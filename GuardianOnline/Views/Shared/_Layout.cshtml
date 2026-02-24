@@ -1,0 +1,891 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title - Poletech Online Application</title>
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/dataTables.fixedHeader.min.js"></script>
+
+    @*<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">*@
+    <link rel="stylesheet" href="~/Content/fonts1.css">
+    <link rel="stylesheet" href="~/Content/Fonts2.css">
+    <link rel="stylesheet" href="~/Content/fonts3.css">
+
+    <link rel="stylesheet" href="~/fonts/style.css">
+    <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+
+
+    <link rel="stylesheet" href="~/Content/Login.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="~/Content/style.css">
+    @*<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">*@
+    <link rel="stylesheet" href="~/fonts/font-awesome.min.css">
+
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">*@
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">*@
+    @*<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.10.4/font/bootstrap-icons.min.css">*@
+    <link rel="stylesheet" href="~/Content/icons_new.min.css">
+    <link rel="stylesheet" href="~/Content/fixedHeader.dataTables.min.css">
+    <link rel="stylesheet" href="~/Content/jquery1.dataTables.min.css">
+    @*<link rel="stylesheet" href="~/Content/bootstrap-icons.css">*@
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='~/Content/sweetalert2.min.css'>
+    <link rel="icon" href="~/Images/qqqq.jpg" type="image/x-icon">
+
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <style>
+        .select2-selection {
+            -webkit-box-shadow: 0;
+            box-shadow: 0;
+            background-color: #fff;
+            border: 0;
+            border-radius: 10px;
+            color: #555555;
+            font-size: 16px;
+            outline: 0;
+            min-height: 48px;
+            text-align: center;
+        }
+
+        .select2-selection__rendered {
+            margin: 10px;
+        }
+
+        .select2-selection__arrow {
+            margin: 10px;
+        }
+
+        .badge-notification i {
+            width: 100px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .badge-notification .badge:after {
+            content: "100";
+            position: absolute;
+            background: blue;
+            height: 2rem;
+            top: 1rem;
+            right: 1.5rem;
+            width: 2rem;
+            text-align: center;
+            line-height: 2rem;
+            font-size: 1rem;
+            border-radius: 50%;
+            color: white;
+            border: 1px solid blue;
+        }
+
+        #ex2 .fa-stack[data-count]:after {
+            position: absolute;
+            right: 0%;
+            top: 1%;
+            content: attr(data-count);
+            font-size: 30%;
+            padding: .6em;
+            border-radius: 999px;
+            line-height: .75em;
+            color: white;
+            background: rgba(255, 0, 0, 0.85);
+            text-align: center;
+            min-width: 0em;
+            font-weight: bold;
+        }
+
+        .parent {
+            /*border: 1px solid black;*/
+            margin: 1rem;
+            padding: 1rem 1rem;
+            /*text-align: center;*/
+        }
+
+        .child {
+            display: inline-block;
+            /*border: 1px solid red;*/
+            padding: 1rem 1rem;
+            /*vertical-align: middle;*/
+            /*width:330px;*/
+            right: 0;
+            /*z-index: 1001;*/
+            position: fixed;
+        }
+
+        .child1 {
+            display: inline-block;
+            /*border: 1px solid red;*/
+            text-align: left;
+            /*padding: 1rem 1rem;*/
+            padding: 0.1rem 0.1rem;
+            /*vertical-align: middle;*/
+        }
+
+        .child2 {
+            display: inline-block;
+            right: 0;
+            position: fixed;
+            /*padding: 6rem 2rem;*/
+            top: 100px;
+            padding-right: 14px;
+            /*vertical-align: middle;*/
+        }
+
+        .child3 {
+            right: 0;
+            position: fixed;
+            /*padding: 14rem 2rem;*/
+            top: 160px;
+            padding-right: 14px;
+            /*vertical-align: middle;*/
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <div class="snackbar">
+        <a href="@Url.Action("ProviderClaimFormApproved","ClaimForm")" target="_self">
+
+            <img class="snackbar-icon" src="~/Images/snackbar.png" />
+            <div class="snackbar-text">
+                <h2 class="snackbar-text-heading">Reiceve Approval From CMC!</h2>
+                <p class="snackbar-text-paragraph"></p>
+                <p class="snackbar-text-paragraph"></p>
+                <p class="snackbar-text-paragraph">Card Number : <p1 id="CardNumbersnackbar"></p1> </p>
+                <p class="snackbar-text-paragraph">Claim Form : <p1 id="Claimformsnackbar"></p1> </p>
+            </div>
+        </a>
+
+        <svg class="snackbar-close-btn"
+             width="22"
+             height="22"
+             viewBox="0 0 22 22"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+            <circle opacity="0.12" cx="11" cy="11" r="10" fill="red" />
+            <path fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M1.75 11C1.75 5.89137 5.89137 1.75 11 1.75C16.1086 1.75 20.25 5.89137 20.25 11C20.25 16.1086 16.1086 20.25 11 20.25C5.89137 20.25 1.75 16.1086 1.75 11ZM11 0.25C5.06294 0.25 0.25 5.06294 0.25 11C0.25 16.9371 5.06294 21.75 11 21.75C16.9371 21.75 21.75 16.9371 21.75 11C21.75 5.06294 16.9371 0.25 11 0.25ZM8.53033 7.46967C8.23744 7.17678 7.76256 7.17678 7.46967 7.46967C7.17678 7.76256 7.17678 8.23744 7.46967 8.53033L9.93934 11L7.46967 13.4697C7.17678 13.7626 7.17678 14.2374 7.46967 14.5303C7.76256 14.8232 8.23744 14.8232 8.53033 14.5303L11 12.0607L13.4697 14.5303C13.7626 14.8232 14.2374 14.8232 14.5303 14.5303C14.8232 14.2374 14.8232 13.7626 14.5303 13.4697L12.0607 11L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L11 9.93934L8.53033 7.46967Z"
+                  fill="red" />
+        </svg>
+    </div>
+
+
+    <div class="snackbarMember">
+        <a href="@Url.Action("MemberSmartCardRequests","ClaimForm")" target="_self">
+
+            <img class="snackbarMember-icon" src="~/Images/snackbar.png" />
+            <div class="snackbarMember-text">
+                <h2 class="snackbarMember-text-heading">Reiceve Smart Card Requests From Member!</h2>
+                <p class="snackbarMember-text-paragraph"></p>
+                <p class="snackbarMember-text-paragraph"></p>
+                <p class="snackbarMember-text-paragraph">Card Number : <p1 id="CardNumbersnackbarMember"></p1> </p>
+            </div>
+        </a>
+
+        <svg class="snackbarMember-close-btn"
+             width="22"
+             height="22"
+             viewBox="0 0 22 22"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+            <circle opacity="0.12" cx="11" cy="11" r="10" fill="red" />
+            <path fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M1.75 11C1.75 5.89137 5.89137 1.75 11 1.75C16.1086 1.75 20.25 5.89137 20.25 11C20.25 16.1086 16.1086 20.25 11 20.25C5.89137 20.25 1.75 16.1086 1.75 11ZM11 0.25C5.06294 0.25 0.25 5.06294 0.25 11C0.25 16.9371 5.06294 21.75 11 21.75C16.9371 21.75 21.75 16.9371 21.75 11C21.75 5.06294 16.9371 0.25 11 0.25ZM8.53033 7.46967C8.23744 7.17678 7.76256 7.17678 7.46967 7.46967C7.17678 7.76256 7.17678 8.23744 7.46967 8.53033L9.93934 11L7.46967 13.4697C7.17678 13.7626 7.17678 14.2374 7.46967 14.5303C7.76256 14.8232 8.23744 14.8232 8.53033 14.5303L11 12.0607L13.4697 14.5303C13.7626 14.8232 14.2374 14.8232 14.5303 14.5303C14.8232 14.2374 14.8232 13.7626 14.5303 13.4697L12.0607 11L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L11 9.93934L8.53033 7.46967Z"
+                  fill="red" />
+        </svg>
+    </div>
+
+
+
+    <style>
+        /*@@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap");
+        @@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@500&display=swap");*/
+
+        @@import url("../Content/font@400.css");
+        @@import url("../Content/font@500.css");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: radial-gradient(circle, rgb(255, 255, 255) 70%, rgb(243, 243, 243) 100%);
+            position: relative;
+        }
+
+        .snackbar {
+            width: 400px;
+            height: 150px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            transition: transform 0.6s ease-out;
+            position: fixed;
+            z-index: 100;
+            right: 30px;
+            bottom: -80px;
+            transform: translateY(90px);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar {
+                width: 240px;
+                right: 16px;
+            }
+        }
+
+        .snackbar.isShown {
+            transform: translateY(-180px);
+        }
+
+        .snackbar-icon {
+            max-width: 60px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-icon {
+                display: none;
+            }
+        }
+
+        .snackbar-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 90px;
+            font-size: 15px;
+        }
+
+        .snackbar-text-heading {
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .snackbar-text-paragraph {
+            color: #34292e;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-text {
+                left: 20px;
+            }
+        }
+
+        .snackbar-close-btn {
+            position: absolute;
+            top: 50%;
+            left: calc(100% - 10px);
+            transform: translate(-100%, -50%);
+            cursor: pointer;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-close-btn {
+                top: 20px;
+            }
+        }
+
+        .show-snackbar-btn {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 100%;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            cursor: pointer;
+            transition: all 0.25s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+            .show-snackbar-btn:hover {
+                transform: translate(-50%, calc(-50% - 5px));
+            }
+
+            .show-snackbar-btn img {
+                max-width: 70%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+        .jssecrets {
+            text-decoration: none !important;
+            padding: 16px;
+            background: #ffc805;
+            color: #000000;
+            font-size: 1em;
+            border-radius: 8px;
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0px 4px 12px rgba(184, 144, 0, 0.1882352941), 0px 8px 24px rgba(184, 144, 0, 0.3764705882);
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            transition: all 0.3s;
+        }
+
+            .jssecrets:hover {
+                transform: translateY(-4px);
+            }
+    </style>
+
+    <script>
+        //const showSnackbarBtn = document.querySelector('.show-snackbar-btn');
+        const snackbar = document.querySelector('.snackbar');
+        const closeBtn = document.querySelector('.snackbar-close-btn');
+
+        // Functions
+
+        //const showSnackbar = (autohide) => {
+        //    snackbar.classList.add('isShown');
+        //    $('#CardNumber').text("12451245679")
+        //    $('#Claimform').text("1201011564")
+        //    if (autohide) {
+        //        setTimeout(hideSnackbar, 5000);
+        //    }
+        //};
+
+        const hideSnackbar = () => {
+            snackbar.classList.remove('isShown');
+        };
+
+        // Event listeners
+
+        //showSnackbarBtn.addEventListener('click', showSnackbar.bind(null, true));
+        closeBtn.addEventListener('click', hideSnackbar);
+    </script>
+
+    <style>
+        .snackbarMember {
+            width: 400px;
+            height: 150px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            transition: transform 0.6s ease-out;
+            position: fixed;
+            z-index: 100;
+            right: 30px;
+            bottom: -80px;
+            transform: translateY(90px);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbarMember {
+                width: 240px;
+                right: 16px;
+            }
+        }
+
+        .snackbarMember.isShown {
+            transform: translateY(-180px);
+        }
+
+        .snackbarMember-icon {
+            max-width: 60px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbarMember-icon {
+                display: none;
+            }
+        }
+
+        .snackbarMember-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 90px;
+            font-size: 15px;
+        }
+
+        .snackbarMember-text-heading {
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .snackbarMember-text-paragraph {
+            color: #34292e;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbarMember-text {
+                left: 20px;
+            }
+        }
+
+        .snackbarMember-close-btn {
+            position: absolute;
+            top: 50%;
+            left: calc(100% - 10px);
+            transform: translate(-100%, -50%);
+            cursor: pointer;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbarMember-close-btn {
+                top: 20px;
+            }
+        }
+
+        .show-snackbarMember-btn {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 100%;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            cursor: pointer;
+            transition: all 0.25s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+            .show-snackbarMember-btn:hover {
+                transform: translate(-50%, calc(-50% - 5px));
+            }
+
+            .show-snackbarMember-btn img {
+                max-width: 70%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+    </style>
+
+    <script>
+        const snackbarMember = document.querySelector('.snackbarMember');
+        const closeBtnd1 = document.querySelector('.snackbarMember-close-btn');
+        const hideSnackbard1 = () => {
+            snackbarMember.classList.remove('isShown');
+        };
+        closeBtnd1.addEventListener('click', hideSnackbard1);
+    </script>
+
+    @if (Session["UserID"] != null)
+    {
+
+        <div class='parent'>
+            @if (Session["ClaimForm_Approved"] != null)
+            {
+                if (int.Parse(Session["ClaimForm_Approved"].ToString()) == 1)
+                {
+                    <div class='child'>
+                        <div id="ex2">
+                            <a href="@Url.Action("ProviderClaimFormApproved", "ClaimForm")">
+                                <span class="fa-stack fa-3x has-badge" id="NotifactionCount" @*data-count="0"*@>
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-bell fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+
+                        </div>
+                    </div>
+                }
+            }
+            <div class='child1'>
+
+                <aside class="sidebar">
+                    <div class="toggle">
+                        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar" style="background-color:teal">
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="side-inner">
+                        <div class="profile">
+                            @* <img src="~/images/login.jpg" alt="Image" class="img-fluid">*@
+                            <img src=@Session["UserImage"].ToString() alt="Image" class="img-fluid">
+                            <img src=@Session["UserqrImage"].ToString() alt="Image" class="img-fluid">
+
+                            <h1 class="name1">@Session["branchCode"].ToString()</h1>
+                            <h1 class="name1">@Session["Providername"].ToString()</h1>
+                            <h2 class="name1">@Session["branchName"].ToString() </h2>
+                            <h3 class="name">@Session["FirstName"].ToString() @Session["LastName"].ToString()</h3>
+
+                            @*<span class="country">Web Designer</span>*@
+                        </div>
+
+                        <div class="nav-menu">
+                            <ul>
+                                <li><a href="@Url.Action("DoctorHome","ClaimForm")"><span class="icon-home2 mr-3"></span> Home</a></li>
+
+                                @*@if (Session["UploadMember_Claim"] != null)
+                                    {
+                                        if (int.Parse(Session["UploadMember_Claim"].ToString()) == 1)
+                                        {
+                                            <li><a href="@Url.Action("UploadMemberClaim","ClaimForm")"><span class="icon-upload mr-3"></span> Upload ClaimForm</a></li>
+                                        }
+                                    }*@
+                                @if (Session["Medical_Services"] != null)
+                                {
+                                    if (int.Parse(Session["Medical_Services"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("ClaimServices","ClaimForm")"><span class="icon-book mr-3"></span> Medical Services</a></li>
+                                    }
+                                }
+                                @if (Session["ClaimForm_Approved"] != null)
+                                {
+                                    if (int.Parse(Session["ClaimForm_Approved"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("ProviderClaimFormApproved","ClaimForm")"><span class="glyphicon glyphicon-star mr-3"></span> ClaimForm Approved</a></li>
+                                    }
+                                }
+                                @if (Session["Approval"] != null)
+                                {
+                                    if (int.Parse(Session["Approval"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Approval","ClaimForm")"><span class="glyphicon glyphicon-text-color mr-3"></span> Approval</a></li>
+                                    }
+                                }
+                                @if (Session["Approval"] != null)
+                                {
+                                    if (int.Parse(Session["Approval"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Chronic_Approvals","ClaimForm")"><span class=" glyphicon glyphicon-text-background mr-3"></span> Chronic Approval</a></li>
+                                    }
+                                }
+                                @if (Session["Doctor_ClaimForm"] != null)
+                                {
+                                    if (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Doctor_ClaimForm","ClaimForm")"><span class="glyphicon glyphicon-star mr-3"></span> Doctor ClaimForm</a></li>
+                                    }
+                                }
+                                @if ((Session["Medical_Services"] != null) || (Session["Doctor_ClaimForm"] != null))
+                                {
+                                    if ((int.Parse(Session["Medical_Services"].ToString()) == 1) || (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
+                                    {
+                                        <li><a href="@Url.Action("Print_CancelAPProval","ClaimForm")"><span class="glyphicon glyphicon-print mr-3"></span> Print & Cancel Invoice</a></li>
+                                    }
+                                }
+                                @if (Session["Doctor_ClaimForm"] != null)
+                                {
+                                    if (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Print_CancelClaimForm","ClaimForm")"><span class="glyphicon glyphicon-print mr-3"></span> Print ClaimForm</a></li>
+                                    }
+                                }
+                                @if (Session["ClaimForm_Approved"] != null || Session["Approval"] != null || Session["Doctor_ClaimForm"] != null)
+                                {
+                                    if ((int.Parse(Session["ClaimForm_Approved"].ToString()) == 1) || (int.Parse(Session["Approval"].ToString()) == 1) || (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
+                                    {
+                                        <li><a href="@Url.Action("MemberSmartCardRequests","ClaimForm")"><span class="glyphicon glyphicon-phone mr-3"></span> Smart Card Requests</a></li>
+                                    }
+                                }
+                                @if (Session["Invoices_Audit"] != null)
+                                {
+                                    if (int.Parse(Session["Invoices_Audit"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Invoices_Audit","ClaimForm")"><span class="glyphicon glyphicon-list-alt mr-3"></span> Invoices Audit</a></li>
+                                    }
+                                }
+                                @if (Session["Expanded_Services"] != null)
+                                {
+                                    if (int.Parse(Session["Expanded_Services"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("Provider_Expended_services","ClaimForm")"><span class="icon-account_balance mr-3"></span> Expanded Services</a></li>
+                                    }
+                                }
+
+                                @if (Session["Payment_Inquiry"] != null)
+                                {
+                                    if (int.Parse(Session["Payment_Inquiry"].ToString()) == 1)
+                                    {
+                                        <li><a href="@Url.Action("PaymentInquiry","ClaimForm")"><span class="icon-dollar mr-3"></span> Payment Inquiry</a></li>
+                                    }
+                                }
+
+                                @if (bool.Parse(Session["IsAdmin"].ToString()) == true)
+                                {
+                                    <li class="accordion">
+                                        <a href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" class="collapsible">
+                                            <span class="icon-user mr-3"></span> Admin
+                                        </a>
+                                        <div id="collapseFive" class="collapse" aria-labelledby="headingOne">
+                                            <div>
+                                                <ul>
+                                                    <li>
+                                                        <a href="@Url.Action("Index","UserDatas")">
+                                                            User Data
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("Add_User_Roles","UserDatas")" @*style="background-color:teal"*@>
+                                                            Add User Roles
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("Edit_User_Roles","UserDatas")">
+                                                            Edit User Roles
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                }
+
+                                @if (bool.Parse(Session["ProviderAdmin"].ToString()) == true)
+                                {
+                                    <li class="accordion">
+                                        <a href="#" data-toggle="collapse" data-target="#collapsesex" aria-expanded="false" aria-controls="collapsesex" class="collapsible">
+                                            <span class="icon-user mr-3"></span> Provider Admin
+                                        </a>
+                                        <div id="collapsesex" class="collapse" aria-labelledby="headingOne">
+                                            <div>
+                                                <ul>
+                                                    @*<li>
+                                                            <a href="@Url.Action("Index","ProviderUserDatas")">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Data
+                                                            </a>
+
+                                                        </li>*@
+                                                    <li class="accordion">
+                                                        <a href="#" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven" class="collapsible">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="icon-user mr-3"></span>User Data
+                                                        </a>
+                                                        <div id="collapseseven" class="collapse" aria-labelledby="headingOne">
+                                                            <div>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="@Url.Action("Index","ProviderUserDatas")">
+                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fa fa-chevron-circle-right"></span>  User Home
+                                                                        </a>
+
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="@Url.Action("Create","ProviderUserDatas")" @*style="background-color:teal"*@>
+                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fa fa-chevron-circle-right"></span>  User Create
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("Add_User_Roles","ProviderUserDatas")" @*style="background-color:teal"*@>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fa fa-user-plus"></span>Add User Roles
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("Edit_User_Roles","ProviderUserDatas")">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="icon-edit"></span>Edit User Roles
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                }
+                                <li><a href="@Url.Action("AccountData","UserDatas")"><span class="icon-user-circle mr-3"></span>User Account</a></li>
+                                <li style="padding-bottom:80px"><a href="@Url.Action("login","ClaimForm")"><span class="icon-sign-out mr-3"></span> Sign out</a></li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                </aside>
+            </div>
+
+        </div>
+
+        if (Session["ClaimForm_Approved"] != null || Session["Approval"] != null || Session["Doctor_ClaimForm"] != null)
+        {
+            if ((int.Parse(Session["ClaimForm_Approved"].ToString()) == 1) || (int.Parse(Session["Approval"].ToString()) == 1) || (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
+            {
+                <div class='child3'>
+                    <div id="ex2">
+                        <a href="@Url.Action("MemberSmartCardRequests", "ClaimForm")">
+                            <span class="fa-stack fa-3x has-badge" id="MemberSmartCardRequestsCount" style='font-size:25px' @*data-count="0"*@>
+                                <i class="bi icon-birthday-cake  fa-stack-2x"></i>
+                                @*<i class="bi icon-bitbucket-square   fa-stack-2x"></i>*@
+                                @*<i class="fa fa-bell fa-stack-1x fa-inverse"></i>*@
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            }
+        }
+
+        if (Session["ClaimForm_Approved"] != null || Session["Doctor_ClaimForm"] != null)
+        {
+            if ((int.Parse(Session["ClaimForm_Approved"].ToString()) == 1) || (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
+            {
+                <div class='child2'>
+                    <div id="ex2">
+                        <a href="@Url.Action("Messanger", "ClaimForm")">
+                            <span class="fa-stack fa-3x has-badge" id="MesaageCount" style='font-size:25px' @*data-count="0"*@>
+                                <i class="bi bi-messenger fa-stack-2x"></i>
+                                @*<i class="fa fa-bell fa-stack-1x fa-inverse"></i>*@
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            }
+        }
+    }
+    <main>
+        <div class="site-section">
+            <div class="container">
+                <div class="row justify-content-center">
+
+
+
+                    <div class="container body-content">
+                        @RenderBody()
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+
+
+    <script src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+</body>
+</html>
+
+
+<asp:ScriptManager ID="scriptmanager1" runat="server" ScriptMode="Release"></asp:ScriptManager>
+
+<style>
+    span.deleteicon {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        span.deleteicon span {
+            position: absolute;
+            display: block;
+            right: 3px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            color: #fff;
+            background-color: #ccc;
+            font: 13px monospace;
+            text-align: center;
+            line-height: 1em;
+            cursor: pointer;
+        }
+
+        span.deleteicon input {
+            padding-right: 18px;
+            box-sizing: border-box;
+        }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('input.deletable').wrap('<span class="deleteicon"></span>').after($('<span>x</span>').click(function () {
+            $(this).prev('input').val('').trigger('change').focus();
+        }));
+        //var favoritemovie = sessionStorage.getItem("favoriteMovie");
+        //$('#notifactionaaa').val(favoritemovie);
+
+    });
+    function my_code(count) {
+        //var favoritemovie = sessionStorage.getItem("favoriteMovie");
+        // $('#NotifactionCount').data('data-count', count);
+        //$('#NotifactionCount').add('data-count', count);
+        //$('#ex2').find('.fa-stack').text(count);
+        if (count == 0) {
+            $('#NotifactionCount').removeAttr("data-count");
+
+        }
+        else {
+            $('#NotifactionCount').attr("data-count", count);
+        }
+    }
+</script>
+
+
+<script>
+    //$(document).ready(function () {
+
+    function myFunction_CLearConsole() {
+        console.clear();
+    }
+    setInterval(myFunction_CLearConsole, 3000);
+    //})
+</script>

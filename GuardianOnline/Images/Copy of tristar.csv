@@ -1,0 +1,52 @@
+Customer name,Card number,Client number,Member name,Member Birth date,Member age,Plan type,Sex Type,Active Date,Activity Status,DeActive Date,Member Status,Sub-member?,Sex type,Active date,Activity Status,Deactivate Date,Contract Status,Sub-Member ?,Parent Name,Sub-Member Relationship ,OverCeiling ?
+Tristar Global Health,197600001,,Ashraf Ramez Ahmed Gohar,08-11-1976,47,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,197600017,,Mona Hassan Ali Hassan,01-01-1976,47,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Ashraf Ramez Ahmed Gohar,????,UnChecked
+Tristar Global Health,25011000087,,Ramez Ashraf Gohar,24-06-2010,13,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,Checked,Ashraf Ramez Ahmed Gohar,???,UnChecked
+Tristar Global Health,25011500093,,Seif Ashraf Gohar,30-06-2015,8,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,Checked,Ashraf Ramez Ahmed Gohar,???,UnChecked
+Tristar Global Health,197006293,,Karim Paul Haddad,26-05-1970,53,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,197705077,,Sanaa  Mansour Aziz,07-01-1977,46,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Karim Paul Haddad,????,UnChecked
+Tristar Global Health,197700002,,Mohamed Said Mohamed Bakry,17-07-1977,46,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,201600018,,Zina Mohammed Bakry,24-04-2016,7,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Mohamed Said Mohamed Bakry,????,UnChecked
+Tristar Global Health,198000015,,Mohamed Abdelnaby,15-09-1980,43,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,198600031,,Hasnaa Saeed,01-01-1986,37,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Mohamed Abdelnaby,????,UnChecked
+Tristar Global Health,198900007,,Nesma Tawfik Abdullah Youssef,31-03-1989,34,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018700007,,Mohamed Ali Abd El Sabour,25-07-1987,36,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018800023,,Rehab Abdallah Ahmed,12-05-1988,35,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Mohamed Ali Abd El Sabour,????,UnChecked
+Tristar Global Health,199505914,,Arty Nabil Wassef,05-03-1995,28,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,199300431,,Mohamed Hassan Refaat,17-03-1993,30,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018200024,,Gamal Goda Ali,29-04-1982,41,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018700025,,Reham Mohamed Ahmed Hamed,01-09-1987,36,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Gamal Goda Ali,????,UnChecked
+Tristar Global Health,198406219,,Ali Ahmed Ali,09-04-1984,39,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,198900004,,Martina Ibrahim Garaal Sawiris,21-08-1989,34,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,199008086,,Nourhan Abd El-meguid Galal,17-11-1990,33,A,F,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,199108025,,Mohamed Morsy Mohamed Youssif,10-10-1991,32,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25017100035,,Emad Fayek Megaly Abdelmeseh,05-06-1971,52,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019500040,,Ibram Ibrahim Qasem,08-10-1995,28,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019000043,,Mohamed Khamis Mohamed,07-09-1990,33,A,M,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019000045,,Angel jan george,14-09-1990,33,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600047,,Abd Elnasser Mohamed ali,02-01-1996,27,A,M,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25017600048,,Manal Mourice Fahem,03-01-1976,47,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Emad Fayek Megaly Abdelmeseh,????,UnChecked
+Tristar Global Health,198900010,,Omnia Hossam El-Din,10-10-1989,34,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25017700050,,Baha Manssour El Tom,27-11-1977,46,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019700100,,Karim Mostafa Mohamed,21/04/1997,26,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019800101,,Abd Elrahaman Nasser Sayed,12/4/1998,25,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019800102,,Mohamed Adel Mahmoud Hassan,2/4/1991,32,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019800103,,Hadeer Salah Abdo Ali,3/5/1994,29,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018900104,,Nader Boushra,1/1/1989,34,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600105,,Zeinab Nashee Hassan,1/2/1996,27,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600106,,Roudayna Hafez Mohamed,2/5/1996,27,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018400107,,Ahmed Mohamed Omar,9/7/1984,39,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600108,,Abd Elaziz Essam Abd Elaziz,7/1/1996,27,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019700109,,Zayad Osamaa Adel,1/11/1997,26,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600110,,Ahmed Ashraf Ali Khalil,12/7/1996,27,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018800111,,Aya Salah Abdo Ali,21/12/1988,35,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018100112,,Mohamed Ragheb Gad,10/3/1981,42,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019700113,,Mahmoud Zedan Hassan Khalil,30/08/1997,26,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019400114,,Hassan Noseer Hassan,4/6/1994,29,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019400115,,Ahmed Mohamed Ahmed Hamed,18/10/1994,29,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019700116,,Noura Kamal Thabet,16/03/1997,26,A,F,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019600117,,Rami Nageh,15/08/1996,27,A,M,1/1/2023,Active,,Primary,false,M,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25019700118,,Basma Osama Hassan,5/10/1997,26,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,UnChecked,,,UnChecked
+Tristar Global Health,25018300119,,Walaa Mohamed Shabaan,3/11/1983,40,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Mohamed Said Mohamed Bakry,????,UnChecked
+Tristar Global Health,25019600120,,Yara Ehab Mohamed,19/10/1996,27,A,F,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Abd Elnasser Mohamed ali,????,UnChecked
+Tristar Global Health,25018600121,,John Atef Farag,9/12/1986,37,A,M,1/1/2023,Active,,Primary,false,F,1/1/2023,Active,,Primary,Checked,Arty Nabil Wassef,???,UnChecked

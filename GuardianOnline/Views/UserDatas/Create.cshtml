@@ -1,0 +1,323 @@
+﻿@model GuardianOnline.Infrastructure.ProviderUserData
+
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    /*#clist {
+        width:400px;
+        /*max-width: 450px;
+    }
+    #selectclist {
+        width: 400px;
+        /*max-width: 450px;
+    }*/
+    #provider_names, #branch_Names, #User_Name, #First_Name, #Last_Name, #User_Email, #User_Password, #confUser_Password, #imgfile {
+        font-size: 18px;
+        color: black;
+    }
+
+    #provider_nameslabel, #branch_Nameslabel, #User_Namelabel, #First_Namelabel, #Last_Namelabel, #User_Emaillabel, #User_Passwordlabel, #confUser_Passwordlabel, #imgfilelabel {
+        font-size: 18px;
+        /*color: black;*/
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table, table table td {
+            border: 0px solid #ccc;
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+
+
+<h2 style="color:teal;text-align:center">Create User Data</h2>
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">User Data</legend>
+
+    @using (Html.BeginForm("Create", "UserDatas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @*<h4>User Data</h4>
+                <hr />*@
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @*<div class="form-group" hidden>
+                    @Html.LabelFor(model => model.UserTypeID, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.UserTypeID, new SelectList(ViewBag.UserType_ID), "--Select User Type--", htmlAttributes: new { @class = "form-control", @id = "UserType_ID", @Name = "UserType_ID" })
+
+                        @Html.ValidationMessageFor(model => model.UserTypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserTypeCustomerID, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.UserTypeCustomerID, new SelectList(ViewBag.UserTypeCustomer_ID), "--Select Customer User--", htmlAttributes: new { @class = "form-control", @id = "UserTypeCustomer_ID", @Name = "UserTypeCustomer_ID" })
+
+                        @Html.ValidationMessageFor(model => model.UserTypeCustomerID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProviderID, htmlAttributes: new { @class = "control-label col-md-3", @id = "provider_nameslabel" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(ViewBag.providernames), "--Select Provider Name--", htmlAttributes: new { @class = "form-control", @id = "provider_names", @Name = "provider_names" })
+
+                    @Html.ValidationMessageFor(model => model.ProviderID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BranchID, htmlAttributes: new { @class = "control-label col-md-3", @id = "branch_Nameslabel" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.BranchID, new SelectList(ViewBag.branchNames), "--Select Branch Name--", htmlAttributes: new { @class = "form-control", @id = "branch_Names", @Name = "branch_Names" })
+
+                    @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3", @id = "User_Namelabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "User_Name" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3", @id = "First_Namelabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "First_Name" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3", @id = "Last_Namelabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "Last_Name" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-3", @id = "User_Emaillabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control", @id = "User_Email" } })
+                    @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserPassword, htmlAttributes: new { @class = "control-label col-md-3", @id = "User_Passwordlabel" })
+                <div class="col-md-9">
+                    @Html.PasswordFor(model => model.UserPassword, new { htmlAttributes = new { @class = "form-control", @id = "User_Password" } })
+                    @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.confUserPassword, htmlAttributes: new { @class = "control-label col-md-3", @id = "confUser_Passwordlabel" })
+                <div class="col-md-9">
+                    @Html.PasswordFor(model => model.confUserPassword, new { htmlAttributes = new { @class = "form-control", @id = "confUser_Password" } })
+                    @Html.ValidationMessageFor(model => model.confUserPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("User Image", htmlAttributes: new { @class = "control-label col-md-3", @id = "imgfilelabel" })
+                <div class="col-md-9">
+                    <input type="file" id="imgfile" name="imgfile" class="form-control icon-file_upload" />
+                    @Html.ValidationMessageFor(model => model.UserImage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.IsAdmin, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsAdmin)
+                        @Html.ValidationMessageFor(model => model.IsAdmin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProviderAdmin, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.ProviderAdmin)
+                        @Html.ValidationMessageFor(model => model.ProviderAdmin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9" style="text-align:center">
+                    <input type="submit" value="Create" class="btn btn-primary btn-lg" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        <a href="@Url.Action("Index","UserDatas")"><u>&laquo; Back to Main List</u></a>
+    </div>
+</fieldset>
+
+
+@*eror messages*@
+@if (ViewBag.ErorMessage != null)
+{
+    <script type="text/javascript">
+
+        window.onload = function () {
+            Swal.fire("Error !", "@ViewBag.ErorMessage", "error");
+
+               // alert("@ViewBag.ErorMessage");
+            };
+    </script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#provider_names").select2();
+        $("#branch_Names").select2();
+
+        $("#provider_names").change(function () {
+
+            $.get("/UserDatas/Get_Provider_Branch", { id: $('#provider_names').val() }, function (data) {
+                $('#branch_Names')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="whatever">Select Provider Branch</option>')
+                    .val('whatever')
+                    ;
+                var select = document.getElementById("branch_Names"), data;
+
+
+                for (var i = 0; i < data.length; i++) {
+                    var opt = document.createElement("option");
+
+
+                    txt = document.createTextNode(data[i]);
+                    opt.appendChild(txt);
+                    opt.setAttribute("value", data[i]);
+                    select.insertBefore(opt, select.lastChild);
+
+                }
+
+
+
+
+            })
+
+
+
+        });
+
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+</script>
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+

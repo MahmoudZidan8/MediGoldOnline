@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
+
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+
+<style>
+
+    .badge-notification i {
+        width: 100px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        position: relative;
+    }
+
+    .badge-notification .badge:after {
+        content: "100";
+        position: absolute;
+        background: blue;
+        height: 2rem;
+        top: 1rem;
+        right: 1.5rem;
+        width: 2rem;
+        text-align: center;
+        line-height: 2rem;
+        font-size: 1rem;
+        border-radius: 50%;
+        color: white;
+        border: 1px solid blue;
+    }
+    #ex2 .fa-stack[data-count]:after {
+        position: absolute;
+        right: 0%;
+        top: 1%;
+        content: attr(data-count);
+        font-size: 30%;
+        padding: .6em;
+        border-radius: 999px;
+        line-height: .75em;
+        color: white;
+        background: rgba(255, 0, 0, 0.85);
+        text-align: center;
+        min-width: 2em;
+        font-weight: bold;
+    }
+
+    #ex3 .fa-stack[data-count]:after {
+        position: absolute;
+        right: 0%;
+        top: 1%;
+        content: attr(data-count);
+        font-size: 30%;
+        padding: .6em;
+        border-radius: 50%;
+        line-height: .8em;
+        color: white;
+        background: rgba(255, 0, 0, 0.85);
+        text-align: center;
+        min-width: 1em;
+        font-weight: bold;
+    }
+</style>
+@*<div class="badge-notification">
+    <i class="fa fa-bell fa-5x fa-border icon-grey badge"></i>
+</div>
+
+<div id="ex3">
+    <span class="p1 fa-stack fa-5x has-badge" data-count="3">
+        <i class="p2 fa fa-circle fa-stack-2x"></i>
+        <i class="p3 fa fa-shopping-cart fa-stack-1x fa-inverse" data-count="5"></i>
+    </span>
+</div>*@
+
+<div id="ex2">
+    <a href="@Url.Action("ProviderClaimFormApproved","ClaimForm")">
+        <span class="fa-stack fa-5x has-badge" @*data-count="0"*@>
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-bell fa-stack-1x fa-inverse"></i>
+        </span>
+    </a>
+
+</div>

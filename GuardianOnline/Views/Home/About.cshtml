@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+<div class="snackbar">
+    <a href="@Url.Action("ProviderClaimFormApproved","ClaimForm")" target="_self">
+
+        <img class="snackbar-icon" src="~/Images/snackbar.png" />
+        <div class="snackbar-text">
+            <h2 class="snackbar-text-heading">Reiceve Approval From CMC!</h2>
+            <p class="snackbar-text-paragraph"></p>
+            <p class="snackbar-text-paragraph"></p>
+            <p class="snackbar-text-paragraph">Card Number : <p1 id="CardNumber"></p1> </p>
+            <p class="snackbar-text-paragraph">Claim Form : <p1 id="Claimform"></p1> </p>
+        </div>
+    </a>
+
+    <svg class="snackbar-close-btn"
+         width="22"
+         height="22"
+         viewBox="0 0 22 22"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+        <circle opacity="0.12" cx="11" cy="11" r="10" fill="red" />
+        <path fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M1.75 11C1.75 5.89137 5.89137 1.75 11 1.75C16.1086 1.75 20.25 5.89137 20.25 11C20.25 16.1086 16.1086 20.25 11 20.25C5.89137 20.25 1.75 16.1086 1.75 11ZM11 0.25C5.06294 0.25 0.25 5.06294 0.25 11C0.25 16.9371 5.06294 21.75 11 21.75C16.9371 21.75 21.75 16.9371 21.75 11C21.75 5.06294 16.9371 0.25 11 0.25ZM8.53033 7.46967C8.23744 7.17678 7.76256 7.17678 7.46967 7.46967C7.17678 7.76256 7.17678 8.23744 7.46967 8.53033L9.93934 11L7.46967 13.4697C7.17678 13.7626 7.17678 14.2374 7.46967 14.5303C7.76256 14.8232 8.23744 14.8232 8.53033 14.5303L11 12.0607L13.4697 14.5303C13.7626 14.8232 14.2374 14.8232 14.5303 14.5303C14.8232 14.2374 14.8232 13.7626 14.5303 13.4697L12.0607 11L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L11 9.93934L8.53033 7.46967Z"
+              fill="red" />
+    </svg>
+</div>
+    <div class="show-snackbar-btn">
+        <img src="https://jssecrets.com/wp-content/uploads/2022/09/snackbar.png" />
+    </div>
+
+
+    <!-- made in jssecrets.com -->
+    <!--<a class="jssecrets" href="https://jssecrets.com/" target="_blank">jssecrets.com</a>-->
+    <!-- made in jssecrets.com -->
+
+    <style>
+        @@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap");
+        @@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@500&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: radial-gradient(circle, rgb(255, 255, 255) 70%, rgb(243, 243, 243) 100%);
+            position: relative;
+        }
+
+        .snackbar {
+            width: 400px;
+            height: 150px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            transition: transform 0.6s ease-out;
+            position: fixed;
+            z-index: 100;
+            right: 30px;
+            bottom: -80px;
+            transform: translateY(90px);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar {
+                width: 240px;
+                right: 16px;
+            }
+        }
+
+        .snackbar.isShown {
+            transform: translateY(-180px);
+        }
+
+        .snackbar-icon {
+            max-width: 60px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-icon {
+                display: none;
+            }
+        }
+
+        .snackbar-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 90px;
+            font-size: 15px;
+        }
+
+        .snackbar-text-heading {
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .snackbar-text-paragraph {
+            color: #34292e;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-text {
+                left: 20px;
+            }
+        }
+
+        .snackbar-close-btn {
+            position: absolute;
+            top: 50%;
+            left: calc(100% - 10px);
+            transform: translate(-100%, -50%);
+            cursor: pointer;
+        }
+
+        @@media (max-width: 575.9px) {
+            .snackbar-close-btn {
+                top: 20px;
+            }
+        }
+
+        .show-snackbar-btn {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 100%;
+            box-shadow: 0 10px 25px rgba(124, 130, 141, 0.2);
+            cursor: pointer;
+            transition: all 0.25s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+            .show-snackbar-btn:hover {
+                transform: translate(-50%, calc(-50% - 5px));
+            }
+
+            .show-snackbar-btn img {
+                max-width: 70%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+        .jssecrets {
+            text-decoration: none !important;
+            padding: 16px;
+            background: #ffc805;
+            color: #000000;
+            font-size: 1em;
+            border-radius: 8px;
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0px 4px 12px rgba(184, 144, 0, 0.1882352941), 0px 8px 24px rgba(184, 144, 0, 0.3764705882);
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            transition: all 0.3s;
+        }
+
+            .jssecrets:hover {
+                transform: translateY(-4px);
+            }
+    </style>
+
+    <script>
+        const showSnackbarBtn = document.querySelector('.show-snackbar-btn');
+        const snackbar = document.querySelector('.snackbar');
+        const closeBtn = document.querySelector('.snackbar-close-btn');
+
+        // Functions
+
+        const showSnackbar = (autohide) => {
+            snackbar.classList.add('isShown');
+            $('#CardNumber').text("12451245679")
+            $('#Claimform').text("1201011564")
+            if (autohide) {
+                setTimeout(hideSnackbar, 5000);
+            }
+        };
+
+        const hideSnackbar = () => {
+            snackbar.classList.remove('isShown');
+        };
+
+        // Event listeners
+
+        showSnackbarBtn.addEventListener('click', showSnackbar.bind(null, true));
+        closeBtn.addEventListener('click', hideSnackbar);
+    </script>

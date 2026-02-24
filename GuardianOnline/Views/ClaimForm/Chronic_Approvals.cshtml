@@ -1,0 +1,1492 @@
+﻿
+@{
+    ViewBag.Title = "Chronic_Approvals";
+}
+
+<script type="text/javascript" src="~/Scripts/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jszip.min.js"></script>
+<script type="text/javascript" src="~/Scripts/vfs_fonts.js"></script>
+<script type="text/javascript" src="~/Scripts/buttons.html5.min.js"></script>
+<script type="text/javascript" src="~/Scripts/buttons.print.min.js"></script>
+
+<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
+
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+
+<script type="text/javascript" src="~/Scripts/date-eu.js"></script>
+
+<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
+
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
+@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
+
+
+<input type="hidden" id="trigger" value="0" />
+<input type="hidden" id="triggercount" value="0" />
+
+<input type="hidden" id="trigger1" value="0" />
+<input type="hidden" id="triggercount1" value="0" />
+<style>
+    /*body {
+        margin: 0;
+        padding: 0;
+        background: #262626;
+    }*/
+    #backring1 {
+        background-color: darkgray;
+    }
+
+    .ring1 {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 150px;
+        height: 150px;
+        background: transparent;
+        border: 3px solid /*#3c3c3c*/ #9ac3b8;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 150px;
+        font-family: sans-serif;
+        font-size: 20px;
+        color: /*#928d36*/ #fff000;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px #fff000;
+        box-shadow: 0 0 20px rgba(0,0,0,.5);
+        background-color: #11395c;
+    }
+
+        .ring1:before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #fff000;
+            border-right: 3px solid #fff000;
+            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
+            border-radius: 50%;
+            animation: animateC1 2s linear infinite;
+        }
+
+    spana1 {
+        display: block;
+        position: absolute;
+        top: calc(50% - 2px);
+        left: 50%;
+        width: 50%;
+        height: 4px;
+        background: transparent;
+        transform-origin: left;
+        animation: animate1 2s linear infinite;
+    }
+
+        spana1:before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff000;
+            top: -6px;
+            right: -8px;
+            box-shadow: 0 0 20px #fff000;
+        }
+
+    @@keyframes animateC1 {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes animate1 {
+        0% {
+            transform: rotate(45deg);
+        }
+
+        100% {
+            transform: rotate(405deg);
+        }
+    }
+</style>
+
+<style>
+
+    .Bottom-Arrow {
+        display: flex;
+        bottom: 0px;
+        right: 0px;
+        position: fixed;
+        /*height: 100vh;*/
+    }
+
+    .Bottom-round {
+        position: relative;
+        border: 25px solid #fff;
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        background-color: teal
+    }
+
+    spana {
+        z-index: 999;
+        height: 3px;
+        margin: 1px;
+        width: 16px;
+        background: #fff;
+        transition: 0.4s ease;
+    }
+
+        spana:first-child {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 22%;
+            bottom: 35%;
+        }
+
+        spana:nth-child(2) {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 43%;
+            bottom: 35%;
+        }
+
+        spana:nth-child(3) {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 22%;
+            bottom: 54%;
+        }
+
+        spana:nth-child(4) {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 43%;
+            bottom: 54%;
+        }
+
+    .Bottom-round:hover spana:nth-child(1) {
+        transform: rotate(-135deg);
+    }
+
+    .Bottom-round:hover spana:nth-child(2) {
+        transform: rotate(135deg);
+    }
+
+    .Bottom-round:hover spana:nth-child(3) {
+        transform: rotate(225deg);
+    }
+
+    .Bottom-round:hover spana:nth-child(4) {
+        transform: rotate(-225deg);
+    }
+
+    .Bottom-round:hover {
+        border: 25px solid teal;
+        box-shadow: #19ba2e 0 3px 5px;
+        transform: scale(1.05);
+    }
+
+
+
+
+    .Up-Arrow {
+        display: flex;
+        bottom: 111px;
+        right: 0px;
+        position: fixed;
+        /*height: 100vh;*/
+    }
+
+    .Up-round {
+        position: relative;
+        border: 25px solid #fff;
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        background-color: teal
+    }
+
+    spanu {
+        z-index: 999;
+        height: 3px;
+        margin: 1px;
+        width: 16px;
+        background: #fff;
+        transition: 0.4s ease;
+    }
+
+        spanu:first-child {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 22%;
+            bottom: 35%;
+        }
+
+        spanu:nth-child(2) {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 43%;
+            bottom: 35%;
+        }
+
+        spanu:nth-child(3) {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 22%;
+            bottom: 54%;
+        }
+
+        spanu:nth-child(4) {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 43%;
+            bottom: 54%;
+        }
+
+    .Up-round:hover spanu:nth-child(1) {
+        transform: rotate(135deg);
+    }
+
+    .Up-round:hover spanu:nth-child(2) {
+        transform: rotate(-135deg);
+    }
+
+    .Up-round:hover spanu:nth-child(3) {
+        transform: rotate(-225deg);
+    }
+
+    .Up-round:hover spanu:nth-child(4) {
+        transform: rotate(225deg);
+    }
+
+    .Up-round:hover {
+        border: 25px solid teal;
+        box-shadow: #19ba2e 0 -3px 5px;
+        transform: scale(1.05);
+    }
+</style>
+
+<style>
+
+    /*table {
+        width: 82vw;
+        height: 90vh;
+        background-color: #6fcaea;
+        box-shadow: 0 .4rem .8rem #ebc474;
+        border-radius: .8rem;
+        overflow: hidden;
+
+    }*/
+    .status {
+        padding: .4rem 0;
+        border-radius: 2rem;
+        text-align: center;
+    }
+
+        .status.Received {
+            background-color: #e0dede;
+            color: black;
+        }
+
+        .status.UnPaid {
+            background-color: #75ea75;
+            color: black;
+        }
+
+        .status.Paid {
+            background-color: forestgreen;
+            color: white;
+        }
+
+        .status.PartlyPaid {
+            background-color: #154e4e;
+            color: white;
+        }
+
+
+    @@media (max-width: 1800px) {
+        /*td:nth-child(1), td:nth-child(2),*/ td:nth-child(3), td:nth-child(4) {
+            min-width: 12.1rem;
+        }
+    }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        color: #cc8f11;
+        text-align: center;
+    }
+
+    tr {
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    td:first-child,
+    th:first-child {
+        border-radius: 10px 0 0 10px;
+        border-color: teal;
+    }
+
+    /*// Set border-radius on the top-right and bottom-right of the last table data on the table row*/
+    td:last-child,
+    th:last-child {
+        border-radius: 0 10px 10px 0;
+        border-color: teal;
+    }
+</style>
+
+<style>
+    #fromDate, #toDate {
+        -webkit-box-shadow: 0;
+        max-width: 200PX;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 200PX;
+        box-shadow: 10PX;
+        border-radius: 15PX;
+        color: black;
+        font-size: 17PX;
+        text-align: center;
+    }
+
+    #link {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    /*.previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+        .previous:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .next {
+        background-color: #04AA6D;
+        color: white;
+    }*/
+
+    .round {
+        background-color: teal;
+        color: white;
+        border-radius: 50%;
+    }
+</style>
+
+<style>
+    td.details-control {
+        background: url('/Images/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('/Images/details_close.png') no-repeat center center;
+    }
+
+    #Invoices_Count, #Invoices_RequestedAmt {
+        -webkit-box-shadow: 0;
+        max-width: 150PX;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 150PX;
+        box-shadow: 10PX;
+        border-radius: 15PX;
+        color: black;
+        font-size: 17PX;
+        text-align: center;
+        background: #d4d6d7;
+    }
+</style>
+<style>
+
+    #ddlCustomers {
+        max-width: 550px;
+    }
+
+    #selectclist {
+        max-width: 550px;
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table.table1 {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table.table1 th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+        }
+
+        table.table1 th, table.table1 td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table.table1, table.table1 table td {
+            border: 0px solid #ccc;
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+</style>
+<h2 style="color:teal;text-align:center">Chronic Approvals</h2>
+
+
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">Chronic Approvals Content</legend>
+
+    <div style="text-align:center;padding-bottom:15px">
+        <label style="color:#8a97a4;font-size:15px">From Date  </label>
+        <input type="date" id="fromDate" name="fromDate" onchange="selectDate()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label style="color:#8a97a4;font-size:15px">To Date	  </label>
+        <input type="date" id="toDate" name="toDate" onchange="selectDate()">
+    </div>
+
+    <table @*class="table1"*@ class="table table-hover" id="tblApprovals" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="background-color:teal;color:white"></th>
+                <th style="background-color:teal;color:white">Claim ID</th>
+                <th style="background-color:teal;color:white">ClaimForm Number</th>
+                <th style="background-color:teal;color:white">Customer Name</th>
+                <th style="background-color:teal;color:white">Member Name</th>
+                <th style="background-color:teal;color:white">Card Number</th>
+                <th style="background-color:teal;color:white">Procedure Date</th>
+                <th style="background-color:teal;color:white">Contract Amt</th>
+                <th style="background-color:teal;color:white">Requested Amt</th>
+                <th style="background-color:teal;color:white">Deductable Perc</th>
+                <th style="background-color:teal;color:white">Deductable Amt</th>
+                <th style="background-color:teal;color:white"><div class="checkbox-wrapper-19"><input type="checkbox" id="cbtestt"><label style="background-color:white" for="cbtestt" class="check-box"></label></div></th>
+            </tr>
+        </thead>
+        @*<tbody></tbody>*@
+    </table>
+
+    <br />
+    <br />
+    <div style="text-align:center">
+        <label style="color:dodgerblue;font-size:15px">Invoices Count  </label>
+        <input type="text" size="20" id="Invoices_Count" name="Invoices_Count" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label style="color:dodgerblue;font-size:15px">Invoices Deductable Amt	 </label>
+        <input type="text" size="20" id="Invoices_RequestedAmt" name="Invoices_RequestedAmt" value="0" readonly>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div style="text-align:center;">
+        <button type="button" id="Send_To_Pay" class="btn btn-primary btn-lg">
+            <span class="glyphicon glyphicon-send"></span>&nbsp;
+            Accept Chronic Approvals
+        </button>
+    </div>
+    <br />
+
+    <div style="text-align:left;display:inline-block;position:relative">
+        <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
+    </div>
+    <div style="text-align:right;display:inline-block;padding-left:700px;position:relative">
+        <a id="link" class="round" href="@Url.Action("Print_CancelAPProval","ClaimForm")">@*<u>*@ Go to Print & Cancel Approval &raquo;@*</u>*@</a>
+    </div>
+</fieldset>
+<div id="backring1">
+    <div class="ring1" id="Loadingg">
+        Loading
+        <spana1></spana1>
+    </div>
+</div>
+<div onclick="topFunction()" class="Up-Arrow">
+
+    <div class="Up-round">
+        <spanu></spanu>
+        <spanu></spanu>
+        <spanu></spanu>
+        <spanu></spanu>
+    </div>
+
+</div>
+
+<div onclick="BottomFunction()" class="Bottom-Arrow">
+
+    <div class="Bottom-round">
+        <spana></spana>
+        <spana></spana>
+        <spana></spana>
+        <spana></spana>
+    </div>
+
+</div>
+
+
+<script>
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+    function BottomFunction() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+<script>
+    function selectDate() {
+        let table = $('#tblApprovals').DataTable();
+        table.draw();
+    }
+    $(document).ready(function () {
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            let toDate = $('#toDate').val();
+            let fromDate = $('#fromDate').val();
+            let formatedToDate = toDate ? new Date(toDate) : '';
+            let formatedFromDate = fromDate ? new Date(fromDate) : '';
+            let dateField = data[6];
+            //alert(dateField)
+            let formatedDateField = dateField ? new Date(dateField) : '';
+            //alert(formatedFromDate);
+            //alert(formatedToDate);
+            //alert(formatedDateField);
+            if (formatedToDate && formatedFromDate && formatedDateField) {
+                //console.log("1");
+                return formatedToDate >= formatedDateField && formatedDateField >= formatedFromDate
+            } else if (formatedToDate && !formatedFromDate && formatedDateField) {
+                //console.log("2");
+
+                return formatedToDate >= formatedDateField
+            } else if (!formatedToDate && formatedFromDate && formatedDateField) {
+                //console.log("3");
+
+                return formatedDateField >= formatedFromDate
+            } else if (!formatedToDate && !formatedFromDate) {
+                //console.log("4");
+
+                return true
+            }
+            return false;
+        });
+    });
+</script>
+<script>
+    function show(button, ClaimItemID, ClaimID) {
+        var row = $(button).closest("TR");
+
+        var rowindexx = row[0].rowIndex;
+
+        var ServiceQnt = row[0].cells.item(1).innerHTML;
+        var requesPrice = $("#" + ClaimItemID).val();
+        var DeductPerc = row[0].cells.item(6).innerHTML;
+
+        var NewRequestAmt = Number(requesPrice) * Number(ServiceQnt);
+        var NewDeductAmt = Number(NewRequestAmt) * Number(DeductPerc);
+
+        row[0].cells.item(5).innerHTML = (NewRequestAmt).toFixed(2);
+        row[0].cells.item(7).innerHTML = (NewDeductAmt).toFixed(2);
+       // var DifferanceAmt = (requesAmt - ServiceAmt).toFixed(2);
+       // var NewRequest = Number(DueAmt) + Number(DifferanceAmt);
+        var NewrequesPrice = Number(requesPrice);
+        $.get("/ClaimForm/updateChronicrequestAmt", { Claim_ID: ClaimID, ClaimItem_ID: ClaimItemID, reques_price: NewrequesPrice }, function (data) {
+
+            if (data == "A") {
+                ///////////
+                Swal.fire("Warning !", "Select A Valid Requested Amt Again", "warning");
+            }
+            else {
+
+                $("#tblApprovals TBODY TR").each(function () {
+                    var row = $(this);
+                    //alert(row.find("TD").eq(1).html());
+                    //alert(ClaimID);
+                    if (row.find("TD").eq(1).html() == ClaimID) {
+
+                        var totalrequestAMT = data[0].toFixed(2);
+                        var Deductt = row.find("TD").eq(9).html();
+                        var NewDeductAmt = Number(totalrequestAMT) * Number(Deductt);
+                        var FinalNewDeductAmt = (NewDeductAmt).toFixed(2);
+                        //alert(totalrequestAMT);
+                        //alert(Deductt);
+                        //alert(NewDeductAmt);
+                        //alert(FinalNewDeductAmt);
+                        row.find("TD").eq(8).html(totalrequestAMT);
+                        row.find("TD").eq(10).html(FinalNewDeductAmt);
+                    }
+
+                });
+                $('#tblApprovals').click();
+
+            }
+        })
+
+
+    }
+    //'<th>Claim Item ID</th>' + '<th>Claim ID</th>' +
+    function format(d) {
+        var result = '<table id="childtable" class="table1" cellpadding="10" cellspacing="0" border="1" style="padding-left: 80px; width:100% ">' +
+            '<tr>' + '<th>Service Name</th>' + '<th>Service Qnt</th>' + '<th>Unit Price</th>' + '<th>Service Amt</th>' + '<th>Requested Price</th>' + '<th>Requested Amt</th>'
+            + '<th>Deduct Perc</th>' + '<th>Deduct Amt</th>' + '<th>Service Note</th>' + '<th>Edit</th>' + '</tr>';
+        //loop thouth the OderListDetails and add the child items.
+        //alert(d);
+        //alert(d.OrderListDetails.length);
+        for (var i = 0; i < d.OrderListDetails.length; i++) {
+            //var child = '<tr><td>' + d.OrderListDetails[i].ClaimitemID + '</td>' +
+            //    '<td>' + d.OrderListDetails[i].ClaimID + '</td>' +
+            var child = '<tr><td>' + d.OrderListDetails[i].ServiceName + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceQnt + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceUnitAmt + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceAmt + '</td>' +
+                '<td>' + "<input type='number'style='text-align: center;border-radius: 15PX;color: #11bbaa;' id='" + d.OrderListDetails[i].ClaimitemID + "' value='" + d.OrderListDetails[i].ServiceRequestedPrice + "' />" + '</td>' +
+                //'<td>' + d.OrderListDetails[i].ServiceRequestedPrice + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceRequestedAmt + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceDeductPerc + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceDeductAmt + '</td>' +
+                //'<td>' + d.OrderListDetails[i].ServiceDueAmt + '</td>' +
+                //'<td>' + d.OrderListDetails[i].ServiceDifferenceAmt + '</td>' +
+                '<td>' + d.OrderListDetails[i].ServiceNote + '</td>' +
+                '<td>' + "<button type='button' class='btn btn-success' style='text-align:center' onclick='show(this," + d.OrderListDetails[i].ClaimitemID + "," + d.OrderListDetails[i].ClaimID + ");'>Save</button>" + '</td></tr>';
+
+            result += child;
+        }
+        result += '</table>';
+        return result;
+    }
+    $(document).ready(function () {
+        //call the action method and get the data.
+        $.ajax({
+            url: "/ClaimForm/GetChronicOrderList",
+            type: "Get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                //console.log("succsss" + data);
+                //$.get("/Approvals/GetOrderList", {}, function (data) {
+                //alert(data.length);
+                //after getting the data, bind the DataTable.
+                var table = $("#tblApprovals").DataTable({
+                    "data": data,
+                    "ordering": false,
+                    "paging": false,
+                    "scrollCollapse": true,
+                    "deferRender": true,
+                    buttons: [
+                        //'copy', 'csv', 'excel', /*'pdf',*/ 'print'
+                    ],
+                    "bInfo": true,
+                    //"order": [[7, "asc"]], //or asc
+                    "columnDefs": [{ "targets": 4, "type": "date-eu" }],
+                    //serverSide: true,
+                    //ord: true,
+                    //"scrollX": true,
+
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
+                        { "data": "ClaimID" },
+                        { "data": "ClaimFormNum" },
+                        { "data": "CustomerName" },
+                        { "data": "MemberName" },
+                        { "data": "CardNumber" },
+                        //{ "data": "MemberName" },
+                        { "data": "ProcedureDate" },
+                        { "data": "TContractAmt" },
+                        { "data": "TRequestedAmt" },
+                        { "data": "DeductablePerc" },
+                        { "data": "DeductableAmt" },
+                        {   // Checkbox select column
+                            "data": '<input type="checkbox">',
+                            "defaultContent": '',
+                            //"className": 'select-checkbox',
+                        },
+
+
+                    ],
+
+                    dom: 'Bfrtip',
+                    //buttons: [
+                    //    'copy', 'csv', 'excel', 'pdf', 'print'
+                    //],
+                    "order": [[0, 'desc']]
+
+                });
+                var i = 0;
+
+                $("#tblApprovals TBODY TR").each(function () {
+                    var row = $(this);
+                    //alert(row.find("TD").eq(1).html());
+                    //alert(ClaimID);
+                    row.find("TD").eq(11).html('<div class="checkbox-wrapper-19"><input type="checkbox" id="cbtest' + i + '"> <label for="cbtest' + i + '" class="check-box"></div>');
+                    i = i + 1;
+                });
+                //}, //Expand/Collapse the nested objects.
+                $('#tblApprovals tbody').on('click', 'td.details-control', function () {
+                    var table = $("#tblApprovals").DataTable();
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    }
+                    else {
+                        // Open this row
+                        row.child(format(row.data())).show();
+                        tr.addClass('shown');
+                    }
+                });
+
+            },
+            error: function (ex) {
+                console.log(ex);
+            }
+        });
+
+        $("#cbtestt").change(function () {
+            if ($('#cbtestt').is(":checked") != false) {
+                var i = 0;
+                $("#tblApprovals TBODY TR").each(function () {
+                    var row = $(this);
+                    var Claim_Service = {};
+                    var dt = $('#tblApprovals').DataTable();
+                    if (dt != null) {
+                        if (dt.rows().count() > 0) {
+                            var str = row.find("TD").eq(11).html();
+                            try {
+                            //var removeFirst = str.replace('<div class="checkbox-wrapper-19"><input type="checkbox" id="cbtest', '');
+                            //var removeSecond = removeFirst.replace('"> <label for="cbtest0" class="check-box"></label></div>', '');
+                            let substrings = str.split('for="cbtest', 2);
+                            var secondString = substrings[1];
+                            var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
+                            var checkboxIdNumber = parseInt(removeSecond);
+                            //alert(checkboxIdNumber);
+
+                            //if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                            $('#cbtest' + checkboxIdNumber).prop('checked', true);
+                            //$('#cbtest' + i).prop('checked', true);
+                            i = i + 1;
+                            } catch (err) {
+
+                            }
+
+                            //}
+                        }
+                    }
+                });
+                $('#tblApprovals').click();
+
+
+   }
+            else {
+                var i = 0;
+                $("#tblApprovals TBODY TR").each(function () {
+                    var row = $(this);
+                    var Claim_Service = {};
+                    var dt = $('#tblApprovals').DataTable();
+                    if (dt != null) {
+                        if (dt.rows().count() > 0) {
+
+                            var str = row.find("TD").eq(11).html();
+                            try {
+                            //var removeFirst = str.replace('<div class="checkbox-wrapper-19"><input type="checkbox" id="cbtest', '');
+                            //var removeSecond = removeFirst.replace('"> <label for="cbtest0" class="check-box"></label></div>', '');
+                            let substrings = str.split('for="cbtest', 2);
+                            var secondString = substrings[1];
+                            var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
+                            var checkboxIdNumber = parseInt(removeSecond);
+                            //alert(checkboxIdNumber);
+
+                            //if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                            $('#cbtest' + checkboxIdNumber).prop('checked', false);
+                            //if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                            //$('#cbtest' + i).prop('checked', false);
+                            i = i + 1;
+                        }catch (err) {
+
+                        }
+                            //}
+                        }
+                    }
+                });
+
+                $('#tblApprovals').click();
+
+            }
+        });
+        $("#Loadingg").hide();
+
+
+        $("body").on("click", "#tblApprovals", function () {
+            var i = 0;
+            var Totalcount = 0;
+            var TotalDue = 0;
+
+            $("#tblApprovals TBODY TR").each(function () {
+                //alert($(this).find("TD").eq(0).html());
+                var row = $(this);
+
+                if ($(this).find("TD").eq(0).html() == "") {
+                    var str = row.find("TD").eq(11).html();
+                    let substrings = str.split('for="cbtest', 2);
+                    var secondString = substrings[1];
+                    var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
+                    var checkboxIdNumber = parseInt(removeSecond);
+                    //if ($('#cbtest' + i).is(":checked") == true) {
+                    if ($('#cbtest' + checkboxIdNumber).is(":checked") == true) {
+                        var Requestedpayment = $(this).find("TD").eq(10).html();
+                        var lastDue = parseFloat((Requestedpayment).replace(/,/g, ''));
+                        TotalDue = TotalDue + lastDue;
+                        Totalcount = Totalcount + 1;
+                    }
+                    i = i + 1;
+                }
+            });
+
+            $('#Invoices_Count').val(Totalcount);
+            $('#Invoices_RequestedAmt').val(TotalDue.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+
+        })
+         $("body").on("click", "#Send_To_Pay", function () {
+            Swal.fire({
+                title: "Confirm",
+                imageUrl: "/Images/Quationimg.jpg",
+                imageWidth: 550,
+                imageHeight: 225,
+                text: "Are you Sure you want to Accept Chronic Approvals Selected?",
+                showCancelButton: true,
+                confirmButtonText: "Confirm",
+                cancelButtonColor: "#700c0c"
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    $("#Loadingg").show();
+
+                    var Claims_Services = new Array();
+                var i = 0;
+                    var j = 0;
+                    var table = $('#tblApprovals').DataTable();
+                    table.search('').draw();
+                    sleep(1000);
+
+                    table.rows().eq(0).each(function (index) {
+                        var row = table.row(index);
+                        var data = row.data();
+                        var Claim_Service = {};
+                        if (table != null) {
+                            if (table.rows().count() > 0) {
+                            if ($('#cbtest' + index).is(":checked") == true) {
+                                Claim_Service.Claim_Id = table.cell(index, 1).data();
+                                Claim_Service.Deductable_Amt = table.cell(index, 9).data();
+                                Claims_Services.push(Claim_Service);
+                                j = j + 1;
+                            }
+                            i = i + 1;
+                        }
+                    }
+                    });
+                    if (j == 0) {
+                        $("#Loadingg").hide();
+
+                       Swal.fire("Warning !", "Please Select At Least One Invoice To Accept Chronic Approvals. ", "warning");
+
+                   }
+                   else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/AcceptChronicApprovals",
+                        data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            $("#Loadingg").hide();
+
+                            if (r == "0") {
+                                Swal.fire("Warning !", "Please Select At Least One Invoice To Accept Chronic Approvals. ", "warning");
+                            }
+                            else {
+                                Swal.fire("Success", "Invoices are Accepted For Member Chronic. ", "success").then(function () {
+
+                                    for (let i = 0; i < r.length; i++) {
+                                        var ClaimID = r[i].ClaimID;
+                                        window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_blank');
+
+                                        if (i==r.length-1) {
+                                         window.open('@Url.Action("Chronic_Approvals", "ClaimForm")', '_self');
+                                        }
+
+                                    }
+                                    @*if (r.length == 0) {
+                                         window.open('@Url.Action("Chronic_Approvals", "ClaimForm")', '_self');
+                                    }*@
+
+                                   });
+                                 }
+                        }
+                    });
+                }
+
+                    }
+                });
+
+
+        });
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            $.connection.hub.stop();
+
+            // //console.log("tab out")
+            // tab is changed
+        } else {
+            //$.connection.hub.connect();
+            $.connection.hub.start().done(function () {
+                 //console.log("connection started")
+                //notifications.onconn();
+                getData();
+                getData1();
+            }).fail(function (e) {
+                //console.log(e);
+            });
+            //console.log("tab in")
+
+            // tab is active
+        }
+    });
+
+    function sleep(ms) {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+
+
+    }
+    $(function () {
+        // Proxy created on the fly
+        var cus = $.connection.cusHub;
+        //var cus1 = $.connection.cusHub1;
+        //console.log(cus)
+        // Declare a function on the job hub so the server can invoke it
+        cus.client.displayCustomer = function () {
+            // async function a() {
+            getData();
+            //   await sleep(2000);
+            //  getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+        cus.client.data = function () {
+            //async function a() {
+            //    getData();
+            //    await sleep(2000);
+            getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+
+        cus.client.data1 = function () {
+            getData2();
+        };
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+        getData1();
+        getData2();
+        //async function aa() {
+        //    getData();
+        //    await sleep(2000);
+        //    getData1();
+        //}
+        //aa();
+
+
+    });
+
+    function getData1() {
+
+        try {
+            //var $tbl = $('#tblInfo');
+            $.ajax({
+                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data1) {
+
+                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                        if (data == 0) {
+                            $('#MesaageCount').removeAttr("data-count");
+
+                        }
+                        else {
+                            $('#MesaageCount').attr("data-count", data);
+                        }
+                        // console.log(data);
+                    });
+
+
+                    $.each(data1.listCus, function (i, model) {
+
+                    });
+                }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+     function getData() {
+        try {
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                }
+                //alert(provid);
+                //alert(branchid);
+
+                @*alert("@Session["providerid"]");
+                alert(data.ProviderID);*@
+
+                //$tbl.empty();
+                $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#NotifactionCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#NotifactionCount').attr("data-count", data1);
+                    }
+                });
+
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                        $('#trigger').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+
+                        @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                        if (result == true) {
+                                window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        }
+                        else {
+
+                        }
+                            $('#trigger').val("0");*@
+                                    if ("@Session["ClaimForm_Approved"]"!="") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                   if (ClaimForm_Approv == 1) {
+                                       var sound = new Audio('/Media/alert.mp3');
+                                       sound.autoplay = true;
+                                       sound.muted = false;
+                                       sound.play();
+                                       setTimeout(function () {
+                                           snackbar.classList.add('isShown');
+                                           $('#CardNumbersnackbar').text(model.CardNumber)
+                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                           setTimeout(hideSnackbar, 5000);
+                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                                        if (result == true) {
+                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                                       }
+                                       else {
+
+                                       }*@
+                                       $('#trigger').val("0");
+                                       if (data2 == 0) {
+                                           $('#NotifactionCount').removeAttr("data-count");
+
+                                       }
+                                       else {
+                                           $('#NotifactionCount').attr("data-count", data2);
+                                           }
+                                       }, 100);
+                                }
+                                 }
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+    function getData2() {
+        try {
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+                  var ApprovePage1 = 0;
+                  var ApprovePage2 = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                     ApprovePage1 = parseInt("@Session["Approval"]");
+                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                }
+
+                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                    }
+                });
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
+                        $('#trigger1').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+
+                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data) {
+
+                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+
+                            //if (result == true) {
+                            var sound = new Audio('/Media/alert.mp3');
+                            sound.play();
+                            setTimeout(function () {
+                                snackbarMember.classList.add('isShown');
+                                $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                setTimeout(hideSnackbard1, 5000);
+                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
+                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        //}
+                        //else {
+
+                        //}
+                            $('#trigger1').val("0");
+                            if (data == 0) {
+                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                            }
+                            else {
+                                $('#MemberSmartCardRequestsCount').attr("data-count", data);
+                                }
+                            }, 100);
+
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+</script>
+
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+
+
+
+<style>
+    .checkbox-wrapper-19 {
+        box-sizing: border-box;
+        --background-color: #fff;
+        --checkbox-height: 25px;
+    }
+
+    @@-moz-keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@-webkit-keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    @@-webkit-keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    @@-moz-keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    .checkbox-wrapper-19 input[type=checkbox] {
+        display: none;
+    }
+
+    .checkbox-wrapper-19 .check-box {
+        height: var(--checkbox-height);
+        width: var(--checkbox-height);
+        background-color: transparent;
+        border: calc(var(--checkbox-height) * .1) solid #000;
+        border-radius: 5px;
+        position: relative;
+        display: inline-block;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-transition: border-color ease 0.2s;
+        -o-transition: border-color ease 0.2s;
+        -webkit-transition: border-color ease 0.2s;
+        transition: border-color ease 0.2s;
+        cursor: pointer;
+    }
+
+        .checkbox-wrapper-19 .check-box::before,
+        .checkbox-wrapper-19 .check-box::after {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: absolute;
+            height: 0;
+            width: calc(var(--checkbox-height) * .2);
+            background-color: #34b93d;
+            display: inline-block;
+            -moz-transform-origin: left top;
+            -ms-transform-origin: left top;
+            -o-transform-origin: left top;
+            -webkit-transform-origin: left top;
+            transform-origin: left top;
+            border-radius: 5px;
+            content: " ";
+            -webkit-transition: opacity ease 0.5;
+            -moz-transition: opacity ease 0.5;
+            transition: opacity ease 0.5;
+        }
+
+        .checkbox-wrapper-19 .check-box::before {
+            top: calc(var(--checkbox-height) * .72);
+            left: calc(var(--checkbox-height) * .41);
+            box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
+            -moz-transform: rotate(-135deg);
+            -ms-transform: rotate(-135deg);
+            -o-transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg);
+        }
+
+        .checkbox-wrapper-19 .check-box::after {
+            top: calc(var(--checkbox-height) * .37);
+            left: calc(var(--checkbox-height) * .05);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box,
+        .checkbox-wrapper-19 .check-box.checked {
+            border-color: #34b93d;
+        }
+
+            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after,
+            .checkbox-wrapper-19 .check-box.checked::after {
+                height: calc(var(--checkbox-height) / 2);
+                -moz-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                -o-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                -webkit-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                animation: dothabottomcheck-19 0.2s ease 0s forwards;
+            }
+
+            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before,
+            .checkbox-wrapper-19 .check-box.checked::before {
+                height: calc(var(--checkbox-height) * 1.2);
+                -moz-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                -o-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                -webkit-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                animation: dothatopcheck-19 0.4s ease 0s forwards;
+            }
+</style>

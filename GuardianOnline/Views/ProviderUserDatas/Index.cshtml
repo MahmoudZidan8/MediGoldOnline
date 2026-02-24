@@ -1,0 +1,784 @@
+﻿@model IEnumerable<GuardianOnline.Infrastructure.ProviderUserData>
+@{
+    ViewBag.Title = "Index";
+}
+@*@Scripts.Render("~/bundles/jquery")*@
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
+@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
+
+<input type="hidden" id="trigger" value="0" />
+<input type="hidden" id="triggercount" value="0" />
+
+<input type="hidden" id="trigger1" value="0" />
+<input type="hidden" id="triggercount1" value="0" />
+<style>
+
+    #link {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    /*#link1 {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link1:hover {
+            background-color: #ddd;
+            color: black;
+        }*/
+    /*.previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+        .previous:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .next {
+        background-color: #04AA6D;
+        color: white;
+    }*/
+
+    .round {
+        background-color: teal;
+        color: white;
+        border-radius: 50%;
+    }
+</style>
+<style>
+    #User_list {
+        max-width: 450px;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+    }
+
+    body {
+        /*font-family: Arial;*/
+        font-size: 18pt;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            font-size: 22pt;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-size: 14pt;
+            /*font-weight: bold;*/
+        }
+
+        table, table table td {
+            /*border: 0px solid #ccc;*/
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-size: 14pt;
+            /*font-weight: bold;*/
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<h2 style="color:teal;text-align:center">Users</h2>
+
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">Users Data</legend>
+
+    <p>
+        @*@Html.ActionLink("Create New", "Create",null,new {@class="btn btn-primary " })*@
+        <a href="@Url.Action("create","ProviderUserDatas")" class="btn btn-primary btn-lg">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add User
+        </a>
+    </p>
+    <div class="container" style="text-align:center;background:#e2dede;width:1080px;height:70px">
+        <br />
+        <p>
+            @*@Html.Label("Users list")*@
+            <label @*for="User_list"*@ style="color:black;width:150px;font-size:18px">Users list</label> &nbsp;
+            @Html.DropDownList("Citydropdown1", new SelectList(ViewBag.li), "----Select User Name----", htmlAttributes: new { @class = "form-control", @id = "User_list", @Name = "User_list" })
+        </p>
+
+    </div>
+
+    <br />
+    <br />
+
+
+    <table class="table" id="tblusers" cellpadding="0" cellspacing="0">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserPassword)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IPAddress)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.LastLoginDate)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLockedOut)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IsFirstLogin)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.InvalidPasswordAttempts)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IsAdmin)
+                </th>*@
+            <th></th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserPassword)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IPAddress)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.LastLoginDate)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsLockedOut)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IsFirstLogin)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.InvalidPasswordAttempts)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsAdmin)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+    <div>
+        <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home List@*</u>*@</a>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tblusers").hide();
+
+        $("#User_list").select2();
+
+        $("#User_list").change(function () {
+
+            $.get("/UserDatas/Select_User", { id: $('#User_list').val() }, function (data) {
+                $("#tblusers").hide();
+                if (data != "") {
+                    $("#tblusers").show();
+                    $("#tblusers").find("tr:not(:first)").remove();
+                    var tBody = $("#tblusers > TBODY")[0];
+
+                    for (var i = 0; i < data.length; i++) {
+                        //var rowCount = tblusers.rows.length;
+                        //for (var j = rowCount - 1; j > 0; j--) {
+                        //    tblusers.deleteRow(j);
+                        //}
+
+                        //Add Row.
+                        var row = tBody.insertRow(-1);
+
+                        //Add Name cell.
+                        var cell = $(row.insertCell(-1));
+                        cell.html(data[i].UserName);
+
+                        cell = $(row.insertCell(-1));
+                        cell.html(data[i].UserEmail);
+
+                        cell = $(row.insertCell(-1));
+                        cell.html(data[i].UserPassword);
+
+                        var StartDate = moment(data[i].CreateDate);
+
+                        //Add Name cell.
+                        cell = $(row.insertCell(-1));
+                        cell.html(StartDate.format("DD-MM-YYYY"));
+
+                        cell = $(row.insertCell(-1));
+                        cell.html(data[i].FirstName);
+
+                        cell = $(row.insertCell(-1));
+                        cell.html(data[i].LastName);
+
+                        cell = $(row.insertCell(-1));
+                        var checkbox1 = $("<input />");
+                        checkbox1.attr("type", "checkbox");
+                        checkbox1.attr("id", "IsACTIVE1");
+
+                        checkbox1.attr("Active");
+                        checkbox1.val("Active");
+                        cell.append(checkbox1);
+
+                        if (data[i].IsLockedOut != false) {
+
+                            $("#IsACTIVE1").prop('checked', true);
+
+                        }
+                        else {
+                            $('#IsACTIVE1').prop('checked', false);
+                        }
+
+                        //cell = $(row.insertCell(-1));
+                        //var checkbox11 = $("<input />");
+                        //checkbox11.attr("type", "checkbox");
+                        //checkbox11.attr("id", "IsACTIVE11");
+
+                        //checkbox11.attr("Active");
+                        //checkbox11.val("Active");
+                        //cell.append(checkbox11);
+
+                        //if (data[i].IsAdmin != false) {
+
+                        //    $("#IsACTIVE11").prop('checked', true);
+
+                        //}
+                        //else {
+                        //    $('#IsACTIVE11').prop('checked', false);
+                        //}
+
+                        cell = $(row.insertCell(-1));
+                        var btnEdit = $("<input />");
+                        btnEdit.attr("type", "button");
+                        btnEdit.attr("id", "1");
+                        btnEdit.attr("class", "btn btn-success");
+                        btnEdit.attr("onclick", "location.href='../ProviderUserDatas/edit/" + data[i].UserID + "'");
+                        btnEdit.attr("Edit");
+                        btnEdit.val("Edit");
+                        cell.append(btnEdit);
+
+                        //var btnRemove = $("<input />");
+                        //btnRemove.attr("type", "button");
+                        //btnRemove.attr("id", "1");
+                        //btnRemove.attr("class", "btn btn-danger");
+                        //btnRemove.attr("onclick", "location.href='../UserDatas/Delete/" + data[i].UserID + "'");
+                        //btnRemove.attr(" | Delete");
+                        //btnRemove.val(" | Delete");
+                        //cell.append(btnRemove);
+
+                    }
+                }
+
+            })
+
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+</script>
+
+
+<script type="text/javascript">
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            //$.connection.hub.disconnect();
+            // $.connection.hub.disconnected(function () {
+            //});
+            $.connection.hub.stop();
+
+             //console.log("tab out")
+            // tab is changed
+        } else {
+            //$.connection.hub.connect();
+            $.connection.hub.start().done(function () {
+                 //console.log("connection started")
+                //notifications.onconn();
+                getData();
+                getData1();
+            }).fail(function (e) {
+                //console.log(e);
+            });
+            //console.log("tab in")
+
+            // tab is active
+        }
+    });
+
+    function sleep(ms) {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+
+
+    }
+    $(function () {
+
+        // Proxy created on the fly
+        var cus = $.connection.cusHub;
+        //var cus1 = $.connection.cusHub1;
+        //console.log(cus)
+        // Declare a function on the job hub so the server can invoke it
+        cus.client.displayCustomer = function () {
+            // async function a() {
+            getData();
+            //   await sleep(2000);
+            //  getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+        cus.client.data = function () {
+            //async function a() {
+            //    getData();
+            //    await sleep(2000);
+            getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+        // Start the connection
+
+        cus.client.data1 = function () {
+            getData2();
+        };
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+        getData1();
+        getData2();
+        //async function aa() {
+        //    getData();
+        //    await sleep(2000);
+        //    getData1();
+        //}
+        //aa();
+
+    });
+
+    function getData1() {
+        try {
+
+        //var $tbl = $('#tblInfo');
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data1) {
+
+                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                    if (data == 0) {
+                        $('#MesaageCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MesaageCount').attr("data-count", data);
+                    }
+                    // console.log(data);
+                });
+
+
+                $.each(data1.listCus, function (i, model) {
+
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+    function getData() {
+        try {
+
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                }
+                //alert(provid);
+                //alert(branchid);
+
+                @*alert("@Session["providerid"]");
+                alert(data.ProviderID);*@
+
+                //$tbl.empty();
+                $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#NotifactionCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#NotifactionCount').attr("data-count", data1);
+                    }
+                });
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                        $('#trigger').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+
+                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+
+                            @*//if (result == true) {
+                            alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
+                                //window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        //}
+                        //else {
+
+                        //}
+                            $('#trigger').val("0");*@
+                                    if ("@Session["ClaimForm_Approved"]"!="") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                   if (ClaimForm_Approv == 1) {
+                                       var sound = new Audio('/Media/alert.mp3');
+                                       sound.autoplay = true;
+                                       sound.muted = false;
+                                       sound.play();
+                                       setTimeout(function () {
+                                           snackbar.classList.add('isShown');
+                                           $('#CardNumbersnackbar').text(model.CardNumber)
+                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                           setTimeout(hideSnackbar, 5000);
+                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                                        if (result == true) {
+                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                                       }
+                                       else {
+
+                                       }*@
+                                       $('#trigger').val("0");
+                                           if (data2 == 0) {
+                                           $('#NotifactionCount').removeAttr("data-count");
+
+                                       }
+                                       else {
+                                               $('#NotifactionCount').attr("data-count", data2);
+                                           }
+                                       }, 100);
+
+                                }
+                                 }
+
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+    function getData2() {
+        try {
+
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+                  var ApprovePage1 = 0;
+                  var ApprovePage2 = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                     ApprovePage1 = parseInt("@Session["Approval"]");
+                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                }
+
+                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                    }
+                });
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
+                        $('#trigger1').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                       
+                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+
+                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+
+                            //if (result == true) {
+                            var sound = new Audio('/Media/alert.mp3');
+                            sound.play();
+                            setTimeout(function () {
+                                snackbarMember.classList.add('isShown');
+                                $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                setTimeout(hideSnackbard1, 5000);
+                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
+                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        //}
+                        //else {
+
+                        //}
+                            $('#trigger1').val("0");
+                                if (data2 == 0) {
+                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                            }
+                            else {
+                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                }
+                            }, 100);
+
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+</script>
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+
+
+@*<script type="text/javascript">
+        $(function () {
+
+            // Proxy created on the fly
+            var cus = $.connection.cusHub;
+
+            // Declare a function on the job hub so the server can invoke it
+            cus.client.displayCustomer = function () {
+                getData1();
+            };
+
+            // Start the connection
+            $.connection.hub.start();
+            getData1();
+        });
+
+        function getData1() {
+            //var $tbl = $('#tblInfo');
+            $.ajax({
+                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                        if (data == 0) {
+                            $('#MesaageCount').removeAttr("data-count");
+
+                        }
+                        else {
+                            $('#MesaageCount').attr("data-count", data);
+                        }
+                        // console.log(data);
+                    });
+
+
+                    $.each(data.listCus, function (i, model) {
+
+                    });
+                }
+            });
+        }
+
+    </script>*@

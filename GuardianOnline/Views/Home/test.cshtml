@@ -1,0 +1,3283 @@
+﻿
+@{
+    ViewBag.Title = "test";
+}
+
+
+
+
+
+<style>
+    #Member_name_DC, #Card_number_DC, #Diagnosis_DC, #ICD_Number_DC {
+        -webkit-box-shadow: 0;
+        max-width: 450px;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 300PX;
+        box-shadow: 10PX;
+        border-radius: 15PX;
+        color: black;
+        font-size: 17PX;
+        padding-left: 10PX;
+    }
+
+    #selectServicelist_DC, #selectlabslist_DC, #selectscanlist_DC, #selectopticalcenterlist_DC, #selectphysiothrapylist_DC, #selectServicelistDoc_DC, #Service_Note_DC, #Service_Note1_DC, #Service_Note2_DC, #Service_Note3_DC, #Service_Note4_DC {
+        -webkit-box-shadow: 0;
+        max-width: 450px;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 420PX;
+        box-shadow: 10PX;
+        /*border:0;*/
+        border-radius: 50PX;
+        /*text-align:center;*/
+        color: black;
+        font-size: 17PX;
+        padding-left: 10PX;
+    }
+
+    #imgfilelabel_DC {
+        font-size: 18px;
+        color: #000;
+    }
+
+   
+
+    #Service_Note_DC {
+        max-width: 550px;
+    }
+
+    #Member_name_DC, #Card_number_DC, #ICD_Number_DC, #Member_name_DC {
+        font-size: 15px;
+    }
+
+  
+</style>
+<input type="hidden" id="prov_cat_idd_DC" />
+<input type="hidden" id="Provider_id_DC" />
+<input type="hidden" id="edited_row_idDoc_DC" />
+<input type="hidden" id="edited_row_id_DC" />
+<input type="hidden" id="edited_row_id1_DC" />
+<input type="hidden" id="edited_row_id2_DC" />
+<input type="hidden" id="edited_row_id3_DC" />
+<input type="hidden" id="edited_row_id4_DC" />
+
+<input type="hidden" id="CustomerPremium_Amt_DC" value="" />
+<input type="hidden" id="Customer_TotalDueAmt_DC" value="" />
+<input type="hidden" id="AnnualCeilinggg_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_DC" value="" />
+<input type="hidden" id="Ceiling_Amt_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service_DC" value="" />
+<input type="hidden" id="Ceiling_Amt1_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service1_DC" value="" />
+<input type="hidden" id="Ceiling_Amt2_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service2_DC" value="" />
+<input type="hidden" id="Ceiling_Amt3_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service3_DC" value="" />
+<input type="hidden" id="Ceiling_Amt4_DC" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service4_DC" value="" />
+
+<input type="hidden" id="EditDueAmt_Service_DC" value="" />
+
+<input type="hidden" id="CheckCardNum_DC" value="1" />
+<input type="hidden" id="contractNum_DC" value="" />
+
+<input type="hidden" id="Contract_TypeID_DC" value="" />
+<input type="hidden" id="Is_OverCeiling_DC" value="" />
+
+
+<br />
+<p>
+    
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <a id="Medical_History_DC" class="btn btn-warning">
+        <span class="glyphicon glyphicon-book"></span>
+        Medical History
+    </a>
+</p>
+<fieldset class="scheduler-border">
+    <h2 style="color:teal;text-align:center">ADD ClaimForm</h2>
+
+    <legend class="scheduler-border" style="color:teal">ClaimForm Data Content</legend>
+
+    <table class="table147" cellpadding="0" cellspacing="0">
+        <tr>
+          
+            <td style="width: 150px;font-size:15px">
+                @Html.Label("Member Name")
+            </td>
+            <td style="width: 350px">
+                <input list="Members_List_DC" type="text" id="Member_name_DC" name="Member_name_DC" size="400" class="deletable" style="max-width:400px">
+                <datalist id="Members_List_DC"></datalist>
+            </td>
+
+            <td style="width: 150px;font-size:15px">
+                @Html.Label("Card Number")
+            </td>
+            <td style="width: 350px">
+                @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @size = 400, @id = "Card_number_DC", @Name = "Card_number_DC" } })
+            </td>
+
+           
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+   
+    <br />
+    <table class="table789" id="Member_Info_Table_DC" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Member Name</th>
+                <th>Customer Name</th>
+                <th>Card Number</th>
+                <th>Contract Number</th>
+                <th>Plan</th>
+                <th>Active Date</th>
+                <th>Activity Status</th>
+                <th>Deactive Date</th>
+                <th>Contract Start Date</th>
+                <th>Contract End Date</th>
+                <th>Sex Type</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+
+
+    </table>
+
+
+    <br />
+    <table class="table369">
+
+        <tr>
+
+            <td style="width: 170px;font-size:15px">
+                @Html.Label("Diagnosis")
+            </td>
+            <td style="width: 250px;font-size:15px">
+                <input list="Diagnosis_List_DC" type="text" id="Diagnosis_DC" name="Diagnosis_DC" size="400" class="deletable" style="max-width:400px">
+                <datalist id="Diagnosis_List_DC"></datalist>
+
+            </td>
+            <td style="width: 170px;font-size:15px">
+
+                @Html.Label("ICD Number")
+            </td>
+            <td style="width: 250px;font-size:15px">
+
+                @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control deletable", @size = 400, @id = "ICD_Number_DC", @Name = "ICD_Number_DC" } })
+
+            </td>
+
+
+        </tr>
+        <tr></tr>
+
+
+    </table>
+    <br />
+   
+</fieldset>
+
+<fieldset class="scheduler-border" id="Provider_services_DC">
+    <legend class="scheduler-border" style="color:teal">Doctor Services</legend>
+    <div id="claim_services1_DC">
+      
+        <input type="submit" value="Add New Service" data-bs-toggle="modal" data-bs-target="#myModaldoc_DC" id="Add_New_Claim_ServiceDoc_DC" class="btn btn-primary btn-lg" />
+        <br />
+        <table class="table7899" id="Claim_ServicesDoc_DC" cellpadding="0" cellspacing="0">
+            <thead style="text-align:center">
+                <tr>
+                    <th style="text-align:center">Serial</th>
+                    <th style="text-align:center">Service Name</th>
+                    <th style="text-align:center">Service Price</th>
+                    <th style="text-align:center">Service Qnt</th>
+                    <th style="text-align:center">Requested Price</th>
+                    <th style="text-align:center"></th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+                @{var claimitemselect = ViewBag.providerServices;
+                    var ii = 0; }
+                @*var counts = claimitemselect.Count; }
+                    @for (var i = 0; i < counts; i++)*@
+                @if (claimitemselect != null)
+                {
+
+                    ii = ii + 1;
+
+                    <tr>
+                        <td>@ii</td>
+                        <td>@claimitemselect.GetType().GetProperty("ServiceName").GetValue(claimitemselect)</td>
+                        <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
+                        <td>1.00</td>
+                        <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
+                        <td>
+                            <input type="button" onclick="editedDoc_DC(this)" data-bs-toggle="modal" data-bs-target="#myModaldoc_DC" value="Edit" class="btn btn-success" />
+                        </td>
+                        <td>
+                            <input type="button" onclick="RemovedDoc_DC(this)" value="Remove" class="btn btn-danger" />
+                        </td>
+                    </tr>
+
+
+
+                }
+            </tbody>
+        </table>
+
+        <br />
+        <div class="modal" id="myModaldoc_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">Claim Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div id="Add_Claim_ServiceeeDoc_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdocdiv_DC">
+                                            <input list="Service_Listdoc_DC" type="text" id="selectServicelistDoc_DC" size="400" name="selectServicelistDoc_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="Service_Listdoc_DC"></datalist>
+
+                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
+                                        </div>
+
+                                    </td>
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Price")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice_DC", @Name = "SystemPrice_DC",
+                                       @Value = "1.00" , @readonly = "readonly"}
+                                })
+
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Requested Price")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price_DC", @Name = "Requested_Price_DC",
+                                       @Value = "1.00" @*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntityDoc_DC", @Name = "quntityDoc_DC",
+                                       @Value = "1.00" @*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <div></div>
+                            <div></div>
+
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_ServiceDoc_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceEDoc_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_ServiceDoc_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceEDoc_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="form-group">
+        @Html.Label("ClaimForm Image", htmlAttributes: new { @class = "control-label col-md-2", @id = "imgfilelabel_DC" })
+        <div class="col-md-10">
+            <input type="file" id="imgfile_DC" name="imgfile_DC" class="form-control icon-file_upload" required />
+        </div>
+    </div>
+    <br />
+    <br />
+
+</fieldset>
+
+
+<br />
+
+<fieldset class="scheduler-border" id="provider_role_DC">
+    <legend class="scheduler-border" style="color:teal">Provider apperance</legend>
+    <br />
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+    </div>
+    <div class="form-check form-check-inline">
+
+        <label>Select All </label>
+        @*<input type="checkbox" id="select_all_DC" name="select_all_DC" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="select_all_DC" name="select_all_DC" /><label style="background-color:white" for="select_all_DC" class="check-box"></label></div>
+
+    </div>
+
+    @*<br />*@
+
+
+    <div class="form-check form-check-inline">
+
+        <label style="font-size:20px">pharmacy</label>
+        @*<input type="checkbox" id="pharmacy" name="pharmacy" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="pharmacy_DC" name="pharmacy_DC" /><label style="background-color:white" for="pharmacy_DC" class="check-box"></label></div>
+
+    </div>
+    <div class="form-check form-check-inline">
+
+        <label style="font-size:20px">labs</label>
+        @*<input type="checkbox" id="labs" name="labs" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="labs_DC" name="labs_DC" /><label style="background-color:white" for="labs_DC" class="check-box"></label></div>
+
+    </div>
+    <div class="form-check form-check-inline">
+
+        <label style="font-size:20px">scan</label>
+        @*<input type="checkbox" id="scan" name="scan" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="scan_DC" name="scan_DC" /><label style="background-color:white" for="scan_DC" class="check-box"></label></div>
+
+    </div>
+
+    <div class="form-check form-check-inline">
+
+        <label style="font-size:20px">optical center</label>
+        @*<input type="checkbox" id="opticalcenter" name="opticalcenter" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="opticalcenter_DC" name="opticalcenter_DC" /><label style="background-color:white" for="opticalcenter_DC" class="check-box"></label></div>
+
+    </div>
+    <div class="form-check form-check-inline">
+
+        <label style="font-size:20px">physiothrapy</label>
+        @*<input type="checkbox" id="physiothrapy" name="physiothrapy" />*@
+        <div class="checkbox-wrapper-19"><input type="checkbox" id="physiothrapy_DC" name="physiothrapy_DC" /><label style="background-color:white" for="physiothrapy_DC" class="check-box"></label></div>
+
+    </div>
+
+</fieldset>
+<br />
+<fieldset class="scheduler-border" id="pharmacy_role_DC">
+    <legend class="scheduler-border" style="color:teal">pharmacy</legend>
+
+    <div id="claim_services1_DC">
+
+        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal_DC" id="Add_New_Claim_Service_DC" class="btn btn-primary btn-lg" />
+
+        <br />
+        <br />
+        <table class="table7899" id="Claim_Services_DC" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Service Name</th>
+                    <th>Service Qnt</th>
+                    <th>Service Note</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        <br />
+        <div class="modal" id="myModal_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">pharmacy Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Add_Claim_Serviceee_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+                                    <td style="width: 100px;font-size:13px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv_DC">
+                                            <input list="drugs_List_DC" type="text" id="selectServicelist_DC" size="400" name="ServicelIST_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="drugs_List_DC"></datalist>
+
+                                        </div>
+
+                                    </td>
+
+
+
+                                </tr>
+                            </table>
+                            <table id="table2_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+
+                                <tr>
+
+                                    <td style="width: 100px;color:red;font-size:13px ">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity_DC", @Name = "quntity_DC",
+                                       @Value = "1.00"@*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 150px;color:red;font-size:13px">
+                                        @Html.Label("Service Note")
+                                    </td>
+                                    <td style="width: 400px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
+                                       @size = 50, @id = "Service_Note_DC", @Name = "Service_Note_DC"@*, @readonly = "readonly"*@}
+                            })
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <br />
+
+                            <br />
+                            <div></div>
+                            <div></div>
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE_DC" class="btn btn-success btn-lg" />
+
+                            </div>
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+
+
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <br />
+        @*<div></div>
+            <div></div>
+            <div style="font-size: 15px;text-align:center" id="diagnosis">
+                <input type="submit" value="ADD Claim" id="Doctor_Add_claim_DC" class="btn btn-primary" style="width:150px;height:50px" />
+
+            </div>*@
+
+    </div>
+</fieldset>
+<br />
+
+<fieldset class="scheduler-border" id="labs_role_DC">
+    <legend class="scheduler-border" style="color:teal">labs</legend>
+
+    <div id="claim_services2_DC">
+        @*<div style="font-size: 30px" id="diagnosis">
+
+                <span class="label-as-badge label label-success">Approval Services</span>
+            </div>*@
+        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal1_DC" id="Add_New_Claim_Service1_DC" class="btn btn-primary btn-lg" />
+
+        <br />
+        <br />
+        <table class="table7899" id="Claim_Services1_DC" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Service Name</th>
+                    <th>Service Qnt</th>
+                    <th>Service Note</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        <br />
+        <div class="modal" id="myModal1_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">lab Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Add_Claim_Serviceee1_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+                                    <td style="width: 100px;font-size:13px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv_DC">
+                                            <input list="labs_List_DC" type="text" id="selectlabslist_DC" size="400" name="selectlabslist_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="labs_List_DC"></datalist>
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                            <table id="table2_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+
+                                <tr>
+
+                                    <td style="width: 100px;color:red;font-size:13px ">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity1_DC", @Name = "quntity1_DC",
+                                       @Value = "1.00"@*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 150px;color:red;font-size:13px">
+                                        @Html.Label("Service Note")
+                                    </td>
+                                    <td style="width: 400px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
+                                       @size = 50, @id = "Service_Note1_DC", @Name = "Service_Note1_DC"@*, @readonly = "readonly"*@}
+                            })
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <br />
+
+                            <br />
+                            <div></div>
+                            <div></div>
+                           
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service1_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE1_DC" class="btn btn-success btn-lg" />
+
+                            </div>
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service1_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE1_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+
+                          
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+<br />
+
+<fieldset class="scheduler-border" id="scan_role_DC">
+    <legend class="scheduler-border" style="color:teal">scan</legend>
+
+
+    <div id="claim_services3_DC">
+      
+        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal3_DC" id="Add_New_Claim_Service3_DC" class="btn btn-primary btn-lg" />
+
+        <br />
+        <br />
+        <table class="table7899" id="Claim_Services3_DC" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Service Name</th>
+                    <th>Service Qnt</th>
+                    <th>Service Note</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        <br />
+        <div class="modal" id="myModal3_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">Scan Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Add_Claim_Serviceee2_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+
+                                    <td style="width: 100px;font-size:13px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv_DC">
+                                            <input list="scan_List_DC" type="text" id="selectscanlist_DC" size="400" name="selectscanlist_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="scan_List_DC"></datalist>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <table id="table2_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+
+                                <tr>
+
+                                    <td style="width: 100px;color:red;font-size:13px ">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity2_DC", @Name = "quntity2_DC",
+                                       @Value = "1.00"@*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 150px;color:red;font-size:13px">
+                                        @Html.Label("Service Note")
+                                    </td>
+                                    <td style="width: 400px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
+                                       @size = 50, @id = "Service_Note2_DC", @Name = "Service_Note2_DC"@*, @readonly = "readonly"*@}
+                            })
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <br />
+
+                            <br />
+                            <div></div>
+                            <div></div>
+                           
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service2_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE2_DC" class="btn btn-success btn-lg" />
+
+                            </div>
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service2_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE2_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</fieldset>
+<br />
+
+<fieldset class="scheduler-border" id="opticalcenter_role_DC">
+    <legend class="scheduler-border" style="color:teal">optical center</legend>
+
+
+    <div id="claim_services4_DC">
+    
+        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal4_DC" id="Add_New_Claim_Service4_DC" class="btn btn-primary btn-lg" />
+
+        <br />
+        <br />
+        <table class="table7899" id="Claim_Services4_DC" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Service Name</th>
+                    <th>Service Qnt</th>
+                    <th>Service Note</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        <br />
+        <div class="modal" id="myModal4_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">optical Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Add_Claim_Serviceee3_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+
+                                    <td style="width: 100px;font-size:13px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv_DC">
+                                            <input list="opticalcenter_List_DC" type="text" id="selectopticalcenterlist_DC" size="400" name="selectopticalcenterlist_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="opticalcenter_List_DC"></datalist>
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                            <table id="table2_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+
+                                <tr>
+
+                                    <td style="width: 100px;color:red;font-size:13px ">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity3_DC", @Name = "quntity3_DC",
+                                       @Value = "1.00"@*,@Value = "1.00", @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 150px;color:red;font-size:13px">
+                                        @Html.Label("Service Note")
+                                    </td>
+                                    <td style="width: 400px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
+                                       @size = 50, @id = "Service_Note3_DC", @Name = "Service_Note3_DC"@*, @readonly = "readonly"*@}
+                            })
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <br />
+
+                            <br />
+                            <div></div>
+                            <div></div>
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service3_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE3_DC" class="btn btn-success btn-lg" />
+
+                            </div>
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service3_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE3_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+
+                            
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</fieldset>
+
+<br />
+
+<fieldset class="scheduler-border" id="physiothrapy_role_DC">
+    <legend class="scheduler-border" style="color:teal">physiothrapy</legend>
+
+
+    <div id="claim_services5_DC">
+       
+        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal5_DC" id="Add_New_Claim_Service5_DC" class="btn btn-primary btn-lg" />
+
+        <br />
+        <br />
+        <table class="table7899" id="Claim_Services5_DC" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Service Name</th>
+                    <th>Service Qnt</th>
+                    <th>Service Note</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        <br />
+        <div class="modal" id="myModal5_DC">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">physiothrapy Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Add_Claim_Serviceee4_DC">
+                            <table id="table1_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+
+                                    <td style="width: 100px;font-size:13px">
+                                        @Html.Label("Service list")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv_DC">
+                                            <input list="physiothrapy_List_DC" type="text" id="selectphysiothrapylist_DC" size="400" name="selectphysiothrapylist_DC" class="deletable" style="max-width:400px">
+                                            <datalist id="physiothrapy_List_DC"></datalist>
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                            <table id="table2_DC" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+
+                                <tr>
+
+                                    <td style="width: 100px;color:red;font-size:13px ">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity4_DC", @Name = "quntity4_DC",
+                                       @Value = "1.00"@*, @readonly = "readonly"*@}
+                            })
+
+                                    </td>
+
+                                    <td style="width: 150px;color:red;font-size:13px">
+                                        @Html.Label("Service Note")
+                                    </td>
+                                    <td style="width: 400px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
+                                       @size = 50, @id = "Service_Note4_DC", @Name = "Service_Note4_DC"@*, @readonly = "readonly"*@}
+                            })
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <br />
+
+                            <br />
+                            <div></div>
+                            <div></div>
+                           
+                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service4_DC">
+                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE4_DC" class="btn btn-success btn-lg" />
+
+                            </div>
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service4_DC">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE4_DC" class="btn btn-primary btn-lg" />
+
+                            </div>
+
+                           
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</fieldset>
+<div></div>
+<div style="font-size: 15px;text-align:center" id="Doctor_Add_claimdiv_DC">
+    <input type="submit" value="Request ClaimForm" id="Doctor_Add_claim_DC" class="btn btn-primary" style="width:150px;height:50px" />
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#New_Claim_ServiceDoc_DC").hide();
+        $("#edit_Claim_ServiceDoc_DC").hide();
+        $("#New_Claim_Service_DC").hide();
+        $("#edit_Claim_Service_DC").hide();
+        $("#New_Claim_Service1_DC").hide();
+        $("#edit_Claim_Service1_DC").hide();
+        $("#New_Claim_Service2_DC").hide();
+        $("#edit_Claim_Service2_DC").hide();
+        $("#New_Claim_Service3_DC").hide();
+        $("#edit_Claim_Service3_DC").hide();
+        $("#New_Claim_Service4_DC").hide();
+        $("#edit_Claim_Service4_DC").hide();
+
+        $("#Member_Info_Table_DC").hide();
+        $("#Add_Claim_Serviceee_DC").hide();
+        $("#Add_Claim_Serviceee1_DC").hide();
+        $("#Add_Claim_Serviceee2_DC").hide();
+        $("#Add_Claim_Serviceee3_DC").hide();
+        $("#Add_Claim_Serviceee4_DC").hide();
+
+
+
+
+        $('#Claim_ServicesDoc_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            // orderCellsTop: true,
+            //fixedHeader: true,
+
+        });
+
+        $('#Claim_Services_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            // orderCellsTop: true,
+            //fixedHeader: true,
+
+        });
+
+        $('#Claim_Services1_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            // orderCellsTop: true,
+            //fixedHeader: true,
+
+        });
+
+        $('#Claim_Services3_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            //fixedHeader: true,
+        });
+
+        $('#Claim_Services4_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            // orderCellsTop: true,
+            //fixedHeader: true,
+
+        });
+
+        $('#Claim_Services5_DC').DataTable({
+            paging: false,
+            //scrollX: true,
+            // orderCellsTop: true,
+            //fixedHeader: true,
+
+        });
+       
+        $("#Card_number_DC").change(function () {
+
+            $.get("/ClaimForm/Get_Member_info", { id: $('#Card_number_DC').val() }, function (data) {
+
+                if (data.length != 0) {
+                    $("#Information").show();
+                    $("#Member_Info_Table_DC").show();
+
+
+                    $('#Member_name_DC').val(data[0]);
+                    $('#contractNum_DC').val(data[3]);
+
+                    $("#Member_Info_Table_DC").find("tr:not(:first)").remove();
+                    //$("#Member_Info_Table_DC").empty();
+
+                    var tBody = $("#Member_Info_Table_DC > TBODY")[0];
+
+                    //Add Row.
+                    var row = tBody.insertRow(-1);
+                    var cell = $(row.insertCell(-1));
+                    cell.html(data[0]);
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[1]);
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[2]);
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[3]);
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[4]);
+                    //cell.css('color', 'red');
+                    var ActiveDate = moment(data[5]);
+                    cell = $(row.insertCell(-1));
+                    cell.html(ActiveDate.format("DD-MM-YYYY"));
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+
+                    if (data[18] == "1") {
+                        cell.html("Stopped");
+                        cell.css('color', 'red');
+
+                    }
+                    else {
+                        if (data[6] == "Stopped") {
+                            cell.html("Stopped");
+                            cell.css('color', 'red');
+                        }
+                        else {
+                            cell.html(data[6]);
+                            cell.css('color', 'Green');
+                        }
+                    }
+                    //cell.css('color', 'red');
+
+                    var DeActive_Date = moment(data[7]);
+                    var Cancel_Date = moment(data[21]);
+
+                    cell = $(row.insertCell(-1));
+                    //alert(data[0][i].DeActiveDate);
+                    //alert(DeActive_Date.format("DD-MM-YYYY"));
+                    var aaaa = DeActive_Date.format("DD-MM-YYYY");;
+                    var bbbb = Cancel_Date.format("DD-MM-YYYY");;
+
+                    if ((data[7] != null && aaaa != "01-01-0001") || (data[21] != null && bbbb != "01-01-0001") || (data[22] == "0")) {
+                        if (data[7] != null && aaaa != "01-01-0001") {
+                            cell.html(DeActive_Date.format("DD-MM-YYYY"));
+                        }
+                        else if (data[21] != null && bbbb != "01-01-0001") {
+                            cell.html(Cancel_Date.format("DD-MM-YYYY"));
+                        }
+                        else {
+                            cell.html("");
+                        }
+
+                    }
+                    else {
+
+                        if (data[18] == "1") {
+                            var contractend_Date = moment(data[17]);
+                            //cell = $(row.insertCell(-1));
+                            var aaa2 = contractend_Date.format("DD-MM-YYYY");;
+                            if (data[17] != null && aaa2 != "01-01-0001") {
+                                cell.html(contractend_Date.format("DD-MM-YYYY"));
+                            }
+                        }
+                        else {
+                            cell.html('');
+                        }
+
+                    }
+
+
+                    //var memberbirth_Date = moment(data[8]);
+                    //cell = $(row.insertCell(-1));
+                    //var aaa = memberbirth_Date.format("DD-MM-YYYY");;
+                    //if (data[8] != null && aaa != "01-01-0001") {
+                    //    cell.html(memberbirth_Date.format("DD-MM-YYYY"));
+                    //}
+                    //else {
+                    //    cell.html('');
+                    //}
+
+                    //cell = $(row.insertCell(-1));
+                    //cell.html(data[9]);
+
+                    var contractstart_Date = moment(data[16]);
+                    cell = $(row.insertCell(-1));
+                    var aaa1 = contractstart_Date.format("DD-MM-YYYY");;
+                    if (data[16] != null && aaa1 != "01-01-0001") {
+                        cell.html(contractstart_Date.format("DD-MM-YYYY"));
+                    }
+                    else {
+                        cell.html('');
+                    }
+
+                    var contractend_Date = moment(data[17]);
+                    cell = $(row.insertCell(-1));
+                    var aaa2 = contractend_Date.format("DD-MM-YYYY");;
+                    if (data[17] != null && aaa2 != "01-01-0001") {
+                        cell.html(contractend_Date.format("DD-MM-YYYY"));
+                    }
+                    else {
+                        cell.html('');
+                    }
+                    //cell.css('color', 'red');
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[10]);
+                    //cell.css('color', 'red');
+
+
+                    if (data[11] == "1") {
+                        //alert("Customer Used 100% of Premium Amount in Contract")
+                        //$("#claim_services1_DC").hide();
+                        //$("#claim_services1pharmacy").hide();
+                        if (data[12] == 0) {
+                            $("#claim_services1_DC").show();
+
+                        }
+                        else if (confirm("Customer Used 100% of Premium Amount in Contract , Customer Used : "
+                            + data[13] + " And Premium Amount : " + data[12] + "\n Do you want to Add Services")) {
+                            $("#claim_services1_DC").show();
+
+                        }
+                        else {
+                            //$("#claim_services1_DC").hide();
+                        }
+
+                    }
+
+                    else if (data[11] == "2") {
+                        //alert("Member Used 100% of Annual Ceiling in Contract , Member Used : "
+                        //    + data[15] + " And Annual Ceiling : " + data[14])
+
+                        Swal.fire("information !", "Member Used 100% of Annual Ceiling in Contract <br> Member Used : "
+                            + data[15] + " <br> Annual Ceiling : " + data[14], "info");
+
+                        // alert("Member Used 100% of Annual Ceiling in Contract")
+                        //$("#claim_services1_DC").hide();
+                        //$("#claim_services1pharmacy").hide();
+                    }
+                    else if (data[11] == "11") {
+
+                        if (data[12] == 0) {
+                            $("#claim_services1_DC").show();
+
+                        }
+                        //alert("Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10%")
+                        else {
+                            //alert("Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10% , Customer Used : "
+                            //    + data[13] + " And Premium Amount : " + data[12])
+                            Swal.fire("information !", "Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10% <br> Customer Used : "
+                                + data[13] + " <br> Premium Amount : " + data[12], "info");
+
+                            //$("#claim_services1_DC").show();
+                            //$("#claim_services1pharmacy").show();
+                            //if ($('#prov_cat_idd_DC').val() != 2) {
+                            $("#claim_services1_DC").show();
+                            //}
+                            //else {
+                            //    //$("#claim_services1pharmacy").show();
+                            //}
+                        }
+                    }
+                    else {
+                        //if ($('#prov_cat_idd_DC').val() != 2) {
+                        $("#claim_services1_DC").show();
+                        //}
+                        //else {
+                        //    //$("#claim_services1pharmacy").show();
+                        //}
+                    }
+                    $('#CustomerPremium_Amt_DC').val(data[12]);
+                    $('#Customer_TotalDueAmt_DC').val(data[13]);
+                    $('#AnnualCeilinggg_DC').val(data[14]);
+                    $('#Member_TotalDueAmt_DC').val(data[15]);
+
+                    $('#CheckCardNum_DC').val("0");
+
+                    if (data[6] == "Stopped") {
+                        //$("#diagnosis").show();
+                        //alert("Member Activity Status is Stopped \n Deactive Date is : " + DeActive_Date.format("DD-MM-YYYY"));
+                        Swal.fire("Warning !", "Member Activity Status is Stopped \n Deactive Date is : " + DeActive_Date.format("DD-MM-YYYY"), "warning");
+
+
+                    }
+                    if (data[18] == "1") {
+                        //alert("The Contract Period Time has Ended \n End Date is : " + contractend_Date.format("DD-MM-YYYY"));
+                        Swal.fire("Warning !", "The Contract Period Time has Ended \n End Date is : " + contractend_Date.format("DD-MM-YYYY"), "warning");
+
+                    }
+                    $('#Contract_TypeID_DC').val(data[19]);
+                    $('#Is_OverCeiling_DC').val(data[20]);
+
+
+                }
+                else {
+                    //alert($('#Card_number_DC').val() + " is not Correct Please Enter Card Number Again")
+                    Swal.fire("Warning !", $('#Card_number_DC').val() + " is not Correct <br> Please Enter Card Number Again", "warning");
+
+                    $("#Member_Info_Table_DC").hide();
+                    $('#Member_name_DC').val("");
+                    $('#CheckCardNum_DC').val("1");
+                    $('#contractNum_DC').val("");
+
+                }
+
+                $("#selectServicelistdiv_DC .select2-selection__rendered").text("----Select Service Name----");
+                $("#drugs_namediv .select2-selection__rendered").text("----Select Drug Name----");
+
+
+            })
+        });
+        serialdoc_dC = 0;
+        $("body").on("click", "#New_Claim_ServiceEDoc_DC", function () {
+
+            $.get("/ClaimForm/Check_ServiceName", { id: $('#selectServicelistDoc_DC').val() }, function (data) {
+
+                if (data != "") {
+                    if (($('#selectServicelistDoc_DC').val() == "")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else {
+
+                        var isexist = 0;
+                        $("#Claim_ServicesDoc_DC TBODY TR").each(function () {
+                            var row = $(this);
+                            var dt = $('#Claim_ServicesDoc_DC').DataTable();
+                            if (dt != null) {
+                                if (dt.rows().count() > 0) {
+                                    var newService_Name = $('#selectServicelistDoc_DC').val();
+                                    var Service_Name = row.find("TD").eq(1).text();
+
+                                    if (newService_Name == Service_Name) {
+                                        isexist = 1;
+                                    }
+
+                                }
+                            }
+                        });
+
+                        if (isexist == 0) {
+                            var t = $('#Claim_ServicesDoc_DC').DataTable();
+                            var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModaldoc_DC' onclick='editedDoc_DC(this);'>Edit</button>";
+                            var btnRemove = "<button type='button' class='btn btn-danger' onclick='RemovedDoc_DC(this);'>Remove</button>";
+                            serialdoc_dC++;
+                            t.row.add([serialdoc_dC, $('#selectServicelistDoc_DC').val()
+                                , $('#SystemPrice_DC').val(), $('#quntityDoc_DC').val(), $('#Requested_Price_DC').val(), btnEdit, btnRemove
+                            ]).draw()
+                                ;
+                            Swal.fire("Success", "Claim Service is inserted to Services Successfully", "success");
+
+                            //alert("Claim Service is inserted to Services.");
+                        }
+                        else/* if (isexist == 1)*/ {
+                            //alert("Claim Service is Added Since while in Provider Services.");
+                            Swal.fire("Warning !", "Claim Service is Added Since while in Provider Services.", "warning");
+
+                        }
+                        //else {
+                        //    alert("Claim Service is Added Since while in Approval waiting.");
+
+                        //}
+
+                    }
+                }
+                else {
+
+                    //alert("Select Correct Service Name");
+                    Swal.fire("Warning !", "Select Correct Service Name", "warning");
+
+                }
+
+            });
+
+
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceEDoc_DC", function () {
+            $.get("/ClaimForm/Check_ServiceName", { id: $('#selectServicelistDoc_DC').val() }, function (data) {
+
+                if (data != "") {
+                    if (($('#selectServicelistDoc_DC').val() == "")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else {
+
+                        var Row_id = $('#edited_row_idDoc_DC').val() - 1;
+                        var t = $('#Claim_ServicesDoc_DC').DataTable();
+                        if ($('#selectServicelistDoc_DC').val() != "") {
+                            t.cell(Row_id, 1).data($('#selectServicelistDoc_DC').val()).draw();
+                        }
+                        if ($('#SystemPrice_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#SystemPrice_DC').val()).draw();
+                        }
+                        if ($('#quntityDoc_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#quntityDoc_DC').val()).draw();
+                        }
+                        if ($('#Requested_Price_DC').val() != "") {
+                            t.cell(Row_id, 4).data($('#Requested_Price_DC').val()).draw();
+
+                        }
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+                    }
+                }
+                else {
+
+                    //alert("Select Correct Service Name");
+                    Swal.fire("Warning !", "Select Correct Service Name", "warning");
+
+                }
+
+
+
+            });
+
+        });
+
+
+        serial_DC = 0;
+        $("body").on("click", "#New_Claim_ServiceE_DC", function () {
+
+            //let ServiceNam = $('#selectServicelist_DC').val();
+            //const myArray = ServiceNam.split(' $$ ( ');
+            //var ServiceNamselect = myArray[0];
+            var ServiceNamselect = $('#selectServicelist_DC').val();
+            $.get("/ClaimForm/CheckServiceNam", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    var qntitt = parseFloat(($('#quntity_DC').val()).replace(/,/g, ''));
+                    var Due_Serviceee = price * qntitt;
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        Swal.fire("Warning !", "Card Number is Required", "warning");
+                    }
+                    else {
+                        var t = $('#Claim_Services_DC').DataTable();
+                        var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal_DC' onclick='edited_DC(this);'>Edit</button>";
+                        var btnRemove = "<button type='button' class='btn btn-danger' onclick='Removed_DC(this);'>Remove</button>";
+                        serial_DC++;
+                        t.row.add([serial_DC, ServiceNamselect
+                            , $('#quntity_DC').val(),
+                            $('#Service_Note_DC').val(), btnEdit, btnRemove
+                        ]).draw()
+                            ;
+
+                        Swal.fire("success !", "Claim Service is inserted to Services.", "success");
+
+                    }
+                }
+
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+
+        });
+        serial1 = 0;
+        $("body").on("click", "#New_Claim_ServiceE1_DC", function () {
+            var ServiceNamselect = $('#selectlabslist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamlab", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    var qntitt = parseFloat(($('#quntity1_DC').val()).replace(/,/g, ''));
+                    var Due_Serviceee = price * qntitt;
+
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        Swal.fire("Warning !", "Card Number is Required", "warning");
+                    }
+                    else {
+                        var t = $('#Claim_Services1_DC').DataTable();
+                        var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal1_DC' onclick='edited1_DC(this);'>Edit</button>";
+                        var btnRemove = "<button type='button' class='btn btn-danger' onclick='Removed1_DC(this);'>Remove</button>";
+                        serial_DC1++;
+                        t.row.add([serial_DC1, ServiceNamselect
+                            , $('#quntity1_DC').val(),
+                            $('#Service_Note1_DC').val(), btnEdit, btnRemove
+                        ]).draw()
+                            ;
+                        Swal.fire("success !", "Claim Service is inserted to Services.", "success");
+
+                    }
+
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+
+        });
+        serial_DC2 = 0;
+        $("body").on("click", "#New_Claim_ServiceE2_DC", function () {
+
+            var ServiceNamselect = $('#selectscanlist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamscan", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    var qntitt = parseFloat(($('#quntity2_DC').val()).replace(/,/g, ''));
+                    var Due_Serviceee = price * qntitt;
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        Swal.fire("Warning !", "Card Number is Required", "warning");
+                    }
+                    else {
+
+                        var t = $('#Claim_Services3_DC').DataTable();
+                        var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal3_DC' onclick='edited2_DC(this);'>Edit</button>";
+                        var btnRemove = "<button type='button' class='btn btn-danger' onclick='Removed2_DC(this);'>Remove</button>";
+                        serial_DC2++;
+                        t.row.add([serial_DC2, ServiceNamselect
+                            , $('#quntity2_DC').val(),
+                            $('#Service_Note2_DC').val(), btnEdit, btnRemove
+                        ]).draw()
+                            ;
+
+                        Swal.fire("success !", "Claim Service is inserted to Services.", "success");
+
+                    }
+
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+
+        });
+        serial_DC3 = 0;
+        $("body").on("click", "#New_Claim_ServiceE3_DC", function () {
+
+            var ServiceNamselect = $('#selectopticalcenterlist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamoptical", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    var qntitt = parseFloat(($('#quntity3_DC').val()).replace(/,/g, ''));
+                    var Due_Serviceee = price * qntitt;
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        Swal.fire("Warning !", "Card Number is Required", "warning");
+                    }
+                    else {
+
+                        var t = $('#Claim_Services4_DC').DataTable();
+                        var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal4_DC' onclick='edited3_DC(this);'>Edit</button>";
+                        var btnRemove = "<button type='button' class='btn btn-danger' onclick='Removed3_DC(this);'>Remove</button>";
+                        serial_DC3++;
+                        t.row.add([serial_DC3, ServiceNamselect
+                            , $('#quntity3_DC').val(),
+                            $('#Service_Note3_DC').val(), btnEdit, btnRemove
+                        ]).draw()
+                            ;
+                        Swal.fire("success !", "Claim Service is inserted to Services.", "success");
+
+                    }
+
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+
+        });
+        serial_DC4 = 0;
+        $("body").on("click", "#New_Claim_ServiceE4_DC", function () {
+
+
+            var ServiceNamselect = $('#selectphysiothrapylist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamphysiothrapy", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    var qntitt = parseFloat(($('#quntity4_DC').val()).replace(/,/g, ''));
+                    var Due_Serviceee = price * qntitt;
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever")) {
+                        Swal.fire("Warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        Swal.fire("Warning !", "Card Number is Required", "warning");
+                    }
+                    else {
+
+                        var t = $('#Claim_Services5_DC').DataTable();
+                        var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal5_DC' onclick='edited4_DC(this);'>Edit</button>";
+                        var btnRemove = "<button type='button' class='btn btn-danger' onclick='Removed4_DC(this);'>Remove</button>";
+                        serial_DC4++;
+                        t.row.add([serial_DC4, ServiceNamselect
+                            , $('#quntity4_DC').val(),
+                            $('#Service_Note4_DC').val(), btnEdit, btnRemove
+                        ]).draw()
+                            ;
+                        Swal.fire("success !", "Claim Service is inserted to Services.", "success");
+                    }
+
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceE_DC", function () {
+
+            //let ServiceNam = $('#selectServicelist_DC').val();
+            //const myArray = ServiceNam.split(' $$ ( ');
+            //var ServiceNamselect = myArray[0];
+            var ServiceNamselect = $('#selectServicelist_DC').val();
+            $.get("/ClaimForm/CheckServiceNam", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever") || ($('#NewClaimService').val() == "1")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        //alert("Card Number is Required");
+                        Swal.fire("warning !", "Card Number is Required", "warning");
+
+
+                    }
+                    else {
+
+
+                        var Row_id = $('#edited_row_id_DC').val();
+                        var t = $('#Claim_Services_DC').DataTable();
+                        if (ServiceNamselect != "") {
+                            t.cell(Row_id, 1).data(ServiceNamselect).draw();
+                        }
+                        if ($('#quntity_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#quntity_DC').val()).draw();
+                        }
+
+                        if ($('#Service_Note_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#Service_Note_DC').val()).draw();
+                        }
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+                    }
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceE1_DC", function () {
+
+            var ServiceNamselect = $('#selectlabslist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamlab", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever") || ($('#NewClaimService').val() == "1")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        //alert("Card Number is Required");
+                        Swal.fire("warning !", "Card Number is Required", "warning");
+
+
+                    }
+                    else {
+
+
+                        var Row_id = $('#edited_row_id1_DC').val();
+
+                        var t = $('#Claim_Services1_DC').DataTable();
+                        if (ServiceNamselect != "") {
+                            t.cell(Row_id, 1).data(ServiceNamselect).draw();
+                        }
+                        if ($('#quntity1_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#quntity1_DC').val()).draw();
+                        }
+                        if ($('#Service_Note1_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#Service_Note1_DC').val()).draw();
+                        }
+
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+
+                    }
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceE2_DC", function () {
+
+
+            var ServiceNamselect = $('#selectscanlist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamscan", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever") || ($('#NewClaimService').val() == "1")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        //alert("Card Number is Required");
+                        Swal.fire("warning !", "Card Number is Required", "warning");
+
+
+                    }
+                    else {
+
+
+                        var Row_id = $('#edited_row_id2_DC').val();
+
+                        var t = $('#Claim_Services3_DC').DataTable();
+                        if (ServiceNamselect != "") {
+                            t.cell(Row_id, 1).data(ServiceNamselect).draw();
+                        }
+                        if ($('#quntity2_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#quntity2_DC').val()).draw();
+                        }
+                        if ($('#Service_Note2_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#Service_Note2_DC').val()).draw();
+                        }
+
+
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+                    }
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceE3_DC", function () {
+
+
+            var ServiceNamselect = $('#selectopticalcenterlist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamoptical", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever") || ($('#NewClaimService').val() == "1")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        //alert("Card Number is Required");
+                        Swal.fire("warning !", "Card Number is Required", "warning");
+
+
+                    }
+                    else {
+                        var Row_id = $('#edited_row_id3_DC').val();
+
+                        var t = $('#Claim_Services4_DC').DataTable();
+                        if (ServiceNamselect != "") {
+                            t.cell(Row_id, 1).data(ServiceNamselect).draw();
+                        }
+                        if ($('#quntity3_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#quntity3_DC').val()).draw();
+                        }
+                        if ($('#Service_Note3_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#Service_Note3_DC').val()).draw();
+                        }
+
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+                    }
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+        });
+
+        $("body").on("click", "#edit_Claim_ServiceE4_DC", function () {
+
+            var ServiceNamselect = $('#selectphysiothrapylist_DC').val();
+            $.get("/ClaimForm/CheckServiceNamphysiothrapy", { id: ServiceNamselect }, function (price) {
+                if (price != "aa") {
+                    if ((ServiceNamselect == "") || (ServiceNamselect == "whatever") || ($('#NewClaimService').val() == "1")) {
+                        //alert("Select Service Name is Required");
+                        Swal.fire("warning !", "Select Service Name is Required", "warning");
+
+                    }
+                    else if ($('#Card_number_DC').val() == "") {
+                        //alert("Card Number is Required");
+                        Swal.fire("warning !", "Card Number is Required", "warning");
+
+
+                    }
+                    else {
+
+
+                        var Row_id = $('#edited_row_id4_DC').val();
+
+                        var t = $('#Claim_Services5_DC').DataTable();
+                        if (ServiceNamselect != "") {
+                            t.cell(Row_id, 1).data(ServiceNamselect).draw();
+                        }
+                        if ($('#quntity4_DC').val() != "") {
+                            t.cell(Row_id, 2).data($('#quntity4_DC').val()).draw();
+                        }
+                        if ($('#Service_Note4_DC').val() != "") {
+                            t.cell(Row_id, 3).data($('#Service_Note4_DC').val()).draw();
+                        }
+
+                        Swal.fire("success !", "Claim Service is updated.", "success");
+
+                    }
+                }
+                else {
+                    Swal.fire("Warning !", "Service Name is Mistake Please Select Service Name Again ", "warning");
+                }
+            })
+        });
+
+        $("body").on("click", "#Add_New_Claim_ServiceDoc_DC", function () {
+            $("#Add_Claim_ServiceeeDoc_DC").show();
+            $("#New_Claim_ServiceDoc_DC").show();
+            $("#edit_Claim_ServiceDoc_DC").hide();
+
+        });
+
+        $("body").on("click", "#Add_New_Claim_Service_DC", function () {
+            $("#Add_Claim_Serviceee_DC").show();
+            $("#New_Claim_Service_DC").show();
+            $("#edit_Claim_Service_DC").hide();
+
+        });
+
+        $("body").on("click", "#Add_New_Claim_Service1_DC", function () {
+            $("#Add_Claim_Serviceee1_DC").show();
+            $("#New_Claim_Service1_DC").show();
+            $("#edit_Claim_Service1_DC").hide();
+
+        });
+
+        $("body").on("click", "#Add_New_Claim_Service3_DC", function () {
+            $("#Add_Claim_Serviceee2_DC").show();
+            $("#New_Claim_Service2_DC").show();
+            $("#edit_Claim_Service2_DC").hide();
+
+        });
+        $("body").on("click", "#Add_New_Claim_Service4_DC", function () {
+            $("#Add_Claim_Serviceee3_DC").show();
+            $("#New_Claim_Service3").show();
+            $("#edit_Claim_Service3_DC").hide();
+
+        });
+        $("body").on("click", "#Add_New_Claim_Service5_DC", function () {
+            $("#Add_Claim_Serviceee4_DC").show();
+            $("#New_Claim_Service4_DC").show();
+            $("#edit_Claim_Service4_DC").hide();
+
+        });
+
+    });
+
+    function RemovedDoc_DC(button) {
+
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                //if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                //var table = $("#Claim_Services_DC")[0];
+                var table = $('#Claim_ServicesDoc_DC').DataTable();
+                //alert(row[0].rowIndex-1);
+
+                //Delete the Table row using it's Index.
+                //table.deleteRow(row[0].rowIndex);
+
+
+                var rows = table
+                    .rows(row[0].rowIndex - 1)
+                    .remove()
+                    .draw();
+                //}
+            }
+        });
+
+    };
+    function Removed_DC(button) {
+
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                var table = $('#Claim_Services_DC').DataTable();
+
+                var ServiceNamselect = table.cell(row[0].rowIndex - 1, 1).data();
+
+
+                $.get("/ClaimForm/CheckServiceNam", { id: ServiceNamselect }, function (price) {
+                    //if (price != "aa") {
+
+                    //}
+                    var rows = table
+                        .rows(row[0].rowIndex - 1)
+                        .remove()
+                        .draw();
+                })
+            }
+        });
+
+    };
+    function Removed1_DC(button) {
+
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                var table = $('#Claim_Services1_DC').DataTable();
+
+
+                var ServiceNamselect = table.cell(row[0].rowIndex - 1, 1).data();
+                $.get("/ClaimForm/CheckServiceNamlab", { id: ServiceNamselect }, function (price) {
+                    //if (price != "aa") {
+                    //    var Due_Serviceee = price * qntt;
+                    //    if (Claim_serv != "Exceed Limit" && Claim_serv != "Excluded Cost") {
+
+                    //        $('#Customer_TotalDueAmt_DC').val(Customer_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_DC').val(Member_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_Service1_DC').val(Member_TotalDueAmt_Servicee - Due_Serviceee);
+                    //    }
+                    //}
+                    var rows = table
+                        .rows(row[0].rowIndex - 1)
+                        .remove()
+                        .draw();
+                })
+            }
+        });
+
+    };
+    function Removed2_DC(button) {
+
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                var table = $('#Claim_Services3_DC').DataTable();
+
+
+                var ServiceNamselect = table.cell(row[0].rowIndex - 1, 1).data();
+                $.get("/ClaimForm/CheckServiceNamscan", { id: ServiceNamselect }, function (price) {
+                    //if (price != "aa") {
+                    //    var Due_Serviceee = price * qntt;
+                    //    if (Claim_serv != "Exceed Limit" && Claim_serv != "Excluded Cost") {
+
+                    //        $('#Customer_TotalDueAmt_DC').val(Customer_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_DC').val(Member_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_Service2_DC').val(Member_TotalDueAmt_Servicee - Due_Serviceee);
+                    //    }
+                    //}
+                    var rows = table
+                        .rows(row[0].rowIndex - 1)
+                        .remove()
+                        .draw();
+                })
+            }
+        });
+
+    };
+    function Removed3_DC(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                var table = $('#Claim_Services4_DC').DataTable();
+
+                var ServiceNamselect = table.cell(row[0].rowIndex - 1, 1).data();
+                $.get("/ClaimForm/CheckServiceNamoptical", { id: ServiceNamselect }, function (price) {
+                    //if (price != "aa") {
+                    //    var Due_Serviceee = price * qntt;
+                    //    if (Claim_serv != "Exceed Limit" && Claim_serv != "Excluded Cost") {
+
+                    //        $('#Customer_TotalDueAmt_DC').val(Customer_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_DC').val(Member_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_Service3_DC').val(Member_TotalDueAmt_Servicee - Due_Serviceee);
+                    //    }
+                    //}
+                    var rows = table
+                        .rows(row[0].rowIndex - 1)
+                        .remove()
+                        .draw();
+                })
+            }
+        });
+
+    };
+    function Removed4_DC(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        Swal.fire({
+            title: "Confirm",
+            //icon: 'warning',
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "Do you want to delete: " + name,
+            showCancelButton: true,
+            confirmButtonText: "Confirm",
+            cancelButtonColor: "#700c0c"
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                var table = $('#Claim_Services5_DC').DataTable();
+
+
+                var ServiceNamselect = table.cell(row[0].rowIndex - 1, 1).data();
+
+                //var Due_Serviceee = parseFloat((Due_Serv).replace(/,/g, ''));
+                $.get("/ClaimForm/CheckServiceNamphysiothrapy", { id: ServiceNamselect }, function (price) {
+                    //if (price != "aa") {
+                    //    var Due_Serviceee = price * qntt;
+                    //    if (Claim_serv != "Exceed Limit" && Claim_serv != "Excluded Cost") {
+
+                    //        $('#Customer_TotalDueAmt_DC').val(Customer_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_DC').val(Member_TotalDueAmtt - Due_Serviceee);
+                    //        $('#Member_TotalDueAmt_Service4_DC').val(Member_TotalDueAmt_Servicee - Due_Serviceee);
+                    //    }
+                    //}
+                    var rows = table
+                        .rows(row[0].rowIndex - 1)
+                        .remove()
+                        .draw();
+                })
+            }
+        });
+
+    };
+
+
+
+    //////////////////////////
+    function editedDoc_DC(button) {
+        $("#Add_Claim_ServiceeeDoc_DC").show();
+        $("#edit_Claim_ServiceDoc_DC").show();
+        $("#New_Claim_ServiceDoc_DC").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[2].innerHTML;
+        $('#edited_row_idDoc_DC').val(rowindexx);
+        var roww = $(button).closest("TR").find("td");
+
+        $("#selectServicelistDoc_DC").val(roww[1].innerHTML);
+        $("#SystemPrice_DC").val(roww[2].innerHTML);
+        $('#quntityDoc_DC').val(roww[3].innerHTML);
+        $('#Requested_Price_DC').val(roww[4].innerHTML);
+
+    }
+
+    function edited_DC(button) {
+        $("#Add_Claim_Serviceee_DC").show();
+        $("#edit_Claim_Service_DC").show();
+        $("#New_Claim_Service_DC").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[1].innerText;
+        var Service_qntt = row1data[2].innerText;
+        $('#edited_row_id_DC').val(rowindexx - 1);
+        // $.get("/Approvals/Get_ServiceCode_row", { Service_Name: Service_Name, Providerid: $('#Provider_id_DC').val() }, function (data) {
+        $.get("/ClaimForm/CheckServiceNam", { id: Service_Name }, function (price) {
+            if (price == "aa") {
+                price = 0;
+            }
+            var roww = $(button).closest("TR").find("td");
+
+            $("#selectServicelist_DC").val(roww[1].innerText);
+            $('#quntity_DC').val(roww[2].innerText);
+            var duee = price * Service_qntt;
+            //$('#EditDueAmt_Service_DC').val(roww[5].innerText.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+            $('#EditDueAmt_Service_DC').val(duee);
+            $('#Service_Note_DC').val(roww[3].innerText);
+
+            //$('#Service_code').val(data);
+
+
+            // })
+
+        })
+
+
+    }
+    function edited1_DC(button) {
+        $("#Add_Claim_Serviceee1_DC").show();
+        $("#edit_Claim_Service1_DC").show();
+        $("#New_Claim_Service1_DC").hide();
+
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[1].innerText;
+        var Service_qntt = row1data[2].innerText;
+        $('#edited_row_id1_DC').val(rowindexx - 1);
+        // $.get("/Approvals/Get_ServiceCode_row", { Service_Name: Service_Name, Providerid: $('#Provider_id_DC').val() }, function (data) {
+        $.get("/ClaimForm/CheckServiceNamlab", { id: Service_Name }, function (price) {
+            if (price == "aa") {
+                price = 0;
+            }
+            var roww = $(button).closest("TR").find("td");
+
+            $("#selectlabslist_DC").val(roww[1].innerText);
+            $('#quntity1_DC').val(roww[2].innerText);
+
+            var duee = price * Service_qntt;
+            $('#EditDueAmt_Service_DC').val(duee);
+            //$('#EditDueAmt_Service_DC').val(roww[5].innerText.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+            $('#Service_Note1_DC').val(roww[3].innerText);
+
+            //$('#Service_code').val(data);
+
+
+            // })
+        })
+
+
+
+    }
+    function edited2_DC(button) {
+        $("#Add_Claim_Serviceee2_DC").show();
+        $("#edit_Claim_Service2_DC").show();
+        $("#New_Claim_Service2_DC").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[1].innerText;
+        var Service_qntt = row1data[2].innerText;
+
+        $('#edited_row_id2_DC').val(rowindexx - 1);
+        // $.get("/Approvals/Get_ServiceCode_row", { Service_Name: Service_Name, Providerid: $('#Provider_id_DC').val() }, function (data) {
+        $.get("/ClaimForm/CheckServiceNamscan", { id: Service_Name }, function (price) {
+            if (price == "aa") {
+                price = 0;
+            }
+            var roww = $(button).closest("TR").find("td");
+
+            $("#selectscanlist_DC").val(roww[1].innerText);
+            $('#quntity2_DC').val(roww[2].innerText);
+            var duee = price * Service_qntt;
+            $('#EditDueAmt_Service_DC').val(duee);
+            //$('#EditDueAmt_Service_DC').val(roww[5].innerText.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+            $('#Service_Note2_DC').val(roww[3].innerText);
+
+            //$('#Service_code').val(data);
+
+
+            // })
+
+        })
+
+
+    }
+    function edited3_DC(button) {
+        $("#Add_Claim_Serviceee3_DC").show();
+        $("#edit_Claim_Service3_DC").show();
+        $("#New_Claim_Service3_DC").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[1].innerText;
+        var Service_qntt = row1data[2].innerText;
+
+        $('#edited_row_id3_DC').val(rowindexx - 1);
+        // $.get("/Approvals/Get_ServiceCode_row", { Service_Name: Service_Name, Providerid: $('#Provider_id_DC').val() }, function (data) {
+        $.get("/ClaimForm/CheckServiceNamoptical", { id: Service_Name }, function (price) {
+            if (price == "aa") {
+                price = 0;
+            }
+            var roww = $(button).closest("TR").find("td");
+
+            $("#selectopticalcenterlist_DC").val(roww[1].innerText);
+            $('#quntity3_DC').val(roww[2].innerText);
+            var duee = price * Service_qntt;
+            $('#EditDueAmt_Service_DC').val(duee);
+            //$('#EditDueAmt_Service_DC').val(roww[5].innerText.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+            $('#Service_Note3_DC').val(roww[3].innerText);
+
+            //$('#Service_code').val(data);
+
+
+            // })
+        })
+
+
+
+    }
+    function edited4_DC(button) {
+        $("#Add_Claim_Serviceee4_DC").show();
+        $("#edit_Claim_Service4_DC").show();
+        $("#New_Claim_Service4_DC").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex;
+        var Service_Name = row1data[1].innerText;
+        var Service_qntt = row1data[2].innerText;
+
+        $('#edited_row_id4_DC').val(rowindexx - 1);
+        // $.get("/Approvals/Get_ServiceCode_row", { Service_Name: Service_Name, Providerid: $('#Provider_id_DC').val() }, function (data) {
+        $.get("/ClaimForm/CheckServiceNamphysiothrapy", { id: Service_Name }, function (price) {
+            if (price == "aa") {
+                price = 0;
+            }
+            var roww = $(button).closest("TR").find("td");
+
+            $("#selectphysiothrapylist_DC").val(roww[1].innerText);
+            $('#quntity4_DC').val(roww[2].innerText);
+            var duee = price * Service_qntt;
+            $('#EditDueAmt_Service_DC').val(duee);
+            //$('#EditDueAmt_Service_DC').val(roww[5].innerText.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+            $('#Service_Note4_DC').val(roww[3].innerText);
+
+            //$('#Service_code').val(data);
+
+
+            // })
+        })
+
+
+
+    }
+
+</script>
+
+
+<script type="text/javascript">
+            $(document).ready(function () {
+
+
+                $("#Diagnosis_DC").change(function () {
+
+
+
+
+                    $.get("/ClaimForm/Get_Icd_code", { id: $('#Diagnosis_DC').val() }, function (data) {
+                        $('#ICD_Number_DC').val(data.ICDCode1);
+
+                    })
+
+
+                });
+
+                $("#ICD_Number_DC").change(function () {
+
+
+
+
+                    $.get("/ClaimForm/Get_Diagnosis_Name", { id: $('#ICD_Number_DC').val() }, function (data) {
+                        $('#Diagnosis_DC').val(data.ShortName);
+
+                    })
+
+
+                });
+
+
+              
+
+                //$("#quntity_DC").change(function () {
+                //    myFunction();
+
+                //});
+
+                $("#quntityDoc_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntityDoc_DC').val()).replace(/,/g, ''));
+                    if ($('#quntityDoc_DC').val() == "" || isNaN($('#quntityDoc_DC').val())) {
+                        quntityy = 1;
+                        $('#quntityDoc_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntityDoc_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#SystemPrice_DC").change(function () {
+                    var quntityy = parseFloat(($('#SystemPrice_DC').val()).replace(/,/g, ''));
+                    if ($('#SystemPrice_DC').val() == "" || isNaN($('#SystemPrice_DC').val())) {
+                        quntityy = 1;
+                        $('#SystemPrice_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#SystemPrice_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#Requested_Price_DC").change(function () {
+                    var quntityy = parseFloat(($('#Requested_Price_DC').val()).replace(/,/g, ''));
+                    if ($('#Requested_Price_DC').val() == "" || isNaN($('#Requested_Price_DC').val())) {
+                        quntityy = 1;
+                        $('#Requested_Price_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#Requested_Price_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#quntity_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntity_DC').val()).replace(/,/g, ''));
+                    if ($('#quntity_DC').val() == "" || isNaN($('#quntity_DC').val())) {
+                        quntityy = 1;
+                        $('#quntity_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntity_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#quntity1_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntity1_DC').val()).replace(/,/g, ''));
+                    if ($('#quntity1_DC').val() == "" || isNaN($('#quntity1_DC').val())) {
+                        quntityy = 1;
+                        $('#quntity1_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntity1_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#quntity2_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntity2_DC').val()).replace(/,/g, ''));
+                    if ($('#quntity2_DC').val() == "" || isNaN($('#quntity2_DC').val())) {
+                        quntityy = 1;
+                        $('#quntity2_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntity2_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#quntity3_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntity3_DC').val()).replace(/,/g, ''));
+                    if ($('#quntity3_DC').val() == "" || isNaN($('#quntity3_DC').val())) {
+                        quntityy = 1;
+                        $('#quntity3_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntity3_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#quntity4_DC").change(function () {
+                    var quntityy = parseFloat(($('#quntity4_DC').val()).replace(/,/g, ''));
+                    if ($('#quntity4_DC').val() == "" || isNaN($('#quntity4_DC').val())) {
+                        quntityy = 1;
+                        $('#quntity4_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#quntity4_DC').val(quntityy.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+                $("#Deductible_amt").change(function () {
+                    var Service_Deductuble = parseFloat(($('#Deductible_amt').val()).replace(/,/g, ''));
+                    if (Service_Deductuble == "" || isNaN(Service_Deductuble)) {
+                        Service_Deductuble = 0;
+                        $('#Deductible_amt').val(Service_Deductuble.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                    else {
+                        $('#Deductible_amt').val(Service_Deductuble.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    }
+                });
+
+
+
+                function myFunction() {
+                    var Unit_pric = parseFloat(($('#Unit_price').val()).replace(/,/g, ''));
+                    var quntit = parseFloat(($('#quntity_DC').val()).replace(/,/g, ''));
+                    var Service_Deductuble_Per = parseFloat(($('#Service_Deductuble_Perc').val()).replace(/,/g, ''));
+
+                    if (Unit_pric == "" || isNaN(Unit_pric)) {
+                        Unit_pric = 0;
+
+                    }
+                    if (quntit == "" || isNaN(quntit)) {
+                        quntit = 0;
+
+                    }
+                    //calculations
+                    var Contrac_amt = Unit_pric * quntit;
+
+                    var Deductibl_amt = Contrac_amt * Service_Deductuble_Per;
+                    $('#quntity_DC').val(quntit.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Unit_price').val(Unit_pric.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Contract_amt').val(Contrac_amt.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Deductible_amt').val(Deductibl_amt.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+
+                }
+
+
+
+                $("body").on("click", "#Doctor_Add_claim_DC", function () {
+
+                    Swal.fire({
+                        title: "Confirm",
+                        //icon: 'warning',
+                        imageUrl: "/Images/Quationimg.jpg",
+                        imageWidth: 550,
+                        imageHeight: 225,
+                        text: "Are you Sure you want to Request ClaimForm ?",
+                        showCancelButton: true,
+                        confirmButtonText: "Confirm",
+                        cancelButtonColor: "#700c0c"
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            var Claims_ServicesDoc = new Array();
+                            var j = 0;
+                            $("#Claim_ServicesDoc_DC TBODY TR").each(function () {
+                                var row = $(this);
+                                var Claim_Servicedoc = {};
+                                var dt = $('#Claim_ServicesDoc_DC').DataTable();
+                                if (dt != null) {
+                                    if (dt.rows().count() > 0) {
+                                        Claim_Servicedoc.Service_Name = row.find("TD").eq(1).text();
+                                        Claim_Servicedoc.ServicePrice = parseFloat((row.find("TD").eq(2).text()).replace(/,/g, ''));
+                                        Claim_Servicedoc.Service_Qnt = parseFloat((row.find("TD").eq(3).text()).replace(/,/g, ''));
+                                        Claim_Servicedoc.RequestedPrice = parseFloat((row.find("TD").eq(4).text()).replace(/,/g, ''));
+                                        Claims_ServicesDoc.push(Claim_Servicedoc);
+                                            j = j + 1;
+
+                                    }
+                                }
+                            });
+                            if (j != 0) {
+                            //if (($('#pharmacy_DC').is(":checked") != false) || ($('#labs_DC').is(":checked") != false) || ($('#scan_DC').is(":checked") != false) || ($('#opticalcenter_DC').is(":checked") != false) || ($('#physiothrapy_DC').is(":checked") != false)) {
+
+                                var cardNumber = $('#Card_number_DC').val();
+                                var Membername = $('#Member_name_DC').val();
+                                var Diagnosi = $('#Diagnosis_DC').val();
+
+                                if (cardNumber == "") {
+                                    Swal.fire("warning !", "Please Enter Card Number", "warning");
+
+                                }
+                                else {
+                                    if (Membername == "") {
+                                        Swal.fire("warning !", "Please Enter Member Name", "warning");
+
+                                    }
+                                    else {
+                                        if (Diagnosi == "") {
+                                            Swal.fire("warning !", "Please Enter Diagnosis", "warning");
+
+                                        }
+                                        else {
+                                                //Loop through the Table rows and build a JSON array.
+                                                // Loop through the Table rows in pharmacy
+                                                var Claims_Services = new Array();
+                                                if ($('#pharmacy_DC').is(":checked") != false) {
+                                                    $("#Claim_Services_DC TBODY TR").each(function () {
+                                                        var row = $(this);
+                                                        var Claim_Service = {};
+                                                        var dt = $('#Claim_Services_DC').DataTable();
+                                                        if (dt != null) {
+                                                            if (dt.rows().count() > 0) {
+                                                                Claim_Service.Service_Name = row.find("TD").eq(1).text();
+                                                                Claim_Service.Service_Qnt = parseFloat((row.find("TD").eq(2).html()).replace(/,/g, ''));
+                                                                Claim_Service.Service_Note = row.find("TD").eq(3).text();
+                                                                Claims_Services.push(Claim_Service);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                                // Loop through the Table rows in labs
+                                                var Claims_Serviceslabs = new Array();
+                                                if ($('#labs_DC').is(":checked") != false) {
+                                                    $("#Claim_Services1_DC TBODY TR").each(function () {
+                                                        var row = $(this);
+                                                        var Claim_Service = {};
+                                                        var dt = $('#Claim_Services1_DC').DataTable();
+                                                        if (dt != null) {
+                                                            if (dt.rows().count() > 0) {
+                                                                Claim_Service.Service_Name = row.find("TD").eq(1).text();
+                                                                Claim_Service.Service_Qnt = parseFloat((row.find("TD").eq(2).html()).replace(/,/g, ''));
+                                                                Claim_Service.Service_Note = row.find("TD").eq(3).text();
+                                                                Claims_Serviceslabs.push(Claim_Service);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                                // Loop through the Table rows in scan
+                                                var Claims_Servicesscan = new Array();
+                                                if ($('#scan_DC').is(":checked") != false) {
+                                                    $("#Claim_Services3_DC TBODY TR").each(function () {
+                                                        var row = $(this);
+                                                        var Claim_Service = {};
+                                                        var dt = $('#Claim_Services3_DC').DataTable();
+                                                        if (dt != null) {
+                                                            if (dt.rows().count() > 0) {
+                                                                Claim_Service.Service_Name = row.find("TD").eq(1).text();
+                                                                Claim_Service.Service_Qnt = parseFloat((row.find("TD").eq(2).html()).replace(/,/g, ''));
+                                                                Claim_Service.Service_Note = row.find("TD").eq(3).text();
+                                                                Claims_Servicesscan.push(Claim_Service);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                                // Loop through the Table rows in opticalcenter
+                                                var Claims_Servicesopticalcenter = new Array();
+                                                if ($('#opticalcenter_DC').is(":checked") != false) {
+                                                    $("#Claim_Services4_DC TBODY TR").each(function () {
+                                                        var row = $(this);
+                                                        var Claim_Service = {};
+                                                        var dt = $('#Claim_Services4_DC').DataTable();
+                                                        if (dt != null) {
+                                                            if (dt.rows().count() > 0) {
+                                                                Claim_Service.Service_Name = row.find("TD").eq(1).text();
+                                                                Claim_Service.Service_Qnt = parseFloat((row.find("TD").eq(2).html()).replace(/,/g, ''));
+                                                                Claim_Service.Service_Note = row.find("TD").eq(3).text();
+                                                                Claims_Servicesopticalcenter.push(Claim_Service);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                                // Loop through the Table rows in physiothrapy
+                                                var Claims_Servicesphysiothrapy = new Array();
+                                                if ($('#physiothrapy_DC').is(":checked") != false) {
+                                                    $("#Claim_Services5_DC TBODY TR").each(function () {
+                                                        var row = $(this);
+                                                        var Claim_Service = {};
+                                                        var dt = $('#Claim_Services5_DC').DataTable();
+                                                        if (dt != null) {
+                                                            if (dt.rows().count() > 0) {
+                                                                Claim_Service.Service_Name = row.find("TD").eq(1).text();
+                                                                Claim_Service.Service_Qnt = parseFloat((row.find("TD").eq(2).html()).replace(/,/g, ''));
+                                                                Claim_Service.Service_Note = row.find("TD").eq(3).text();
+                                                                Claims_Servicesphysiothrapy.push(Claim_Service);
+                                                            }
+                                                        }
+                                                    });
+                                            }
+
+                                                var formData = new FormData();
+                                                formData.append("imgfile_DC", $("#imgfile_DC")[0].files[0]);
+                                                var fileUpload = $("#imgfile_DC").get(0);
+                                                var files = fileUpload.files;
+                                                var fileData = new FormData();
+                                                fileData.append("imgfile_DC", files[0]);
+
+
+                                            //Send the JSON array to Controller using AJAX.
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/ClaimForm/addpdffiles",
+                                                data: fileData,
+                                                contentType: false,
+                                                dataType: "json",
+                                                processData: false,
+                                                async: false,
+                                                success: function (qq) {
+
+                                                //Send the JSON array to Controller using AJAX.
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "/ClaimForm/InsertApproval_Servicess",
+                                                    data: JSON.stringify({ Claims_ServicesDoc: Claims_ServicesDoc, Claim_Servicese: Claims_Services, Claims_Serviceslabs: Claims_Serviceslabs, Claims_Servicesscan: Claims_Servicesscan, Claims_Servicesopticalcenter: Claims_Servicesopticalcenter, Claims_Servicesphysiothrapy: Claims_Servicesphysiothrapy, Card_numberr: $('#Card_number_DC').val(), Diagnosiss: $('#Diagnosis_DC').val(), ICD_Numberr: $('#ICD_Number_DC').val()}),
+                                                    contentType: "application/json; charset=utf-8",
+                                                    dataType: "json",
+                                                    success: function (r) {
+                                                        if (r[0] == 0) {
+                                                            //$("#Claim_Services_DC").find("tr:not(:first)").remove();
+                                                            var t = $('#Claim_ServicesDoc_DC').DataTable();
+                                                            t.rows().remove().draw();
+                                                            serialdoc_dC = 0;
+
+                                                            var t = $('#Claim_Services_DC').DataTable();
+                                                            t.rows().remove().draw();
+                                                            serial_DC = 0;
+
+                                                            var t1 = $('#Claim_Services1_DC').DataTable();
+                                                            t1.rows().remove().draw();
+                                                            serial_DC1 = 0;
+
+                                                            var t2 = $('#Claim_Services3_DC').DataTable();
+                                                            t2.rows().remove().draw();
+                                                            serial_DC2 = 0;
+
+                                                            var t3 = $('#Claim_Services4_DC').DataTable();
+                                                            t3.rows().remove().draw();
+                                                            serial_DC3 = 0;
+
+                                                            var t4 = $('#Claim_Services5_DC').DataTable();
+                                                            t4.rows().remove().draw();
+                                                            serial_DC4 = 0;
+                                                            //alert("Approval Form is inserted.\n Approval Number is : " + r[1] + "    .");
+
+                                                            //if (confirm("Approval Form is inserted.\n Approval Number is : " + r[1] + "    ." + "\n Do you want to Print Approval")) {
+                                                            //window.open('Url.Action("GenerateReport_PrintBatchApproval", "Approvals", new { typeOfReport = "PDF" })', '_blank');
+                                                            //alert("Approval Form is inserted.\n Approval Number is : " + r[1] + "    .");
+                                                            //Swal.fire("Success !", "Approval Form is inserted.<br> Approval Number is : " + r[1] + "    .", "success");
+                                                            Swal.fire("Success", "Claim Form is inserted.<br> Claim Form Number is : " + r[1] + "    .", "success");
+                                                            @*.then(function () {
+
+                                                                var Approval_numberee = r[1];
+
+                                                                window.open('@Url.Action("GenerateReport_PrintBatchApproval", "Approvals")?typeOfReport=PDF' + '&Approval_numberr=' + Approval_numberee, '_blank');
+                                                            });*@
+
+                                                            // }
+                                                            $("#select_all_DC").prop('checked', false).change();
+                                                            $('#Card_number_DC').val('');
+                                                            $('#Member_name_DC').val('');
+                                                            $("#Member_Info_Table_DC").hide();
+                                                            $('#ICD_Number_DC').val('');
+                                                            $('#Diagnosis_DC').val('');
+                                                            $('#imgfile_DC').val('');
+                                                            $('#CheckCardNum_DC').val("1");
+                                                            $('#contractNum_DC').val("");
+
+                                                        }
+                                                        else if (r[0] == 1) {
+                                                            //alert(r[1]);
+                                                            Swal.fire("warning !", r[1], "warning");
+
+                                                        }
+
+                                                    }
+                                                    });
+                                                }
+                                            });
+
+
+                                        }
+                                    }
+                                }
+                                }
+                            else {
+                                //Swal.fire("warning !", "Please Select At Least One Provider Service", "warning");
+                                Swal.fire("Warning !", "Please Select At Least One Service To Request ClaimForm. ", "warning");
+
+                            }
+
+                            }
+                                });
+
+                });
+
+
+                $("#Member_name_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('Members_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_members", { id: value }, function (data) {
+
+                        for (var i = 0; i < data[0].length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[0][i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                        if (data[1] == "a") {
+
+                            $('#Card_number_DC').val("");
+                            $("#Information").hide();
+                            $("#Member_Info_Table_DC").hide();
+                            $('#CheckCardNum_DC').val("1");
+
+
+                        }
+                        else {
+                            $('#Card_number_DC').val(data[1]);
+
+                            $.get("/ClaimForm/Get_Member_info", { id: data[1] }, function (data) {
+
+
+                                if (data.length != 0) {
+                                    $("#Information").show();
+                                    $("#Member_Info_Table_DC").show();
+
+
+                                    $('#Member_name_DC').val(data[0]);
+                                    $('#contractNum_DC').val(data[3]);
+
+                                    $("#Member_Info_Table_DC").find("tr:not(:first)").remove();
+                                    //$("#Member_Info_Table_DC").empty();
+
+                                    var tBody = $("#Member_Info_Table_DC > TBODY")[0];
+
+                                    //Add Row.
+                                    var row = tBody.insertRow(-1);
+                                    var cell = $(row.insertCell(-1));
+                                    cell.html(data[0]);
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(data[1]);
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(data[2]);
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(data[3]);
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(data[4]);
+                                    //cell.css('color', 'red');
+                                    var ActiveDate = moment(data[5]);
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(ActiveDate.format("DD-MM-YYYY"));
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+
+                                    if (data[18] == "1") {
+                                        cell.html("Stopped");
+                                        cell.css('color', 'red');
+
+                                    }
+                                    else {
+                                        cell.html(data[6]);
+                                        cell.css('color', 'Green');
+
+                                    }
+                                    //cell.css('color', 'red');
+
+                                    var DeActive_Date = moment(data[7]);
+                                    cell = $(row.insertCell(-1));
+                                    //alert(data[0][i].DeActiveDate);
+                                    //alert(DeActive_Date.format("DD-MM-YYYY"));
+                                    var aaaa = DeActive_Date.format("DD-MM-YYYY");;
+                                    //alert(aaaa);
+                                    if (data[7] != null && aaaa != "01-01-0001") {
+                                        //alert(DeActive_Date.format("DD-MM-YYYY"));
+                                        cell.html(DeActive_Date.format("DD-MM-YYYY"));
+                                        //cell.css('color', 'red');
+
+                                    }
+                                    else {
+                                        cell.html('');
+
+                                    }
+
+
+                                    //var memberbirth_Date = moment(data[8]);
+                                    //cell = $(row.insertCell(-1));
+                                    //var aaa = memberbirth_Date.format("DD-MM-YYYY");;
+                                    //if (data[8] != null && aaa != "01-01-0001") {
+                                    //    cell.html(memberbirth_Date.format("DD-MM-YYYY"));
+                                    //}
+                                    //else {
+                                    //    cell.html('');
+                                    //}
+
+                                    //cell = $(row.insertCell(-1));
+                                    //cell.html(data[9]);
+
+                                    var contractstart_Date = moment(data[16]);
+                                    cell = $(row.insertCell(-1));
+                                    var aaa1 = contractstart_Date.format("DD-MM-YYYY");;
+                                    if (data[16] != null && aaa1 != "01-01-0001") {
+                                        cell.html(contractstart_Date.format("DD-MM-YYYY"));
+                                    }
+                                    else {
+                                        cell.html('');
+                                    }
+
+                                    var contractend_Date = moment(data[17]);
+                                    cell = $(row.insertCell(-1));
+                                    var aaa2 = contractend_Date.format("DD-MM-YYYY");;
+                                    if (data[17] != null && aaa2 != "01-01-0001") {
+                                        cell.html(contractend_Date.format("DD-MM-YYYY"));
+                                    }
+                                    else {
+                                        cell.html('');
+                                    }
+                                    //cell.css('color', 'red');
+                                    cell = $(row.insertCell(-1));
+                                    cell.html(data[10]);
+                                    //cell.css('color', 'red');
+
+
+                                    if (data[11] == "1") {
+                                        //alert("Customer Used 100% of Premium Amount in Contract")
+                                        //$("#claim_services1_DC").hide();
+                                        //$("#claim_services1pharmacy").hide();
+                                        if (data[12] == 0) {
+                                            $("#claim_services1_DC").show();
+
+                                        }
+                                        else if (confirm("Customer Used 100% of Premium Amount in Contract , Customer Used : "
+                                            + data[13] + " And Premium Amount : " + data[12] + "\n Do you want to Add Services")) {
+                                            $("#claim_services1_DC").show();
+
+                                        }
+                                        else {
+                                            //$("#claim_services1_DC").hide();
+                                        }
+
+                                    }
+
+                                    else if (data[11] == "2") {
+                                        //alert("Member Used 100% of Annual Ceiling in Contract , Member Used : "
+                                        //    + data[15] + " And Annual Ceiling : " + data[14])
+
+                                        Swal.fire("information !", "Member Used 100% of Annual Ceiling in Contract <br> Member Used : "
+                                            + data[15] + " <br> Annual Ceiling : " + data[14], "info");
+
+                                        // alert("Member Used 100% of Annual Ceiling in Contract")
+                                        //$("#claim_services1_DC").hide();
+                                        //$("#claim_services1pharmacy").hide();
+                                    }
+                                    else if (data[11] == "11") {
+
+                                        if (data[12] == 0) {
+                                            $("#claim_services1_DC").show();
+
+                                        }
+                                        //alert("Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10%")
+                                        else {
+                                            //alert("Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10% , Customer Used : "
+                                            //    + data[13] + " And Premium Amount : " + data[12])
+                                            Swal.fire("information !", "Customer Used More Than 90% of Premium Amount in Contract and The rest of the amount is less than 10% <br> Customer Used : "
+                                                + data[13] + " <br> Premium Amount : " + data[12], "info");
+
+                                            //$("#claim_services1_DC").show();
+                                            //$("#claim_services1pharmacy").show();
+                                            //if ($('#prov_cat_idd_DC').val() != 2) {
+                                            $("#claim_services1_DC").show();
+                                            //}
+                                            //else {
+                                            //    //$("#claim_services1pharmacy").show();
+                                            //}
+                                        }
+                                    }
+                                    else {
+                                        //if ($('#prov_cat_idd_DC').val() != 2) {
+                                        $("#claim_services1_DC").show();
+                                        //}
+                                        //else {
+                                        //    //$("#claim_services1pharmacy").show();
+                                        //}
+                                    }
+                                    $('#CustomerPremium_Amt_DC').val(data[12]);
+                                    $('#Customer_TotalDueAmt_DC').val(data[13]);
+                                    $('#AnnualCeilinggg_DC').val(data[14]);
+                                    $('#Member_TotalDueAmt_DC').val(data[15]);
+
+                                    $('#CheckCardNum_DC').val("0");
+
+                                    if (data[6] == "Stopped") {
+                                        //$("#diagnosis").show();
+                                        //alert("Member Activity Status is Stopped \n Deactive Date is : " + DeActive_Date.format("DD-MM-YYYY"));
+                                        Swal.fire("Warning !", "Member Activity Status is Stopped \n Deactive Date is : " + DeActive_Date.format("DD-MM-YYYY"), "warning");
+
+
+                                    }
+                                    if (data[18] == "1") {
+                                        //alert("The Contract Period Time has Ended \n End Date is : " + contractend_Date.format("DD-MM-YYYY"));
+                                        Swal.fire("Warning !", "The Contract Period Time has Ended \n End Date is : " + contractend_Date.format("DD-MM-YYYY"), "warning");
+
+                                    }
+                                    $('#Contract_TypeID_DC').val(data[19]);
+                                    $('#Is_OverCeiling_DC').val(data[20]);
+
+
+                                }
+                                else {
+                                    //alert($('#Card_number_DC').val() + " is not Correct Please Enter Card Number Again")
+                                    Swal.fire("warning !", $('#Card_number_DC').val() + " is not Correct <br> Please Enter Card Number Again", "warning");
+
+
+                                    $("#Member_Info_Table_DC").hide();
+                                    $('#Member_name_DC').val("");
+                                    $('#CheckCardNum_DC').val("1");
+                                    $('#contractNum_DC').val("");
+
+                                }
+
+                                $("#selectServicelistdiv_DC .select2-selection__rendered").text("----Select Service Name----");
+                                $("#drugs_namediv .select2-selection__rendered").text("----Select Drug Name----");
+
+
+                            })
+
+                        }
+                    })
+
+                });
+
+
+                $("#Diagnosis_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('Diagnosis_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_diagnosis", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+
+                $("#selectServicelistDoc_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('Service_Listdoc_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_Servicess", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+                $("#selectServicelistDoc_DC").change(function () {
+
+                    var ServiceNam = $('#selectServicelistDoc_DC').val();
+                    if (ServiceNam != "") {
+                        $.get("/ClaimForm/Get_service_data", { selectServicelist: ServiceNam }, function (data) {
+                            if (data[0] == 1) {
+                                $('#SystemPrice_DC').val(data[1].toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                                $('#Requested_Price_DC').val(data[1].toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                            }
+                            else {
+                                //alert(data[1]);
+                                var pri = 0;
+                                $('#SystemPrice_DC').val(pri.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                                $('#Requested_Price_DC').val(pri.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+
+                                Swal.fire("warning !", data[1], "warning");
+
+                            }
+
+                        })
+                    }
+
+                });
+
+                $("#selectServicelist_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('drugs_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_Servicesspharmacy", { id: value}, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+
+
+                $("#selectlabslist_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('labs_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_Servicesslab", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+                $("#selectscanlist_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('scan_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_Servicessscan", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+                $("#selectopticalcenterlist_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('opticalcenter_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_ServicessOptical", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+
+                $("#selectphysiothrapylist_DC").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var incompleteTasks = document.getElementById('physiothrapy_List_DC');
+                    incompleteTasks.innerHTML = '';
+                    $.get("/ClaimForm/select_Servicessphysiothrapy", { id: value }, function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            var li = document.createElement('option');
+
+                            li.value = data[i];
+                            incompleteTasks.appendChild(li);
+
+                        }
+                    })
+
+                });
+
+
+
+
+                $("body").on("click", "#Medical_History_DC", function () {
+
+
+                    if ($('#CheckCardNum_DC').val() != "1") {
+
+                        if ($('#Card_number_DC').val()=="") {
+
+                            //alert("Please Select Card Number");
+                            Swal.fire("warning !", "Please Select Card Number", "warning");
+
+                        }
+                        if ($('#contractNum_DC').val() == "") {
+                            Swal.fire("warning !", "Please Select Contract Number", "warning");
+
+                            //alert("Please Select Contract Number");
+                        }
+                        else {
+                            var cardNumber = $('#Card_number_DC').val();
+                            var contractNumber = $('#contractNum_DC').val();
+                            //alert(cardNumber);
+                            //alert(contractNumber);
+                            window.open('@Url.Action("MedicalHistory", "ClaimForm")?card_Number=' + cardNumber/* + '&contract_Number=' + contractNumber*/, '_blank');
+                        }
+                    }
+                    else {
+                        //alert("Please Select Card Number");
+                        Swal.fire("warning !", "Please Select Card Number", "warning");
+
+                    }
+
+                })
+
+
+
+               
+
+
+
+            });
+
+
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+</script>
+
+
+<script>
+    $("#pharmacy_role_DC").hide();
+    $("#labs_role_DC").hide();
+    $("#scan_role_DC").hide();
+    $("#opticalcenter_role_DC").hide();
+    $("#physiothrapy_role_DC").hide();
+
+    $("#select_all_DC").change(function () {
+
+        if ($('#select_all_DC').is(":checked") != false) {
+
+            $("#pharmacy_DC").prop('checked', true);
+            $("#labs_DC").prop('checked', true);
+            $("#scan_DC").prop('checked', true);
+            $("#opticalcenter_DC").prop('checked', true);
+            $("#physiothrapy_DC").prop('checked', true);
+
+
+            $("#pharmacy_role_DC").show();
+            $("#labs_role_DC").show();
+            $("#scan_role_DC").show();
+            $("#opticalcenter_role_DC").show();
+            $("#physiothrapy_role_DC").show();
+
+
+        }
+        else {
+            $("#pharmacy_DC").prop('checked', false);
+            $("#labs_DC").prop('checked', false);
+            $("#scan_DC").prop('checked', false);
+            $("#opticalcenter_DC").prop('checked', false);
+            $("#physiothrapy_DC").prop('checked', false);
+
+            $("#pharmacy_role_DC").hide();
+            $("#labs_role_DC").hide();
+            $("#scan_role_DC").hide();
+            $("#opticalcenter_role_DC").hide();
+            $("#physiothrapy_role_DC").hide();
+
+        }
+    });
+
+    $("#pharmacy_DC").change(function () {
+
+        if ($('#pharmacy_DC').is(":checked") != false) {
+            $("#pharmacy_role_DC").show();
+        }
+        else {
+            $("#pharmacy_role_DC").hide();
+        }
+    });
+    $("#labs_DC").change(function () {
+
+        if ($('#labs_DC').is(":checked") != false) {
+            $("#labs_role_DC").show();
+        }
+        else {
+            $("#labs_role_DC").hide();
+        }
+    });
+    $("#scan_DC").change(function () {
+
+        if ($('#scan_DC').is(":checked") != false) {
+            $("#scan_role_DC").show();
+        }
+        else {
+            $("#scan_role_DC").hide();
+        }
+    });
+    $("#opticalcenter_DC").change(function () {
+
+        if ($('#opticalcenter_DC').is(":checked") != false) {
+            $("#opticalcenter_role_DC").show();
+        }
+        else {
+            $("#opticalcenter_role_DC").hide();
+        }
+    });
+    $("#physiothrapy_DC").change(function () {
+
+        if ($('#physiothrapy_DC').is(":checked") != false) {
+            $("#physiothrapy_role_DC").show();
+        }
+        else {
+            $("#physiothrapy_role_DC").hide();
+        }
+    });
+
+</script>
+

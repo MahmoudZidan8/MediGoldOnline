@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3deddd47548840d7a5cad6443674751f" Name="Diagram1">
+        <EntityTypeShape EntityType="MedInsuranceProModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccAccount" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccBankAccount" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccBankBranch" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccBankLetter" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccBank" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccBatchPayment" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccCtrType" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccDocType" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccEntryCtr" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccEntryType" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccJournal" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccJournalEntry" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccPaymentMethod" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccPayment" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccRecInvoice" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccRecInvoiceType" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccRecSchedule" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccReimbBatch" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ActivityData" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ActivityTypeData" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AlertCMCData" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AlertProviderData" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AreaData" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.BrokerData" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.BusinessFieldData" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CCGroupData" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Censu" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CityData" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMApprovalItem" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMApproval" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMApprovalStatu" Width="1.5" PointX="8.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMBatchDeliver" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMBatchHistory" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMBatchStatu" Width="1.5" PointX="16.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMChronicBatch" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMChronicMemberDrug" Width="1.5" PointX="4.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMChronicMember" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMChronicTemplate" Width="1.5" PointX="18.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimICD" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimItem" Width="1.5" PointX="18.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimItemsTemp" Width="1.5" PointX="0.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaim" Width="1.5" PointX="6.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimsItemsONLINE" Width="1.5" PointX="8.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimsONLINE" Width="1.5" PointX="10.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimStatu" Width="1.5" PointX="18.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimsTemp" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMComApprovalItem" Width="1.5" PointX="20.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMComApproval" Width="1.5" PointX="20.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMComApprovalStatu" Width="1.5" PointX="12.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMRecBatch" Width="1.5" PointX="14.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLTClientCustomer" Width="1.5" PointX="20.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLTClient" Width="1.5" PointX="2.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLTContact" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractConDef" Width="1.5" PointX="22.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractCondition" Width="1.5" PointX="22.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractData" Width="1.5" PointX="22.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractDef" Width="1.5" PointX="16.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractFinance" Width="1.5" PointX="22.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractInstallment" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractMember" Width="1.5" PointX="18.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractPlanCeiling" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractPlanPermuim" Width="1.5" PointX="2.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractPVException" Width="1.5" PointX="24.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractReimbBeneficiary" Width="1.5" PointX="24.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractReimbData" Width="1.5" PointX="24.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractReimbDetail" Width="1.5" PointX="24.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Contract" Width="1.5" PointX="24.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractServiceCeiling" Width="1.5" PointX="20.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractType" Width="1.5" PointX="22.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CRMLogActionTypeData" Width="1.5" PointX="24.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CRMLogData" Width="1.5" PointX="8.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CRMRole" Width="1.5" PointX="10.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CRMUser" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerCat" Width="1.5" PointX="26.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerCensu" Width="1.5" PointX="26.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerContactData" Width="1.5" PointX="26.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerData" Width="1.5" PointX="12.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerInvoice" Width="1.5" PointX="26.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerLoginData" Width="1.5" PointX="14.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerLoginStatu" Width="1.5" PointX="26.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerMemberss" Width="1.5" PointX="26.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerSubCat" Width="1.5" PointX="24.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.DrugException" Width="1.5" PointX="26.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Go_RECLAIM" Width="1.5" PointX="2.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.GroupData" Width="1.5" PointX="4.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ICDCode" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.IndiActivityData" Width="1.5" PointX="28.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.IndiCatData" Width="1.5" PointX="6.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.IndividualData" Width="1.5" PointX="28.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.InsuranceCompanyData" Width="1.5" PointX="8.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.IntermediateData" Width="1.5" PointX="28.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LogAction" Width="1.5" PointX="28.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LogData" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LogType" Width="1.5" PointX="20.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUAccommodation" Width="1.5" PointX="28.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUAgeBraket" Width="1.5" PointX="22.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUAgeGroup" Width="1.5" PointX="24.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUAppSerial" Width="1.5" PointX="26.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUCeilingAmount" Width="1.5" PointX="28.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUCeilingType" Width="1.5" PointX="30.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUFixedExpen" Width="1.5" PointX="30.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUGroupDiscount" Width="1.5" PointX="30.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUOrgan" Width="1.5" PointX="30.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUService" Width="1.5" PointX="30.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUServiceType" Width="1.5" PointX="14.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUSession" Width="1.5" PointX="30.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUTemplate" Width="1.5" PointX="16.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUTemplateService" Width="1.5" PointX="30.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LUWaitingPeriod" Width="1.5" PointX="30.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberActivityStatusData" Width="1.5" PointX="30.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberClaimForm" Width="1.5" PointX="30.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberContractStatusData" Width="1.5" PointX="4.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberRelationshipData" Width="1.5" PointX="18.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Messanger" Width="1.5" PointX="32.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferArchive" Width="1.5" PointX="32.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferCondition" Width="1.5" PointX="32.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferFinance" Width="1.5" PointX="32.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferFinanceIn" Width="1.5" PointX="32.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferGroup" Width="1.5" PointX="20.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferIntro" Width="1.5" PointX="22.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferLPlan" Width="1.5" PointX="32.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferLTemplate" Width="1.5" PointX="32.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferPaymentMethod" Width="1.5" PointX="6.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferPlan" Width="1.5" PointX="8.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Offer" Width="1.5" PointX="24.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferSummary" Width="1.5" PointX="26.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferTemplate" Width="1.5" PointX="28.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferType" Width="1.5" PointX="34.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferUFinance" Width="1.5" PointX="34.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferUGroup" Width="1.5" PointX="10.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferUIntro" Width="1.5" PointX="34.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferUPlan" Width="1.5" PointX="12.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferUTemplate" Width="1.5" PointX="34.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PageData" Width="1.5" PointX="14.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PageRoleData" Width="1.5" PointX="16.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PageTypeData" Width="1.5" PointX="34.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PaymentRelation" Width="1.5" PointX="34.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PlanTypeData" Width="1.5" PointX="34.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderClaimRole" Width="1.5" PointX="34.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderContactData" Width="1.5" PointX="34.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderOldCodeMatching" Width="1.5" PointX="30.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderUserData" Width="1.5" PointX="32.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderUserRolesData" Width="1.5" PointX="34.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PTLPricingPlan" Width="1.5" PointX="18.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVArea" Width="1.5" PointX="20.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVBranchData" Width="1.5" PointX="36.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVCity" Width="1.5" PointX="4.75" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVClaimsBook" Width="1.5" PointX="36.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVContract" Width="1.5" PointX="36.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVMedCat" Width="1.5" PointX="36.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVMedData" Width="1.5" PointX="36.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVMedUnit" Width="1.5" PointX="36.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVNetWorkType" Width="1.5" PointX="36.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderCat" Width="1.5" PointX="36.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderClaimBook" Width="1.5" PointX="36.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderData" Width="1.5" PointX="36.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderNetWork" Width="1.5" PointX="6.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderOldData" Width="1.5" PointX="8.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderSubCat" Width="1.5" PointX="14.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVServiceCat" Width="1.5" PointX="26.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVServicePricing" Width="1.5" PointX="28.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVService" Width="1.5" PointX="38.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVServiceType" Width="1.5" PointX="38.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVTemplate" Width="1.5" PointX="38.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVTemplatePricing" Width="1.5" PointX="38.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotaionPlan" Width="1.5" PointX="10.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Quotation" Width="1.5" PointX="38.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationCat" Width="1.5" PointX="38.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationItem" Width="1.5" PointX="20.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationNetwork" Width="1.5" PointX="22.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationService" Width="1.5" PointX="38.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationStatu" Width="1.5" PointX="38.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationTob" Width="1.5" PointX="38.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ReportData" Width="1.5" PointX="0.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ReportOptionData" Width="1.5" PointX="2.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ReportTypeData" Width="1.5" PointX="38.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RoleData" Width="1.5" PointX="40.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RolePagesData" Width="1.5" PointX="40.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Sa_CareItems" Width="1.5" PointX="4.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SalesmanCustomerData" Width="1.5" PointX="40.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SalesmanData" Width="1.5" PointX="40.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.StatusData" Width="1.5" PointX="40.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SubBrokerData" Width="1.5" PointX="12.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SubStatusData" Width="1.5" PointX="14.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.UserData" Width="1.5" PointX="40.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.UserReportOption" Width="1.5" PointX="40.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.UserReportsData" Width="1.5" PointX="40.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.UserRolesData" Width="1.5" PointX="24.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccPaymentStatu" Width="1.5" PointX="40.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.BatchNumTable" Width="1.5" PointX="40.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLM" Width="1.5" PointX="30.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ClmTemp" Width="1.5" PointX="40.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractMemberSerial" Width="1.5" PointX="32.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractProviderType" Width="1.5" PointX="40.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractReimboldData" Width="1.5" PointX="40.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CRMCompany" Width="1.5" PointX="20.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.leadsTest" Width="1.5" PointX="42.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MembershipTypeData" Width="1.5" PointX="42.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferFact" Width="1.5" PointX="42.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PayBatch" Width="1.5" PointX="42.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProviderPeriodTemp" Width="1.5" PointX="42.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.tableName" Width="1.5" PointX="42.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.TempAppToDelete" Width="1.5" PointX="42.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.tempProvidersWrongCat" Width="1.5" PointX="42.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccClaimsRep" Width="1.5" PointX="26.75" PointY="42.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccountingMasterSheet" Width="1.5" PointX="42.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AccRecBatchRep" Width="1.5" PointX="42.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ActivitySearchGridQuery" Width="1.5" PointX="42.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ApprovalView" Width="1.5" PointX="38.75" PointY="42.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.batch_190200070" Width="1.5" PointX="42.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.BatchEntryView" Width="1.5" PointX="0.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.BatchHistoryRep" Width="1.5" PointX="2.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CardNumView" Width="1.5" PointX="4.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.chroniclist" Width="1.5" PointX="10.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.chronicmembersview" Width="1.5" PointX="12.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ClaimsByRecBatchView" Width="1.5" PointX="14.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ClaimsContractOut" Width="1.5" PointX="16.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMApprovalInquiry" Width="1.5" PointX="22.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMApprovalItemInquiry" Width="1.5" PointX="28.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMBatchImportView" Width="1.5" PointX="30.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMBatchRep" Width="1.5" PointX="32.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMClaimsRep" Width="1.5" PointX="44.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMRecBatchRep" Width="1.5" PointX="44.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMUtilizationRep" Width="1.5" PointX="44.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CLMView" Width="1.5" PointX="44.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractMemberView" Width="1.5" PointX="18.75" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractPlanView" Width="1.5" PointX="44.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractsTOBView" Width="1.5" PointX="44.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractsWithPlansView" Width="1.5" PointX="44.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ContractView" Width="1.5" PointX="44.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ConvertMedToService" Width="1.5" PointX="44.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerClaimsInquiry" Width="1.5" PointX="44.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerClaimsInquiry1" Width="1.5" PointX="34.75" PointY="45.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerClaimsInquiry2" Width="1.5" PointX="46.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.GetClaimdIDView" Width="1.5" PointX="2.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.GetClaimsItem" Width="1.5" PointX="4.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.GetClaimSum" Width="1.5" PointX="46.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Heba_Offer" Width="1.5" PointX="6.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ImportBatchSheetClaim" Width="1.5" PointX="46.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ImportClaim" Width="1.5" PointX="46.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQBankLetter" Width="1.5" PointX="46.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQBatchPayment" Width="1.5" PointX="46.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQBatchPaymentStatu" Width="1.5" PointX="46.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQClaimItem" Width="1.5" PointX="46.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQContractMember" Width="1.5" PointX="8.75" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQMemberAddDelete" Width="1.5" PointX="18.75" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQPayment" Width="1.5" PointX="40.75" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQReimBatch" Width="1.5" PointX="46.75" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQTax41" Width="1.5" PointX="48.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.LQUserCLMEntry" Width="1.5" PointX="48.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.Medical_Network" Width="1.5" PointX="48.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MedicalHistoryMember" Width="1.5" PointX="10.75" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberUTView" Width="1.5" PointX="12.75" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemebersView" Width="1.5" PointX="14.75" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.OfferView" Width="1.5" PointX="48.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PaymentView" Width="1.5" PointX="24.75" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ProvidersInquirey" Width="1.5" PointX="48.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVClaimsBookView" Width="1.5" PointX="26.75" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVProviderCatPivotRep" Width="1.5" PointX="48.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PvServicePricingView" Width="1.5" PointX="48.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PvServicePricingView2" Width="1.5" PointX="48.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.QuotationRep" Width="1.5" PointX="48.75" PointY="45.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RecoveryReport" Width="1.5" PointX="20.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RecoveryReportold" Width="1.5" PointX="28.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ReimbursementMasterSheet" Width="1.5" PointX="30.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.TopMasterSheet" Width="1.5" PointX="36.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.UtilizationMasterSheet" Width="1.5" PointX="42.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.View_1" Width="1.5" PointX="50.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MedInsuranceProModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MedInsuranceProModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MedInsuranceProModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ClmApprovalItemsOnline" Width="1.5" PointX="5.375" PointY="50.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ClmApprovalOnline" Width="1.5" PointX="51.375" PointY="7.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AlertCMCDoctor" Width="1.5" PointX="51.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AppVersion" Width="1.5" PointX="13.375" PointY="51.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CustomerClaimsInquiryNew" Width="1.5" PointX="15.375" PointY="51.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.MemberClaimImage" Width="1.5" PointX="51.375" PointY="16.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AlertCMCMemberData" Width="1.5" PointX="51.375" PointY="19.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.DrinkData" Width="1.5" PointX="51.75" PointY="22.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.EatingData" Width="1.5" PointX="51.75" PointY="25.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ethnicityMainGroupData" Width="1.5" PointX="51.75" PointY="29.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ethnicitySubGroupData" Width="1.5" PointX="51.75" PointY="32.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.familyHistoryData" Width="1.5" PointX="33.75" PointY="51.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.HappyHealthData" Width="1.5" PointX="51.75" PointY="35.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.HealthPredictionsHighData" Width="1.5" PointX="51.75" PointY="38.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.HealthPredictionsLowData" Width="1.5" PointX="51.75" PointY="41.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.HealthPredictionsModerateData" Width="1.5" PointX="51.75" PointY="44.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.HoursIntervalData" Width="1.5" PointX="51.75" PointY="47.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ImprovementsData" Width="1.5" PointX="51.75" PointY="50.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.KlarityQuestionData" Width="1.5" PointX="17.75" PointY="52.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.KlarityResultData" Width="1.5" PointX="39.75" PointY="52.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.minutesIntervalData" Width="1.5" PointX="41.75" PointY="52.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PersonhavediseaseData" Width="1.5" PointX="43.75" PointY="52.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PiecesData" Width="1.5" PointX="53.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RecommendationData" Width="1.5" PointX="0.75" PointY="53.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RiskFactorsHighData" Width="1.5" PointX="2.75" PointY="53.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RiskFactorsLowData" Width="1.5" PointX="53.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.RiskFactorsModerateData" Width="1.5" PointX="53.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SexTypeData" Width="1.5" PointX="53.75" PointY="9.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SmokingStatusData" Width="1.5" PointX="53.75" PointY="12.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.sysdiagram" Width="1.5" PointX="53.75" PointY="15.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.AlertSmartCardData" Width="1.5" PointX="53.375" PointY="18.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.SmartCardRequestData" Width="1.5" PointX="5.375" PointY="54.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.WellnessReport" Width="1.5" PointX="7.375" PointY="54.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.File" Width="1.5" PointX="9.375" PointY="54.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.PVMedException" Width="1.5" PointX="20.375" PointY="54.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.CancelReasonData" Width="1.5" PointX="54.375" PointY="21.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ChronicTest" Width="1.5" PointX="22.375" PointY="54.75" />
+        <EntityTypeShape EntityType="MedInsuranceProModel.ChronicTestMember" Width="1.5" PointX="24.375" PointY="54.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

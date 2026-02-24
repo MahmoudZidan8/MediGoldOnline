@@ -1,0 +1,309 @@
+﻿
+@{
+    ViewBag.Title = "Edit_User_Roles";
+}
+
+<h2 style="color:teal;text-align:center">Edit User Roles</h2>
+
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+<style>
+    #User_list {
+        max-width: 450px;
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table, table table td {
+            border: 0px solid #ccc;
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<br />
+<br />
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">Users Roles Data</legend>
+    <div class="container" style="text-align:center;background:#e2dede;width:1080px;height:70px">
+        <br />
+        <p>
+            @Html.Label("Users list")
+            @Html.DropDownList("Citydropdown1", new SelectList(ViewBag.li), "----Select User Name----", htmlAttributes: new { @class = "form-control", @id = "User_list", @Name = "User_list" })
+        </p>
+
+    </div>
+
+    <br />
+    <br />
+    <label>Select All </label>
+    <input type="checkbox" id="select_all" name="select_all" />
+    <br />
+    <table class="table" id="tblUser_Roles" cellpadding="0" cellspacing="0">
+        <thead class="table-dark">
+
+        </thead>
+        <tr>
+            <th>Role Name</th>
+            <th>IsChecked</th>
+
+        </tr>
+        <tbody>
+
+            <tr>
+                <td>Pages</td>
+                <td></td>
+
+            </tr>
+
+            <tr>
+                <td>Upload Member Claim</td>
+                <td><input type="checkbox" id="UploadMember_Claim" name="UploadMember_Claim" /></td>
+
+            </tr>
+
+            <tr>
+                <td>Medical Services</td>
+                <td><input type="checkbox" id="Medical_Services" name="Medical_Services" /></td>
+
+            </tr>
+            <tr>
+                <td>ClaimForm Approved</td>
+                <td><input type="checkbox" id="ClaimForm_Approved" name="ClaimForm_Approved" /></td>
+
+            </tr>
+            <tr>
+                <td>Approval</td>
+                <td><input type="checkbox" id="Approval" name="Approval" /></td>
+
+            </tr>
+            <tr>
+                <td>Expanded Services</td>
+                <td><input type="checkbox" id="Expanded_Services" name="Expanded_Services" /></td>
+
+            </tr>
+            <tr>
+                <td>Payment Inquiry</td>
+                <td><input type="checkbox" id="Payment_Inquiry" name="Payment_Inquiry" /></td>
+
+            </tr>
+            <tr>
+                <td>Invoices Audit</td>
+                <td><input type="checkbox" id="Invoices_Audit" name="Invoices_Audit" /></td>
+
+            </tr>
+            <tr>
+                <td>Doctor ClaimForm</td>
+                <td><input type="checkbox" id="Doctor_ClaimForm" name="Doctor_ClaimForm" /></td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-lg" style="text-align:center">
+        <input type="submit" value="Update" id="User_role" class="btn btn-success btn-lg" />
+    </div>
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#User_list").select2();
+
+        $("#User_list").change(function () {
+            $.get("/UserDatas/Get_User_Roless", { id: $('#User_list').val() }, function (data) {
+
+                if (data[0] == 0) {
+                    // alert(data[1][0]);
+                    if (data[1][0] != false) { $("#UploadMember_Claim").prop('checked', true); }
+                    else { $('#UploadMember_Claim').prop('checked', false); }
+
+                    if (data[1][1] != false) { $("#Medical_Services").prop('checked', true); }
+                    else { $('#Medical_Services').prop('checked', false); }
+
+
+                    if (data[1][2] != false) { $("#ClaimForm_Approved").prop('checked', true); }
+                    else { $('#ClaimForm_Approved').prop('checked', false); }
+
+                    if (data[1][3] != false) { $("#Expanded_Services").prop('checked', true); }
+                    else { $('#Expanded_Services').prop('checked', false); }
+
+                    if (data[1][4] != false) { $("#Payment_Inquiry").prop('checked', true); }
+                    else { $('#Payment_Inquiry').prop('checked', false); }
+
+                    if (data[1][5] != false) { $("#Invoices_Audit").prop('checked', true); }
+                    else { $('#Invoices_Audit').prop('checked', false); }
+
+                    if (data[1][6] != false) { $("#Approval").prop('checked', true); }
+                    else { $('#Approval').prop('checked', false); }
+
+                    
+                    if (data[1][7] != false) { $("#Doctor_ClaimForm").prop('checked', true); }
+                    else { $('#Doctor_ClaimForm').prop('checked', false); }
+
+
+                    // alert("User Roles is Updated");
+
+                }
+                else {
+                    //alert(data[1]);
+                }
+
+            })
+
+
+        });
+        $("body").on("click", "#User_role", function () {
+            //alert($('#Cliams_Booklet').is(":checked"));
+            $.get("/UserDatas/Edit_User_Roless", {
+                User_list: $('#User_list').val(),
+                UploadMember_Claim: $('#UploadMember_Claim').is(":checked"),
+                Medical_Services: $('#Medical_Services').is(":checked"),
+                ClaimForm_Approved: $('#ClaimForm_Approved').is(":checked"),
+                Approval: $('#Approval').is(":checked"),
+                Expanded_Services: $('#Expanded_Services').is(":checked"),
+                Payment_Inquiry: $('#Payment_Inquiry').is(":checked"),
+                Invoices_Audit: $('#Invoices_Audit').is(":checked"),
+                Doctor_ClaimForm: $('#Doctor_ClaimForm').is(":checked")
+            }, function (data) {
+
+                if (data[0] == 0) {
+
+                    //alert("User Roles is Edited");
+                    Swal.fire("Success", "User Roles is Edited Successfully", "success");
+
+                }
+                else {
+                    Swal.fire("Error !", data[1], "error");
+
+                    //alert(data[1]);
+                }
+
+
+
+            })
+        });
+        $("#select_all").change(function () {
+
+            //alert($('#select_all').is(":checked"));
+            if ($('#select_all').is(":checked") != false) {
+                $("#UploadMember_Claim").prop('checked', true);
+                $("#Medical_Services").prop('checked', true);
+                $("#ClaimForm_Approved").prop('checked', true);
+                $("#Approval").prop('checked', true);
+                $("#Expanded_Services").prop('checked', true);
+                $("#Payment_Inquiry").prop('checked', true);
+                $("#Invoices_Audit").prop('checked', true);
+                $("#Doctor_ClaimForm").prop('checked', true);
+            }
+            else {
+                $("#UploadMember_Claim").prop('checked', false);
+                $("#Medical_Services").prop('checked', false);
+                $("#ClaimForm_Approved").prop('checked', false);
+                $("#Approval").prop('checked', false);
+                $("#Expanded_Services").prop('checked', false);
+                $("#Payment_Inquiry").prop('checked', false);
+                $("#Invoices_Audit").prop('checked', false);
+                $("#Doctor_ClaimForm").prop('checked', false);
+            }
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+</script>
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+

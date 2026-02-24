@@ -1,0 +1,303 @@
+﻿@model GuardianOnline.Infrastructure.PVProviderData
+@{
+    ViewBag.Title = "Login";
+
+    // ✅ اختر النظام هنا:
+    // System A (Home)
+    // var loginPostUrl = Url.Action("LoginPost", "Home");
+    // var successUrl   = Url.Action("Index", "Home");
+
+    // System B (ClaimForm)
+    var loginPostUrl = Url.Action("LoginPost", "ClaimForm");
+    var successUrl = Url.Action("DoctorHome", "ClaimForm");
+}
+
+<div class="container-fluid">
+    <div class="row main-content text-center">
+        <div class="col-md-8 company__info">
+            <img src="~/Images/qqqq.jpg" alt="..." class="login__img" />
+            <div class="img__overlay"></div>
+            <div class="img__text">
+                <h2>MediGold Online</h2>
+                <p>Claims / Providers Portal</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-xs-12 col-sm-12 login_form">
+            <div class="container-fluid">
+                <div>
+                    <h1 class="h11">Login</h1>
+                    <p class="sub-title">Enter your credentials to continue</p>
+                </div>
+
+                @* ✅ فورم حقيقي + AntiForgery *@
+                <form id="loginForm" class="form-group">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <input type="text" name="user" id="user" class="form__input"
+                               placeholder="Username" autocomplete="username" required>
+                    </div>
+
+                    <div class="row pass-wrap">
+                        <input type="password" name="password" id="password" class="form__input"
+                               placeholder="Password" autocomplete="current-password" required>
+
+                        <button type="button" class="pass-toggle" id="togglePass" aria-label="Show password">
+                            <span id="toggleIcon">👁</span>
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <button type="submit" id="Loginn" class="btn btn-login">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <div class="note-links">
+                            <a href="https://www.medigold-health.com/" target="_blank">MediGold Website</a>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="flex-c-m">
+                    <a href="https://www.facebook.com/" target="_blank" class="login100-social-item bg1"><i class="fa fa-facebook"></i></a>
+                    <a href="https://twitter.com/" target="_blank" class="login100-social-item bg2"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.google.com/" target="_blank" class="login100-social-item bg3"><i class="fa fa-google"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .main-content {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+        margin: 5em auto;
+        display: flex;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .company__info {
+        position: relative;
+        height: 520px;
+        background: #efefef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .login__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .img__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(0,0,0,.10));
+    }
+
+    .img__text {
+        position: absolute;
+        left: 26px;
+        bottom: 26px;
+        color: #fff;
+        text-align: left;
+    }
+
+        .img__text h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .img__text p {
+            margin: 6px 0 0 0;
+            color: rgba(255,255,255,.85);
+        }
+
+    .login_form {
+        background-color: #fff;
+        padding: 22px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .h11 {
+        color: #008080;
+        font-size: 38px;
+        line-height: 1.2;
+        text-align: center;
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .sub-title {
+        text-align: center;
+        margin: 8px 0 18px 0;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    form {
+        padding: 0 1.2em;
+        width: 100%;
+    }
+
+    .form__input {
+        width: 100%;
+        border: 1px solid #d9d9d9;
+        border-radius: 12px;
+        text-align: center;
+        outline: none;
+        margin: 14px auto;
+        transition: all .2s ease;
+        height: 52px;
+        font-size: 16px;
+        box-shadow: 0 0 10px rgba(0, 128, 128, 0.08);
+    }
+
+        .form__input:focus {
+            border-color: #008080;
+            box-shadow: 0 0 0 4px rgba(0,128,128,.12);
+        }
+
+    .pass-wrap {
+        position: relative;
+    }
+
+    .pass-toggle {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 18px;
+        opacity: .8;
+    }
+
+        .pass-toggle:hover {
+            opacity: 1;
+        }
+
+    .btn-login {
+        transition: all .2s ease;
+        width: 100%;
+        border-radius: 14px;
+        color: #fff;
+        font-weight: 800;
+        background-color: #008080;
+        border: 1px solid #008080;
+        margin-top: 10px;
+        height: 54px;
+        font-size: 16px;
+        box-shadow: 0 10px 25px rgba(0,128,128,.18);
+    }
+
+        .btn-login:hover {
+            filter: brightness(.95);
+        }
+
+    .note-links {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 13px;
+    }
+
+    .flex-c-m {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 18px;
+    }
+
+    .bg1 {
+        background-color: #3b5998
+    }
+
+    .bg2 {
+        background-color: #1da1f2
+    }
+
+    .bg3 {
+        background-color: #ea4335
+    }
+
+    .login100-social-item {
+        font-size: 22px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        margin: 6px;
+    }
+
+        .login100-social-item:hover {
+            background: #333;
+        }
+
+    @@media screen and (max-width: 640px) {
+        .company__info {
+            display: none;
+        }
+
+        .main-content {
+            width: 95%;
+            margin: 2em auto;
+        }
+    }
+</style>
+
+<script>
+    $(function () {
+
+        // ✅ Toggle password
+        $("#togglePass").on("click", function () {
+            const input = $("#password");
+            const isPass = input.attr("type") === "password";
+            input.attr("type", isPass ? "text" : "password");
+            $("#toggleIcon").text(isPass ? "🙈" : "👁");
+        });
+
+        // ✅ Submit once (no duplicated click handlers)
+        $("#loginForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const user = $("#user").val();
+            const password = $("#password").val();
+            const token = $('input[name="__RequestVerificationToken"]').val();
+
+            $.ajax({
+                url: "@loginPostUrl",
+                type: "POST",
+                data: { user: user, password: password, __RequestVerificationToken: token },
+                success: function (data1) {
+                    if (!data1) {
+                        Swal.fire("Warning !", "invalid user Name OR Password <br> Please Enter Valid user Name And Password", "warning");
+                        return;
+                    }
+                    window.location = "@successUrl";
+                },
+                error: function () {
+                    Swal.fire("Error", "Server error. Please try again.", "error");
+                }
+            });
+        });
+
+    });
+</script>

@@ -1,0 +1,636 @@
+﻿@model GuardianOnline.Infrastructure.MemberClaimForm
+
+@{
+    ViewBag.Title = "UploadMemberClaim";
+}
+
+<style>
+    /*body {
+            background-image:url('../Images/login.jpg');
+        }*/
+    /*table1 {
+        border: 1px solid black;
+    }*/
+    #ClaimForm_Number, #Card_number, #imgfile {
+        font-size: 18px;
+        color: black;
+    }
+
+    #ClaimForm_Numberlabel, #Card_numberlabel, #imgfilelabel {
+        font-size: 18px;
+        color: black;
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table, table table td {
+            border: 0px solid #ccc;
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+
+    #pagination {
+        width: 100%;
+        text-align: center;
+    }
+
+        #pagination ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+</style>
+<style>
+
+    #link {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+        .previous:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .next {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    .round {
+        background-color: teal;
+        color: white;
+        border-radius: 50%;
+    }
+</style>
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+<input type="hidden" id="trigger" value="0" />
+<input type="hidden" id="triggercount" value="0" />
+
+<input type="hidden" id="trigger1" value="0" />
+<input type="hidden" id="triggercount1" value="0" />
+
+<h2 style="color:teal;text-align:center">Member ClaimForm</h2>
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
+@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
+
+@using (Html.BeginForm("UploadMemberClaim", "ClaimForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @*<h4>MemberClaimForm</h4>
+            <hr />*@
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border" style="color:teal">Member ClaimForm Content</legend>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <br />
+            <br />
+            <div class="form-group">
+
+                @Html.Label("ClaimForm Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "ClaimForm_Numberlabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.ClaimFormNumber, new { htmlAttributes = new { @class = "form-control", @id = "ClaimForm_Number", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.ClaimFormNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                @Html.Label("Card Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "Card_numberlabel" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control", @id = "Card_number", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.EntryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EntryID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EntryID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.EntryDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EntryDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EntryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.MemberClaimformStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MemberClaimformStatus, new { htmlAttributes = new { @class = "form-control", @Value = 1 } })
+                    @Html.ValidationMessageFor(model => model.MemberClaimformStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.ProviderCat, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProviderCat, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProviderCat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("ClaimForm Image", htmlAttributes: new { @class = "control-label col-md-3", @id = "imgfilelabel" })
+                <div class="col-md-9">
+                    <input type="file" id="imgfile" name="imgfile" class="form-control icon-file_upload" required />
+                    @*@Html.EditorFor(model => model.ClaimFormImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.ClaimFormImage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9" style="text-align:center">
+                    <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block" @*style="width:190px"*@ />
+                </div>
+            </div>
+            <br />
+            <br />
+            <div>
+                <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main List@*</u>*@</a>
+                @*@Html.ActionLink("Back to List", "Index")*@
+            </div>
+
+        </fieldset>
+
+    </div>
+}
+
+@*eror messages*@
+@if (ViewBag.card_numberqq != null && ViewBag.card_numberqq != "")
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                $('#Card_number').val("@ViewBag.card_numberqq");
+                //$('#Check_CardNumber').click();
+
+            };
+    </script>
+}
+
+@*eror messages*@
+@if (ViewBag.ErorMessage != null)
+{
+    <script type="text/javascript">
+
+        window.onload = function () {
+            Swal.fire("Error !", "@ViewBag.ErorMessage", "error");
+
+                @*alert("@ViewBag.ErorMessage");*@
+            };
+    </script>
+}
+
+
+
+
+<script type="text/javascript">
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            //$.connection.hub.disconnect();
+            // $.connection.hub.disconnected(function () {
+            //});
+            $.connection.hub.stop();
+
+             //console.log("tab out")
+            // tab is changed
+        } else {
+            //$.connection.hub.connect();
+            $.connection.hub.start().done(function () {
+                 //console.log("connection started")
+                //notifications.onconn();
+                getData();
+                getData1();
+            }).fail(function (e) {
+                //console.log(e);
+            });
+            //console.log("tab in")
+
+            // tab is active
+        }
+    });
+
+    function sleep(ms) {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+
+
+    }
+    $(function () {
+        // Proxy created on the fly
+        var cus = $.connection.cusHub;
+        //var cus1 = $.connection.cusHub1;
+        //console.log(cus)
+        // Declare a function on the job hub so the server can invoke it
+        cus.client.displayCustomer = function () {
+            // async function a() {
+            getData();
+            //   await sleep(2000);
+            //  getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+        cus.client.data = function () {
+            //async function a() {
+            //    getData();
+            //    await sleep(2000);
+            getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+
+        cus.client.data1 = function () {
+            getData2();
+        };
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+        getData1();
+        getData2();
+        //async function aa() {
+        //    getData();
+        //    await sleep(2000);
+        //    getData1();
+        //}
+        //aa();
+
+
+    });
+    function getData1() {
+        try {
+
+        //var $tbl = $('#tblInfo');
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data1) {
+
+                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                    if (data == 0) {
+                        $('#MesaageCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MesaageCount').attr("data-count", data);
+                    }
+                    // console.log(data);
+                });
+
+
+                $.each(data1.listCus, function (i, model) {
+
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+    function getData() {
+        try {
+
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                }
+                //alert(provid);
+                //alert(branchid);
+
+                @*alert("@Session["providerid"]");
+                alert(data.ProviderID);*@
+
+                //$tbl.empty();
+                $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#NotifactionCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#NotifactionCount').attr("data-count", data1);
+                    }
+                });
+
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1) ) {
+                        $('#trigger').val("1");
+
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+
+                        @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                        if (result == true) {
+                                window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        }
+                        else {
+
+                        }
+                            $('#trigger').val("0");*@
+
+                                    if ("@Session["ClaimForm_Approved"]"!="") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                   if (ClaimForm_Approv == 1) {
+                                       var sound = new Audio('/Media/alert.mp3');
+                                       sound.play();
+                                       setTimeout(function () {
+                                           snackbar.classList.add('isShown');
+                                           $('#CardNumbersnackbar').text(model.CardNumber)
+                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                           setTimeout(hideSnackbar, 5000);
+                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                                        if (result == true) {
+                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                                       }
+                                       else {
+
+                                       }*@
+                                       $('#trigger').val("0");
+                                           if (data2 == 0) {
+                                           $('#NotifactionCount').removeAttr("data-count");
+
+                                       }
+                                       else {
+                                               $('#NotifactionCount').attr("data-count", data2);
+                                           }
+                                       }, 100);
+                                }
+                                 }
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+        });
+    }
+        catch (err) {
+    }
+    }
+    function getData2() {
+        try {
+
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+                  var ApprovePage1 = 0;
+                  var ApprovePage2 = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                     ApprovePage1 = parseInt("@Session["Approval"]");
+                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                }
+
+                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                    }
+                });
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
+                        $('#trigger1').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                       
+                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+
+                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+
+                            //if (result == true) {
+                            var sound = new Audio('/Media/alert.mp3');
+                            sound.play();
+                            setTimeout(function () {
+                                snackbarMember.classList.add('isShown');
+                                $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                setTimeout(hideSnackbard1, 5000);
+                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
+                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        //}
+                        //else {
+
+                        //}
+                            $('#trigger1').val("0");
+                                if (data2 == 0) {
+                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                            }
+                            else {
+                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                }
+                            }, 100);
+
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+</script>
+
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+
+
+@*<script type="text/javascript">
+        $(function () {
+
+            // Proxy created on the fly
+            var cus = $.connection.cusHub;
+
+            // Declare a function on the job hub so the server can invoke it
+            cus.client.displayCustomer = function () {
+                getData1();
+            };
+
+            // Start the connection
+            $.connection.hub.start();
+            getData1();
+        });
+
+        function getData1() {
+            //var $tbl = $('#tblInfo');
+            $.ajax({
+                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                        if (data == 0) {
+                            $('#MesaageCount').removeAttr("data-count");
+
+                        }
+                        else {
+                            $('#MesaageCount').attr("data-count", data);
+                        }
+                        // console.log(data);
+                    });
+
+
+                    $.each(data.listCus, function (i, model) {
+
+                    });
+                }
+            });
+        }
+
+    </script>*@

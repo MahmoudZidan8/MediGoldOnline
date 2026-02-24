@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row main-content bg-success text-center">
+            <div class="col-md-12  company__info">
+                <img src="~/Images/qqqq.jpg" alt="..." align="middle" width="700" height="550" style="position:relative;" />
+
+                @*<span class="company__logo"><h2><span class="fa fa-android"></span></h2></span>
+        <h4 class="company_title">Your Company Logo</h4>*@
+            </div>
+            <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+                <div class="container-fluid">
+                    <div class="row" style="text-align:center">
+                        @*<h1>Log In</h1>*@
+                        <h1>Login</h1>
+                    </div>
+                    <div class="row">
+                        <form control="" class="form-group">
+                            <div class="row">
+                                <input type="text" name="username" id="username" class="form__input" placeholder="User Name">
+                            </div>
+                            <div class="row">
+                                <!-- <span class="fa fa-lock"></span> -->
+                                <input type="password" name="password" id="password" class="form__input" placeholder="Password">
+                            </div>
+                            @*<div class="row">
+                    <input type="checkbox" name="remember_me" id="remember_me" class="">
+                    <label for="remember_me">Remember Me!</label>
+                </div>*@
+                            <div class="row">
+                                <input type="submit" value="Submit" class="btn">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="flex-c-m">
+                        <a href="https://www.facebook.com/" target="_blank" class="login100-social-item bg1">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+
+                        <a href="https://twitter.com/" class="login100-social-item bg2" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+
+                        <a href="https://www.google.com/" class="login100-social-item bg3" target="_blank">
+                            <i class="fa fa-google"></i>
+                        </a>
+                    </div>
+                    <div class="row">
+            <p>Go To Tristar Web Site? <a href="https://tristarinco.com/" target="_blank">From Here</a></p>
+        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+    <style>
+        .flex-c-m {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            -ms-align-items: center;
+            align-items: center;
+        }
+
+        .bg1 {
+            background-color: #3b5998
+        }
+
+        .bg2 {
+            background-color: #1da1f2
+        }
+
+        .bg3 {
+            background-color: #ea4335
+        }
+
+
+
+        /*//////////////////////////////////////////////////////////////////
+[ Social item ]*/
+        .login100-social-item {
+            font-size: 25px;
+            color: #fff;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 5px;
+        }
+
+            .login100-social-item:hover {
+                color: #fff;
+                background-color: #333333;
+            }
+
+        ::-webkit-input-placeholder { /* Edge */
+            color: darkgray;
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer */
+            color: darkgray;
+        }
+
+::placeholder {
+  color: darkgray;
+}
+    .main-content{
+	width: 100%;
+	border-radius: 20px;
+	box-shadow: 0 5px 5px rgba(0,0,0,.4);
+	margin: 5em auto;
+	display: flex;
+}
+        .company__info {
+            /*padding-top:100px;
+            max-width: 50%;
+            max-height: 100% ;
+            width: 5px;
+            height: 500px;*/
+            /*background-repeat: no-repeat;*/
+            background-color: #efefef;
+            /*background-image: url('/Images/qqqq.jpg');*/
+            background-size: contain;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            display: flex;
+            /*flex-direction: column;
+            justify-content: center;*/
+            color: #fff;
+        }
+.fa-android{
+	font-size:3em;
+}
+@@media screen and (max-width: 640px) {
+	.main-content{width: 90%;}
+	.company__info{
+		display: none;
+	}
+	.login_form{
+		border-top-left-radius:20px;
+		border-bottom-left-radius:20px;
+	}
+}
+@@media screen and (min-width: 642px) and (max-width:800px){
+	.main-content{width: 70%;}
+}
+        .row > h1 {
+            color: #008080;
+            display: block;
+            font-family: Poppins-Bold;
+            font-size: 39px;
+            line-height: 1.2;
+            text-align: center;
+        }
+.login_form{
+	background-color: #fff;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+	border-top:1px solid #ccc;
+	border-right:1px solid #ccc;
+    width:500px;
+    height:600px;
+}
+form{
+	padding: 0 2em;
+}
+.form__input{
+	width: 100%;
+	border:0px solid transparent;
+	border-radius: 0;
+	border-bottom: 1px solid #aaa;
+	padding: 1em .5em .5em;
+	padding-left: 2em;
+	outline:none;
+	margin:2.5em auto;
+	transition: all .5s ease;
+    height:70px;
+
+
+}
+.form__input:focus{
+	border-bottom-color: #008080;
+	box-shadow: 0 0 5px rgba(0,80,80,.4);
+	border-radius: 4px;
+
+}
+
+        .btn {
+            transition: all .5s ease;
+            width: 100%;
+            border-radius: 30px;
+            color: #008080;
+            font-weight: 900;
+            background-color: #fff;
+            border: 1px solid #008080;
+            margin-top: 1.5em;
+            margin-bottom: 1em;
+            height: 70px;
+            box-shadow: 0 0 5px rgba(0,80,80,.4);
+        }
+.btn:hover, .btn:focus{
+	background-color: #008080;
+	color:darkgray;
+}
+    </style>

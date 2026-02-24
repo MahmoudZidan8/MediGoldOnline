@@ -1,0 +1,1647 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{03165467-96CE-4929-BC98-EC030273C2FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GuardianOnline.Infrastructure</RootNamespace>
+    <AssemblyName>GuardianOnline.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Authentication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Authentication.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Authentication.Cookies, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Authentication.Cookies.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Authentication.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Cryptography.Internal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cryptography.Internal.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Cryptography.KeyDerivation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cryptography.KeyDerivation.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Cryptography.KeyDerivation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.DataProtection.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.DataProtection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.DataProtection.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FileProviders.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Hosting.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Hosting.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Http.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Http.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Http.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Http.Extensions.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Http.Features, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Http.Features.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.WebUtilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebUtilities.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.OptionsModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.OptionsModel.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.OptionsModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.PlatformAbstractions.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.WebEncoders.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.Core.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.WebEncoders.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.1.0.0-rc1-final\lib\net451\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.2.2\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.51.5185.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.51.5185-beta\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.51.5185.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.51.5185-beta\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccAccount.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBank.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankAccount.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankAccountsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankBranch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankBranchAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankLetter.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBankLettersAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBanksAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBatchPayment.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccBatchPaymentsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccClaimsRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccCtrType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccCtrTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccDocType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccDocTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccEntryCtr.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccEntryCtrAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccEntryType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccEntryTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccHelperAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccJournal.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccJournalAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccJournalEntry.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccJournalEntryAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingMasterSheet.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPayableRepAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPayment.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPaymentMethod.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPaymentMethodAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPaymentsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccPaymentStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecBatchRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecInvoice.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecInvoiceAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecInvoiceType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecInvoiceTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecSchedule.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccRecScheduleAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccReimbBatch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccReimbBatchAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccReimbPaymentAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivitySearchGridQuery.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityTypeDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlertCMCData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlertCMCDoctor.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlertCMCMemberData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlertProviderData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlertSmartCardData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppVersion.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AreaData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AreaDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetRole.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserClaim.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserLogin.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchEntryView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchHistoryRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchNumTable.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="batch_190200070.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BrokerData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BrokerDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessFieldData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessFieldDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CancelReasonData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CardNumView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CCGroupData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CCGroupDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Censu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CensusAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="chroniclist.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="chronicmembersview.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChronicTest.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChronicTestMember.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CityData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CityDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClaimsByRecBatchView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClaimsContractOut.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLM.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApproval.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalInquiry.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalItemInquiry.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalItemsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClmApprovalItemsOnline.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClmApprovalOnline.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMApprovalStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchDeliver.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchDeliverAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchHistory.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchImportView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMBatchStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicBatch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicBatchAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicMember.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicMemberDrug.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicMemberDrugAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicMembersAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMChronicTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaim.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimICD.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimICDAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimItemsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimItemsTemp.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsActionOld_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsItemsONLINE.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsONLINE.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimsTemp.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMClaimUtilizationAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMComApproval.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMComApprovalItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMComApprovalItemsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMComApprovalsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMComApprovalStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMRecBatch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMRecBatchAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMRecBatchRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClmTemp.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMUtilizationAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMUtilizationRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLMView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTClient.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTClientCustomer.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTClientCustomersAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTClientsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTContact.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CLTContactsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contract.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractConDef.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractConDefAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractCondition.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractConditionsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractDef.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractDefAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractFinance.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractFinanceAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractInstallment.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractInstallmentsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractMember.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractMembersAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractMemberSerial.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractMemberView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPlanCeiling.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPlanCeilingAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPlanPermuim.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPlanPermuimAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPlanView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractProviderType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPVException.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractPVExceptionAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbBeneficiary.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbBeneficiaryAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbDetail.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimbDetailAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractReimboldData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractServiceCeiling.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractServiceCeilingAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractsTOBView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractsWithPlansView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConvertMedToService.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMCompany.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMCompanyAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMLogActionTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMLogActionTypeDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMLogData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMLogDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMRole.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMRoleAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMUser.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRMUserAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerCensu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerCensusAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerClaimsInquiry.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerClaimsInquiry1.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerClaimsInquiry2.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerClaimsInquiryNew.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerContactData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerContactDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInvoice.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInvoicesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerLoginData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerLoginStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerMemberss.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerSubCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerSubCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomizeUserData.cs" />
+    <Compile Include="C__MigrationHistory.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DrinkData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DrugException.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DrugExceptionAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EatingData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ethnicityMainGroupData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ethnicitySubGroupData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="familyHistoryData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="File.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClaimdIDView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClaimsItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClaimSum.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Go_RECLAIM.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GroupData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GroupDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GuardinOnlineContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuardinOnlineContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GuardinOnlineContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GuardinOnlineContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuardinOnlineContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="HappyHealthData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HealthPredictionsHighData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HealthPredictionsLowData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HealthPredictionsModerateData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Heba_Offer.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoursIntervalData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ICDCode.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ICDCodesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportBatchSheetClaim.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportClaim.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImprovementsData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndiActivityData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndiActivityDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndiCatData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndiCatDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndividualData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndividualDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InsuranceCompanyData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IntermediateData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IntermediateDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KlarityQuestionData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KlarityResultData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="leadsTest.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogAction.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQBankLetter.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQBatchPayment.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQBatchPaymentStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQClaimItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQContractMember.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQMemberAddDelete.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQPayment.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQReimBatch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQTax41.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LQUserCLMEntry.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAccommodation.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAccommodationAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAgeBraket.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAgeBraketAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAgeGroup.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAgeGroupAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAppSerial.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUAppSerialAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUCeilingAmount.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUCeilingAmountsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUCeilingType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUCeilingTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUFixedExpen.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUFixedExpensAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUGroupDiscount.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUGroupDiscountAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUOrgan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUOrganAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUService.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUServicesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUServiceType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUServiceTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUSession.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUSessionAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUTemplateService.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUTemplateServiceAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUWaitingPeriod.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LUWaitingPeriodAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalHistoryMember.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Medical_Network.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberActivityStatusData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberActivityStatusDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberClaimForm.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberClaimImage.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberContractStatusData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberContractStatusDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberRelationshipData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberRelationshipDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MembershipTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MembershipTypeDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberUtilizationCieling_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberUTView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemebersView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Messanger.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="minutesIntervalData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Offer.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferArchive.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferArchiveAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferCondition.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferConditionsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferFact.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferFinance.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferFinanceAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferFinanceIn.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferFinanceInAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferGroup.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferGroupAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferIntro.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferIntroAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferLPlan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferLPlanAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferLTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferLTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferPaymentMethod.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferPlan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferPlanAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OffersAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferSummary.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferSummaryAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUFinance.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUFinanceAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUGroup.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUIntro.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUPlan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferuPlanAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferUTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfferView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageRoleData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageRoleDataActions_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageTypeAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PageTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayBatch.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentRelation.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonhavediseaseData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PiecesData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanTypeDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProviderClaimRole.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderContactData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderContactDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderOldCodeMatching.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderPeriodTemp.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProvidersInquirey.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderUserData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderUserRolesData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PTLPricingPlan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVArea.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVAreaAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVBranchData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVBranchDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVCity.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVCityAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVClaimsBook.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVClaimsBookAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVClaimsBookView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVContract.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVContractAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedException.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedUnit.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVMedUnitAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVNetWorkType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVNetWorkTypesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderCatPivotRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderClaimBook.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderClaimBooksAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderNetWork.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderNetWorkAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderOldData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderSubCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVProviderSubCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVService.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServiceCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServiceCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServicePricing.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServicePricingAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PvServicePricingView.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PvServicePricingView2.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServicesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVServiceType.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVTemplate.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVTemplateAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PVTemplatePricing.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotaionPlan.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotaionPlanAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Quotation.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationCatAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationItem.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationItemsAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationNetwork.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationNetworkAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationRep.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationService.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationServicesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationStatu.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationTob.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationTobAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecommendationData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecoveryReport.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecoveryReportold.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReimbursementMasterSheet.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportOptionData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiskFactorsHighData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiskFactorsLowData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiskFactorsModerateData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RolePagesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RolePagesData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesmanCustomerData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesmanCustomerDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesmanData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesmanDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sa_CareItems.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SexTypeData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmartCardRequestData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmokingStatusData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatusData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StatusDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubBrokerData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubBrokerDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubStatusData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubStatusDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tableName.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempAppToDelete.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tempProvidersWrongCat.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TopMasterSheet.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserReportOption.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserReportOptionAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserReportsData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserReportsDataAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRolesAction_Result.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRolesData.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UtilizationMasterSheet.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_1.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WellnessReport.cs">
+      <DependentUpon>GuardinOnlineContext.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="GuardinOnlineContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GuardinOnlineContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="GuardinOnlineContext.edmx.diagram">
+      <DependentUpon>GuardinOnlineContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-3.7.1.min.map" />
+    <None Include="Scripts\jquery-3.7.1.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GuardinOnlineContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GuardinOnlineContext.edmx</DependentUpon>
+      <LastGenOutput>GuardinOnlineContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="GuardinOnlineContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GuardinOnlineContext.edmx</DependentUpon>
+      <LastGenOutput>GuardinOnlineContext.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

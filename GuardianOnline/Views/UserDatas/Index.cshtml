@@ -1,0 +1,345 @@
+﻿@model IEnumerable<GuardianOnline.Infrastructure.ProviderUserData>
+
+@{
+    ViewBag.Title = "Index";
+}
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+<style>
+    #User_list {
+        max-width: 450px;
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 8pt;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        table th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table, table table td {
+            border: 0px solid #ccc;
+        }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
+        box-shadow: 5px 5px 5px 5px #700c0c;
+    }
+
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<h2 style="color:teal;text-align:center">Users</h2>
+
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">Users Data</legend>
+
+    <p>
+        @*@Html.ActionLink("Create New", "Create",null,new {@class="btn btn-primary " })*@
+        <a href="@Url.Action("create","UserDatas")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add User
+        </a>
+    </p>
+    <div class="container" style="text-align:center;background:#e2dede;width:1080px;height:70px">
+        <p>
+            @Html.Label("Users list")
+            @Html.DropDownList("Citydropdown1", new SelectList(ViewBag.li), "----Select User Name----", htmlAttributes: new { @class = "form-control", @id = "User_list", @Name = "User_list" })
+        </p>
+
+    </div>
+
+    <br />
+    <br />
+
+
+    <table class="table" id="tblusers" cellpadding="0" cellspacing="0">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserPassword)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IPAddress)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.LastLoginDate)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLockedOut)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IsFirstLogin)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.InvalidPasswordAttempts)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            <th></th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserPassword)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IPAddress)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.LastLoginDate)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsLockedOut)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IsFirstLogin)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.InvalidPasswordAttempts)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsAdmin)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#User_list").select2();
+
+        $("#User_list").change(function () {
+
+            $.get("/UserDatas/Select_User", { id: $('#User_list').val() }, function (data) {
+
+                $("#tblusers").find("tr:not(:first)").remove();
+                var tBody = $("#tblusers > TBODY")[0];
+
+                for (var i = 0; i < data.length; i++) {
+                    //var rowCount = tblusers.rows.length;
+                    //for (var j = rowCount - 1; j > 0; j--) {
+                    //    tblusers.deleteRow(j);
+                    //}
+
+                    //Add Row.
+                    var row = tBody.insertRow(-1);
+
+                    //Add Name cell.
+                    var cell = $(row.insertCell(-1));
+                    cell.html(data[i].UserName);
+
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[i].UserEmail);
+
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[i].UserPassword);
+
+                    var StartDate = moment(data[i].CreateDate);
+
+                    //Add Name cell.
+                    cell = $(row.insertCell(-1));
+                    cell.html(StartDate.format("DD-MM-YYYY"));
+
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[i].FirstName);
+
+                    cell = $(row.insertCell(-1));
+                    cell.html(data[i].LastName);
+
+                    cell = $(row.insertCell(-1));
+                    var checkbox1 = $("<input />");
+                    checkbox1.attr("type", "checkbox");
+                    checkbox1.attr("id", "IsACTIVE1");
+
+                    checkbox1.attr("Active");
+                    checkbox1.val("Active");
+                    cell.append(checkbox1);
+
+                    if (data[i].IsLockedOut != false) {
+
+                        $("#IsACTIVE1").prop('checked', true);
+
+                    }
+                    else {
+                        $('#IsACTIVE1').prop('checked', false);
+                    }
+
+                    cell = $(row.insertCell(-1));
+                    var checkbox11 = $("<input />");
+                    checkbox11.attr("type", "checkbox");
+                    checkbox11.attr("id", "IsACTIVE11");
+
+                    checkbox11.attr("Active");
+                    checkbox11.val("Active");
+                    cell.append(checkbox11);
+
+                    if (data[i].IsAdmin != false) {
+
+                        $("#IsACTIVE11").prop('checked', true);
+
+                    }
+                    else {
+                        $('#IsACTIVE11').prop('checked', false);
+                    }
+
+                    cell = $(row.insertCell(-1));
+                    var btnEdit = $("<input />");
+                    btnEdit.attr("type", "button");
+                    btnEdit.attr("id", "1");
+                    btnEdit.attr("class", "btn btn-success");
+                    btnEdit.attr("onclick", "location.href='../UserDatas/edit/" + data[i].UserID + "'");
+                    btnEdit.attr("Edit");
+                    btnEdit.val("Edit");
+                    cell.append(btnEdit);
+
+                    //var btnRemove = $("<input />");
+                    //btnRemove.attr("type", "button");
+                    //btnRemove.attr("id", "1");
+                    //btnRemove.attr("class", "btn btn-danger");
+                    //btnRemove.attr("onclick", "location.href='../UserDatas/Delete/" + data[i].UserID + "'");
+                    //btnRemove.attr(" | Delete");
+                    //btnRemove.val(" | Delete");
+                    //cell.append(btnRemove);
+
+                }
+
+            })
+
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+</script>
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+

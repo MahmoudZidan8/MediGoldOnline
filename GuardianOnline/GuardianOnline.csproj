@@ -1,0 +1,583 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9225767C-5FE4-4382-A54C-426CBBFA0CB7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GuardianOnline</RootNamespace>
+    <AssemblyName>GuardianOnline</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.4\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.4\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.4.2.2\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.2.2\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.9\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.9\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.9\lib\net45\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\Admin\ProviderUserDatasController.cs" />
+    <Compile Include="Controllers\Admin\UserDatasController.cs" />
+    <Compile Include="Controllers\Claims\ClaimFormController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Hubs\CusHub.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ClaimFormDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClaimFormDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report\InvoiceDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoiceDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-icons.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapbundle.min.css" />
+    <Content Include="Content\buttons.dataTables.min.css" />
+    <Content Include="Images\Chronic2.jpg" />
+    <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap4.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\dataTables.bootstrap5.css" />
+    <Content Include="Content\dataTables.bootstrap5.min.css" />
+    <Content Include="Content\dataTables.bulma.css" />
+    <Content Include="Content\dataTables.bulma.min.css" />
+    <Content Include="Content\datatables.css" />
+    <Content Include="Content\dataTables.dataTables.css" />
+    <Content Include="Content\dataTables.dataTables.min.css" />
+    <Content Include="Content\dataTables.foundation.css" />
+    <Content Include="Content\dataTables.foundation.min.css" />
+    <Content Include="Content\dataTables.jqueryui.css" />
+    <Content Include="Content\dataTables.jqueryui.min.css" />
+    <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\dataTables.semanticui.css" />
+    <Content Include="Content\dataTables.semanticui.min.css" />
+    <Content Include="Content\daterangepicker.css" />
+    <Content Include="Content\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\font%40400.css" />
+    <Content Include="Content\font%40500.css" />
+    <Content Include="Content\fontExo.css" />
+    <Content Include="Content\fontfamily.css" />
+    <Content Include="Content\fonts1.css" />
+    <Content Include="Content\Fonts2.css" />
+    <Content Include="Content\fonts3.css" />
+    <Content Include="Content\icons_new.min.css" />
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\jquery1.dataTables.min.css" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\owl.carousel.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\select2.min.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\sweetalert2.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\icomoon.svg" />
+    <Content Include="fonts\style.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\294205 %28100%29.jpg" />
+    <Content Include="Images\294205.jpg" />
+    <Content Include="Images\314462.jpg" />
+    <Content Include="Images\316352.jpg" />
+    <Content Include="Images\administratormale.png" />
+    <Content Include="Images\Approvalimg.jpg" />
+    <Content Include="Images\Approvalimg1.jpg" />
+    <Content Include="Images\Approvalimg2.jpg" />
+    <Content Include="Images\approvalservices.jpg" />
+    <Content Include="Images\AuditImg.jpg" />
+    <Content Include="Images\ClaimFormImg.jpg" />
+    <Content Include="Images\claimformPrint.jpg" />
+    <Content Include="Images\CommercialRegisterImageCommercialRegisterImage.png" />
+    <Content Include="Images\ContractImage314462.jpg" />
+    <Content Include="Images\ContractImagecontracytimage.jpg" />
+    <Content Include="Images\Dental.png" />
+    <Content Include="Images\details_close.png" />
+    <Content Include="Images\details_open.png" />
+    <Content Include="Images\doctor.jpg" />
+    <Content Include="Images\doctorClaimForm.jpg" />
+    <Content Include="Images\download.jpg" />
+    <Content Include="Images\download1.jpg" />
+    <Content Include="Images\ExpandedServices.png" />
+    <Content Include="Images\HomeBackground.jpg" />
+    <Content Include="Images\Hospital.jpg" />
+    <Content Include="Images\hospital.png" />
+    <Content Include="Images\image1.jpg" />
+    <Content Include="Images\image2.jpg" />
+    <Content Include="Images\imgApproval.png" />
+    <Content Include="Images\Lab.png" />
+    <Content Include="Images\log.jpg" />
+    <Content Include="Images\login.jpg" />
+    <Content Include="Images\MedicalCenter.png" />
+    <Content Include="Images\medicalservices.jpg" />
+    <Content Include="Images\OpticalCenter.jpg" />
+    <Content Include="Images\paymentinquiry.png" />
+    <Content Include="Images\Pharmacy.png" />
+    <Content Include="Images\physiotherapy.jpg" />
+    <Content Include="Images\Phythi.png" />
+    <Content Include="Images\Premium.png" />
+    <Content Include="Images\PrintCancelInvoice.png" />
+    <Content Include="Images\ProviderCommercialRegisterImageCommercialRegisterImage.png" />
+    <Content Include="Images\ProviderCommercialRegisterImagecontracytimage.jpg" />
+    <Content Include="Images\ProviderContractImagecontracytimage.jpg" />
+    <Content Include="Images\ProviderTaxCardImagecontracytimage.jpg" />
+    <Content Include="Images\ProviderTaxCardImagetaxcardimages.jpg" />
+    <Content Include="Images\qqqq.jpg" />
+    <Content Include="Images\Quationimg.jpg" />
+    <Content Include="Images\Radiology.png" />
+    <Content Include="Images\snackbar.png" />
+    <Content Include="Images\sort_asc.png" />
+    <Content Include="Images\sort_asc_disabled.png" />
+    <Content Include="Images\sort_both.png" />
+    <Content Include="Images\sort_desc.png" />
+    <Content Include="Images\sort_desc_disabled.png" />
+    <Content Include="Images\standard.jpg" />
+    <Content Include="Images\Standards.png" />
+    <Content Include="Images\TaxCardImagetaxcardimages.jpg" />
+    <Content Include="Images\tris1.jpg" />
+    <Content Include="Images\tristar.jpg" />
+    <Content Include="Images\tristar2.jpg" />
+    <Content Include="Images\UploadClaimForm.png" />
+    <Content Include="Images\UserDefault.png" />
+    <Content Include="Media\alert.mp3" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\icomoon.eot" />
+    <Content Include="fonts\icomoon.ttf" />
+    <Content Include="fonts\icomoon.woff" />
+    <Content Include="Images\aaa.xlsx" />
+    <Content Include="Images\CommercialRegisterImage.png_CommercialRegisterImage" />
+    <Content Include="Images\CommercialRegisterImage10840-001.pdf" />
+    <Content Include="Images\ContractImage070820211353.pdf" />
+    <Content Include="Images\ContractImage10840-001.pdf" />
+    <Content Include="Images\ContractImage19.pdf" />
+    <Content Include="Images\ContractImage4.pdf" />
+    <Content Include="Images\contracytimage.jpg_ContractImage" />
+    <Content Include="Images\Copy of Copy of a.xls" />
+    <Content Include="Images\Copy of MembersGrid.xls" />
+    <Content Include="Images\Copy of tr.xlsx" />
+    <Content Include="Images\Copy of tristar.csv" />
+    <Content Include="Images\MembersGrid %282%29.xls" />
+    <Content Include="Images\MembersGrid.xls" />
+    <Content Include="Images\New Microsoft Excel Worksheet %283%29.xlsx" />
+    <Content Include="Images\ProviderContractImage6.pdf" />
+    <Content Include="Images\ProviderContractImage7.pdf" />
+    <Content Include="Images\ristar.csv" />
+    <Content Include="Images\TaxCardImage10840-001.pdf" />
+    <Content Include="Images\TaxCardImage6.pdf" />
+    <Content Include="Images\taxcardimages.jpg_TaxCardImage" />
+    <Content Include="Images\tris- Guardian Application.xlsx" />
+    <Content Include="Images\tristar.xls" />
+    <Content Include="Images\tristar.xlsx" />
+    <Content Include="Images\مايا جاز 2023.csv" />
+    <Content Include="Images\مايا جاز 2023.xlsx" />
+    <Content Include="ApplicationInsights.config" />
+    <Content Include="fonts\a1.woff2" />
+    <Content Include="fonts\a2.woff2" />
+    <Content Include="fonts\a3.woff2" />
+    <Content Include="fonts\fa1.woff2" />
+    <Content Include="fonts\fa2.woff2" />
+    <Content Include="fonts\f500.woff2" />
+    <Content Include="fonts\f400.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\bootstrap-icons.woff" />
+    <Content Include="fonts\bootstrap-icons.woff2" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Report\InvoiceDataSet.xsc">
+      <DependentUpon>InvoiceDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Report\ClaimFormDataSet.xsc">
+      <DependentUpon>ClaimFormDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Report\ClaimFormDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ClaimFormDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\ClaimFormDataSet.xss">
+      <DependentUpon>ClaimFormDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Report\InvoiceDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InvoiceDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report\InvoiceDataSet.xss">
+      <DependentUpon>InvoiceDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\buttons.html5.min.js" />
+    <Content Include="Scripts\buttons.print.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap5.js" />
+    <Content Include="Scripts\dataTables.bootstrap5.min.js" />
+    <Content Include="Scripts\dataTables.bulma.js" />
+    <Content Include="Scripts\dataTables.bulma.min.js" />
+    <Content Include="Scripts\dataTables.buttons.min.js" />
+    <Content Include="Scripts\dataTables.dataTables.js" />
+    <Content Include="Scripts\dataTables.dataTables.min.js" />
+    <Content Include="Scripts\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\dataTables.foundation.js" />
+    <Content Include="Scripts\dataTables.foundation.min.js" />
+    <Content Include="Scripts\dataTables.jqueryui.js" />
+    <Content Include="Scripts\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\datatables.js" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\dataTables.semanticui.js" />
+    <Content Include="Scripts\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\date-eu.js" />
+    <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
+    <Content Include="Scripts\jszip.min.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\pdfmake.min.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\select2.min.js_4.1.0-beta.1\cdnjs\select2.min.js" />
+    <Content Include="Scripts\sweetalert2.all.min.js" />
+    <Content Include="Scripts\vfs_fonts.js" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ClaimForm\ClaimServices.cshtml" />
+    <Content Include="Views\ClaimForm\DoctorHome.cshtml" />
+    <Content Include="Views\ClaimForm\login.cshtml" />
+    <Content Include="Views\ClaimForm\ProviderClaimFormApproved.cshtml" />
+    <Content Include="Views\ClaimForm\Provider_Expended_services.cshtml" />
+    <Content Include="Views\ClaimForm\UploadMemberClaim.cshtml" />
+    <Content Include="Views\UserDatas\Add_User_Roles.cshtml" />
+    <Content Include="Views\UserDatas\Create.cshtml" />
+    <Content Include="Views\UserDatas\Edit.cshtml" />
+    <Content Include="Views\UserDatas\Edit_User_Roles.cshtml" />
+    <Content Include="Views\UserDatas\Index.cshtml" />
+    <Content Include="Views\ClaimForm\PaymentInquiry.cshtml" />
+    <Content Include="Views\UserDatas\AccountData.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\ProviderUserDatas\Index.cshtml" />
+    <Content Include="Views\ProviderUserDatas\Create.cshtml" />
+    <Content Include="Views\ProviderUserDatas\Edit.cshtml" />
+    <Content Include="Views\ProviderUserDatas\Add_User_Roles.cshtml" />
+    <Content Include="Views\ProviderUserDatas\Edit_User_Roles.cshtml" />
+    <Content Include="Views\ClaimForm\Messanger.cshtml" />
+    <Content Include="Views\ClaimForm\Print_CancelAPProval.cshtml" />
+    <Content Include="Views\ClaimForm\Invoices_Audit.cshtml" />
+    <Content Include="Views\ClaimForm\Approval.cshtml" />
+    <Content Include="Views\ClaimForm\Doctor_ClaimForm.cshtml" />
+    <Content Include="Views\ClaimForm\MedicalHistory.cshtml" />
+    <Content Include="Views\ClaimForm\ShowBatchData.cshtml" />
+    <Content Include="Views\ClaimForm\MemberSmartCardRequests.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
+    <Content Include="Views\ClaimForm\Print_CancelClaimForm.cshtml" />
+    <Content Include="Views\ClaimForm\Chronic_Approvals.cshtml" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GuardianOnline.Infrastructure\GuardianOnline.Infrastructure.csproj">
+      <Project>{03165467-96ce-4929-bc98-ec030273c2fa}</Project>
+      <Name>GuardianOnline.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
+    <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52763</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44380/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

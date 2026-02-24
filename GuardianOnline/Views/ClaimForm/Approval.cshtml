@@ -1,0 +1,1690 @@
+﻿
+@{
+    ViewBag.Title = "Approval";
+}
+
+@*@Scripts.Render("~/bundles/jquery")*@
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
+<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
+
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+<input type="hidden" id="trigger" value="0" />
+<input type="hidden" id="triggercount" value="0" />
+
+<input type="hidden" id="trigger1" value="0" />
+<input type="hidden" id="triggercount1" value="0" />
+
+<input type="hidden" id="edited_row_id" />
+<input type="hidden" id="Member_DeducPerc" />
+
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
+@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
+
+<style>
+    /*body {
+        margin: 0;
+        padding: 0;
+        background: #262626;
+    }*/
+    #backring1 {
+        background-color: darkgray;
+    }
+
+    .ring1 {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 150px;
+        height: 150px;
+        background: transparent;
+        border: 3px solid /*#3c3c3c*/ #9ac3b8;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 150px;
+        font-family: sans-serif;
+        font-size: 20px;
+        color: /*#928d36*/ #fff000;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px #fff000;
+        box-shadow: 0 0 20px rgba(0,0,0,.5);
+        background-color: #11395c;
+    }
+
+        .ring1:before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #fff000;
+            border-right: 3px solid #fff000;
+            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
+            border-radius: 50%;
+            animation: animateC1 2s linear infinite;
+        }
+
+    spana1 {
+        display: block;
+        position: absolute;
+        top: calc(50% - 2px);
+        left: 50%;
+        width: 50%;
+        height: 4px;
+        background: transparent;
+        transform-origin: left;
+        animation: animate1 2s linear infinite;
+    }
+
+        spana1:before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff000;
+            top: -6px;
+            right: -8px;
+            box-shadow: 0 0 20px #fff000;
+        }
+
+    @@keyframes animateC1 {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes animate1 {
+        0% {
+            transform: rotate(45deg);
+        }
+
+        100% {
+            transform: rotate(405deg);
+        }
+    }
+</style>
+<style>
+    #selectServicelist {
+        -webkit-box-shadow: 0;
+        max-width: 450px;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 420PX;
+        box-shadow: 10PX;
+        /*border:0;*/
+        border-radius: 50PX;
+        /*text-align:center;*/
+        color: black;
+        font-size: 17PX;
+        padding-left: 10PX;
+    }
+
+    #Claim_FormAmt, #Member_DeductablePercentage, #Member_Deductable {
+        -webkit-box-shadow: 0;
+        max-width: 100px;
+        width: 100%;
+        min-height: 35PX;
+        min-width: 150PX;
+        box-shadow: 10PX;
+        border-radius: 15PX;
+        color: black;
+        font-size: 17PX;
+        text-align: center;
+    }
+
+    #link {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    #link1 {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        #link1:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    /*.previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+        .previous:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .next {
+        background-color: #04AA6D;
+        color: white;
+    }*/
+
+    .round {
+        background-color: teal;
+        color: white;
+        border-radius: 50%;
+    }
+</style>
+<style>
+    /*body {
+            background-image:url('../Images/login.jpg');
+        }*/
+    /*table1 {
+        border: 1px solid black;
+    }*/
+
+    body.table789 {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    table.table789 {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+        text-align: center;
+    }
+
+        table.table789 th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            font-size: 12pt;
+            text-align: center;
+        }
+
+        table.table789 th, table.table789 td {
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-size: 12pt;
+        }
+
+        table.table789, table.table789 table td {
+            border: 1px solid #ccc;
+            font-size: 12pt;
+        }
+
+    body.table7899 {
+        font-family: Arial;
+        font-size: 11pt;
+        text-align: center;
+    }
+
+    table.table7899 {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+        text-align: center;
+    }
+
+        table.table7899 th {
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            font-size: 15pt;
+            text-align: center;
+        }
+
+        table.table7899 th, table.table789 td {
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table.table7899, table.table7899 table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+            /*color: black;*/
+        }
+
+    #ProviderBranch {
+        max-width: 450px;
+    }
+
+    #ClaimForm_Number {
+        max-width: 900px;
+    }
+
+    #form_number, #Card_number, #ClaimForm_Number, #Date_Procedure, #Date_symptoms, #ICD_Number {
+        font-size: 18px;
+        color: black;
+        padding-left: 280px;
+    }
+
+    #providerName {
+        font-size: 12px;
+    }
+
+    #Card_numberLabel {
+        font-size: 18px;
+        color: black;
+    }
+
+    #ClaimForm_NumberLabel {
+        font-size: 18px;
+        color: black;
+    }
+
+    legend.scheduler-border {
+        width: inherit; /* Or auto */
+        padding: 0 10px; /* To give a bit of padding on the left and right */
+        border-bottom: none;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
+        box-shadow: 1px 1px 1px 1px #700c0c;
+    }
+
+    #pagination {
+        width: 100%;
+        text-align: center;
+    }
+
+        #pagination ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+</style>
+<h2 style="color:teal;text-align:center">Approval</h2>
+
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border" style="color:teal">Member Validation</legend>
+    <br />
+    <div>
+        <div class="form-group">
+            @Html.Label("Card Number", htmlAttributes: new { @class = "control-label col-md-2", @id = "Card_numberLabel" })
+            <div class="col-md-10">
+                @Html.Editor("c1", new { htmlAttributes = new { @class = "form-control", @id = "Card_number", @Name = "Card_number", required = "required" } })
+                @Html.ValidationMessage("c1", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <br />
+        <div style="text-align:center;padding-top:30px">
+            <button type="button" id="Check_CardNumber" class="btn btn-primary btn-lg" style="width:200px;height:50px;font-size:18px">
+                <span class="glyphicon glyphicon-search"></span>&nbsp;
+                Check Approval
+            </button>
+        </div>
+        <br />
+
+    </div>
+    <table class="table789" id="Member_Info_Table" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Member Name</th>
+                <th>Customer Name</th>
+                <th>Card Number</th>
+                <th>Contract Number</th>
+                <th>Plan</th>
+                <th>Active Date</th>
+                <th>Activity Status</th>
+                <th>Deactive Date</th>
+                <th>Member Birth Date</th>
+                <th>Member Age</th>
+                <th>Sex Type</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+    <br />
+
+</fieldset>
+
+<fieldset class="scheduler-border" @*style="background-color:lightgray"*@ id="Expended_services">
+    <legend class="scheduler-border" style="color:teal">Approval waiting</legend>
+    <div id="claim_services2">
+        <table class="table7899" id="Claim_Services2" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Approve Service</th>
+                    <th>ClaimForm Number</th>
+                    <th>Item Id</th>
+                    <th>Service Name</th>
+                    <th>Service Price</th>
+                    <th>Service Qnt</th>
+                    <th>Service Amt</th>
+                    <th>Requested Price</th>
+                    <th>Note</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+        </table>
+        <br />
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">Claim Services</h2>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div id="Add_Claim_Serviceee">
+                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Service Name")
+                                    </td>
+                                    <td style="width: 250px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "serv_name", @Name = "serv_name", @*,@Value = "1.00"*@/**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            @readonly = "readonly"
+                                                        }
+                                                    })
+                                    </td>
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Quntity")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity", @Name = "quntity"  , @readonly = "readonly"}
+                                })
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Price")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice", @Name = "SystemPrice",
+                                        @readonly = "readonly"}
+                                })
+
+                                    </td>
+
+
+                                    <td style="width: 100px;font-size:14px">
+                                        @Html.Label("Service Amt")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Service_Amt", @Name = "Service_Amt",
+                                        @readonly = "readonly"}
+                                })
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <td style="width: 120px;font-size:14px">
+                                        @Html.Label("Requested Price")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price", @Name = "Requested_Price"
+                                                @*, @readonly = "readonly"*@}
+                                        })
+
+                                    </td>
+
+                                    <td style="width: 120px;font-size:14px">
+                                        @Html.Label("Requested Amt")
+                                    </td>
+                                    <td style="width: 150px">
+                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Amt", @Name = "Requested_Amt",
+                                        @readonly = "readonly"}
+                                })
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                                <tr>
+                                    <td style="width: 150px;font-size:14px">
+                                        @Html.Label("Service Modification")
+                                    </td>
+                                    <td style="width: 250px">
+                                        <div id="selectServicelistdiv">
+                                            <input list="Service_List" type="text" id="selectServicelist" size="400" name="ServicelIST" class="deletable" style="max-width:400px">
+                                            <datalist id="Service_List"></datalist>
+
+                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <div></div>
+                            <div></div>
+
+
+                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service">
+                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE" class="btn btn-primary btn-lg" />
+
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+
+    <label for="Notess">Notes : </label>
+    @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @size =135, @id = "Notess", @Name = "Notess", @readonly = "readonly"}
+  })
+
+</fieldset>
+<fieldset class="scheduler-border" @*style="background-color:green"*@ id="Expended_Invoice">
+    <legend class="scheduler-border" style="color:teal">Approval Member Invoice</legend>
+    <br />
+
+    <label style="color:red">Approval Amt : </label>
+    <input type="text" size="20" id="Claim_FormAmt" name="Claim_FormAmt" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="color:red">Member Deductable Percentage : </label>
+    <input type="text" size="20" id="Member_DeductablePercentage" name="Member_DeductablePercentage" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="color:red">Member Deductable : </label>
+    <input type="text" size="20" id="Member_Deductable" name="Member_Deductable" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+
+</fieldset>
+@if (Session["branchCode"].ToString() != "CMCPharmacy")
+{
+    <div style="text-align:center;" id="Approve_Claim">
+        <button type="button" id="Approve_ClaimForm" class="btn btn-primary btn-lg">
+            Accept Approval
+        </button>
+    </div>
+}
+<div class="alert alert-danger active btn-lg" role="alert" id="memberNotApproval">
+    <div style="text-align:center">
+        <a> A Member Have not Any Approval From CMC in Tristar , Please Contact With CMC !</a>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<div style="text-align:left;display:inline-block;position:relative">
+    <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
+</div>
+<div style="text-align:right;display:inline-block;padding-left:750px;position:relative">
+    <a id="link" class="round" href="@Url.Action("Print_CancelAPProval","ClaimForm")">@*<u>*@ Go to Print Cancel APProval &raquo;@*</u>*@</a>
+
+</div>
+
+<div id="backring1">
+    <div class="ring1" id="Loadingg">
+        Loading
+        <spana1></spana1>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<script>
+
+    $("#selectServicelist").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        var incompleteTasks = document.getElementById('Service_List');
+        incompleteTasks.innerHTML = '';
+        $.get("/ClaimForm/select_Servicess", { id: value }, function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                var li = document.createElement('option');
+
+                li.value = data[i];
+                incompleteTasks.appendChild(li);
+
+            }
+        })
+
+    });
+
+    $("#selectServicelist").change(function () {
+
+        var ServiceNam = $('#selectServicelist').val();
+        var LastServiceNam = $('#serv_name').val();
+        if (ServiceNam != "" && LastServiceNam != "") {
+
+            var isexist = 0;
+            $("#Claim_Services2 TBODY TR").each(function () {
+                var row = $(this);
+                var dt = $('#Claim_Services2').DataTable();
+                if (dt != null) {
+                    if (dt.rows().count() > 0) {
+                        var newService_Name = $('#selectServicelist').val();
+                        var Service_Name = row.find("TD").eq(3).text();
+
+                        if (newService_Name == Service_Name) {
+                            isexist = 1;
+                        }
+
+                    }
+                }
+            });
+            if (isexist == 0) {
+            $.get("/ClaimForm/Check_service_Modification", { selectServicelist: ServiceNam, LastService_Nam: LastServiceNam }, function (data) {
+                if (data[0] == 1) {
+                    var quntityy = parseFloat(($('#quntity').val()).replace(/,/g, ''));
+                    if ($('#quntity').val() == "" || isNaN($('#quntity').val())) {
+                        quntityy = 1;
+                    }
+
+                    var price = data[1];
+
+                    var serviceAmt = quntityy * price;
+                    $('#serv_name').val(ServiceNam);
+                    $('#SystemPrice').val(data[1].toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Service_Amt').val(serviceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Requested_Price').val(data[1].toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#Requested_Amt').val(serviceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+                    $('#selectServicelist').val("");
+
+                }
+                else {
+
+                    Swal.fire("warning !", data[1], "warning");
+                    $('#selectServicelist').val("");
+
+                }
+
+                })
+            }
+            else{
+                Swal.fire("Warning !", "Service Modification Name is Exist in Approval waiting , You Can not Update Service Name To : ( " + ServiceNam+" ) .", "warning");
+                $('#selectServicelist').val("");
+
+            }
+        }
+
+    });
+
+    $("body").on("click", "#edit_Claim_ServiceE", function () {
+
+
+        var Row_id = $('#edited_row_id').val();
+        var t = $('#Claim_Services2').DataTable();
+        if ($('#serv_name').val() != "") {
+            t.cell(Row_id, 3).data($('#serv_name').val()).draw();
+        }
+        if ($('#SystemPrice').val() != "") {
+            t.cell(Row_id, 4).data($('#SystemPrice').val()).draw();
+
+        }
+        //if ($('#quntity').val() != "") {
+        //    t.cell(Row_id, 3).data($('#quntity').val()).draw();
+        //}
+        if ($('#Service_Amt').val() != "") {
+            t.cell(Row_id, 6).data($('#Service_Amt').val()).draw();
+        }
+        //t.cell(Row_id, 5).data($('#Refuse_Note').val()).draw();
+        if ($('#Requested_Amt').val() != "") {
+            t.cell(Row_id, 7).data($('#Requested_Amt').val()).draw();
+        }
+        Swal.fire("Success !", "Claim Service is updated.", "success");
+        var i = 0;
+        var count = 0;
+        var deduct = $('#Member_DeducPerc').val();
+        $("#Claim_Services2 TBODY TR").each(function () {
+            if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                var duepayment = $(this).find("TD").eq(7).html();
+                var lastDue = parseFloat((duepayment).replace(/,/g, ''));
+                count = count + lastDue;
+            }
+            i = i + 1;
+
+        });
+        var Member_Deductableamt = count * deduct / 100;
+        $('#Claim_FormAmt').val(count);
+        $('#Member_Deductable').val(Member_Deductableamt);
+
+
+        var Claimitemid = t.cell(Row_id, 2).data();
+        $.get("/ClaimForm/UpdateServiceModificationName", { Claimitem_id: Claimitemid, service_name: $('#serv_name').val() }, function (data) {
+
+        })
+
+    });
+
+    //$("#Card_number").change(function () {
+    $("body").on("click", "#Check_CardNumber", function () {
+
+        $("#Loadingg").show();
+        $("#Member_Info_Table").hide();
+        $.get("/ClaimForm/Get_Member_info", { id: $('#Card_number').val() }, function (data) {
+            $("#Loadingg").hide();
+            if (data.length != 0) {
+                $("#Member_Info_Table").show();
+
+                //if (data[4] != "Stopped") {
+                    //$("#imgpost").show();
+                    //$("#button_open_div").hide();
+                    //$("#button_Close_div").show();
+
+                    $("#ClaimForm_image").show();
+                    //$("#Expended_services").show();
+                    $("#Provider_services").show();
+                //}
+                //else {
+
+                //    $("#imgpost").hide();
+                //    $("#button_open_div").hide();
+                //    $("#button_Close_div").hide();
+
+                //    $("#ClaimForm_image").hide();
+                //    $("#Provider_services").hide();
+                //    $("#Member_Info_Table").hide();
+
+                //    $("#Expended_services").hide();
+                //    $("#Expended_services_Stoped").hide();
+                //    $("#Expended_services_Done").hide();
+
+                //}
+
+                $("#Member_Info_Table").find("tr:not(:first)").remove();
+                var tBody = $("#Member_Info_Table > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+                var cell = $(row.insertCell(-1));
+                cell.html(data[0]);
+                cell = $(row.insertCell(-1));
+                cell.html(data[1]);
+                cell = $(row.insertCell(-1));
+                cell.html(data[2]);
+                cell = $(row.insertCell(-1));
+                cell.html(data[3]);
+                cell = $(row.insertCell(-1));
+                cell.html(data[4]);
+                var ActiveDate = moment(data[5]);
+                cell = $(row.insertCell(-1));
+                cell.html(ActiveDate.format("DD-MM-YYYY"));
+                cell = $(row.insertCell(-1));
+                //cell.html(data[6]);
+                if (data[18] == "1") {
+                    cell.html("Stopped");
+                    cell.css('color', 'red');
+                    $("#imgpost").hide();
+                    $("#button_open_div").hide();
+                    $("#button_Close_div").hide();
+
+                    $("#ClaimForm_image").hide();
+                    $("#Provider_services").hide();
+                    //$("#Member_Info_Table").hide();
+
+                    $("#Expended_services").hide();
+                    $("#Expended_services_Stoped").hide();
+                    $("#Expended_services_Done").hide();
+
+                }
+                else {
+                    if (data[6] == "Stopped") {
+                        cell.html("Stopped");
+                        cell.css('color', 'red');
+                    }
+                    else {
+                        cell.html(data[6]);
+                        cell.css('color', 'Green');
+                    }
+                }
+                var DeActive_Date = moment(data[7]);
+                var Cancel_Date = moment(data[21]);
+                cell = $(row.insertCell(-1));
+                var aaaa = DeActive_Date.format("DD-MM-YYYY");
+                var bbbb = Cancel_Date.format("DD-MM-YYYY");
+                if ((data[7] != null && aaaa != "01-01-0001") || (data[21] != null && bbbb != "01-01-0001") || (data[22] == "0")) {
+                    if (data[7] != null && aaaa != "01-01-0001") {
+                        cell.html(DeActive_Date.format("DD-MM-YYYY"));
+                    }
+                    else if (data[21] != null && bbbb != "01-01-0001") {
+                        cell.html(Cancel_Date.format("DD-MM-YYYY"));
+                    }
+                    else {
+                        cell.html("");
+                    }
+
+                    $("#imgpost").hide();
+                    $("#button_open_div").hide();
+                    $("#button_Close_div").hide();
+
+                    $("#ClaimForm_image").hide();
+                    $("#Provider_services").hide();
+                    //$("#Member_Info_Table").hide();
+
+                    $("#Expended_services").hide();
+                    $("#Expended_services_Stoped").hide();
+                    $("#Expended_services_Done").hide();
+
+                }
+                else {
+
+                    if (data[18] == "1") {
+                        var contractend_Date = moment(data[17]);
+                        //cell = $(row.insertCell(-1));
+                        var aaa2 = contractend_Date.format("DD-MM-YYYY");;
+                        if (data[17] != null && aaa2 != "01-01-0001") {
+                            cell.html(contractend_Date.format("DD-MM-YYYY"));
+                            $("#imgpost").hide();
+                            $("#button_open_div").hide();
+                            $("#button_Close_div").hide();
+
+                            $("#ClaimForm_image").hide();
+                            $("#Provider_services").hide();
+                            //$("#Member_Info_Table").hide();
+
+                            $("#Expended_services").hide();
+                            $("#Expended_services_Stoped").hide();
+                            $("#Expended_services_Done").hide();
+
+                        }
+                    }
+                    else {
+                        cell.html('');
+                    }
+                    //cell.html('');
+
+                }
+
+
+                var memberbirth_Date = moment(data[8]);
+                cell = $(row.insertCell(-1));
+                var aaa = memberbirth_Date.format("DD-MM-YYYY");;
+                if (data[8] != null && aaa != "01-01-0001") {
+                    cell.html(memberbirth_Date.format("DD-MM-YYYY"));
+                }
+                else {
+                    cell.html('');
+
+                }
+
+                cell = $(row.insertCell(-1));
+                cell.html(data[9]);
+                cell = $(row.insertCell(-1));
+                cell.html(data[10]);
+
+            }
+
+            else {
+
+                var errortext = $('#Card_number').val() + "  is not Correct <br> Please Enter Card Number Again";
+                Swal.fire("Warning !", errortext, "warning");
+
+                //alert($('#Card_number').val() + " is not Correct Please Enter Card Number Again")
+                $("#Member_Info_Table").hide();
+                $("#imgpost").hide();
+                $("#button_open_div").hide();
+                $("#button_Close_div").hide();
+
+                $("#ClaimForm_image").hide();
+                //$("#Expended_services").hide();
+                $("#Provider_services").hide();
+                $("#Expended_services").hide();
+                $("#Expended_services_Stoped").hide();
+                $("#Expended_services_Done").hide();
+
+            }
+        })
+        $.get("/ClaimForm/Get_Approvals", { id: $('#Card_number').val() }, function (data) {
+            $("#Loadingg").hide();
+                if (data != "") {
+
+                    if (data[0].length != 0) {
+                        $("#memberNotApproval").hide();
+                        $("#Expended_services").show();
+                        $("#Expended_Invoice").show();
+                        $("#Approve_Claim").show();
+
+                        var t = $('#Claim_Services2').DataTable();
+                        t.rows().remove().draw();
+                        serialll = 0;
+                        for (var i = 0; i < data[0].length; i++) {
+
+                            serialll++;
+                            var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal' onclick='edited(this);'>Edit</button>";
+                            var id = "IsACTIVE1" + i;
+                            var checkbox = "<div class='checkbox-wrapper-19'><input type='checkbox' id='" + id + "' ></input><label style='background-color: white' for=" + id +" class='check-box'></label></div>";
+
+                            t.row.add([checkbox, data[0][i].ClaimFormNum, data[0][i].ClaimItemID, data[0][i].ServiceName
+                                , data[0][i].Price.toLocaleString('en-US', { minimumFractionDigits: 2 })
+                                , data[0][i].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 })
+                                , data[0][i].ServiceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
+                                , data[0][i].RequestedPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
+                                , data[0][i].Refuse_Note, btnEdit
+                            ]).draw()
+                                ;
+                            // $('td:eq(0)',1).css('color', 'blue');
+                            //$('#Claim_FormAmt').val(data[3]);
+                            $('#Claim_FormAmt').val(0);
+                            $('#Member_DeductablePercentage').val(data[1] + " %");
+                            //$('#Member_Deductable').val(data[2]);
+                            $('#Member_Deductable').val(0);
+
+
+                            $('#Member_DeducPerc').val(data[1]);
+                            $('#Notess').val("");
+
+
+                        }
+                    }
+                    //$("#Card_number").val($('#Card_number').val()).change();
+
+                }
+                else {
+
+                    // Swal.fire("warning !", "A Member Have not any Approval ", "warning");
+                    $("#memberNotApproval").show();
+
+                    $("#Expended_services").hide();
+                    $("#Expended_Invoice").hide();
+                    $("#Approve_Claim").hide();
+
+                    var t = $('#Claim_Services2').DataTable();
+                    t.rows().remove().draw();
+                }
+            })
+
+
+    });
+
+    $("body").on("click", "#link1", function () {
+        var Card_numberee = $('#Card_number').val();
+        window.open('@Url.Action("UploadMemberClaim", "ClaimForm")' + '?Card_numbere=' + Card_numberee, '_self');
+           //href="Url.Action("UploadMemberClaim","ClaimForm", new { id = ViewBag.CardNumber })"
+        });
+
+
+    $("#Member_Info_Table").hide();
+    $("#Expended_services").hide();
+    $("#Expended_Invoice").hide();
+    $("#Approve_Claim").hide();
+    $("#memberNotApproval").hide();
+
+    $('#Claim_Services2').DataTable({
+        paging: false,
+        ordering: false,
+    });
+    $("#Requested_Price").change(function () {
+        var quntityy = parseFloat(($('#quntity').val()).replace(/,/g, ''));
+        var Service_Pricee1 = parseFloat(($('#Requested_Price').val()).replace(/,/g, ''));
+
+        if ($('#Requested_Price').val() == "" || isNaN($('#Requested_Price').val())) {
+            Service_Pricee1 = 1;
+            $('#Requested_Price').val(Service_Pricee1.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+        }
+        else {
+            $('#Requested_Price').val(Service_Pricee1.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+        }
+
+        var Due_am = quntityy * Service_Pricee1;
+        $('#Requested_Amt').val(Due_am.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+
+    });
+
+    $("body").on("click", "#Claim_Services2", async function () {
+        await sleep(20);
+        var trigger = 0;
+        var i = 0;
+        var count = 0;
+        var ClaimFormNum = 0;
+        var claimItemIDD=0 ;
+        var deduct = $('#Member_DeducPerc').val();
+
+        $.when(
+            $("#Claim_Services2 TBODY TR").each(function () {
+                if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                    var duepayment = $(this).find("TD").eq(7).html();
+                    var lastDue = parseFloat((duepayment).replace(/,/g, ''));
+                    count = count + lastDue;
+                    if (trigger == 0) {
+                        ClaimFormNum = $(this).find("TD").eq(1).html();
+                        trigger = 1;
+                        claimItemIDD = $(this).find("TD").eq(2).html();
+                    }
+                    var ClaimFormNumnew = $(this).find("TD").eq(1).html();
+                    if (ClaimFormNumnew != ClaimFormNum) {
+                        count = count - lastDue;
+                        $('#IsACTIVE1' + i).prop('checked', false);
+                    }
+                }
+                i = i + 1;
+
+        })
+        )
+            .then(function () {
+                $.get("/ClaimForm/Get_Deduct_Claimform", { id: claimItemIDD }, function (data) {
+                    //alert(data);
+
+                    if (data != "qq") {
+                        $('#Member_DeductablePercentage').val(data[0] + " %");
+                        $('#Member_DeducPerc').val(data[0]);
+                        deduct = data[0];
+                        //if (deduct == 0) {
+                        //    $('#Member_Deductable').val(0);
+                        //}
+                        var Member_Deductableamt = count * deduct / 100;
+                        $('#Claim_FormAmt').val(count);
+                        $('#Member_Deductable').val(Member_Deductableamt);
+                        $('#Notess').val(data[1]);
+
+                    }
+                    else /*if (trigger == 0)*/ {
+                        $('#Claim_FormAmt').val(0);
+                        $('#Member_DeductablePercentage').val(0 + " %");
+                        $('#Member_Deductable').val(0);
+                        $('#Member_DeducPerc').val(0);
+                        $('#Notess').val("");
+
+                    }
+
+                })
+            });
+
+    })
+
+    //////////////////////////
+    function edited(button) {
+        $("#Add_Claim_Serviceee").show();
+        $("#edit_Claim_Service").show();
+        //$("#New_Claim_Service").hide();
+
+        //Determine the reference of the Row using the Button.
+        //var row = $(button).closest("TR");
+        var row = $(button).closest("TR");
+        //.find("td")
+        //Delete the Table row using it's Index.
+        var row1data = $(button).closest("TR").find("td");
+
+        var rowindexx = row[0].rowIndex - 1;
+        //var Service_Name = row1data[2].innerHTML;
+        $('#edited_row_id').val(rowindexx);
+        //alert(data);
+        //alert(data.ServiceQnt);
+        var roww = $(button).closest("TR").find("td");
+        $("#serv_name").val(roww[3].innerHTML);
+        $('#SystemPrice').val(roww[4].innerHTML);
+        $('#quntity').val(roww[5].innerHTML);
+        $('#Service_Amt').val(roww[6].innerHTML);
+        var Requested_P = (parseFloat((roww[7].innerHTML).replace(/,/g, '')) / parseFloat((roww[5].innerHTML).replace(/,/g, ''))).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        $('#Requested_Price').val(Requested_P);
+        $('#Requested_Amt').val(roww[7].innerHTML);
+
+
+
+
+
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            //$.connection.hub.disconnect();
+            // $.connection.hub.disconnected(function () {
+            //});
+            $.connection.hub.stop();
+
+             //console.log("tab out")
+            // tab is changed
+        } else {
+            //$.connection.hub.connect();
+            $.connection.hub.start().done(function () {
+                 //console.log("connection started")
+                //notifications.onconn();
+                getData();
+                getData1();
+            }).fail(function (e) {
+                //console.log(e);
+            });
+            //console.log("tab in")
+
+            // tab is active
+        }
+    });
+
+    function sleep(ms) {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+
+
+    }
+    $(function () {
+        // Proxy created on the fly
+        var cus = $.connection.cusHub;
+        //var cus1 = $.connection.cusHub1;
+        //console.log(cus)
+        // Declare a function on the job hub so the server can invoke it
+        cus.client.displayCustomer = function () {
+            // async function a() {
+            getData();
+            //   await sleep(2000);
+            //  getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+        cus.client.data = function () {
+            //async function a() {
+            //    getData();
+            //    await sleep(2000);
+            getData1();
+            //}
+            //a();
+
+            //getData();
+            //getData1();
+        };
+
+        cus.client.data1 = function () {
+            getData2();
+        };
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+        getData1();
+        getData2();
+        //async function aa() {
+        //    getData();
+        //    await sleep(2000);
+        //    getData1();
+        //}
+        //aa();
+
+    });
+    function getData1() {
+
+        try {
+        //var $tbl = $('#tblInfo');
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data1) {
+
+                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                    if (data == 0) {
+                        $('#MesaageCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MesaageCount').attr("data-count", data);
+                    }
+                    // console.log(data);
+                });
+
+
+                $.each(data1.listCus, function (i, model) {
+
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+    function getData() {
+        try {
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                }
+                //alert(provid);
+                //alert(branchid);
+
+                @*alert("@Session["providerid"]");
+                alert(data.ProviderID);*@
+
+                //$tbl.empty();
+                $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#NotifactionCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#NotifactionCount').attr("data-count", data1);
+                    }
+                });
+
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                        $('#trigger').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+
+                        @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                        if (result == true) {
+                                window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        }
+                        else {
+
+                        }
+                            $('#trigger').val("0");*@
+                                    if ("@Session["ClaimForm_Approved"]"!="") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                   if (ClaimForm_Approv == 1) {
+                                       var sound = new Audio('/Media/alert.mp3');
+                                       sound.autoplay = true;
+                                       sound.muted = false;
+                                       sound.play();
+                                       setTimeout(function () {
+                                           snackbar.classList.add('isShown');
+                                           $('#CardNumbersnackbar').text(model.CardNumber)
+                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                           setTimeout(hideSnackbar, 5000);
+                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                                        if (result == true) {
+                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                                       }
+                                       else {
+
+                                       }*@
+                                       $('#trigger').val("0");
+                                       if (data2 == 0) {
+                                           $('#NotifactionCount').removeAttr("data-count");
+
+                                       }
+                                       else {
+                                           $('#NotifactionCount').attr("data-count", data2);
+                                           }
+                                       }, 100);
+                                }
+                                 }
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+    function getData2() {
+        try {
+        $.ajax({
+            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+
+                var provid = 0;
+                var branchid = 0;
+                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
+                     provid = parseInt("@Session["providerid"]");
+                     branchid = parseInt("@Session["BranchID"]");
+                }
+                  var ApprovePage = 0;
+                  var ApprovePage1 = 0;
+                  var ApprovePage2 = 0;
+
+                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
+                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                     ApprovePage1 = parseInt("@Session["Approval"]");
+                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                }
+
+                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                    if (data1 == 0) {
+                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                    }
+                    else {
+                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                    }
+                });
+                $.each(data.listCus, function (i, model) {
+
+                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
+                    //}
+                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
+                        $('#trigger1').val("1");
+                        $.connection.hub.disconnected(function () {
+                            setTimeout(function () {
+                                $.connection.hub.start();
+                            }, 5000); // Restart connection after 5 seconds.
+                        });
+
+                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+
+                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+
+                            //if (result == true) {
+                            var sound = new Audio('/Media/alert.mp3');
+                            sound.play();
+                            setTimeout(function () {
+                                snackbarMember.classList.add('isShown');
+                                $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                setTimeout(hideSnackbard1, 5000);
+                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
+                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
+                        //}
+                        //else {
+
+                        //}
+                            $('#trigger1').val("0");
+                                if (data2 == 0) {
+                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                            }
+                            else {
+                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                }
+                            }, 100);
+
+                        })
+                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
+
+                    }
+                    //$tbl.append
+                    //    (
+                    //    '<tr>' +
+                    //        '<td>' + model.ClaimFormNum + '</td>' +
+                    //        '<td>' + model.CardNumber + '</td>' +
+                    //        '<td>' + model.ProviderID + '</td>' +
+                    //        '<td>' + model.BranchID + '</td>' +
+                    //    '<tr>'
+                    //    );
+                });
+            }
+            });
+        }
+        catch (err) {
+        }
+    }
+
+</script>
+
+
+<script>
+
+
+    function refresh() {
+
+              $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/CheckIfSessionValid",
+                        //data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            if (r == "False") {
+                                window.open('@Url.Action("login", "ClaimForm")', '_self');
+                            }
+                            else {
+                                setTimeout(refresh, 5000);
+                                 }
+                        }
+        });
+
+    }
+
+    setTimeout(refresh, 1000);
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#Loadingg").hide();
+        $("body").on("click", "#Approve_ClaimForm", function () {
+            Swal.fire({
+                title: "Confirm",
+                imageUrl: "/Images/Quationimg.jpg",
+                imageWidth: 550,
+                imageHeight: 225,
+                text: "Are you Sure you want to Accept Approval ?",
+                showCancelButton: true,
+                confirmButtonText: "Confirm",
+                cancelButtonColor: "#700c0c"
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    $("#Loadingg").show();
+
+                var Claims_Services = new Array();
+                var i = 0;
+                var j = 0;
+                    $("#Claim_Services2 TBODY TR").each(function () {
+                    var row = $(this);
+                    var Claim_Service = {};
+                        var dt = $('#Claim_Services2').DataTable();
+                    if (dt != null) {
+                        if (dt.rows().count() > 0) {
+                            if ($('#IsACTIVE1' + i).is(":checked") == true) {
+                                Claim_Service.ClaimFormNumber = row.find("TD").eq(1).text();
+                                Claim_Service.ClaimItemIDd = row.find("TD").eq(2).text();
+                                Claim_Service.ServiceName = row.find("TD").eq(3).text();
+                                Claim_Service.ServicePrice = parseFloat((row.find("TD").eq(4).text()).replace(/,/g, ''));
+                                Claim_Service.ServiceQnt = parseFloat((row.find("TD").eq(5).text()).replace(/,/g, ''));
+                                Claim_Service.ServiceAmt = parseFloat((row.find("TD").eq(6).text()).replace(/,/g, ''));
+                                Claim_Service.RequestedPrice = parseFloat((row.find("TD").eq(7).text()).replace(/,/g, ''));
+                                Claims_Services.push(Claim_Service);
+                                j = j + 1;
+
+                            }
+                            i = i + 1;
+                        }
+                    }
+                    });
+                    if (j == 0) {
+                        $("#Loadingg").hide();
+
+                       Swal.fire("Warning !", "Please Select At Least One Service To Accept Approval. ", "warning");
+                   }
+                   else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/ClaimForm/Provider_Accept_Approve",
+                        data: JSON.stringify(Claims_Services),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (r) {
+                            $("#Loadingg").hide();
+
+                            if (r == "0") {
+                                Swal.fire("Warning !", "Approval is Accepted From Another Provider <br> You Can not Accept This Approval <br> Contact With CMC Please", "warning").then(function () {
+                                    $('#Check_CardNumber').click();
+                                });
+                                }
+                            else {
+                                Swal.fire("Success", "Approval is Accepted.<br>Approval Amt is :  " + r[2] + "<br> Member Deductable Percentage is :  " + r[0] + " % <br> Member Deductable is :  " + r[1] + "     ", "success").then(function () {
+                                    var ClaimID = r[3];
+                                    window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
+                                    $('#Check_CardNumber').click();
+                                });
+                                 }
+                        }
+                    });
+                }
+
+                    }
+                });
+
+
+        });
+
+    });
+
+
+</script>
+
+
+
+<style>
+    .checkbox-wrapper-19 {
+        box-sizing: border-box;
+        --background-color: #fff;
+        --checkbox-height: 25px;
+    }
+
+    @@-moz-keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@-webkit-keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@keyframes dothabottomcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) / 2);
+        }
+    }
+
+    @@keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    @@-webkit-keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    @@-moz-keyframes dothatopcheck-19 {
+        0% {
+            height: 0;
+        }
+
+        50% {
+            height: 0;
+        }
+
+        100% {
+            height: calc(var(--checkbox-height) * 1.2);
+        }
+    }
+
+    .checkbox-wrapper-19 input[type=checkbox] {
+        display: none;
+    }
+
+    .checkbox-wrapper-19 .check-box {
+        height: var(--checkbox-height);
+        width: var(--checkbox-height);
+        background-color: transparent;
+        border: calc(var(--checkbox-height) * .1) solid #000;
+        border-radius: 5px;
+        position: relative;
+        display: inline-block;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-transition: border-color ease 0.2s;
+        -o-transition: border-color ease 0.2s;
+        -webkit-transition: border-color ease 0.2s;
+        transition: border-color ease 0.2s;
+        cursor: pointer;
+    }
+
+        .checkbox-wrapper-19 .check-box::before,
+        .checkbox-wrapper-19 .check-box::after {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: absolute;
+            height: 0;
+            width: calc(var(--checkbox-height) * .2);
+            background-color: #34b93d;
+            display: inline-block;
+            -moz-transform-origin: left top;
+            -ms-transform-origin: left top;
+            -o-transform-origin: left top;
+            -webkit-transform-origin: left top;
+            transform-origin: left top;
+            border-radius: 5px;
+            content: " ";
+            -webkit-transition: opacity ease 0.5;
+            -moz-transition: opacity ease 0.5;
+            transition: opacity ease 0.5;
+        }
+
+        .checkbox-wrapper-19 .check-box::before {
+            top: calc(var(--checkbox-height) * .72);
+            left: calc(var(--checkbox-height) * .41);
+            box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
+            -moz-transform: rotate(-135deg);
+            -ms-transform: rotate(-135deg);
+            -o-transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg);
+        }
+
+        .checkbox-wrapper-19 .check-box::after {
+            top: calc(var(--checkbox-height) * .37);
+            left: calc(var(--checkbox-height) * .05);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box,
+        .checkbox-wrapper-19 .check-box.checked {
+            border-color: #34b93d;
+        }
+
+            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after,
+            .checkbox-wrapper-19 .check-box.checked::after {
+                height: calc(var(--checkbox-height) / 2);
+                -moz-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                -o-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                -webkit-animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                animation: dothabottomcheck-19 0.2s ease 0s forwards;
+            }
+
+            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before,
+            .checkbox-wrapper-19 .check-box.checked::before {
+                height: calc(var(--checkbox-height) * 1.2);
+                -moz-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                -o-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                -webkit-animation: dothatopcheck-19 0.4s ease 0s forwards;
+                animation: dothatopcheck-19 0.4s ease 0s forwards;
+            }
+</style>
