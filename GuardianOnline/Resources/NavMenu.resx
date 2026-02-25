@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="MedicalServices" xml:space="preserve"><value>Medical Services</value></data>
+  <data name="ClaimFormApproved" xml:space="preserve"><value>ClaimForm Approved</value></data>
+  <data name="Approval" xml:space="preserve"><value>Approval</value></data>
+  <data name="ChronicApproval" xml:space="preserve"><value>Chronic Approval</value></data>
+  <data name="DoctorClaimForm" xml:space="preserve"><value>Doctor ClaimForm</value></data>
+  <data name="PrintCancelInvoice" xml:space="preserve"><value>Print &amp; Cancel Invoice</value></data>
+  <data name="PrintClaimForm" xml:space="preserve"><value>Print ClaimForm</value></data>
+  <data name="SmartCardRequests" xml:space="preserve"><value>Smart Card Requests</value></data>
+  <data name="InvoicesAudit" xml:space="preserve"><value>Invoices Audit</value></data>
+  <data name="ExpandedServices" xml:space="preserve"><value>Expanded Services</value></data>
+  <data name="PaymentInquiry" xml:space="preserve"><value>Payment Inquiry</value></data>
+
+  <data name="Admin" xml:space="preserve"><value>Admin</value></data>
+  <data name="UserData" xml:space="preserve"><value>User Data</value></data>
+  <data name="AddUserRoles" xml:space="preserve"><value>Add User Roles</value></data>
+  <data name="EditUserRoles" xml:space="preserve"><value>Edit User Roles</value></data>
+
+  <data name="ProviderAdmin" xml:space="preserve"><value>Provider Admin</value></data>
+  <data name="UserHome" xml:space="preserve"><value>User Home</value></data>
+  <data name="UserCreate" xml:space="preserve"><value>User Create</value></data>
+
+  <data name="UserAccount" xml:space="preserve"><value>User Account</value></data>
+  <data name="SignOut" xml:space="preserve"><value>Sign Out</value></data>
+</root>

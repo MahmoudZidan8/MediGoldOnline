@@ -550,6 +550,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Layout.ar.resx" />
     <EmbeddedResource Include="Resources\Layout.resx" />
+    <EmbeddedResource Include="Resources\NavMenu.ar.resx" />
+    <EmbeddedResource Include="Resources\NavMenu.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
