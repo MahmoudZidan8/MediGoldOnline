@@ -1,0 +1,138 @@
+/* ===========================
+   RTL Support for Arabic
+   =========================== */
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Navbar RTL */
+html[dir="rtl"] .navbar-brand {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+html[dir="rtl"] .ms-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+html[dir="rtl"] .me-2 {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+html[dir="rtl"] .ms-1 {
+    margin-left: 0 !important;
+    margin-right: 0.25rem !important;
+}
+
+html[dir="rtl"] .ms-2 {
+    margin-left: 0 !important;
+    margin-right: 0.5rem !important;
+}
+
+html[dir="rtl"] .ms-3 {
+    margin-left: 0 !important;
+    margin-right: 1rem !important;
+}
+
+/* Desktop Sidebar RTL */
+html[dir="rtl"] .sidebar-desktop {
+    left: auto;
+    right: 0;
+    border-left: 1px solid var(--sidebar-border);
+    border-right: none;
+}
+
+html[dir="rtl"] .sidebar-desktop.collapsed {
+    transform: translateX(100%);
+}
+
+/* Main Content RTL */
+html[dir="rtl"] .main-content {
+    margin-left: 0;
+    margin-right: var(--sidebar-w);
+}
+
+html[dir="rtl"] .main-content.sidebar-collapsed {
+    margin-left: 0;
+    margin-right: var(--sidebar-w-collapsed);
+}
+
+/* Mobile Offcanvas RTL */
+html[dir="rtl"] .offcanvas-start {
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+}
+
+html[dir="rtl"] .offcanvas-start.show {
+    transform: translateX(0);
+}
+
+/* Navigation Menu RTL */
+html[dir="rtl"] .nav-menu .nav-link {
+    border-left: none;
+    border-right: 3px solid transparent;
+}
+
+html[dir="rtl"] .nav-menu .nav-link:hover,
+html[dir="rtl"] .nav-menu .nav-link.active {
+    border-left-color: transparent;
+    border-right-color: var(--primary-color);
+}
+
+html[dir="rtl"] .nav-menu .nav-link .bi-chevron-down {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Dropdown RTL */
+html[dir="rtl"] .dropdown-menu-end {
+    left: 0 !important;
+    right: auto !important;
+}
+
+/* Notification Badges RTL */
+html[dir="rtl"] .notification-badges {
+    right: auto;
+    left: 20px;
+}
+
+html[dir="rtl"] .notification-badge .badge {
+    right: auto;
+    left: -5px;
+}
+
+/* Table RTL */
+html[dir="rtl"] .table {
+    text-align: right;
+}
+
+/* Form Controls RTL */
+html[dir="rtl"] .form-control,
+html[dir="rtl"] .form-select {
+    text-align: right;
+}
+
+/* Responsive RTL */
+@media (max-width: 767.98px) {
+    html[dir="rtl"] .main-content {
+        margin-right: 0;
+    }
+    
+    html[dir="rtl"] .notification-badges {
+        left: 15px;
+    }
+}
+
+/* Position absolute badges RTL */
+html[dir="rtl"] .position-absolute.top-0.start-100 {
+    left: auto;
+    right: 100%;
+}
+
+html[dir="rtl"] .translate-middle {
+    transform: translate(50%, -50%) !important;
+}
