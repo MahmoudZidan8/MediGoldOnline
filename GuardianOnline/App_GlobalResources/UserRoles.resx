@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Account_Title" xml:space="preserve"><value>حساب المستخدم</value></data>
+  <data name="Account_SubTitle" xml:space="preserve"><value>إدارة بيانات الحساب</value></data>
+
+  <data name="Section_AccountData" xml:space="preserve"><value>بيانات الحساب</value></data>
+
+  <data name="Field_UserName" xml:space="preserve"><value>اسم المستخدم</value></data>
+  <data name="Field_Password" xml:space="preserve"><value>كلمة المرور</value></data>
+  <data name="Field_ConfirmPassword" xml:space="preserve"><value>تأكيد كلمة المرور</value></data>
+  <data name="Field_FirstName" xml:space="preserve"><value>الاسم الأول</value></data>
+  <data name="Field_LastName" xml:space="preserve"><value>اسم العائلة</value></data>
+  <data name="Field_Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="Field_UserImage" xml:space="preserve"><value>صورة المستخدم</value></data>
+
+  <data name="Btn_Save" xml:space="preserve"><value>حفظ</value></data>
+  <data name="Btn_BackHome" xml:space="preserve"><value>العودة للرئيسية</value></data>
+
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>خطأ!</value></data>
+</root>

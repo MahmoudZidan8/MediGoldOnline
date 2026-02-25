@@ -353,3 +353,243 @@ html[dir="rtl"] .dropdown-menu-end {
     left: 0 !important;
     right: auto !important;
 }
+
+
+/* ===========================
+   Edit User Roles Page Styles
+   =========================== */
+
+.edit-user-roles-container {
+    min-height: calc(100vh - var(--nav-h));
+}
+
+.page-header-bar {
+    background: linear-gradient(135deg, #008080 0%, #006666 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.page-header-bar .page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+}
+
+.page-header-bar .page-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+}
+
+.page-header-bar .btn-group .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-color: rgba(255,255,255,0.3);
+}
+
+.page-header-bar .btn-group .btn:hover {
+    background-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.text-teal {
+    color: #008080 !important;
+}
+
+.btn-teal {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-teal:hover {
+    background-color: #006666;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,128,128,0.3);
+}
+
+.user-select-toolbar {
+    background-color: #f8f9fa !important;
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.user-select-toolbar .form-label {
+    font-size: 1rem;
+    color: #495057;
+    display: flex;
+    align-items: center;
+}
+
+.user-select-toolbar .form-select {
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    padding: 0.6rem 1rem;
+}
+
+.user-select-toolbar .form-select:focus {
+    border-color: #008080;
+    box-shadow: 0 0 0 0.2rem rgba(0,128,128,0.25);
+}
+
+.edit-user-roles-container .card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.edit-user-roles-container .card-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(90deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.edit-user-roles-container .card-header .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #008080;
+}
+
+.edit-user-roles-container .table thead th {
+    background-color: #008080 !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem;
+    border: none;
+}
+
+.edit-user-roles-container .table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.edit-user-roles-container .table tbody tr:hover {
+    background-color: #f0f8f8;
+}
+
+.edit-user-roles-container .table tbody td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.edit-user-roles-container .table tbody td i {
+    font-size: 1.1rem;
+}
+
+.edit-user-roles-container .table-info {
+    background-color: #d1ecf1 !important;
+}
+
+.edit-user-roles-container .table-info td {
+    font-weight: 600;
+    color: #0c5460;
+}
+
+.edit-user-roles-container .card-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 2px solid #e9ecef;
+}
+
+.edit-user-roles-container #User_role {
+    font-size: 1.1rem;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+    transition: all 0.3s ease;
+}
+
+.edit-user-roles-container #User_role:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(40,167,69,0.4);
+}
+
+/* RTL Support */
+html[dir="rtl"] .page-header-bar .btn-group {
+    text-align: right;
+}
+
+html[dir="rtl"] .user-select-toolbar .form-label {
+    text-align: right;
+}
+
+html[dir="rtl"] .edit-user-roles-container .table tbody td i {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .page-header-bar {
+        padding: 1.5rem 0;
+    }
+
+    .page-header-bar .page-title {
+        font-size: 1.5rem;
+    }
+
+    .page-header-bar .page-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .page-header-bar .btn-group {
+        width: 100%;
+    }
+
+    .page-header-bar .btn-group .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .user-select-toolbar {
+        padding: 1rem !important;
+    }
+
+    .edit-user-roles-container .card-body {
+        padding: 1.5rem !important;
+    }
+
+    .edit-user-roles-container .card-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .edit-user-roles-container .card-footer .btn-teal {
+        width: 100%;
+    }
+
+    .edit-user-roles-container .table thead th {
+        font-size: 0.9rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .edit-user-roles-container .table tbody td {
+        font-size: 0.875rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .edit-user-roles-container .table tbody td i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .page-header-bar .page-title {
+        font-size: 1.25rem;
+    }
+
+    .user-select-toolbar .col-md-3 {
+        margin-bottom: 0.5rem;
+    }
+
+    .edit-user-roles-container #User_role {
+        font-size: 1rem;
+        padding: 0.65rem 1.5rem;
+    }
+}

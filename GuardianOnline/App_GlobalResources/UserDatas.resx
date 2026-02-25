@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Account_Title" xml:space="preserve"><value>User Account</value></data>
+  <data name="Account_SubTitle" xml:space="preserve"><value>Manage your account information</value></data>
+
+  <data name="Section_AccountData" xml:space="preserve"><value>Account Data</value></data>
+
+  <data name="Field_UserName" xml:space="preserve"><value>Username</value></data>
+  <data name="Field_Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Field_ConfirmPassword" xml:space="preserve"><value>Confirm Password</value></data>
+  <data name="Field_FirstName" xml:space="preserve"><value>First Name</value></data>
+  <data name="Field_LastName" xml:space="preserve"><value>Last Name</value></data>
+  <data name="Field_Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Field_UserImage" xml:space="preserve"><value>User Image</value></data>
+
+  <data name="Btn_Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Btn_BackHome" xml:space="preserve"><value>Back to Home</value></data>
+
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Error!</value></data>
+</root>

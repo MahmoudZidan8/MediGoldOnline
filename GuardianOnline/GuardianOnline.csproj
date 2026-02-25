@@ -540,6 +540,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_GlobalResources\UserDatas.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserDatas.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserDatas.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserDatas.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
     <EmbeddedResource Include="App_GlobalResources\DoctorHome.ar.resx">

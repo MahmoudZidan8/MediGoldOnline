@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Page Titles -->
+  <data name="Add_Title" xml:space="preserve"><value>إضافة صلاحيات المستخدم</value></data>
+  <data name="Edit_Title" xml:space="preserve"><value>تعديل صلاحيات المستخدم</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>إدارة صلاحيات المستخدمين</value></data>
+
+  <!-- Section -->
+  <data name="Section_RolesData" xml:space="preserve"><value>بيانات صلاحيات المستخدمين</value></data>
+
+  <!-- Controls -->
+  <data name="UsersList" xml:space="preserve"><value>قائمة المستخدمين</value></data>
+  <data name="SelectUser" xml:space="preserve"><value>----اختر اسم المستخدم----</value></data>
+
+  <!-- Table -->
+  <data name="RoleName" xml:space="preserve"><value>اسم الصلاحية</value></data>
+  <data name="IsChecked" xml:space="preserve"><value>مفعل</value></data>
+
+  <!-- Rows -->
+  <data name="SelectAllPages" xml:space="preserve"><value>تحديد كل الصفحات</value></data>
+  <data name="UploadMemberClaim" xml:space="preserve"><value>رفع مطالبة عضو</value></data>
+  <data name="MedicalServices" xml:space="preserve"><value>الخدمات الطبية</value></data>
+  <data name="ClaimFormApproved" xml:space="preserve"><value>المطالبات المعتمدة</value></data>
+  <data name="Approval" xml:space="preserve"><value>الموافقات</value></data>
+  <data name="ExpandedServices" xml:space="preserve"><value>خدمات موسعة</value></data>
+  <data name="PaymentInquiry" xml:space="preserve"><value>استعلام المدفوعات</value></data>
+  <data name="InvoicesAudit" xml:space="preserve"><value>تدقيق الفواتير</value></data>
+  <data name="DoctorClaimForm" xml:space="preserve"><value>نموذج مطالبات الطبيب</value></data>
+
+  <!-- Buttons -->
+  <data name="Btn_Create" xml:space="preserve"><value>إنشاء</value></data>
+  <data name="Btn_Update" xml:space="preserve"><value>تحديث</value></data>
+  <data name="Btn_BackHome" xml:space="preserve"><value>العودة للرئيسية</value></data>
+
+  <!-- Messages -->
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>خطأ!</value></data>
+</root>
