@@ -1,8 +1,17 @@
 ﻿@{
     ViewBag.Title = "DoctorHome";
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
-}
 
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("DoctorHome", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
+}
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
 
@@ -21,140 +30,124 @@
 
     <div class="dh2-header">
         <div>
-            <div class="dh2-title">Dashboard</div>
-            <div class="dh2-sub">Welcome</div>
+            <div class="dh2-title">@T("DashboardTitle", "Dashboard")</div>
+            <div class="dh2-sub">@T("Welcome", "Welcome")</div>
         </div>
         <div class="dh2-date">@DateTime.Now.ToString("dd/MM/yyyy")</div>
     </div>
 
     <div class="dh2-tiles">
 
-        @* Medical Services *@
         @if (Session["Medical_Services"] != null && int.Parse(Session["Medical_Services"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("ClaimServices","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-heart-pulse"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Medical Services</div>
-                    <div class="dh2-desc">Enter medical services module</div>
+                    <div class="dh2-name">@T("MedicalServices_Title", "Medical Services")</div>
+                    <div class="dh2-desc">@T("MedicalServices_Desc", "Enter medical services module")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* ClaimForm Approved *@
         @if (Session["ClaimForm_Approved"] != null && int.Parse(Session["ClaimForm_Approved"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("ProviderClaimFormApproved","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-check2-circle"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">ClaimForm Approved</div>
-                    <div class="dh2-desc">Approved claims dashboard</div>
+                    <div class="dh2-name">@T("ClaimFormApproved_Title", "ClaimForm Approved")</div>
+                    <div class="dh2-desc">@T("ClaimFormApproved_Desc", "Approved claims dashboard")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Approval *@
         @if (Session["Approval"] != null && int.Parse(Session["Approval"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("Approval","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-clipboard-check"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Approval</div>
-                    <div class="dh2-desc">Approvals management</div>
+                    <div class="dh2-name">@T("Approval_Title", "Approval")</div>
+                    <div class="dh2-desc">@T("Approval_Desc", "Approvals management")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
-        }
 
-        @* Chronic Approval *@
-        @if (Session["Approval"] != null && int.Parse(Session["Approval"].ToString()) == 1)
-        {
             <a class="dh2-tile" href="@Url.Action("Chronic_Approvals","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-activity"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Chronic Approval</div>
-                    <div class="dh2-desc">Chronic approvals workflow</div>
+                    <div class="dh2-name">@T("ChronicApproval_Title", "Chronic Approval")</div>
+                    <div class="dh2-desc">@T("ChronicApproval_Desc", "Chronic approvals workflow")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Doctor ClaimForm *@
         @if (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("Doctor_ClaimForm","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-file-medical"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Doctor ClaimForm</div>
-                    <div class="dh2-desc">Create & manage doctor claim forms</div>
+                    <div class="dh2-name">@T("DoctorClaimForm_Title", "Doctor ClaimForm")</div>
+                    <div class="dh2-desc">@T("DoctorClaimForm_Desc", "Create & manage doctor claim forms")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
-        }
 
-        @* Print ClaimForm *@
-        @if (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
-        {
             <a class="dh2-tile" href="@Url.Action("Print_CancelClaimForm","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-printer"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Print ClaimForm</div>
-                    <div class="dh2-desc">Print / Cancel claim forms</div>
+                    <div class="dh2-name">@T("PrintClaimForm_Title", "Print ClaimForm")</div>
+                    <div class="dh2-desc">@T("PrintClaimForm_Desc", "Print / Cancel claim forms")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Print & Cancel Invoice *@
         @if ((Session["Medical_Services"] != null && int.Parse(Session["Medical_Services"].ToString()) == 1)
           || (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
         {
             <a class="dh2-tile" href="@Url.Action("Print_CancelAPProval","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-receipt"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Print & Cancel Invoice</div>
-                    <div class="dh2-desc">Invoices printing & cancellation</div>
+                    <div class="dh2-name">@T("PrintCancelInvoice_Title", "Print & Cancel Invoice")</div>
+                    <div class="dh2-desc">@T("PrintCancelInvoice_Desc", "Invoices printing & cancellation")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Invoices Audit *@
         @if (Session["Invoices_Audit"] != null && int.Parse(Session["Invoices_Audit"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("Invoices_Audit","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-shield-check"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Invoices Audit</div>
-                    <div class="dh2-desc">Audit invoices and review status</div>
+                    <div class="dh2-name">@T("InvoicesAudit_Title", "Invoices Audit")</div>
+                    <div class="dh2-desc">@T("InvoicesAudit_Desc", "Audit invoices and review status")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Expanded Services *@
         @if (Session["Expanded_Services"] != null && int.Parse(Session["Expanded_Services"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("Provider_Expended_services","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-buildings"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Expanded Services</div>
-                    <div class="dh2-desc">Expanded services list</div>
+                    <div class="dh2-name">@T("ExpandedServices_Title", "Expanded Services")</div>
+                    <div class="dh2-desc">@T("ExpandedServices_Desc", "Expanded services list")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
-        @* Payment Inquiry *@
         @if (Session["Payment_Inquiry"] != null && int.Parse(Session["Payment_Inquiry"].ToString()) == 1)
         {
             <a class="dh2-tile" href="@Url.Action("PaymentInquiry","ClaimForm")">
                 <div class="dh2-icon"><i class="bi bi-cash-coin"></i></div>
                 <div class="dh2-body">
-                    <div class="dh2-name">Payment Inquiry</div>
-                    <div class="dh2-desc">Search & view payment status</div>
+                    <div class="dh2-name">@T("PaymentInquiry_Title", "Payment Inquiry")</div>
+                    <div class="dh2-desc">@T("PaymentInquiry_Desc", "Search & view payment status")</div>
                 </div>
                 <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>

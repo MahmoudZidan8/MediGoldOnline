@@ -542,16 +542,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
-    <EmbeddedResource Include="Resources\DoctorHome.ar.resx">
+    <EmbeddedResource Include="App_GlobalResources\DoctorHome.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\DoctorHome.resx">
+    <EmbeddedResource Include="App_GlobalResources\DoctorHome.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Layout.ar.resx" />
-    <EmbeddedResource Include="Resources\Layout.resx" />
-    <EmbeddedResource Include="Resources\NavMenu.ar.resx" />
-    <EmbeddedResource Include="Resources\NavMenu.resx" />
+    <EmbeddedResource Include="App_GlobalResources\Layout.ar.resx" />
+    <EmbeddedResource Include="App_GlobalResources\Layout.resx" />
+    <EmbeddedResource Include="App_GlobalResources\NavMenu.ar.resx" />
+    <EmbeddedResource Include="App_GlobalResources\NavMenu.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
