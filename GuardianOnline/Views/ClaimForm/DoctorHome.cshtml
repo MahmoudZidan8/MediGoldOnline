@@ -1,15 +1,12 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "DoctorHome";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 
-@*<h2 style="text-align:center">@ViewBag.scn</h2>*@
-@*@Scripts.Render("~/bundles/jquery")*@
-@*@Scripts.Render("~/bundles/bootstrap")*@
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
+
 @Html.Hidden("Get", Url.Action("Get", "Customer"))
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
 @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
@@ -19,148 +16,94 @@
 
 <input type="hidden" id="trigger1" value="0" />
 <input type="hidden" id="triggercount1" value="0" />
-<style>
 
-    /*body {
-        background-image: url('../Images/HomeBackground.jpg');
-        background-color: #cccccc;
-    }*/
-    div.scrollmenu {
-        background-color: white;
-        overflow-x: scroll;
-        white-space: nowrap;
-        height: 500px;
-        border-left: 7px solid #bcc9cc;
-        border-right: 7px solid #bcc9cc;
-        /*border-top: 7px solid #bcc9cc;*/
-        /*border-top: 1px solid #0b2e2b;*/
-        border-radius: 15pt;
-        background-image: url('../Images/HomeBackground.jpg');
-        background-color: #cccccc;
-        text-align: center;
-    }
+<div class="page doctor-home-v2">
 
-        div.scrollmenu div {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 14px;
-            text-decoration: none;
-        }
+    <div class="dh2-header">
+        <div>
+            <div class="dh2-title">Dashboard</div>
+            <div class="dh2-sub">Welcome</div>
+        </div>
+        <div class="dh2-date">@DateTime.Now.ToString("dd/MM/yyyy")</div>
+    </div>
 
-            div.scrollmenu div:hover {
-                background-color: #159d91;
-            }
-
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 15px
-    }
-
-    ::-webkit-scrollbar-thumb {
-        -webkit-border-radius: 10px;
-        border-radius: 10px;
-        background: #3fb9af;
-    }
-</style>
-
-<div class="page doctor-home">
-
-    <div class="tiles">
+    <div class="dh2-tiles">
 
         @* Medical Services *@
         @if (Session["Medical_Services"] != null && int.Parse(Session["Medical_Services"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("ClaimServices","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/medicalservices.jpg" alt="Medical Services" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Medical Services</h3>
-                        <p class="sub">Enter medical services module</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("ClaimServices","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-heart-pulse"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Medical Services</div>
+                    <div class="dh2-desc">Enter medical services module</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* ClaimForm Approved *@
         @if (Session["ClaimForm_Approved"] != null && int.Parse(Session["ClaimForm_Approved"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("ProviderClaimFormApproved","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/approvalservices.jpg" alt="ClaimForm Approved" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">ClaimForm Approved</h3>
-                        <p class="sub">Approved claims dashboard</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("ProviderClaimFormApproved","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-check2-circle"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">ClaimForm Approved</div>
+                    <div class="dh2-desc">Approved claims dashboard</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Approval *@
         @if (Session["Approval"] != null && int.Parse(Session["Approval"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Approval","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/imgApproval.png" alt="Approval" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Approval</h3>
-                        <p class="sub">Approvals management</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Approval","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-clipboard-check"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Approval</div>
+                    <div class="dh2-desc">Approvals management</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Chronic Approval *@
         @if (Session["Approval"] != null && int.Parse(Session["Approval"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Chronic_Approvals","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/Chronic2.jpg" alt="Chronic Approval" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Chronic Approval</h3>
-                        <p class="sub">Chronic approvals workflow</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Chronic_Approvals","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-activity"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Chronic Approval</div>
+                    <div class="dh2-desc">Chronic approvals workflow</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Doctor ClaimForm *@
         @if (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Doctor_ClaimForm","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/doctorClaimForm.jpg" alt="Doctor ClaimForm" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Doctor ClaimForm</h3>
-                        <p class="sub">Create & manage doctor claim forms</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Doctor_ClaimForm","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-file-medical"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Doctor ClaimForm</div>
+                    <div class="dh2-desc">Create & manage doctor claim forms</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Print ClaimForm *@
         @if (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Print_CancelClaimForm","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/claimformPrint.jpg" alt="Print ClaimForm" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Print ClaimForm</h3>
-                        <p class="sub">Print / Cancel claim forms</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Print_CancelClaimForm","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-printer"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Print ClaimForm</div>
+                    <div class="dh2-desc">Print / Cancel claim forms</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
@@ -168,634 +111,307 @@
         @if ((Session["Medical_Services"] != null && int.Parse(Session["Medical_Services"].ToString()) == 1)
           || (Session["Doctor_ClaimForm"] != null && int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1))
         {
-            <a class="tile" href="@Url.Action("Print_CancelAPProval","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/PrintCancelInvoice.png" alt="Print & Cancel Invoice" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Print & Cancel Invoice</h3>
-                        <p class="sub">Invoices printing & cancellation</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Print_CancelAPProval","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-receipt"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Print & Cancel Invoice</div>
+                    <div class="dh2-desc">Invoices printing & cancellation</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Invoices Audit *@
         @if (Session["Invoices_Audit"] != null && int.Parse(Session["Invoices_Audit"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Invoices_Audit","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/AuditImg.jpg" alt="Invoices Audit" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Invoices Audit</h3>
-                        <p class="sub">Audit invoices and review status</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Invoices_Audit","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-shield-check"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Invoices Audit</div>
+                    <div class="dh2-desc">Audit invoices and review status</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Expanded Services *@
         @if (Session["Expanded_Services"] != null && int.Parse(Session["Expanded_Services"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("Provider_Expended_services","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/ExpandedServices.png" alt="Expanded Services" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Expanded Services</h3>
-                        <p class="sub">Expanded services list</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("Provider_Expended_services","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-buildings"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Expanded Services</div>
+                    <div class="dh2-desc">Expanded services list</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
         @* Payment Inquiry *@
         @if (Session["Payment_Inquiry"] != null && int.Parse(Session["Payment_Inquiry"].ToString()) == 1)
         {
-            <a class="tile" href="@Url.Action("PaymentInquiry","ClaimForm")">
-                <div class="cardx">
-                    <div class="img-wrap">
-                        <img src="~/Images/paymentinquiry.png" alt="Payment Inquiry" />
-                    </div>
-                    <div class="content">
-                        <h3 class="title">Payment Inquiry</h3>
-                        <p class="sub">Search & view payment status</p>
-                    </div>
+            <a class="dh2-tile" href="@Url.Action("PaymentInquiry","ClaimForm")">
+                <div class="dh2-icon"><i class="bi bi-cash-coin"></i></div>
+                <div class="dh2-body">
+                    <div class="dh2-name">Payment Inquiry</div>
+                    <div class="dh2-desc">Search & view payment status</div>
                 </div>
+                <div class="dh2-go"><i class="bi bi-arrow-right"></i></div>
             </a>
         }
 
     </div>
-
-    <div class="footerx">
-        &copy; @DateTime.Now.ToShortDateString() - POLETECH Online
-    </div>
-
 </div>
 
 @*eror messages*@
 @if (ViewBag.ErorMessage != null)
 {
     <script type="text/javascript">
-
-            window.onload = function () {
-                //alert("@ViewBag.ErorMessage");
-                Swal.fire("Error !", "@ViewBag.ErorMessage", "error");
-
-            };
+        window.onload = function () {
+            Swal.fire("Error !", "@ViewBag.ErorMessage", "error");
+        };
     </script>
 }
 
-
-<style>
-    /* ===== DoctorHome UI ===== */
-    .doctor-home {
-        padding: 24px 20px;
-    }
-
-        /* بدل scroll أفقي: Grid responsive */
-        .doctor-home .tiles {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 18px;
-            padding: 22px;
-            border-radius: 18px;
-            background: #fff;
-            border: 1px solid #e9eef3;
-            box-shadow: 0 10px 30px rgba(0,0,0,.06);
-            position: relative;
-            overflow: hidden;
-        }
-
-            /* خلفية خفيفة بدل ما تكون مزعجة */
-            .doctor-home .tiles::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background-image: url('../Images/HomeBackground.jpg');
-                background-size: cover;
-                background-position: center;
-                opacity: .10;
-                pointer-events: none;
-            }
-
-        .doctor-home .tile {
-            position: relative; /* عشان تبقى فوق الـ ::before */
-            text-decoration: none !important;
-            color: inherit;
-        }
-
-        .doctor-home .cardx {
-            height: 100%;
-            border-radius: 16px;
-            background: rgba(255,255,255,.92);
-            border: 1px solid rgba(183,93,209,.35);
-            box-shadow: 0 10px 25px rgba(0,0,0,.08);
-            overflow: hidden;
-            transition: transform .15s ease, box-shadow .15s ease;
-        }
-
-        .doctor-home .tile:hover .cardx {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 35px rgba(0,0,0,.12);
-        }
-
-        .doctor-home .cardx .img-wrap {
-            height: 140px;
-            background: #f5f7fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .doctor-home .cardx img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .doctor-home .cardx .content {
-            padding: 14px 14px 16px;
-            text-align: center;
-        }
-
-        .doctor-home .cardx .title {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: #093a3a;
-            white-space: nowrap; /* سطر واحد */
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .doctor-home .cardx .sub {
-            margin: 8px 0 0;
-            font-size: 13px;
-            color: #4d6b6b;
-            line-height: 1.4;
-            height: 2.8em; /* سطرين */
-            overflow: hidden;
-        }
-
-        .doctor-home .footerx {
-            margin-top: 18px;
-            text-align: center;
-            font-size: 15px;
-            color: #6b7c8a;
-        }
-
-    /* شاشات صغيرة */
-    @@media (max-width: 576px) {
-        .doctor-home .tiles {
-            padding: 16px;
-        }
-
-        .doctor-home .cardx .img-wrap {
-            height: 120px;
-        }
-    }
-</style>
 <script type="text/javascript">
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-            //$.connection.hub.disconnect();
-            // $.connection.hub.disconnected(function () {
-            //});
             $.connection.hub.stop();
-
-             //console.log("tab out")
-            // tab is changed
         } else {
-            //$.connection.hub.connect();
             $.connection.hub.start().done(function () {
-                 //console.log("connection started")
-                //notifications.onconn();
                 getData();
                 getData1();
-            }).fail(function (e) {
-                //console.log(e);
-            });
-            //console.log("tab in")
-
-            // tab is active
+            }).fail(function (e) { });
         }
     });
 
     function sleep(ms) {
-        return new Promise(
-            resolve => setTimeout(resolve, ms)
-        );
-
-
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
+
     $(function () {
-
-        // Proxy created on the fly
         var cus = $.connection.cusHub;
-        //var cus1 = $.connection.cusHub1;
-        //console.log(cus)
-        // Declare a function on the job hub so the server can invoke it
+
         cus.client.displayCustomer = function () {
-           // async function a() {
-                getData();
-             //   await sleep(2000);
-               //  getData1();
-            //}
-            //a();
-
-            //getData();
-            //getData1();
+            getData();
         };
-        cus.client.data = function () {
-            //async function a() {
-            //    getData();
-            //    await sleep(2000);
-                getData1();
-            //}
-            //a();
 
-            //getData();
-            //getData1();
+        cus.client.data = function () {
+            getData1();
         };
 
         cus.client.data1 = function () {
             getData2();
         };
-        // Start the connection
+
         $.connection.hub.start();
         getData();
         getData1();
         getData2();
-        //async function aa() {
-        //    getData();
-        //    await sleep(2000);
-        //    getData1();
-        //}
-        //aa();
-
     });
 
-        function getData1() {
-            try {
-
-        //var $tbl = $('#tblInfo');
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data1) {
-
-                //$.connection.hub.disconnected(function () {
-                //    setTimeout(function () {
-                //        $.connection.hub.start();
-                //    }, 5000); // Restart connection after 5 seconds.
-                //});
-
-                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
-                });
-
-                $.each(data1.listCus, function (i, model) {
-
-                });
-            }
-                });
-            }
-            catch (err) {
-            }
-    }
-
-        function getData() {
-            try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                var ApprovePage = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                }
-
-                //alert(provid);
-                //alert(branchid);
-
-                @*alert("@Session["providerid"]");
-                alert(data.ProviderID);*@
-
-                //$tbl.empty();
-
-                //if ($('#triggercount').val() == "0") {
-                //    $('#triggercount').val("1");
-
-                $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                            $('#NotifactionCount').removeAttr("data-count");
-
+    function getData1() {
+        try {
+            $.ajax({
+                url: $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data1) {
+                    $.get("/ClaimForm/getcountmessage", {}, function (data) {
+                        if (data == 0) {
+                            $('#MesaageCount').removeAttr("data-count");
                         }
                         else {
-                        $('#NotifactionCount').attr("data-count", data1);
+                            $('#MesaageCount').attr("data-count", data);
                         }
                     });
 
-                //}
-
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage== 1)) {
-                        $('#trigger').val("1");
-
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
-                                    if ("@Session["ClaimForm_Approved"]"!="") {
-                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
-                                   if (ClaimForm_Approv == 1) {
-                                       var sound = new Audio('/Media/alert.mp3');
-                                       sound.autoplay = true;
-                                       sound.muted = false;
-                                       sound.play();
-                                       setTimeout(function () {
-                                           snackbar.classList.add('isShown');
-                                           $('#CardNumbersnackbar').text(model.CardNumber)
-                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
-                                           setTimeout(hideSnackbar, 5000);
-                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                                        if (result == true) {
-                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                                       }
-                                       else {
-
-                                       }*@
-                                       $('#trigger').val("0");
-                                       // $('#notifactionaaa').val("55");
-                                           if (data2 == 0) {
-                                           $('#NotifactionCount').removeAttr("data-count");
-
-                                       }
-                                       else {
-                                               $('#NotifactionCount').attr("data-count", data2);
-                                       }
-                                }, 100);
-                                       //window.onload = my_code(data);
-                                       //alert(data);
-                                       //sessionStorage.setItem("favoriteMovie", data);
-                                       //$('#NotifactionCount').data('data-count', data);
-
-                                }
-                                 }
-                        @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                        if (result == true) {
-                                window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        }
-                        else {
-
-                        }
-                            $('#trigger').val("0");*@
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-                });
-            }
-            catch (err) {
-            }
-    }
-        function getData2() {
-            try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
+                    $.each(data1.listCus, function (i, model) { });
                 }
-                  var ApprovePage = 0;
-                  var ApprovePage1 = 0;
-                  var ApprovePage2 = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                     ApprovePage1 = parseInt("@Session["Approval"]");
-                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
-                }
-
-                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
-                        $('#trigger1').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-
-                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbarMember.classList.add('isShown');
-                                $('#CardNumbersnackbarMember').text(model.CardNumber)
-                                setTimeout(hideSnackbard1, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-                });
-            }
-            catch (err) {
-            }
-    }
-</script>
-
-
-<script>
-    //var time = new Date().getTime();
-
-    //document.onmousemove = function (event) {
-    //    time = new Date().getTime();
-    //}
-
-    //document.onkeypress = function () {
-    //    time = new Date().getTime();
-    //}
-
-    function refresh() {
-
-        @*if (new Date().getTime() - time >= 9000) {
-            //document.getElementById("hiddenForm:gotoRegButton").click();
-            alert("Session expired please login again");
-            //location.href = '../../../login/';
-            window.open('@Url.Action("login", "ClaimForm")', '_self');
-
-        } else {
-            setTimeout(refresh, 9000);
-        }*@
-
-
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                //Swal.fire("Warning !", "Please Select At Least One Invoice To Recover Audit Department To Pay. ", "warning");
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
-        });
-
+            });
+        }
+        catch (err) { }
     }
 
-    setTimeout(refresh, 1000);
-</script>
-
-@*<script type="text/javascript">
-        $(function () {
-
-            // Proxy created on the fly
-            var cus1 = $.connection.cusHub;
-
-            // Declare a function on the job hub so the server can invoke it
-            cus1.client.displayCustomer = function () {
-                getData1();
-            };
-
-            // Start the connection
-            //$.connection.hub.start();
-            getData1();
-        });
-
-        function getData1() {
-            //var $tbl = $('#tblInfo');
+    function getData() {
+        try {
             $.ajax({
-                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                url: $("#Get").val(),
                 type: 'GET',
                 datatype: 'json',
                 success: function (data) {
 
-                    //$.connection.hub.disconnected(function () {
-                    //    setTimeout(function () {
-                    //        $.connection.hub.start();
-                    //    }, 5000); // Restart connection after 5 seconds.
-                    //});
+                    var provid = 0;
+                    var branchid = 0;
 
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
 
+                    var ApprovePage = 0;
+                    if ("@Session["ClaimForm_Approved"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                        if (data1 == 0) {
+                            $('#NotifactionCount').removeAttr("data-count");
+                        }
+                        else {
+                            $('#NotifactionCount').attr("data-count", data1);
+                        }
+                    });
 
                     $.each(data.listCus, function (i, model) {
-                        $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                            if (data == 0) {
-                                $('#MesaageCount').removeAttr("data-count");
 
-                            }
-                            else {
-                                $('#MesaageCount').attr("data-count", data);
-                            }
-                            // console.log(data);
-                        });
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) &&
+                            (model.CardNumber != "0") && (model.ClaimFormNum != 0) &&
+                            ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+
+                            $('#trigger').val("1");
+
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () {
+                                    $.connection.hub.start();
+                                }, 5000);
+                            });
+
+                            $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+                                if ("@Session["ClaimForm_Approved"]" != "") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                    if (ClaimForm_Approv == 1) {
+                                        var sound = new Audio('/Media/alert.mp3');
+                                        sound.autoplay = true;
+                                        sound.muted = false;
+                                        sound.play();
+
+                                        setTimeout(function () {
+                                            snackbar.classList.add('isShown');
+                                            $('#CardNumbersnackbar').text(model.CardNumber)
+                                            $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                            setTimeout(hideSnackbar, 5000);
+
+                                            $('#trigger').val("0");
+
+                                            if (data2 == 0) {
+                                                $('#NotifactionCount').removeAttr("data-count");
+                                            }
+                                            else {
+                                                $('#NotifactionCount').attr("data-count", data2);
+                                            }
+                                        }, 100);
+                                    }
+                                }
+                            });
+                        }
                     });
                 }
             });
         }
+        catch (err) { }
+    }
 
-    </script>*@
+    function getData2() {
+        try {
+            $.ajax({
+                url: $("#Get1").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    var provid = 0;
+                    var branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+
+                    var ApprovePage = 0;
+                    var ApprovePage1 = 0;
+                    var ApprovePage2 = 0;
+
+                    if ("@Session["ClaimForm_Approved"]" != "" || "@Session["Approval"]" != "" || "@Session["Doctor_ClaimForm"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                        ApprovePage1 = parseInt("@Session["Approval"]");
+                        ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                        if (data1 == 0) {
+                            $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                        }
+                        else {
+                            $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                        }
+                    });
+
+                    $.each(data.listCus, function (i, model) {
+
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) &&
+                            (model.CardNumber != "0") && ($('#trigger1').val() == "0") &&
+                            (ApprovePage == 1 || ApprovePage1 == 1 || ApprovePage2 == 1)) {
+
+                            $('#trigger1').val("1");
+
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () {
+                                    $.connection.hub.start();
+                                }, 5000);
+                            });
+
+                            $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+
+                                var sound = new Audio('/Media/alert.mp3');
+                                sound.play();
+
+                                setTimeout(function () {
+                                    snackbarMember.classList.add('isShown');
+                                    $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                    setTimeout(hideSnackbard1, 5000);
+
+                                    $('#trigger1').val("0");
+
+                                    if (data2 == 0) {
+                                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                                    }
+                                    else {
+                                        $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                    }
+                                }, 100);
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        catch (err) { }
+    }
+</script>
+
+<script>
+    function refresh() {
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") {
+                    window.open('@Url.Action("login", "ClaimForm")', '_self');
+                }
+                else {
+                    setTimeout(refresh, 5000);
+                }
+            }
+        });
+    }
+    setTimeout(refresh, 1000);
+</script>
 
 <script type="text/javascript">
     $(document).on('select2:open', () => {
         document.querySelector('.select2-search__field').focus();
     });
 </script>
-

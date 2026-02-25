@@ -1,0 +1,224 @@
+﻿@{
+    bool HasPermission(string key)
+    {
+        try
+        {
+            var value = Session[key];
+            if (value == null) return false;
+
+            if (value is bool b) return b;
+
+            if (int.TryParse(value.ToString(), out var i)) return i == 1;
+
+            if (bool.TryParse(value.ToString(), out var pb)) return pb;
+
+            return false;
+        }
+        catch { return false; }
+    }
+
+    var hasMedicalServices = HasPermission("Medical_Services");
+    var hasClaimFormApproved = HasPermission("ClaimForm_Approved");
+    var hasApproval = HasPermission("Approval");
+    var hasDoctorClaimForm = HasPermission("Doctor_ClaimForm");
+    var hasInvoicesAudit = HasPermission("Invoices_Audit");
+    var hasExpandedServices = HasPermission("Expanded_Services");
+    var hasPaymentInquiry = HasPermission("Payment_Inquiry");
+    var isAdmin = HasPermission("IsAdmin");
+    var isProviderAdmin = HasPermission("ProviderAdmin");
+}
+
+<nav class="nav-menu">
+    <ul class="nav flex-column p-2">
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("DoctorHome", "ClaimForm")">
+                <i class="bi bi-house-door me-2"></i><span>Home</span>
+            </a>
+        </li>
+
+        @if (hasMedicalServices)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ClaimServices", "ClaimForm")">
+                    <i class="bi bi-book me-2"></i><span>Medical Services</span>
+                </a>
+            </li>
+        }
+
+        @if (hasClaimFormApproved)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ProviderClaimFormApproved", "ClaimForm")">
+                    <i class="bi bi-star me-2"></i><span>ClaimForm Approved</span>
+                </a>
+            </li>
+        }
+
+        @if (hasApproval)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Approval", "ClaimForm")">
+                    <i class="bi bi-check-circle me-2"></i><span>Approval</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Chronic_Approvals", "ClaimForm")">
+                    <i class="bi bi-clipboard-check me-2"></i><span>Chronic Approval</span>
+                </a>
+            </li>
+        }
+
+        @if (hasDoctorClaimForm)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Doctor_ClaimForm", "ClaimForm")">
+                    <i class="bi bi-file-medical me-2"></i><span>Doctor ClaimForm</span>
+                </a>
+            </li>
+        }
+
+        @if (hasMedicalServices || hasDoctorClaimForm)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Print_CancelAPProval", "ClaimForm")">
+                    <i class="bi bi-printer me-2"></i><span>Print & Cancel Invoice</span>
+                </a>
+            </li>
+        }
+
+        @if (hasDoctorClaimForm)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Print_CancelClaimForm", "ClaimForm")">
+                    <i class="bi bi-file-earmark-text me-2"></i><span>Print ClaimForm</span>
+                </a>
+            </li>
+        }
+
+        @if (hasClaimFormApproved || hasApproval || hasDoctorClaimForm)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("MemberSmartCardRequests", "ClaimForm")">
+                    <i class="bi bi-credit-card me-2"></i><span>Smart Card Requests</span>
+                </a>
+            </li>
+        }
+
+        @if (hasInvoicesAudit)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Invoices_Audit", "ClaimForm")">
+                    <i class="bi bi-list-check me-2"></i><span>Invoices Audit</span>
+                </a>
+            </li>
+        }
+
+        @if (hasExpandedServices)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Provider_Expended_services", "ClaimForm")">
+                    <i class="bi bi-building me-2"></i><span>Expanded Services</span>
+                </a>
+            </li>
+        }
+
+        @if (hasPaymentInquiry)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("PaymentInquiry", "ClaimForm")">
+                    <i class="bi bi-currency-dollar me-2"></i><span>Payment Inquiry</span>
+                </a>
+            </li>
+        }
+
+        @if (isAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
+                    <i class="bi bi-shield-lock me-2"></i><span>Admin</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <div class="collapse" id="adminSubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link py-2" href="@Url.Action("Index", "UserDatas")">
+                                <i class="bi bi-person me-2"></i><span>User Data</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2" href="@Url.Action("Add_User_Roles", "UserDatas")">
+                                <i class="bi bi-person-plus me-2"></i><span>Add User Roles</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2" href="@Url.Action("Edit_User_Roles", "UserDatas")">
+                                <i class="bi bi-pencil-square me-2"></i><span>Edit User Roles</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+
+        @if (isProviderAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#providerAdminSubmenu" role="button" aria-expanded="false" aria-controls="providerAdminSubmenu">
+                    <i class="bi bi-people me-2"></i><span>Provider Admin</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+
+                <div class="collapse" id="providerAdminSubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link py-2" data-bs-toggle="collapse" href="#userDataSubmenu" role="button" aria-expanded="false" aria-controls="userDataSubmenu">
+                                <i class="bi bi-person me-2"></i><span>User Data</span>
+                                <i class="bi bi-chevron-down ms-auto small"></i>
+                            </a>
+
+                            <div class="collapse" id="userDataSubmenu">
+                                <ul class="nav flex-column ms-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link py-2" href="@Url.Action("Index", "ProviderUserDatas")">
+                                            <i class="bi bi-house me-2"></i><span>User Home</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link py-2" href="@Url.Action("Create", "ProviderUserDatas")">
+                                            <i class="bi bi-plus-circle me-2"></i><span>User Create</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link py-2" href="@Url.Action("Add_User_Roles", "ProviderUserDatas")">
+                                <i class="bi bi-person-plus me-2"></i><span>Add User Roles</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link py-2" href="@Url.Action("Edit_User_Roles", "ProviderUserDatas")">
+                                <i class="bi bi-pencil me-2"></i><span>Edit User Roles</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("AccountData", "UserDatas")">
+                <i class="bi bi-person-circle me-2"></i><span>User Account</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link text-danger" href="@Url.Action("login", "ClaimForm")">
+                <i class="bi bi-box-arrow-right me-2"></i><span>Sign Out</span>
+            </a>
+        </li>
+    </ul>
+</nav>

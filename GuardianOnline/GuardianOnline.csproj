@@ -198,10 +198,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\LocalizationConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\Admin\ProviderUserDatasController.cs" />
     <Compile Include="Controllers\Admin\UserDatasController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Claims\ClaimFormController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -388,6 +390,7 @@
     <Content Include="fonts\bootstrap-icons.woff" />
     <Content Include="fonts\bootstrap-icons.woff2" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\layoutv2.css" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Report\InvoiceDataSet.xsc">
@@ -524,6 +527,8 @@
     <Content Include="Views\ClaimForm\Chronic_Approvals.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
+    <Content Include="Views\Shared\_LayoutV2.cshtml" />
+    <Content Include="Views\Shared\_NavMenuV2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -537,6 +542,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
+    <EmbeddedResource Include="Resources\DoctorHome.ar.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DoctorHome.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Layout.ar.resx" />
+    <EmbeddedResource Include="Resources\Layout.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
