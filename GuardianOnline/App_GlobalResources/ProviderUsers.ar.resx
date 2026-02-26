@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Index -->
+  <data name="Users_Title" xml:space="preserve"><value>المستخدمون</value></data>
+  <data name="Users_SubTitle" xml:space="preserve"><value>إدارة مستخدمي مقدم الخدمة</value></data>
+  <data name="Users_Legend" xml:space="preserve"><value>بيانات المستخدمين</value></data>
+  <data name="Users_List" xml:space="preserve"><value>قائمة المستخدمين</value></data>
+  <data name="SelectUser" xml:space="preserve"><value>----اختر اسم المستخدم----</value></data>
+
+  <data name="Btn_BackHome" xml:space="preserve"><value>رجوع للرئيسية</value></data>
+  <data name="Btn_AddUser" xml:space="preserve"><value>إضافة مستخدم</value></data>
+  <data name="Btn_BackList" xml:space="preserve"><value>رجوع للقائمة الرئيسية</value></data>
+
+  <data name="Col_UserName" xml:space="preserve"><value>اسم المستخدم</value></data>
+  <data name="Col_Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="Col_Password" xml:space="preserve"><value>كلمة المرور</value></data>
+  <data name="Col_CreateDate" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="Col_FirstName" xml:space="preserve"><value>الاسم الأول</value></data>
+  <data name="Col_LastName" xml:space="preserve"><value>اسم العائلة</value></data>
+  <data name="Col_Locked" xml:space="preserve"><value>مقفل</value></data>
+  <data name="Col_Actions" xml:space="preserve"><value>إجراءات</value></data>
+
+  <!-- Create -->
+  <data name="Create_Title" xml:space="preserve"><value>إنشاء بيانات مستخدم</value></data>
+  <data name="Create_SubTitle" xml:space="preserve"><value>إضافة مستخدم جديد لمقدم الخدمة</value></data>
+
+  <!-- Edit -->
+  <data name="Edit_Title" xml:space="preserve"><value>تعديل بيانات مستخدم</value></data>
+  <data name="Edit_SubTitle" xml:space="preserve"><value>تحديث بيانات مستخدم مقدم الخدمة</value></data>
+
+  <!-- Common -->
+  <data name="UserData_Legend" xml:space="preserve"><value>بيانات المستخدم</value></data>
+  <data name="SelectBranch" xml:space="preserve"><value>-- اختر اسم الفرع --</value></data>
+  <data name="UserImage" xml:space="preserve"><value>صورة المستخدم</value></data>
+
+  <data name="Btn_Create" xml:space="preserve"><value>إنشاء</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>حفظ</value></data>
+
+  <!-- Optional label keys -->
+  <data name="Lbl_Branch" xml:space="preserve"><value>فرع مقدم الخدمة</value></data>
+  <data name="Lbl_UserName" xml:space="preserve"><value>اسم المستخدم</value></data>
+  <data name="Lbl_FirstName" xml:space="preserve"><value>الاسم الأول</value></data>
+  <data name="Lbl_LastName" xml:space="preserve"><value>اسم العائلة</value></data>
+  <data name="Lbl_Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="Lbl_Password" xml:space="preserve"><value>كلمة المرور</value></data>
+  <data name="Lbl_ConfirmPassword" xml:space="preserve"><value>تأكيد كلمة المرور</value></data>
+  <data name="Lbl_Locked" xml:space="preserve"><value>المستخدم مقفول</value></data>
+</root>

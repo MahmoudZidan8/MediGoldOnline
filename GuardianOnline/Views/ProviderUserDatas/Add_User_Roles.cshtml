@@ -1,279 +1,270 @@
-﻿
-@{
+﻿@{
     /**/
 
     ViewBag.Title = "Add_User_Roles";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("UserRoles", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
 
+<div class="ur-page">
+    <div class="ur-shell">
 
-@*@Scripts.Render("~/bundles/jquery")*@
-@Scripts.Render("~/bundles/bootstrap")
-<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-<script src="~/signalr/hubs" type="text/javascript"></script>
-@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
-@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+        <!-- Header (Account-style) -->
+        <div class="ur-header">
+            <div>
+                <div class="ur-title">@T("Add_Title", "Add User Roles")</div>
+                <div class="ur-sub">@T("SubTitle", "Manage user roles and permissions")</div>
+            </div>
 
-<link rel="stylesheet" href="~/Content/select2.min.css">
-<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+            <div class="ur-actions-top">
+                <a class="btn btn-outline-secondary ur-btn-top" href="@Url.Action("Index","ProviderUserDatas")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("Btn_BackHome", "Back to Home")</span>
+                </a>
 
+                <a class="btn btn-outline-success ur-btn-top" href="@Url.Action("Edit_User_Roles","ProviderUserDatas")">
+                    <i class="bi bi-pencil-square"></i>
+                    <span>@T("Edit_Title", "Edit User Roles")</span>
+                </a>
+            </div>
+        </div>
 
-@Html.Hidden("Get", Url.Action("Get", "Customer"))
-@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
-@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
+        <!-- ✅ IMPORTANT: enable jQuery bundle (was commented) -->
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+        <script src="~/signalr/hubs" type="text/javascript"></script>
 
-<input type="hidden" id="trigger" value="0" />
-<input type="hidden" id="triggercount" value="0" />
+        <link rel="stylesheet" href="~/Content/select2.min.css">
+        <script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
-<input type="hidden" id="trigger1" value="0" />
-<input type="hidden" id="triggercount1" value="0" />
-<input type="hidden" id="providerCatId" value="@ViewBag.providerCatId" />
+        @Html.Hidden("Get", Url.Action("Get", "Customer"))
+        @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+        @Html.Hidden("Get1", Url.Action("Get1", "Customer"))
 
-<style>
+        <input type="hidden" id="trigger" value="0" />
+        <input type="hidden" id="triggercount" value="0" />
 
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
+        <input type="hidden" id="trigger1" value="0" />
+        <input type="hidden" id="triggercount1" value="0" />
+        <input type="hidden" id="providerCatId" value="@ViewBag.providerCatId" />
 
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
+        <!-- ===== your original styles (unchanged) ===== -->
+        <style>
 
-    /*#link1 {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
+            #link {
+                text-decoration: none;
+                display: inline-block;
+                padding: 8px 16px;
+            }
 
-        #link1:hover {
-            background-color: #ddd;
-            color: black;
-        }*/
-    /*.previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
+                #link:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
 
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }*/
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-<style>
-    #User_list {
-        max-width: 450px;
-    }
-
-    body {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-        text-align: center;
-    }
-
-        table th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        table th, table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
-
-        table, table table td {
-            border: 0px solid #ccc;
-            color: black;
-            font-size: 20px;
-        }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    .ul.pagination {
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-    }
-
-    ul.pagination li {
-        display: inline;
-    }
-
-        ul.pagination li a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-        }
-
-            ul.pagination li a.active {
-                background-color: #4CAF50;
+            .round {
+                background-color: teal;
                 color: white;
+                border-radius: 50%;
+            }
+        </style>
+        <style>
+            #User_list {
+                max-width: 450px;
             }
 
-            ul.pagination li a:hover:not(.active) {
-                background-color: #ddd;
+            body {
+                font-family: Arial;
+                font-size: 10pt;
             }
-</style>
-<h2 style="color:teal;text-align:center">Add User Roles</h2>
-<fieldset class="scheduler-border">
-    <legend class="scheduler-border" style="color:teal">Users Roles Data</legend>
 
-    <br />
-    <br />
-    <div class="container" style="text-align:center;background:#e2dede;width:1115px;height:70px">
-        <br />
-        <p>
-            @*@Html.Label("Users list")*@
-            <label style="color:black;width:100px;font-size:18px;">Users list</label> &nbsp;
-            @Html.DropDownList("Citydropdown1", new SelectList(ViewBag.li), "----Select User Name----", htmlAttributes: new { @class = "form-control", @id = "User_list", @Name = "User_list" })
-        </p>
+            table {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+                background-color: #fff;
+                text-align: center;
+            }
+
+                table th {
+                    background-color: teal;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 24px;
+                    text-align: center;
+                }
+
+                table th, table td {
+                    padding: 5px;
+                    border: 1px solid #ccc;
+                }
+
+                table, table table td {
+                    border: 0px solid #ccc;
+                    color: black;
+                    font-size: 20px;
+                }
+
+            legend.scheduler-border {
+                width: inherit; /* Or auto */
+                padding: 0 10px; /* To give a bit of padding on the left and right */
+                border-bottom: none;
+            }
+
+            fieldset.scheduler-border {
+                border: 1px groove #ddd !important;
+                padding: 0 1.4em 1.4em 1.4em !important;
+                margin: 0 0 1.5em 0 !important;
+                -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
+                box-shadow: 1px 1px 1px 1px #700c0c;
+            }
+
+            .ul.pagination {
+                display: inline-block;
+                padding: 0;
+                margin: 0;
+            }
+
+            ul.pagination li {
+                display: inline;
+            }
+
+                ul.pagination li a {
+                    color: black;
+                    float: left;
+                    padding: 8px 16px;
+                    text-decoration: none;
+                    transition: background-color .3s;
+                }
+
+                    ul.pagination li a.active {
+                        background-color: #4CAF50;
+                        color: white;
+                    }
+
+                    ul.pagination li a:hover:not(.active) {
+                        background-color: #ddd;
+                    }
+        </style>
+
+        <!-- ===== content ===== -->
+        <fieldset class="scheduler-border ur-fieldset">
+            <legend class="scheduler-border" style="color:teal">@T("Section_RolesData", "Users Roles Data")</legend>
+
+            <br />
+            <br />
+            <div class="container ur-toolbar" style="text-align:center;background:#e2dede;width:1115px;height:70px">
+                <br />
+                <p>
+                    <label style="color:black;width:100px;font-size:18px;">@T("UsersList", "Users list")</label> &nbsp;
+                    @Html.DropDownList("Citydropdown1", new SelectList(ViewBag.li), @T("SelectUser", "----Select User Name----"), htmlAttributes: new { @class = "form-control", @id = "User_list", @Name = "User_list" })
+                </p>
+
+            </div>
+            <br />
+
+            <div class="table-responsive ur-table-wrap">
+                <table class="table" id="tblUser_Roles" cellpadding="0" cellspacing="0">
+                    <thead class="table-dark">
+
+                    </thead>
+                    <tr>
+                        <th>@T("RoleName", "Role Name")</th>
+                        <th>@T("IsChecked", "IsChecked")</th>
+
+                    </tr>
+                    <tbody>
+
+                        <tr>
+                            <td style="color:cadetblue;">@T("SelectAllPages", "Select All Pages")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="select_all"><label style="background-color:white" for="select_all" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+
+                        <tr id="UMC">
+                            <td>@T("UploadMemberClaim", "Upload Member Claim")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="UploadMember_Claim"><label style="background-color:white" for="UploadMember_Claim" class="check-box"></label></div>
+                            </td>
+                        </tr>
+
+                        <tr id="MS">
+                            <td>@T("MedicalServices", "Medical Services")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Medical_Services"><label style="background-color:white" for="Medical_Services" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+                        <tr id="CA">
+                            <td>@T("ClaimFormApproved", "ClaimForm Approved")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="ClaimForm_Approved"><label style="background-color:white" for="ClaimForm_Approved" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+                        <tr id="A">
+                            <td>@T("Approval", "Approval")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Approval"><label style="background-color:white" for="Approval" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+                        <tr id="ES">
+                            <td>@T("ExpandedServices", "Expanded Services")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Expanded_Services"><label style="background-color:white" for="Expanded_Services" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+                        <tr id="PI">
+                            <td>@T("PaymentInquiry", "Payment Inquiry")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Payment_Inquiry"><label style="background-color:white" for="Payment_Inquiry" class="check-box"></label></div>
+                            </td>
+
+                        </tr>
+                        <tr id="IA">
+                            <td>@T("InvoicesAudit", "Invoices Audit")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Invoices_Audit"><label style="background-color:white" for="Invoices_Audit" class="check-box"></label></div>
+                            </td>
+                        </tr>
+                        <tr id="Dc">
+                            <td>@T("DoctorClaimForm", "Doctor ClaimForm")</td>
+                            <td>
+                                <div class="checkbox-wrapper-19"><input type="checkbox" id="Doctor_ClaimForm"><label style="background-color:white" for="Doctor_ClaimForm" class="check-box"></label></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <br />
+            <div class="btn-lg ur-btn-row" style="text-align:center">
+                <input type="submit" value="@T("Btn_Create","Create")" id="User_role" class="btn btn-primary btn-lg btn-block ur-action-btn" />
+            </div>
+
+            <div class="ur-footer-links">
+                <a id="link" class="round" href="@Url.Action("Index","ProviderUserDatas")">&laquo; @T("Btn_BackHome", "Back to Home")</a>
+                <a id="link" class="round" href="@Url.Action("Edit_User_Roles","ProviderUserDatas")">@T("Edit_Title", "Edit User Roles") &raquo;</a>
+            </div>
+        </fieldset>
 
     </div>
-    <br />
-    @*<br />
-        <label style="color:black;width:100px;font-size:18px;">Select All </label>
-        <input type="checkbox" id="select_all" name="select_all" />
-        <br />*@
-    <table class="table" id="tblUser_Roles" cellpadding="0" cellspacing="0">
-        <thead class="table-dark">
-
-        </thead>
-        <tr>
-            <th>Role Name</th>
-            <th>IsChecked</th>
-
-        </tr>
-        <tbody>
-
-            <tr>
-                <td style="color:cadetblue;">Select All Pages</td>
-                <td>
-                    @*<input type="checkbox" id="select_all" name="select_all" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="select_all"><label style="background-color:white" for="select_all" class="check-box"></label></div>
-
-                </td>
-
-            </tr>
-
-            <tr id="UMC">
-                <td>Upload Member Claim</td>
-                <td>
-                    @*<input type="checkbox" id="UploadMember_Claim" name="UploadMember_Claim" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="UploadMember_Claim"><label style="background-color:white" for="UploadMember_Claim" class="check-box"></label></div>
-                </td>
-
-            </tr>
-
-            <tr id="MS">
-                <td>Medical Services</td>
-                <td>
-                    @*<input type="checkbox" id="Medical_Services" name="Medical_Services" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Medical_Services"><label style="background-color:white" for="Medical_Services" class="check-box"></label></div>
-                </td>
-
-            </tr>
-            <tr id="CA">
-                <td>ClaimForm Approved</td>
-                <td>
-                    @*<input type="checkbox" id="ClaimForm_Approved" name="ClaimForm_Approved" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="ClaimForm_Approved"><label style="background-color:white" for="ClaimForm_Approved" class="check-box"></label></div>
-                </td>
-
-            </tr>
-            <tr id="A">
-                <td>Approval</td>
-                <td>
-                    @*<input type="checkbox" id="ClaimForm_Approved" name="ClaimForm_Approved" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Approval"><label style="background-color:white" for="Approval" class="check-box"></label></div>
-                </td>
-
-            </tr>
-            <tr id="ES">
-                <td>Expanded Services</td>
-                <td>
-                    @*<input type="checkbox" id="Expanded_Services" name="Expanded_Services" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Expanded_Services"><label style="background-color:white" for="Expanded_Services" class="check-box"></label></div>
-                </td>
-
-            </tr>
-            <tr id="PI">
-                <td>Payment Inquiry</td>
-                <td>
-                    @*<input type="checkbox" id="Payment_Inquiry" name="Payment_Inquiry" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Payment_Inquiry"><label style="background-color:white" for="Payment_Inquiry" class="check-box"></label></div>
-                </td>
-
-            </tr>
-            <tr id="IA">
-                <td>Invoices Audit</td>
-                <td>
-                    @*<input type="checkbox" id="Invoices_Audit" name="Invoices_Audit" />*@
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Invoices_Audit"><label style="background-color:white" for="Invoices_Audit" class="check-box"></label></div>
-                </td>
-            </tr>
-            <tr id="Dc">
-                <td>Doctor ClaimForm</td>
-                <td>
-                    <div class="checkbox-wrapper-19"><input type="checkbox" id="Doctor_ClaimForm"><label style="background-color:white" for="Doctor_ClaimForm" class="check-box"></label></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br />
-    <br />
-    <div class="btn-lg" style="text-align:center">
-        <input type="submit" value="Create" id="User_role" class="btn btn-primary btn-lg btn-block" />
-    </div>
-    <br />
-    <br />
-    <br />
-
-    <div style="text-align:left;display:inline-block;position:relative">
-
-        <a id="link" class="round" href="@Url.Action("Index","ProviderUserDatas")">@*<u>*@&laquo; Back to Main List@*</u>*@</a>
-    </div>
-    <div style="text-align:right;display:inline-block;padding-left:700px;position:relative">
-        <a id="link" class="round" href="@Url.Action("Edit_User_Roles","ProviderUserDatas")">@*<u>*@ Go to  Edit User Roles&raquo;@*</u>*@</a>
-    </div>
-</fieldset>
+</div>
 
 @if (ViewBag.providerCatId != null)
 {
@@ -299,16 +290,6 @@
 
         $("#User_list").select2();
         //alert($('#providerCatId').val());
-        //if (($('#providerCatId').val() == 1) || ($('#providerCatId').val() == 5) || ($('#providerCatId').val() == 6) || ($('#providerCatId').val() == 7)) {
-        //    $("#UMC").hide();
-        //    $("#MS").hide();
-        //    $("#CA").hide();
-        //    $("#A").hide();
-
-        //}
-        //else {
-        //    $("#Dc").hide();
-        //}
 
         $("body").on("click", "#User_role", function () {
             //alert($('#Cliams_Booklet').is(":checked"));
@@ -345,27 +326,20 @@
                         select.insertBefore(opt, select.lastChild);
 
                     }
-                    //alert("User Roles is Added");
+
                     Swal.fire("Success", "User Roles is Added Successfully", "success");
 
                 }
                 else {
-                    //alert(data[1]);
                     Swal.fire("Error !", data[1], "error");
 
                 }
-
-
-
             })
         });
 
         $("#select_all").change(function () {
 
-            //alert($('#select_all').is(":checked"));
             if ($('#select_all').is(":checked") != false) {
-
-
 
                 if (($('#providerCatId').val() == 1) || ($('#providerCatId').val() == 5) || ($('#providerCatId').val() == 6) || ($('#providerCatId').val() == 7)) {
                     $("#Expanded_Services").prop('checked', true);
@@ -382,8 +356,6 @@
                     $("#Payment_Inquiry").prop('checked', true);
                     $("#Invoices_Audit").prop('checked', true);
                 }
-
-
             }
             else {
                 if (($('#providerCatId').val() == 1) || ($('#providerCatId').val() == 5) || ($('#providerCatId').val() == 6) || ($('#providerCatId').val() == 7)) {
@@ -418,26 +390,13 @@
 <script type="text/javascript">
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-            //$.connection.hub.disconnect();
-            // $.connection.hub.disconnected(function () {
-            //});
             $.connection.hub.stop();
-
-             //console.log("tab out")
-            // tab is changed
         } else {
-            //$.connection.hub.connect();
             $.connection.hub.start().done(function () {
-                 //console.log("connection started")
-                //notifications.onconn();
                 getData();
                 getData1();
             }).fail(function (e) {
-                //console.log(e);
             });
-            //console.log("tab in")
-
-            // tab is active
         }
     });
 
@@ -445,318 +404,33 @@
         return new Promise(
             resolve => setTimeout(resolve, ms)
         );
-
-
     }
     $(function () {
 
         // Proxy created on the fly
         var cus = $.connection.cusHub;
-        //var cus1 = $.connection.cusHub1;
-        //console.log(cus)
-        // Declare a function on the job hub so the server can invoke it
-        cus.client.displayCustomer = function () {
-            // async function a() {
-            getData();
-            //   await sleep(2000);
-            //  getData1();
-            //}
-            //a();
 
-            //getData();
-            //getData1();
-        };
-        cus.client.data = function () {
-            //async function a() {
-            //    getData();
-            //    await sleep(2000);
-            getData1();
-            //}
-            //a();
+        cus.client.displayCustomer = function () { getData(); };
+        cus.client.data = function () { getData1(); };
+        cus.client.data1 = function () { getData2(); };
 
-            //getData();
-            //getData1();
-        };
-
-        cus.client.data1 = function () {
-            getData2();
-        };
-        // Start the connection
         $.connection.hub.start();
         getData();
         getData1();
         getData2();
-        //async function aa() {
-        //    getData();
-        //    await sleep(2000);
-        //    getData1();
-        //}
-        //aa();
 
     });
 
     function getData1() {
         try {
 
-        //var $tbl = $('#tblInfo');
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data1) {
-
-                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
-                });
-
-
-                $.each(data1.listCus, function (i, model) {
-
-                });
-            }
-            });
-        }
-        catch (err) {
-        }
-    }
-
-    function getData() {
-        try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                }
-                //alert(provid);
-                //alert(branchid);
-
-                @*alert("@Session["providerid"]");
-                alert(data.ProviderID);*@
-
-                //$tbl.empty();
-                $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#NotifactionCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#NotifactionCount').attr("data-count", data1);
-                    }
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
-                        $('#trigger').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            @*//if (result == true) {
-                            alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                                //window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger').val("0");*@
-                                    if ("@Session["ClaimForm_Approved"]"!="") {
-                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
-                                   if (ClaimForm_Approv == 1) {
-                                       var sound = new Audio('/Media/alert.mp3');
-                                       sound.autoplay = true;
-                                       sound.muted = false;
-                                       sound.play();
-                                       setTimeout(function () {
-                                           snackbar.classList.add('isShown');
-                                           $('#CardNumbersnackbar').text(model.CardNumber)
-                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
-                                           setTimeout(hideSnackbar, 5000);
-                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                                        if (result == true) {
-                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                                       }
-                                       else {
-
-                                       }*@
-                                       $('#trigger').val("0");
-                                           if (data2 == 0) {
-                                           $('#NotifactionCount').removeAttr("data-count");
-
-                                       }
-                                       else {
-                                               $('#NotifactionCount').attr("data-count", data2);
-                                           }
-                                       }, 100);
-                                }
-                                 }
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-            });
-        }
-        catch (err) {
-        }
-    }
-    function getData2() {
-        try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-                  var ApprovePage1 = 0;
-                  var ApprovePage2 = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                     ApprovePage1 = parseInt("@Session["Approval"]");
-                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
-                }
-
-                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
-                        $('#trigger1').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                       
-                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbarMember.classList.add('isShown');
-                                $('#CardNumbersnackbarMember').text(model.CardNumber)
-                                setTimeout(hideSnackbard1, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-            });
-        }
-        catch (err) {
-        }
-    }
-</script>
-
-@*<script type="text/javascript">
-        $(function () {
-
-            // Proxy created on the fly
-            var cus = $.connection.cusHub;
-
-            // Declare a function on the job hub so the server can invoke it
-            cus.client.displayCustomer = function () {
-                getData1();
-            };
-
-            // Start the connection
-            $.connection.hub.start();
-            getData1();
-        });
-
-        function getData1() {
-            //var $tbl = $('#tblInfo');
             $.ajax({
-                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                url: $("#Getmessages").val(),
                 type: 'GET',
                 datatype: 'json',
-                success: function (data) {
+                success: function (data1) {
 
-                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
+                    $.get("/ClaimForm/getcountmessage", {}, function (data) {
                         if (data == 0) {
                             $('#MesaageCount').removeAttr("data-count");
 
@@ -764,47 +438,185 @@
                         else {
                             $('#MesaageCount').attr("data-count", data);
                         }
-                        // console.log(data);
                     });
 
+                    $.each(data1.listCus, function (i, model) { });
+                }
+            });
+        }
+        catch (err) { }
+    }
+
+    function getData() {
+        try {
+
+            $.ajax({
+                url: $("#Get").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    var provid = 0;
+                    var branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+                    var ApprovePage = 0;
+
+                    if ("@Session["ClaimForm_Approved"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                        if (data1 == 0) {
+                            $('#NotifactionCount').removeAttr("data-count");
+
+                        }
+                        else {
+                            $('#NotifactionCount').attr("data-count", data1);
+                        }
+                    });
 
                     $.each(data.listCus, function (i, model) {
 
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                            $('#trigger').val("1");
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () {
+                                    $.connection.hub.start();
+                                }, 5000);
+                            });
+                            $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+
+                                if ("@Session["ClaimForm_Approved"]" != "") {
+                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                                    if (ClaimForm_Approv == 1) {
+                                        var sound = new Audio('/Media/alert.mp3');
+                                        sound.autoplay = true;
+                                        sound.muted = false;
+                                        sound.play();
+                                        setTimeout(function () {
+                                            snackbar.classList.add('isShown');
+                                            $('#CardNumbersnackbar').text(model.CardNumber)
+                                            $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                            setTimeout(hideSnackbar, 5000);
+
+                                            $('#trigger').val("0");
+                                            if (data2 == 0) {
+                                                $('#NotifactionCount').removeAttr("data-count");
+                                            }
+                                            else {
+                                                $('#NotifactionCount').attr("data-count", data2);
+                                            }
+                                        }, 100);
+                                    }
+                                }
+
+                            })
+                        }
                     });
                 }
             });
         }
+        catch (err) { }
+    }
 
-    </script>*@
+    function getData2() {
+        try {
+
+            $.ajax({
+                url: $("#Get1").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    var provid = 0;
+                    var branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+                    var ApprovePage = 0;
+                    var ApprovePage1 = 0;
+                    var ApprovePage2 = 0;
+
+                    if ("@Session["ClaimForm_Approved"]" != "" || "@Session["Approval"]" != "" || "@Session["Doctor_ClaimForm"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                        ApprovePage1 = parseInt("@Session["Approval"]");
+                        ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                        if (data1 == 0) {
+                            $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                        }
+                        else {
+                            $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                        }
+                    });
+                    $.each(data.listCus, function (i, model) {
+
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && ($('#trigger1').val() == "0") && (ApprovePage == 1 || ApprovePage1 == 1 || ApprovePage2 == 1)) {
+                            $('#trigger1').val("1");
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () {
+                                    $.connection.hub.start();
+                                }, 5000);
+                            });
+
+                            $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+
+                                var sound = new Audio('/Media/alert.mp3');
+                                sound.play();
+                                setTimeout(function () {
+                                    snackbarMember.classList.add('isShown');
+                                    $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                    setTimeout(hideSnackbard1, 5000);
+
+                                    $('#trigger1').val("0");
+                                    if (data2 == 0) {
+                                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+
+                                    }
+                                    else {
+                                        $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                    }
+                                }, 100);
+
+                            })
+                        }
+                    });
+                }
+            });
+        }
+        catch (err) { }
+    }
+</script>
 
 <script>
-
-
     function refresh() {
 
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") {
+                    window.open('@Url.Action("login", "ClaimForm")', '_self');
+                }
+                else {
+                    setTimeout(refresh, 5000);
+                }
+            }
         });
 
     }
 
     setTimeout(refresh, 1000);
 </script>
-
-
-
 
 <style>
     .checkbox-wrapper-19 {

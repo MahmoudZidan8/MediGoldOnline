@@ -195,6 +195,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\ProviderUsers.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProviderUsers.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ProviderUsers.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProviderUsers.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserDatas.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDatas.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserDatas.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDatas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserRoles.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoles.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserRoles.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoles.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -234,6 +264,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapbundle.min.css" />
     <Content Include="Content\buttons.dataTables.min.css" />
+    <Content Include="Content\vendor\bootstrap-icons\bootstrap-icons.min.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css" />
     <Content Include="Images\Chronic2.jpg" />
     <Content Include="Content\dataTables.bootstrap.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
@@ -391,6 +423,8 @@
     <Content Include="fonts\bootstrap-icons.woff2" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\layoutv2.css" />
+    <Content Include="Content\vendor\bootstrap-icons\fonts\bootstrap-icons.woff" />
+    <Content Include="Content\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Report\InvoiceDataSet.xsc">
@@ -465,6 +499,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\select2.min.js_4.1.0-beta.1\cdnjs\select2.min.js" />
     <Content Include="Scripts\sweetalert2.all.min.js" />
+    <Content Include="Scripts\vendor\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\vfs_fonts.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
@@ -547,6 +582,22 @@
     <Content Include="App_GlobalResources\UserDatas.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UserDatas.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ProviderUsers.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ProviderUsers.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ProviderUsers.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ProviderUsers.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserRoles.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserRoles.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserRoles.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserRoles.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
