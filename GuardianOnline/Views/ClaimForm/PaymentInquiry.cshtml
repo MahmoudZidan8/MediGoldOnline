@@ -1,24 +1,38 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "PaymentInquiry";
-}
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
 
-@*@Scripts.Render("~/bundles/jquery")*@
-@Scripts.Render("~/bundles/bootstrap")
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("PaymentInquiry", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
+}
+@Scripts.Render("~/bundles/jquery")
+@*@Scripts.Render("~/bundles/bootstrap")*@
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
-<script src="~/Scripts/bootstrap.min.js"></script>
+@*<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>*@
+@*<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">*@
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
 @*<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>*@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="~/Content/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="~/Scripts/dataTables.bootstrap5.min.js"></script>
 
 <script type="text/javascript" src="~/Scripts/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="~/Scripts/jszip.min.js"></script>
@@ -29,7 +43,7 @@
 <link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
 
 @*<link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet" />*@
-<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
+@*<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">*@
 
 
 @*<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>*@
@@ -416,120 +430,505 @@
             margin-left: 10px;
         }
 </style>
-<h2 style="color:teal;text-align:center">Payment Inquiry</h2>
-<br />
-<fieldset class="scheduler-border" @*style="background-color:lightgray"*@ id="Expended_services">
-    <legend class="scheduler-border" style="color:teal">Payment Inquiry Data</legend>
-    <div id="claim_services2">
-        @*table7899*@
-        <table class="table table-dark table-hover" id="Claim_Services2" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th style="background-color:teal">Provider Name</th>
-                    <th style="background-color:teal">Batch Number</th>
-                    <th style="background-color:teal">Rec Date</th>
-                    <th style="background-color:teal">Due Date</th>
-                    <th style="background-color:teal">Payment Date</th>
-                    <th style="background-color:teal">Rec Batch Amt</th>
-                    <th style="background-color:teal">Net Payment Amt.</th>
-                    <th style="background-color:teal">W.H.T</th>
-                    <th style="background-color:teal">Admin fees</th>
-                    <th style="background-color:teal">Due Amt</th>
-                    <th style="background-color:teal">Paid Amt</th>
-                    <th style="background-color:teal">Rest Amt</th>
-                    <th style="background-color:teal">Pay. Doc. No.</th>
-                    <th style="background-color:teal">Payment Method Name</th>
-                    <th style="background-color:teal">Batch Status Name</th>
-                    <th style="background-color:teal">Show</th>
-                </tr>
-            </thead>
+<div class="pv-page pi-page">
+    <div class="pv-shell">
 
-            <tbody>
-                @foreach (var item in @ViewBag.services)
+        <div class="pv-header">
+            <div>
+                <div class="pv-title">@T("Title", "Payment Inquiry")</div>
+                <div class="pv-sub">@T("SubTitle", "View provider payment batches & status")</div>
+            </div>
+
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Home")</span>
+                </a>
+
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("Provider_Expended_services","ClaimForm")">
+                    <i class="bi bi-grid"></i>
+                    <span>@T("GoExpanded", "Go to Expanded Services")</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="pv-card">
+            <div class="pv-card-head">
+                <div class="pv-card-title">@T("Legend", "Payment Inquiry Data")</div>
+            </div>
+            @{
+                // Build distinct statuses from services (C# only)
+                var statusSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (ViewBag.services != null)
                 {
-                    <tr>
-                        <td>@item.GetType().GetProperty("ProviderName").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("BatchNumber").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("RecDate").GetValue(item).ToString("yyyy-MM-dd")</td>
-                        <td>@item.GetType().GetProperty("DueDate").GetValue(item).ToString("yyyy-MM-dd")</td>
-                        <td>@item.GetType().GetProperty("PaymentDate").GetValue(item).ToString("yyyy-MM-dd")</td>
-                        <td>@item.GetType().GetProperty("RecBatchAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("Expr2").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("WHTaxAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("AdminFeesAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("PaymentAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("DueNetPaymentAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("rest").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("PayamentID").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("PaymentMethodName").GetValue(item)</td>
-                        @*<p class="status delivered">Delivered</p>*@
-                        <td>
-                            @if (@item.GetType().GetProperty("BatchStatusName").GetValue(item) == "UnPaid")
-                            {
-                                <p class="status UnPaid">
-                                    @item.GetType().GetProperty("BatchStatusName").GetValue(item)
-                                </p>
-                            }
-                            else if (@item.GetType().GetProperty("BatchStatusName").GetValue(item) == "Paid")
-                            {
-                                <p class="status Paid">
-                                    @item.GetType().GetProperty("BatchStatusName").GetValue(item)
-                                </p>
-                            }
-                            else if (@item.GetType().GetProperty("BatchStatusName").GetValue(item) == "Partly Paid")
-                            {
-                                <p class="status PartlyPaid">
-                                    @item.GetType().GetProperty("BatchStatusName").GetValue(item)
-                                </p>
-                            }
-                            else
-                            {
-                                <p class="status Received">
-                                    @item.GetType().GetProperty("BatchStatusName").GetValue(item)
-                                </p>
-                            }
-
-
-                        </td>
-                        <td>
-                            <a onclick='show(this);'>
-                                <span class="glyphicon glyphicon-eye-open" style="color:#20c5ff"></span>
-                                @*#20c5ff*@
-                            </a>
-                        </td>
-                        @*<td><button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#myModal' style='text-align:center' onclick='show(this);'>Show</button></td>*@
-                    </tr>
+                    foreach (var it in ViewBag.services)
+                    {
+                        var stObj = it.GetType().GetProperty("BatchStatusName").GetValue(it);
+                        var st = (stObj == null) ? "" : stObj.ToString().Trim();
+                        if (!string.IsNullOrWhiteSpace(st)) { statusSet.Add(st); }
+                    }
                 }
-            </tbody>
-        </table>
 
+                // Put common statuses first if they exist
+                var preferred = new[] { "Paid", "UnPaid", "Partly Paid", "Received" };
+                var orderedStatuses = new List<string>();
 
-    </div>
-    <br />
-    <div style="text-align:left;display:inline-block;position:relative">
-        <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
-    </div>
-    <div style="text-align:right;display:inline-block;padding-left:720px;position:relative">
-        <a id="link" class="round" href="@Url.Action("Provider_Expended_services","ClaimForm")">@*<u>*@ Go to Expanded Services &raquo;@*</u>*@</a>
-    </div>
-</fieldset>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+                foreach (var p in preferred)
+                {
+                    if (statusSet.Contains(p)) { orderedStatuses.Add(p); }
+                }
 
-<div id="backring1">
-    <div class="ring1" id="Loadingg">
-        Loading
-        <spana1></spana1>
+                foreach (var s in statusSet)
+                {
+                    bool exists = false;
+                    for (int i = 0; i < orderedStatuses.Count; i++)
+                    {
+                        if (string.Equals(orderedStatuses[i], s, StringComparison.OrdinalIgnoreCase))
+                        {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) { orderedStatuses.Add(s); }
+                }
+            }
+            @{
+                // ===== Summary (C# only) =====
+                int totalCount = 0, paidCount = 0, unpaidCount = 0, receivedCount = 0;
+                decimal sumPaid = 0m, sumRest = 0m;
+
+                Func<object, decimal> ToDec = (val) =>
+                {
+                    if (val == null) return 0m;
+                    decimal d;
+                    return decimal.TryParse(val.ToString(), out d) ? d : 0m;
+                };
+
+                if (ViewBag.services != null)
+                {
+                    foreach (var it in ViewBag.services)
+                    {
+                        totalCount++;
+
+                        var statusObj = it.GetType().GetProperty("BatchStatusName").GetValue(it);
+                        var status = (statusObj == null) ? "" : statusObj.ToString().Trim();
+
+                        // Paid Amt = DueNetPaymentAmt (حسب جدولك الحالي)
+                        var paidAmt = ToDec(it.GetType().GetProperty("DueNetPaymentAmt").GetValue(it));
+                        var restAmt = ToDec(it.GetType().GetProperty("rest").GetValue(it));
+
+                        sumPaid += paidAmt;
+                        sumRest += restAmt;
+
+                        if (string.Equals(status, "Paid", StringComparison.OrdinalIgnoreCase)) { paidCount++; }
+                        else if (string.Equals(status, "UnPaid", StringComparison.OrdinalIgnoreCase)) { unpaidCount++; }
+                        else if (string.Equals(status, "Received", StringComparison.OrdinalIgnoreCase)) { receivedCount++; }
+                    }
+                }
+            }
+
+        <div class="pi-summary">
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-collection"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_TotalBatches", "Total Batches")</div>
+                    <div class="pi-svalue">@totalCount</div>
+                </div>
+            </div>
+
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-check2-circle"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_PaidCount", "Paid")</div>
+                    <div class="pi-svalue">@paidCount</div>
+                </div>
+            </div>
+
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-x-circle"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_UnpaidCount", "Unpaid")</div>
+                    <div class="pi-svalue">@unpaidCount</div>
+                </div>
+            </div>
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-inbox-arrow-down"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_ReceivedCount", "Received")</div>
+                    <div class="pi-svalue">@receivedCount</div>
+                </div>
+            </div>
+
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-cash-stack"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_TotalPaid", "Total Paid Amt")</div>
+                    <div class="pi-svalue">@sumPaid.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="pi-scard">
+                <div class="pi-sicon"><i class="bi bi-hourglass-split"></i></div>
+                <div>
+                    <div class="pi-slabel">@T("Sum_TotalRest", "Total Rest Amt")</div>
+                    <div class="pi-svalue">@sumRest.ToString("N2")</div>
+                </div>
+            </div>
+        </div>
+            <div class="pi-toolbar">
+                <div class="pi-search">
+                    <i class="bi bi-search"></i>
+                    <input id="piSearch" class="form-control" type="text" placeholder="@T("Search", "Search...")" />
+                </div>
+
+                <div class="pi-filters">
+                    <button type="button" class="btn btn-outline-secondary pi-filter active" data-filter="all">
+                        @T("Filter_All", "All")
+                    </button>
+
+                    @foreach (var s in orderedStatuses)
+                    {
+                        // Key for translation. Example: Status_Paid, Status_UnPaid, Status_PartlyPaid, Status_Received
+                        var key = "Status_" + s.Replace(" ", "");
+                        <button type="button" class="btn btn-outline-primary pi-filter" data-filter="@s">
+                            @T(key, s)
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div class="pv-table-wrap pi-scroll">
+                <table class="table table-hover align-middle mb-0" id="Claim_Services2" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@T("Col_ProviderName", "Provider Name")</th>
+                            <th>@T("Col_BatchNumber", "Batch Number")</th>
+                            <th>@T("Col_RecDate", "Rec Date")</th>
+                            <th>@T("Col_DueDate", "Due Date")</th>
+                            <th>@T("Col_PaymentDate", "Payment Date")</th>
+                            <th>@T("Col_RecBatchAmt", "Rec Batch Amt")</th>
+                            <th>@T("Col_NetPayment", "Net Payment Amt.")</th>
+                            <th>@T("Col_WHT", "W.H.T")</th>
+                            <th>@T("Col_AdminFees", "Admin fees")</th>
+                            <th>@T("Col_DueAmt", "Due Amt")</th>
+                            <th>@T("Col_PaidAmt", "Paid Amt")</th>
+                            <th>@T("Col_RestAmt", "Rest Amt")</th>
+                            <th>@T("Col_PayDocNo", "Pay. Doc. No.")</th>
+                            <th>@T("Col_Method", "Payment Method Name")</th>
+                            <th>@T("Col_Status", "Batch Status Name")</th>
+                            <th style="min-width:80px;">@T("Col_Show", "Show")</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in ViewBag.services)
+                        {
+                            <tr>
+                                <td>@item.GetType().GetProperty("ProviderName").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("BatchNumber").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("RecDate").GetValue(item).ToString("yyyy-MM-dd")</td>
+                                <td>@item.GetType().GetProperty("DueDate").GetValue(item).ToString("yyyy-MM-dd")</td>
+                                <td>@item.GetType().GetProperty("PaymentDate").GetValue(item).ToString("yyyy-MM-dd")</td>
+                                <td>@item.GetType().GetProperty("RecBatchAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("Expr2").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("WHTaxAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("AdminFeesAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("PaymentAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("DueNetPaymentAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("rest").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("PayamentID").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("PaymentMethodName").GetValue(item)</td>
+
+                                <td>
+                                    @{
+                                        var st = (item.GetType().GetProperty("BatchStatusName").GetValue(item) ?? "").ToString();
+                                    }
+                                    <span class="pi-status @(st.Replace(" ", ""))">@st</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-primary pi-show-btn" onclick="show(this);">
+                                        <i class="bi bi-eye"></i>
+                                        <span>@(HttpContext.GetGlobalResourceObject("PaymentInquiry","Col_Show") ?? "Show")</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="pv-footer">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Home")</span>
+                </a>
+
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("Provider_Expended_services","ClaimForm")">
+                    <i class="bi bi-grid"></i>
+                    <span>@T("GoExpanded", "Go to Expanded Services")</span>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<style>
+
+    .pi-slabel {
+        font-size: 12px;
+        color: rgba(15,23,42,.65);
+        font-weight: 800;
+        white-space: nowrap; /* ✅ تمنع كسر النص */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pi-svalue {
+        font-size: 22px; /* أكبر شوية */
+        font-weight: 900;
+        color: #0b2b40;
+        line-height: 1.1;
+        direction: ltr; /* ✅ الأرقام تبقى صح في العربي */
+        text-align: start;
+    }
+    html[dir="rtl"] .pi-scard {
+        flex-direction: row-reverse;
+    }
+
+    /* ===== PaymentInquiry: Summary + Toolbar + Better scrolling ===== */
+    .pi-summary {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(160px, 1fr)); /* ✅ 6 في صف واحد */
+        gap: 12px;
+        margin: 6px 0 14px;
+        align-items: stretch;
+    }
+
+.pi-scard{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:16px;
+  box-shadow: 0 10px 26px rgba(15,23,42,.06);
+  padding:12px 14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.pi-sicon{
+  width:44px;height:44px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background: rgba(24,169,153,.12);
+  border:1px solid rgba(24,169,153,.22);
+  color:#0b2b40;
+  font-size:20px;
+}
+.pi-slabel{ font-size:12px; color: rgba(15,23,42,.65); font-weight:800; }
+.pi-svalue{ font-size:20px; font-weight:900; color:#0b2b40; line-height:1.1; }
+
+@@media (max-width: 1200px){
+  .pi-summary{ grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+}
+/* Responsive */
+@@media (max-width: 1400px){
+  .pi-summary{ grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+}
+@@media (max-width: 992px){
+  .pi-summary{ grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+}
+@@media (max-width: 576px){
+  .pi-summary{ grid-template-columns: 1fr; }
+}
+
+.pi-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  margin-bottom:12px;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  background: rgba(15,23,42,.03);
+}
+.pi-search{
+  flex:1;
+  position:relative;
+  max-width: 520px;
+}
+.pi-search i{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  left:12px;
+  color: rgba(15,23,42,.55);
+}
+html[dir="rtl"] .pi-search i{ left:auto; right:12px; }
+
+.pi-search input{
+  padding-left:38px;
+  border-radius:14px;
+  min-height:44px;
+}
+html[dir="rtl"] .pi-search input{
+  padding-left:12px;
+  padding-right:38px;
+}
+
+.pi-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.pi-filter{
+  border-radius:14px;
+  font-weight:900;
+}
+.pi-filter.active{
+  box-shadow: 0 10px 24px rgba(15,23,42,.08);
+}
+
+.pi-scroll{
+  overflow:auto;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.08);
+}
+.pi-scroll table{
+  min-width: 1400px; /* يخلي السحب الأفقي واضح */
+}
+    /* PaymentInquiry UI polish */
+    .pi-page .pv-card {
+        padding: 16px;
+    }
+
+    .pi-page .table thead th {
+        background: rgba(24,169,153,.10);
+        border-bottom: 1px solid rgba(24,169,153,.22);
+        color: #0b2b40;
+        font-weight: 900;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .pi-page .table td {
+        font-size: 13px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .pi-page .dataTables_wrapper .dt-buttons .dt-button {
+        border-radius: 12px !important;
+        border: 1px solid rgba(0,0,0,.08) !important;
+        background: #fff !important;
+        padding: 8px 10px !important;
+        font-weight: 800 !important;
+        color: #0b2b40 !important;
+        margin-right: 6px !important;
+    }
+
+        .pi-page .dataTables_wrapper .dt-buttons .dt-button:hover {
+            background: rgba(24,169,153,.12) !important;
+        }
+
+    .pi-show-btn {
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 900;
+    }
+
+        .pi-show-btn i {
+            font-size: 16px;
+        }
+
+    /* scoped to this page only */
+    .pi-page .table thead th {
+        background: rgba(24,169,153,.12);
+        border-bottom: 1px solid rgba(24,169,153,.22);
+        color: #0b2b40;
+        font-weight: 900;
+        white-space: nowrap;
+        font-size: 13px;
+    }
+
+    .pi-page .table td {
+        font-size: 13px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .pi-show {
+        display: inline-flex;
+        width: 38px;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,.08);
+        background: #fff;
+        text-decoration: none;
+        color: #0b2b40;
+    }
+
+        .pi-show:hover {
+            background: rgba(24,169,153,.12);
+        }
+
+    /* Status pills */
+    .pi-status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: .32rem .6rem;
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 12px;
+        min-width: 86px;
+        border: 1px solid rgba(0,0,0,.08);
+        background: #f3f4f6;
+        color: #111827;
+    }
+
+        .pi-status.UnPaid {
+            background: rgba(34,197,94,.16);
+            color: #14532d;
+            border-color: rgba(34,197,94,.25);
+        }
+
+        .pi-status.Paid {
+            background: rgba(16,185,129,.18);
+            color: #064e3b;
+            border-color: rgba(16,185,129,.28);
+        }
+
+        .pi-status.PartlyPaid {
+            background: rgba(14,116,144,.16);
+            color: #083344;
+            border-color: rgba(14,116,144,.25);
+        }
+
+        .pi-status.Received {
+            background: rgba(148,163,184,.22);
+            color: #0f172a;
+            border-color: rgba(148,163,184,.35);
+        }
+
+    @@media (max-width: 992px) {
+        .pi-page .table td, .pi-page .table th {
+            font-size: 12px;
+        }
+    }
+</style>
+
+@*<div id="backring1">
+        <div class="ring1" id="Loadingg">
+            Loading
+            <spana1></spana1>
+        </div>
+    </div>*@
 
 
 
@@ -541,14 +940,30 @@
         //var data = [];
         $("#Loadingg").hide();
 
-        $('#Claim_Services2').DataTable({
+        var table = $('#Claim_Services2').DataTable({
             ordering: true,
+            searching: false,
             paging: true,
             dom: 'Bfrtip',
             deferRender: true,
-            buttons: [
-                'copy', 'csv', 'excel', /*'pdf',*/ 'print'
-            ],
+            buttons: ['copy', 'csv', 'excel', 'print'],
+            scrollX: true,          // ✅ يحل مشكلة الحركة أفضل (اختياري لكنه قوي)
+            autoWidth: false
+        });
+
+        // Search box
+        $('#piSearch').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+
+        // Filters by status (column 14 => Batch Status Name) 0-based
+        $('.pi-filter').on('click', function () {
+            $('.pi-filter').removeClass('active');
+            $(this).addClass('active');
+
+            var f = $(this).data('filter');
+            if (f === 'all') table.column(14).search('').draw();
+            else table.column(14).search(f, true, false).draw();
         });
         $('#ClaimServicesTable').DataTable({
             paging: true,

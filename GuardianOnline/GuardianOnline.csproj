@@ -195,6 +195,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\PaymentInquiry.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentInquiry.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ProviderUsers.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -598,6 +603,13 @@
     <Content Include="App_GlobalResources\UserRoles.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UserRoles.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PaymentInquiry.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PaymentInquiry.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PaymentInquiry.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />

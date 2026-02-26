@@ -61,25 +61,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to إدارة بيانات الحساب.
+        ///   Looks up a localized string similar to Add User.
         /// </summary>
-        internal static string Account_SubTitle {
+        internal static string Btn_AddUser {
             get {
-                return ResourceManager.GetString("Account_SubTitle", resourceCulture);
+                return ResourceManager.GetString("Btn_AddUser", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to حساب المستخدم.
-        /// </summary>
-        internal static string Account_Title {
-            get {
-                return ResourceManager.GetString("Account_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to العودة للرئيسية.
+        ///   Looks up a localized string similar to Back to Home.
         /// </summary>
         internal static string Btn_BackHome {
             get {
@@ -88,7 +79,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to حفظ.
+        ///   Looks up a localized string similar to Back to Main List.
+        /// </summary>
+        internal static string Btn_BackList {
+            get {
+                return ResourceManager.GetString("Btn_BackList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        internal static string Btn_Create {
+            get {
+                return ResourceManager.GetString("Btn_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Btn_Save {
             get {
@@ -97,83 +106,254 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تأكيد كلمة المرور.
+        ///   Looks up a localized string similar to Actions.
         /// </summary>
-        internal static string Field_ConfirmPassword {
+        internal static string Col_Actions {
             get {
-                return ResourceManager.GetString("Field_ConfirmPassword", resourceCulture);
+                return ResourceManager.GetString("Col_Actions", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to البريد الإلكتروني.
+        ///   Looks up a localized string similar to Create Date.
         /// </summary>
-        internal static string Field_Email {
+        internal static string Col_CreateDate {
             get {
-                return ResourceManager.GetString("Field_Email", resourceCulture);
+                return ResourceManager.GetString("Col_CreateDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to الاسم الأول.
+        ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string Field_FirstName {
+        internal static string Col_Email {
             get {
-                return ResourceManager.GetString("Field_FirstName", resourceCulture);
+                return ResourceManager.GetString("Col_Email", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اسم العائلة.
+        ///   Looks up a localized string similar to First Name.
         /// </summary>
-        internal static string Field_LastName {
+        internal static string Col_FirstName {
             get {
-                return ResourceManager.GetString("Field_LastName", resourceCulture);
+                return ResourceManager.GetString("Col_FirstName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to كلمة المرور.
+        ///   Looks up a localized string similar to Last Name.
         /// </summary>
-        internal static string Field_Password {
+        internal static string Col_LastName {
             get {
-                return ResourceManager.GetString("Field_Password", resourceCulture);
+                return ResourceManager.GetString("Col_LastName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to صورة المستخدم.
+        ///   Looks up a localized string similar to Locked.
         /// </summary>
-        internal static string Field_UserImage {
+        internal static string Col_Locked {
             get {
-                return ResourceManager.GetString("Field_UserImage", resourceCulture);
+                return ResourceManager.GetString("Col_Locked", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اسم المستخدم.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
-        internal static string Field_UserName {
+        internal static string Col_Password {
             get {
-                return ResourceManager.GetString("Field_UserName", resourceCulture);
+                return ResourceManager.GetString("Col_Password", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خطأ!.
+        ///   Looks up a localized string similar to User Name.
         /// </summary>
-        internal static string Msg_ErrorTitle {
+        internal static string Col_UserName {
             get {
-                return ResourceManager.GetString("Msg_ErrorTitle", resourceCulture);
+                return ResourceManager.GetString("Col_UserName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to بيانات الحساب.
+        ///   Looks up a localized string similar to Create a new provider user.
         /// </summary>
-        internal static string Section_AccountData {
+        internal static string Create_SubTitle {
             get {
-                return ResourceManager.GetString("Section_AccountData", resourceCulture);
+                return ResourceManager.GetString("Create_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create User Data.
+        /// </summary>
+        internal static string Create_Title {
+            get {
+                return ResourceManager.GetString("Create_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update provider user information.
+        /// </summary>
+        internal static string Edit_SubTitle {
+            get {
+                return ResourceManager.GetString("Edit_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit User Data.
+        /// </summary>
+        internal static string Edit_Title {
+            get {
+                return ResourceManager.GetString("Edit_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider Branch.
+        /// </summary>
+        internal static string Lbl_Branch {
+            get {
+                return ResourceManager.GetString("Lbl_Branch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        internal static string Lbl_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("Lbl_ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        internal static string Lbl_Email {
+            get {
+                return ResourceManager.GetString("Lbl_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        internal static string Lbl_FirstName {
+            get {
+                return ResourceManager.GetString("Lbl_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        internal static string Lbl_LastName {
+            get {
+                return ResourceManager.GetString("Lbl_LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Locked.
+        /// </summary>
+        internal static string Lbl_Locked {
+            get {
+                return ResourceManager.GetString("Lbl_Locked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Lbl_Password {
+            get {
+                return ResourceManager.GetString("Lbl_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name.
+        /// </summary>
+        internal static string Lbl_UserName {
+            get {
+                return ResourceManager.GetString("Lbl_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --Select Branch Name--.
+        /// </summary>
+        internal static string SelectBranch {
+            get {
+                return ResourceManager.GetString("SelectBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ----Select User Name----.
+        /// </summary>
+        internal static string SelectUser {
+            get {
+                return ResourceManager.GetString("SelectUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Data.
+        /// </summary>
+        internal static string UserData_Legend {
+            get {
+                return ResourceManager.GetString("UserData_Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Image.
+        /// </summary>
+        internal static string UserImage {
+            get {
+                return ResourceManager.GetString("UserImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users Data.
+        /// </summary>
+        internal static string Users_Legend {
+            get {
+                return ResourceManager.GetString("Users_Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users list.
+        /// </summary>
+        internal static string Users_List {
+            get {
+                return ResourceManager.GetString("Users_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage provider users.
+        /// </summary>
+        internal static string Users_SubTitle {
+            get {
+                return ResourceManager.GetString("Users_SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        internal static string Users_Title {
+            get {
+                return ResourceManager.GetString("Users_Title", resourceCulture);
             }
         }
     }

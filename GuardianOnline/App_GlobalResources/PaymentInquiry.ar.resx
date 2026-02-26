@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Page -->
+  <data name="Title" xml:space="preserve"><value>استعلام المدفوعات</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>عرض دفعات مقدم الخدمة وحالة السداد</value></data>
+  <data name="Legend" xml:space="preserve"><value>بيانات استعلام المدفوعات</value></data>
+  <data name="BackHome" xml:space="preserve"><value>رجوع للرئيسية</value></data>
+  <data name="GoExpanded" xml:space="preserve"><value>الذهاب للخدمات الموسعة</value></data>
+
+  <!-- Summary -->
+  <data name="Sum_TotalBatches" xml:space="preserve"><value>إجمالي الدفعات</value></data>
+  <data name="Sum_PaidCount" xml:space="preserve"><value>مدفوعة</value></data>
+  <data name="Sum_UnpaidCount" xml:space="preserve"><value>غير مدفوعة</value></data>
+  <data name="Sum_TotalPaid" xml:space="preserve"><value>إجمالي المدفوع</value></data>
+  <data name="Sum_TotalRest" xml:space="preserve"><value>إجمالي المتبقي</value></data>
+
+  <!-- Toolbar -->
+  <data name="Search" xml:space="preserve"><value>بحث...</value></data>
+  <data name="Filter_All" xml:space="preserve"><value>الكل</value></data>
+
+  <!-- Status translations -->
+  <data name="Status_Paid" xml:space="preserve"><value>مدفوع</value></data>
+  <data name="Status_UnPaid" xml:space="preserve"><value>غير مدفوع</value></data>
+  <data name="Status_PartlyPaid" xml:space="preserve"><value>مدفوع جزئياً</value></data>
+  <data name="Status_Received" xml:space="preserve"><value>مستلم</value></data>
+
+  <!-- Columns -->
+  <data name="Col_ProviderName" xml:space="preserve"><value>اسم مقدم الخدمة</value></data>
+  <data name="Col_BatchNumber" xml:space="preserve"><value>رقم الدفعة</value></data>
+  <data name="Col_RecDate" xml:space="preserve"><value>تاريخ الاستلام</value></data>
+  <data name="Col_DueDate" xml:space="preserve"><value>تاريخ الاستحقاق</value></data>
+  <data name="Col_PaymentDate" xml:space="preserve"><value>تاريخ السداد</value></data>
+  <data name="Col_RecBatchAmt" xml:space="preserve"><value>قيمة الدفعة المستلمة</value></data>
+  <data name="Col_NetPayment" xml:space="preserve"><value>صافي المدفوع</value></data>
+  <data name="Col_WHT" xml:space="preserve"><value>ضريبة خصم المنبع</value></data>
+  <data name="Col_AdminFees" xml:space="preserve"><value>رسوم إدارية</value></data>
+  <data name="Col_DueAmt" xml:space="preserve"><value>المستحق</value></data>
+  <data name="Col_PaidAmt" xml:space="preserve"><value>المدفوع</value></data>
+  <data name="Col_RestAmt" xml:space="preserve"><value>المتبقي</value></data>
+  <data name="Col_PayDocNo" xml:space="preserve"><value>رقم مستند السداد</value></data>
+  <data name="Col_Method" xml:space="preserve"><value>طريقة السداد</value></data>
+  <data name="Col_Status" xml:space="preserve"><value>حالة الدفعة</value></data>
+  <data name="Col_Show" xml:space="preserve"><value>عرض</value></data>
+<data name="Sum_ReceivedCount" xml:space="preserve"><value>مستلم</value></data>
+</root>
