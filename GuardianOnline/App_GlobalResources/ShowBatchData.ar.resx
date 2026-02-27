@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>بيانات الدفعة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>عرض مطالبات الدفعة وتفاصيل الخدمات</value></data>
+  <data name="Legend" xml:space="preserve"><value>محتوى الدفعة</value></data>
+  <data name="BatchNo" xml:space="preserve"><value>رقم الدفعة</value></data>
+  <data name="Hint" xml:space="preserve"><value>اضغط على الأيقونة لعرض تفاصيل الخدمات</value></data>
+
+  <data name="BackToPayments" xml:space="preserve"><value>رجوع لاستعلام المدفوعات</value></data>
+  <data name="BackHome" xml:space="preserve"><value>رجوع للرئيسية</value></data>
+
+  <data name="Col_ClaimID" xml:space="preserve"><value>رقم المطالبة</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>رقم نموذج المطالبة</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="Col_ContractAmt" xml:space="preserve"><value>قيمة التعاقد</value></data>
+  <data name="Col_DeductAmt" xml:space="preserve"><value>قيمة التحمل</value></data>
+  <data name="Col_DiscountAmt" xml:space="preserve"><value>قيمة الخصم</value></data>
+  <data name="Col_DueAmt" xml:space="preserve"><value>المستحق</value></data>
+  <data name="Col_RequestedAmt" xml:space="preserve"><value>المطلوب</value></data>
+  <data name="Col_DifferenceAmt" xml:space="preserve"><value>الفرق</value></data>
+  <data name="Col_BranchName" xml:space="preserve"><value>اسم الفرع</value></data>
+
+  <data name="Child_Title" xml:space="preserve"><value>تفاصيل الخدمات</value></data>
+  <data name="Child_ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="Child_ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Child_UnitAmt" xml:space="preserve"><value>سعر الوحدة</value></data>
+  <data name="Child_ServiceAmt" xml:space="preserve"><value>إجمالي الخدمة</value></data>
+  <data name="Child_DeductAmt" xml:space="preserve"><value>التحمل</value></data>
+  <data name="Child_DiscountAmt" xml:space="preserve"><value>الخصم</value></data>
+  <data name="Child_DueAmt" xml:space="preserve"><value>المستحق</value></data>
+  <data name="Child_RequestedAmt" xml:space="preserve"><value>المطلوب</value></data>
+  <data name="Child_DifferenceAmt" xml:space="preserve"><value>الفرق</value></data>
+  <data name="Child_ServiceNote" xml:space="preserve"><value>ملاحظات</value></data>
+<data name="Sum_TotalClaims" xml:space="preserve"><value>إجمالي المطالبات</value></data>
+<data name="Sum_TotalDue" xml:space="preserve"><value>إجمالي المستحق</value></data>
+<data name="Sum_TotalRequested" xml:space="preserve"><value>إجمالي المطلوب</value></data>
+<data name="Search" xml:space="preserve"><value>بحث...</value></data>
+</root>

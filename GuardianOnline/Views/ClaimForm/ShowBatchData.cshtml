@@ -1,374 +1,137 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ShowBatchData";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("ShowBatchData", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
+
+@* لازم jQuery لأن الصفحة كلها مبنية عليه *@
+@Scripts.Render("~/bundles/jquery")
 
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
-<script src="~/Scripts/bootstrap.min.js"></script>
-@*<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>*@
+@* ===== DataTables Core (لازم) ===== *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
 
+@* ===== Bootstrap5 Integration (اختياري لكن شكل أحسن مع LayoutV2) ===== *@
+<link rel="stylesheet" href="~/Content/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="~/Scripts/dataTables.bootstrap5.min.js"></script>
+
+@* ===== Buttons ===== *@
 <script type="text/javascript" src="~/Scripts/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="~/Scripts/jszip.min.js"></script>
-@*<script type="text/javascript" src="~/Scripts/pdfmake.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/vfs_fonts.js"></script>
 <script type="text/javascript" src="~/Scripts/buttons.html5.min.js"></script>
 <script type="text/javascript" src="~/Scripts/buttons.print.min.js"></script>
-<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
+<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css" />
 
-@*<link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet" />*@
-<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
-
-
-@*<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>*@
+@* Sorting plugin *@
 <script type="text/javascript" src="~/Scripts/date-eu.js"></script>
 
+<div class="pv-page sb-page">
+    <div class="pv-shell">
 
+        <div class="pv-header">
+            <div>
+                <div class="pv-title">@T("Title", "Batch Data")</div>
+                <div class="pv-sub">
+                    @T("SubTitle", "View batch claims and services details")
+                </div>
+            </div>
 
-<style>
-    /*body {
-        margin: 0;
-        padding: 0;
-        background: #262626;
-    }*/
-    #backring1 {
-        background-color: darkgray;
-    }
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("PaymentInquiry","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackToPayments", "Back to Payment Inquiry")</span>
+                </a>
 
-    .ring1 {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        width: 150px;
-        height: 150px;
-        background: transparent;
-        border: 3px solid /*#3c3c3c*/ #9ac3b8;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 150px;
-        font-family: sans-serif;
-        font-size: 20px;
-        color: /*#928d36*/ #fff000;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        text-shadow: 0 0 10px #fff000;
-        box-shadow: 0 0 20px rgba(0,0,0,.5);
-        background-color: #11395c;
-    }
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-house"></i>
+                    <span>@T("BackHome", "Back to Home")</span>
+                </a>
+            </div>
+        </div>
 
-        .ring1:before {
-            content: '';
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            border: 3px solid transparent;
-            border-top: 3px solid #fff000;
-            border-right: 3px solid #fff000;
-            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
-            border-radius: 50%;
-            animation: animateC1 2s linear infinite;
-        }
+        <div class="pv-card">
+            <div class="pv-card-head">
+                <div class="pv-card-title">@T("Legend", "Batch Content Data")</div>
+                <div class="pv-card-sub">
+                    @T("BatchNo", "Batch No") : <span class="sb-batch">@ViewBag.BatchNumberr</span>
+                </div>
+            </div>
 
-    spana1 {
-        display: block;
-        position: absolute;
-        top: calc(50% - 2px);
-        left: 50%;
-        width: 50%;
-        height: 4px;
-        background: transparent;
-        transform-origin: left;
-        animation: animate1 2s linear infinite;
-    }
+            <div class="sb-toolbar">
+                <div class="sb-hint">
+                    <i class="bi bi-info-circle"></i>
+                    <span>@T("Hint", "Click the left icon to show services details")</span>
+                </div>
+            </div>
+            <div class="sb-topbar">
+                <div class="sb-summary">
+                    <div class="sb-scard">
+                        <div class="sb-sicon"><i class="bi bi-list-check"></i></div>
+                        <div>
+                            <div class="sb-slabel">@T("Sum_TotalClaims", "Total Claims")</div>
+                            <div class="sb-svalue" id="sbTotalClaims">0</div>
+                        </div>
+                    </div>
 
-        spana1:before {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #fff000;
-            top: -6px;
-            right: -8px;
-            box-shadow: 0 0 20px #fff000;
-        }
+                    <div class="sb-scard">
+                        <div class="sb-sicon"><i class="bi bi-cash-stack"></i></div>
+                        <div>
+                            <div class="sb-slabel">@T("Sum_TotalDue", "Total Due")</div>
+                            <div class="sb-svalue" id="sbTotalDue">0.00</div>
+                        </div>
+                    </div>
 
-    @@keyframes animateC1 {
-        0% {
-            transform: rotate(0deg);
-        }
+                    <div class="sb-scard">
+                        <div class="sb-sicon"><i class="bi bi-receipt"></i></div>
+                        <div>
+                            <div class="sb-slabel">@T("Sum_TotalRequested", "Total Requested")</div>
+                            <div class="sb-svalue" id="sbTotalRequested">0.00</div>
+                        </div>
+                    </div>
+                </div>
 
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+                <div class="sb-search">
+                    <i class="bi bi-search"></i>
+                    <input id="sbSearch" class="form-control" type="text" placeholder="@T("Search", "Search...")" />
+                </div>
+            </div>
+            <div class="sb-table-wrap">
+                <table class="table table-hover align-middle mb-0" id="tblApprovals" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;"></th>
+                            <th>@T("Col_ClaimID", "Claim ID")</th>
+                            <th>@T("Col_ClaimFormNum", "ClaimForm Number")</th>
+                            <th>@T("Col_CardNumber", "Card Number")</th>
+                            <th>@T("Col_MemberName", "Member Name")</th>
+                            <th>@T("Col_ProcedureDate", "Procedure Date")</th>
+                            <th>@T("Col_ContractAmt", "Contract Amt")</th>
+                            <th>@T("Col_DeductAmt", "Deductable Amt")</th>
+                            <th>@T("Col_DiscountAmt", "Discount Amt")</th>
+                            <th>@T("Col_DueAmt", "Due Amt")</th>
+                            <th>@T("Col_RequestedAmt", "Requested Amt")</th>
+                            <th>@T("Col_DifferenceAmt", "Difference Amt")</th>
+                            <th>@T("Col_BranchName", "Branch Name")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
 
-    @@keyframes animate1 {
-        0% {
-            transform: rotate(45deg);
-        }
-
-        100% {
-            transform: rotate(405deg);
-        }
-    }
-</style>
-<style>
-    td.details-control {
-        background: url('/Images/details_open.png') no-repeat center center;
-        cursor: pointer;
-    }
-
-    tr.shown td.details-control {
-        background: url('/Images/details_close.png') no-repeat center center;
-    }
-</style>
-<style>
-
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    /*.previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
-
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }*/
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-<style>
-    /*body {
-            background-image:url('../Images/login.jpg');
-        }*/
-    /*table1 {
-        border: 1px solid black;
-    }*/
-    table.table1 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table1 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-        }
-
-        table.table1 th, table.table1 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
-
-        table.table1, table.table1 table td {
-            border: 0px solid #ccc;
-        }
-
-    body.table789 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table789 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table789 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table789 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-        table.table789, table.table789 table td {
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-    body.table7899 {
-        font-family: Arial;
-        font-size: 11pt;
-    }
-
-    table.table7899 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table7899 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table7899 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 11pt;
-            font-weight: bold;
-        }
-
-        table.table7899, table.table7899 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 10pt;
-        }
-
-    body.table78991 {
-        font-family: Arial;
-        font-size: 9pt;
-    }
-
-    table.table78991 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table78991 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 11pt;
-        }
-
-        table.table78991 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 9pt;
-            /*font-weight: bold;*/
-        }
-
-        table.table78991, table.table78991 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 9pt;
-            /*font-weight: bold;*/
-            /*color: black;*/
-        }
-
-    #ProviderBranch {
-        max-width: 450px;
-    }
-
-    #ClaimForm_Number {
-        max-width: 900px;
-    }
-
-    #form_number, #Card_number, #Date_Procedure, #Date_symptoms, #ICD_Number {
-        font-size: 15px;
-    }
-
-    #providerName {
-        font-size: 12px;
-    }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-</style>
-<h2 style="color:teal;text-align:center">Batch Data</h2>
-<br />
-<fieldset class="scheduler-border" @*style="background-color:lightgray"*@ id="Expended_services">
-    <legend class="scheduler-border" style="color:teal">Batch Content Data</legend>
-    <div id="claim_services2">
-        <br />
-        <table class="table1" id="tblApprovals" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Claim ID</th>
-                    <th>ClaimForm Number</th>
-                    <th>Card Number</th>
-                    <th>Member Name</th>
-                    <th>Procedure Date</th>
-                    <th>Contract Amt</th>
-                    <th>Deductable Amt</th>
-                    <th>Discount Amt</th>
-                    <th>Due Amt</th>
-                    <th>Requested Amt</th>
-                    <th>Difference Amt</th>
-                    <th>Branch Name</th>
-                </tr>
-            </thead>
-            @*<tbody></tbody>*@
-        </table>
-        <br />
     </div>
-    <br />
-</fieldset>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
+</div>
 <div id="backring1">
     <div class="ring1" id="Loadingg">
         Loading
@@ -376,22 +139,245 @@
     </div>
 </div>
 
+<style>
+    .sb-topbar {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 10px 0 12px;
+    }
 
+    .sb-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 12px;
+        flex: 1;
+    }
 
+    .sb-scard {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 16px;
+        box-shadow: 0 10px 26px rgba(15,23,42,.06);
+        padding: 12px 14px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .sb-sicon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(24,169,153,.12);
+        border: 1px solid rgba(24,169,153,.22);
+        color: #0b2b40;
+        font-size: 20px;
+    }
+
+    .sb-slabel {
+        font-size: 12px;
+        color: rgba(15,23,42,.65);
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sb-svalue {
+        font-size: 20px;
+        font-weight: 900;
+        color: #0b2b40;
+        line-height: 1.1;
+        direction: ltr; /* ✅ الأرقام مظبوطة في العربي */
+        text-align: start;
+    }
+
+    .sb-search {
+        position: relative;
+        min-width: 260px;
+        max-width: 420px;
+    }
+
+        .sb-search i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 12px;
+            color: rgba(15,23,42,.55);
+        }
+
+    html[dir="rtl"] .sb-search i {
+        left: auto;
+        right: 12px;
+    }
+
+    .sb-search input {
+        padding-left: 38px;
+        min-height: 44px;
+        border-radius: 14px;
+    }
+
+    html[dir="rtl"] .sb-search input {
+        padding-left: 12px;
+        padding-right: 38px;
+    }
+
+    @@media (max-width: 1200px) {
+        .sb-summary {
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .sb-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .sb-search {
+            width: 100%;
+            max-width: none;
+        }
+    }
+    /* ===== Scoped UI for ShowBatchData ===== */
+    .sb-page .pv-card {
+        padding: 14px;
+    }
+
+    .sb-page .pv-card-sub {
+        margin-top: 4px;
+        color: rgba(15,23,42,.65);
+        font-weight: 800;
+    }
+
+    .sb-page .sb-batch {
+        font-weight: 900;
+        color: #0b2b40;
+        direction: ltr;
+        display: inline-block;
+    }
+
+    .sb-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        margin: 10px 0 12px;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 14px;
+        background: rgba(15,23,42,.03);
+    }
+
+    .sb-hint {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-weight: 800;
+        color: rgba(15,23,42,.70);
+    }
+
+    .sb-table-wrap {
+        overflow: auto; /* ✅ يحل مشكلة التحرك */
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,.08);
+    }
+
+        .sb-table-wrap table {
+            min-width: 1300px;
+        }
+    /* ✅ سحب أفقي واضح */
+
+    .sb-page table.dataTable thead th {
+        background: rgba(24,169,153,.10);
+        border-bottom: 1px solid rgba(24,169,153,.22);
+        color: #0b2b40;
+        font-weight: 900;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .sb-page table.dataTable td {
+        font-size: 13px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    /* Details icon cell */
+    td.details-control {
+        cursor: pointer;
+        text-align: center;
+        color: #0b2b40;
+    }
+
+    tr.shown td.details-control {
+        opacity: .85;
+    }
+
+    /* DataTables buttons style */
+    .sb-page .dataTables_wrapper .dt-buttons .dt-button {
+        border-radius: 12px !important;
+        border: 1px solid rgba(0,0,0,.08) !important;
+        background: #fff !important;
+        padding: 8px 10px !important;
+        font-weight: 900 !important;
+        color: #0b2b40 !important;
+        margin-right: 6px !important;
+    }
+
+        .sb-page .dataTables_wrapper .dt-buttons .dt-button:hover {
+            background: rgba(24,169,153,.12) !important;
+        }
+
+    #backring1 {
+        display: none;
+    }
+
+    #Loadingg {
+        display: none;
+    }
+</style>
 
 <script>
-    //'<th>Claim Item ID</th>' + '<th>Claim ID</th>' +
+    // Translated labels for child table
+    var tServiceName = '@T("Child_ServiceName", "Service Name")';
+    var tServiceQnt = '@T("Child_ServiceQnt", "Service Qnt")';
+    var tUnitAmt = '@T("Child_UnitAmt", "Unit Amt")';
+    var tServiceAmt = '@T("Child_ServiceAmt", "Service Amt")';
+    var tDeductAmt = '@T("Child_DeductAmt", "Deduct Amt")';
+    var tDiscountAmt = '@T("Child_DiscountAmt", "Discount Amt")';
+    var tDueAmt = '@T("Child_DueAmt", "Due Amt")';
+    var tRequestedAmt = '@T("Child_RequestedAmt", "Requested Amt")';
+    var tDifferenceAmt = '@T("Child_DifferenceAmt", "Difference Amt")';
+    var tServiceNote = '@T("Child_ServiceNote", "Service Note")';
+
     function format(d) {
-        var result = '<table id="childtable" class="table1" cellpadding="10" cellspacing="0" border="1" style="padding-left: 80px; width:100% ">' +
-            '<tr>' + '<th>Service Name</th>' + '<th>Service Qnt</th>' + '<th>Unit Amt</th>' + '<th>Service Amt</th>'
-            + '<th>Deduct Amt</th>' + '<th>Discount Amt</th>' + '<th>Due Amt</th>' + '<th>Requested Amt</th>' + '<th>Difference Amt</th>' + '<th>Service Note</th>'  + '</tr>';
-        //loop thouth the OderListDetails and add the child items.
-        //alert(d);
-        //alert(d.OrderListDetails.length);
+        var result =
+            '<div style="padding:10px 10px 14px;">' +
+            '<div style="font-weight:900;margin-bottom:8px;color:#0b2b40;">@T("Child_Title","Services Details")</div>' +
+            '<div style="overflow:auto;border:1px solid rgba(0,0,0,.08);border-radius:12px;">' +
+            '<table class="table table-sm table-striped mb-0" style="min-width:1100px;">' +
+            '<thead><tr>' +
+            '<th>' + tServiceName + '</th>' +
+            '<th>' + tServiceQnt + '</th>' +
+            '<th>' + tUnitAmt + '</th>' +
+            '<th>' + tServiceAmt + '</th>' +
+            '<th>' + tDeductAmt + '</th>' +
+            '<th>' + tDiscountAmt + '</th>' +
+            '<th>' + tDueAmt + '</th>' +
+            '<th>' + tRequestedAmt + '</th>' +
+            '<th>' + tDifferenceAmt + '</th>' +
+            '<th>' + tServiceNote + '</th>' +
+            '</tr></thead><tbody>';
+
         for (var i = 0; i < d.OrderListDetails.length; i++) {
-            //var child = '<tr><td>' + d.OrderListDetails[i].ClaimitemID + '</td>' +
-            //    '<td>' + d.OrderListDetails[i].ClaimID + '</td>' +
-            var child = '<tr><td>' + d.OrderListDetails[i].ServiceName + '</td>' +
+            result +=
+                '<tr>' +
+                '<td>' + d.OrderListDetails[i].ServiceName + '</td>' +
                 '<td>' + d.OrderListDetails[i].ServiceQnt + '</td>' +
                 '<td>' + d.OrderListDetails[i].ServiceUnitAmt + '</td>' +
                 '<td>' + d.OrderListDetails[i].ServiceAmt + '</td>' +
@@ -401,133 +387,140 @@
                 '<td>' + d.OrderListDetails[i].ServiceRequestedAmt + '</td>' +
                 '<td>' + d.OrderListDetails[i].ServiceDifferenceAmt + '</td>' +
                 '<td>' + d.OrderListDetails[i].ServiceNote + '</td>' +
-               '</tr>';
-
-            result += child;
+                '</tr>';
         }
-        result += '</table>';
+
+        result += '</tbody></table></div></div>';
         return result;
     }
+
+    function toNum(v) {
+        if (v === null || v === undefined) return 0;
+        var n = parseFloat(v);
+        return isNaN(n) ? 0 : n;
+    }
+    function fmt(n) {
+        try { return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+        catch (e) { return (Math.round(n * 100) / 100).toFixed(2); }
+    }
+
     $(document).ready(function () {
 
+        // Loading ON
+        $('#backring1').show();
+        $("#Loadingg").show();
+
         var BatchNumber = "@ViewBag.BatchNumberr";
+
         $.ajax({
             url: "/ClaimForm/GetBatchList",
             data: { Batch_Number: BatchNumber },
-            type: "Get",
+            type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                //console.log("succsss" + data);
-                //$.get("/Approvals/GetOrderList", {}, function (data) {
-                //alert(data.length);
-                //after getting the data, bind the DataTable.
-                $("#Loadingg").hide();
 
+                // Summary
+                var totalClaims = (data && data.length) ? data.length : 0;
+                var sumDue = 0;
+                var sumRequested = 0;
+
+                for (var i = 0; i < totalClaims; i++) {
+                    sumDue += toNum(data[i].NetClaimedAmt);
+                    sumRequested += toNum(data[i].TRequestedAmt);
+                }
+
+                $('#sbTotalClaims').text(totalClaims);
+                $('#sbTotalDue').text(fmt(sumDue));
+                $('#sbTotalRequested').text(fmt(sumRequested));
+
+                // DataTable
                 var table = $("#tblApprovals").DataTable({
-                    "data": data,
-                    "ordering": false,
-                    "paging": true,
-                    "scrollCollapse": true,
-                    "deferRender": true,
-                    buttons: [
-                        'copy', 'csv', 'excel', /*'pdf',*/ 'print'
-                    ],
-                    "bInfo": true,
-                    //"order": [[7, "asc"]], //or asc
-                    "columnDefs": [{ "targets": 4, "type": "date-eu" }],
-                    //serverSide: true,
-                    //ord: true,
-                    //"scrollX": true,
-
-                    "columns": [
-                        {
-                            "className": 'details-control',
-                            "orderable": false,
-                            "data": null,
-                            "defaultContent": ''
-                        },
-                        { "data": "ClaimID" },
-                        { "data": "ClaimFormNum" },
-                        { "data": "CardNumber" },
-                        { "data": "MemberName" },
-                        { "data": "ProcedureDate" },
-                        { "data": "TClaimAmt" },
-                        { "data": "TDeductAmt" },
-                        { "data": "TDiscountAmt" },
-                        { "data": "NetClaimedAmt" },
-                        { "data": "TRequestedAmt" },
-                        { "data": "TDifferenceAmt" },
-                        { "data": "BranchName" },
-                        //{   // Checkbox select column
-                        //    "data": '<input type="checkbox">',
-                        //    "defaultContent": '',
-                        //    //"className": 'select-checkbox',
-                        //},
-
-
-                    ],
-
+                    data: data,
+                    searching: false,
+                    ordering: false,
+                    paging: true,
+                    deferRender: true,
+                    scrollX: true,
+                    autoWidth: false,
                     dom: 'Bfrtip',
-                    //buttons: [
-                    //    'copy', 'csv', 'excel', 'pdf', 'print'
-                    //],
-                    "order": [[0, 'desc']]
+                    buttons: ['copy', 'csv', 'excel', 'print'],
+                    bInfo: true,
+                    columnDefs: [{ targets: 5, type: "date-eu" }],
 
+                    columns: [
+                        {
+                            className: 'details-control',
+                            orderable: false,
+                            data: null,
+                            defaultContent: '<i class="bi bi-plus-square"></i>'
+                        },
+                        { data: "ClaimID" },
+                        { data: "ClaimFormNum" },
+                        { data: "CardNumber" },
+                        { data: "MemberName" },
+                        { data: "ProcedureDate" },
+                        { data: "TClaimAmt" },
+                        { data: "TDeductAmt" },
+                        { data: "TDiscountAmt" },
+                        { data: "NetClaimedAmt" },
+                        { data: "TRequestedAmt" },
+                        { data: "TDifferenceAmt" },
+                        { data: "BranchName" }
+                    ],
+                    order: [[1, 'desc']]
                 });
 
-                //}, //Expand/Collapse the nested objects.
+                // Search
+                $('#sbSearch').on('keyup', function () {
+                    table.search(this.value).draw();
+                });
+
+                // Expand/Collapse
                 $('#tblApprovals tbody').on('click', 'td.details-control', function () {
-                    var table = $("#tblApprovals").DataTable();
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
 
                     if (row.child.isShown()) {
-                        // This row is already open - close it
                         row.child.hide();
                         tr.removeClass('shown');
-                    }
-                    else {
-                        // Open this row
+                        $(this).html('<i class="bi bi-plus-square"></i>');
+                    } else {
                         row.child(format(row.data())).show();
                         tr.addClass('shown');
+                        $(this).html('<i class="bi bi-dash-square"></i>');
                     }
                 });
 
+                // Loading OFF
+                $("#Loadingg").hide();
+                $('#backring1').hide();
             },
             error: function (ex) {
                 console.log(ex);
+                $("#Loadingg").hide();
+                $('#backring1').hide();
             }
         });
     });
 </script>
 
-
-
 <script>
-
-
     function refresh() {
-
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") {
+                    window.open('@Url.Action("login", "ClaimForm")', '_self');
+                }
+                else {
+                    setTimeout(refresh, 5000);
+                }
+            }
         });
-
     }
-
     setTimeout(refresh, 1000);
 </script>
-
-

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>Batch Data</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>View batch claims and services details</value></data>
+  <data name="Legend" xml:space="preserve"><value>Batch Content Data</value></data>
+  <data name="BatchNo" xml:space="preserve"><value>Batch No</value></data>
+  <data name="Hint" xml:space="preserve"><value>Click the left icon to show services details</value></data>
+
+  <data name="BackToPayments" xml:space="preserve"><value>Back to Payment Inquiry</value></data>
+  <data name="BackHome" xml:space="preserve"><value>Back to Home</value></data>
+
+  <data name="Col_ClaimID" xml:space="preserve"><value>Claim ID</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>Procedure Date</value></data>
+  <data name="Col_ContractAmt" xml:space="preserve"><value>Contract Amt</value></data>
+  <data name="Col_DeductAmt" xml:space="preserve"><value>Deductable Amt</value></data>
+  <data name="Col_DiscountAmt" xml:space="preserve"><value>Discount Amt</value></data>
+  <data name="Col_DueAmt" xml:space="preserve"><value>Due Amt</value></data>
+  <data name="Col_RequestedAmt" xml:space="preserve"><value>Requested Amt</value></data>
+  <data name="Col_DifferenceAmt" xml:space="preserve"><value>Difference Amt</value></data>
+  <data name="Col_BranchName" xml:space="preserve"><value>Branch Name</value></data>
+
+  <data name="Child_Title" xml:space="preserve"><value>Services Details</value></data>
+  <data name="Child_ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="Child_ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+  <data name="Child_UnitAmt" xml:space="preserve"><value>Unit Amt</value></data>
+  <data name="Child_ServiceAmt" xml:space="preserve"><value>Service Amt</value></data>
+  <data name="Child_DeductAmt" xml:space="preserve"><value>Deduct Amt</value></data>
+  <data name="Child_DiscountAmt" xml:space="preserve"><value>Discount Amt</value></data>
+  <data name="Child_DueAmt" xml:space="preserve"><value>Due Amt</value></data>
+  <data name="Child_RequestedAmt" xml:space="preserve"><value>Requested Amt</value></data>
+  <data name="Child_DifferenceAmt" xml:space="preserve"><value>Difference Amt</value></data>
+  <data name="Child_ServiceNote" xml:space="preserve"><value>Service Note</value></data>
+<data name="Sum_TotalClaims" xml:space="preserve"><value>Total Claims</value></data>
+<data name="Sum_TotalDue" xml:space="preserve"><value>Total Due</value></data>
+<data name="Sum_TotalRequested" xml:space="preserve"><value>Total Requested</value></data>
+<data name="Search" xml:space="preserve"><value>Search...</value></data>
+</root>

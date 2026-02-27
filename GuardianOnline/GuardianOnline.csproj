@@ -200,6 +200,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PaymentInquiry.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PaymentInquiry.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentInquiry.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ProviderUsers.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -209,6 +214,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProviderUsers.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ShowBatchData.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShowBatchData.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ShowBatchData.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShowBatchData.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\UserDatas.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -610,6 +625,15 @@
     </Content>
     <Content Include="App_GlobalResources\PaymentInquiry.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PaymentInquiry.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ShowBatchData.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ShowBatchData.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ShowBatchData.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ShowBatchData.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
