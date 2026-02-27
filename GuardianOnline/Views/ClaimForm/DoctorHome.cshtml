@@ -12,6 +12,10 @@
         catch { return fallback; }
     };
 }
+@* ✅ لازم jQuery (حل مشكلة الأزرار/السيلكت/الداتا تيبل) *@
+@Scripts.Render("~/bundles/jquery")
+@* Bootstrap bundle (لو LayoutV2 فيه bootstrap، وجوده هنا مش هيكسر — لكن خليه زي صفحاتك القديمة) *@
+@Scripts.Render("~/bundles/bootstrap")
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
 

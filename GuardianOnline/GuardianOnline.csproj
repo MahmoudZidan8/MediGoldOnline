@@ -205,6 +205,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PaymentInquiry.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ProviderExpandedServices.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProviderExpandedServices.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ProviderExpandedServices.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProviderExpandedServices.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ProviderUsers.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -634,6 +644,14 @@
     <Content Include="App_GlobalResources\ShowBatchData.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ShowBatchData.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ProviderExpandedServices.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ProviderExpandedServices.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ProviderExpandedServices.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ProviderExpandedServices.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />

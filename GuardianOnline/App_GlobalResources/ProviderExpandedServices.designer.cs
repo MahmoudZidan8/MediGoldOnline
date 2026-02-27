@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ShowBatchData {
+    internal class ProviderExpandedServices {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ShowBatchData() {
+        internal ProviderExpandedServices() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.ShowBatchData", global::System.Reflection.Assembly.Load("App_GlobalResources"));
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.ProviderExpandedServices", global::System.Reflection.Assembly.Load("App_GlobalResources"));
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,119 +70,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to Payment Inquiry.
+        ///   Looks up a localized string similar to All Branches.
         /// </summary>
-        internal static string BackToPayments {
+        internal static string Branch_All {
             get {
-                return ResourceManager.GetString("BackToPayments", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Batch No.
-        /// </summary>
-        internal static string BatchNo {
-            get {
-                return ResourceManager.GetString("BatchNo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deduct Amt.
-        /// </summary>
-        internal static string Child_DeductAmt {
-            get {
-                return ResourceManager.GetString("Child_DeductAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Difference Amt.
-        /// </summary>
-        internal static string Child_DifferenceAmt {
-            get {
-                return ResourceManager.GetString("Child_DifferenceAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Discount Amt.
-        /// </summary>
-        internal static string Child_DiscountAmt {
-            get {
-                return ResourceManager.GetString("Child_DiscountAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Due Amt.
-        /// </summary>
-        internal static string Child_DueAmt {
-            get {
-                return ResourceManager.GetString("Child_DueAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requested Amt.
-        /// </summary>
-        internal static string Child_RequestedAmt {
-            get {
-                return ResourceManager.GetString("Child_RequestedAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Amt.
-        /// </summary>
-        internal static string Child_ServiceAmt {
-            get {
-                return ResourceManager.GetString("Child_ServiceAmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Name.
-        /// </summary>
-        internal static string Child_ServiceName {
-            get {
-                return ResourceManager.GetString("Child_ServiceName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Note.
-        /// </summary>
-        internal static string Child_ServiceNote {
-            get {
-                return ResourceManager.GetString("Child_ServiceNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Qnt.
-        /// </summary>
-        internal static string Child_ServiceQnt {
-            get {
-                return ResourceManager.GetString("Child_ServiceQnt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Services Details.
-        /// </summary>
-        internal static string Child_Title {
-            get {
-                return ResourceManager.GetString("Child_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unit Amt.
-        /// </summary>
-        internal static string Child_UnitAmt {
-            get {
-                return ResourceManager.GetString("Child_UnitAmt", resourceCulture);
+                return ResourceManager.GetString("Branch_All", resourceCulture);
             }
         }
         
@@ -268,15 +160,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member Name.
-        /// </summary>
-        internal static string Col_MemberName {
-            get {
-                return ResourceManager.GetString("Col_MemberName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Procedure Date.
         /// </summary>
         internal static string Col_ProcedureDate {
@@ -295,20 +178,38 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click the left icon to show services details.
+        ///   Looks up a localized string similar to From Date.
         /// </summary>
-        internal static string Hint {
+        internal static string FromDate {
             get {
-                return ResourceManager.GetString("Hint", resourceCulture);
+                return ResourceManager.GetString("FromDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Content Data.
+        ///   Looks up a localized string similar to Go to Payment Inquiry.
+        /// </summary>
+        internal static string GoPaymentInquiry {
+            get {
+                return ResourceManager.GetString("GoPaymentInquiry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expended services.
         /// </summary>
         internal static string Legend {
             get {
                 return ResourceManager.GetString("Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover To Audit.
+        /// </summary>
+        internal static string RecoverToAudit {
+            get {
+                return ResourceManager.GetString("RecoverToAudit", resourceCulture);
             }
         }
         
@@ -322,7 +223,34 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View batch claims and services details.
+        ///   Looks up a localized string similar to Invoices Count.
+        /// </summary>
+        internal static string SelectedCount {
+            get {
+                return ResourceManager.GetString("SelectedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoices Requested Amt.
+        /// </summary>
+        internal static string SelectedRequested {
+            get {
+                return ResourceManager.GetString("SelectedRequested", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send To Pay.
+        /// </summary>
+        internal static string SendToPay {
+            get {
+                return ResourceManager.GetString("SendToPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select invoices and send to accounting.
         /// </summary>
         internal static string SubTitle {
             get {
@@ -358,11 +286,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Data.
+        ///   Looks up a localized string similar to Expanded Services.
         /// </summary>
         internal static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Date.
+        /// </summary>
+        internal static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
             }
         }
     }

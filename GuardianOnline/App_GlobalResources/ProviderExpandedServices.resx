@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Title" xml:space="preserve"><value>Expanded Services</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Select invoices and send to accounting</value></data>
+  <data name="Legend" xml:space="preserve"><value>Expended services</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>Back to Home</value></data>
+  <data name="GoPaymentInquiry" xml:space="preserve"><value>Go to Payment Inquiry</value></data>
+
+  <data name="Sum_TotalClaims" xml:space="preserve"><value>Total Claims</value></data>
+  <data name="Sum_TotalDue" xml:space="preserve"><value>Total Due</value></data>
+  <data name="Sum_TotalRequested" xml:space="preserve"><value>Total Requested</value></data>
+
+  <data name="Search" xml:space="preserve"><value>Search...</value></data>
+  <data name="Branch_All" xml:space="preserve"><value>All Branches</value></data>
+
+  <data name="RecoverToAudit" xml:space="preserve"><value>Recover To Audit</value></data>
+  <data name="SendToPay" xml:space="preserve"><value>Send To Pay</value></data>
+
+  <data name="FromDate" xml:space="preserve"><value>From Date</value></data>
+  <data name="ToDate" xml:space="preserve"><value>To Date</value></data>
+
+  <data name="SelectedCount" xml:space="preserve"><value>Invoices Count</value></data>
+  <data name="SelectedRequested" xml:space="preserve"><value>Invoices Requested Amt</value></data>
+
+  <data name="Col_ClaimID" xml:space="preserve"><value>Claim ID</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>Procedure Date</value></data>
+  <data name="Col_ContractAmt" xml:space="preserve"><value>Contract Amt</value></data>
+  <data name="Col_DeductAmt" xml:space="preserve"><value>Deductable Amt</value></data>
+  <data name="Col_DiscountAmt" xml:space="preserve"><value>Discount Amt</value></data>
+  <data name="Col_DueAmt" xml:space="preserve"><value>Due Amt</value></data>
+  <data name="Col_RequestedAmt" xml:space="preserve"><value>Requested Amt</value></data>
+  <data name="Col_DifferenceAmt" xml:space="preserve"><value>Difference Amt</value></data>
+  <data name="Col_BranchName" xml:space="preserve"><value>Branch Name</value></data>
+</root>

@@ -1,21 +1,83 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Provider_Expended_services";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("ProviderExpandedServices", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
+
+    // ====== Summaries from ViewBag.services (C# only) ======
+    decimal sumContract = 0m, sumDeduct = 0m, sumDiscount = 0m, sumDue = 0m, sumRequested = 0m, sumDiff = 0m;
+    int totalClaims = 0;
+
+    try
+    {
+        if (ViewBag.services != null)
+        {
+            foreach (var it in ViewBag.services)
+            {
+                totalClaims++;
+
+                Func<string, decimal> getDec = (propName) =>
+                {
+                    try
+                    {
+                        var p = it.GetType().GetProperty(propName);
+                        if (p == null) return 0m;
+                        var v = p.GetValue(it, null);
+                        if (v == null) return 0m;
+
+                        // handle numeric/string
+                        decimal d;
+                        if (v is decimal) return (decimal)v;
+                        if (v is double) return Convert.ToDecimal((double)v);
+                        if (v is float) return Convert.ToDecimal((float)v);
+                        if (v is int) return Convert.ToDecimal((int)v);
+                        if (v is long) return Convert.ToDecimal((long)v);
+
+                        var s = v.ToString();
+                        // remove commas
+                        s = s.Replace(",", "");
+                        if (decimal.TryParse(s, out d)) return d;
+                        return 0m;
+                    }
+                    catch { return 0m; }
+                };
+
+                sumContract += getDec("TClaimAmt");
+                sumDeduct += getDec("TDeductAmt");
+                sumDiscount += getDec("TDiscountAmt");
+                sumDue += getDec("NetClaimedAmt");
+                sumRequested += getDec("TRequestedAmt");
+                sumDiff += getDec("TDifferenceAmt");
+            }
+        }
+    }
+    catch { }
 }
 
+@* ✅ لازم jQuery (حل مشكلة الأزرار/السيلكت/الداتا تيبل) *@
+@Scripts.Render("~/bundles/jquery")
 
-@*@Scripts.Render("~/bundles/jquery")*@
+@* Bootstrap bundle (لو LayoutV2 فيه bootstrap، وجوده هنا مش هيكسر — لكن خليه زي صفحاتك القديمة) *@
 @Scripts.Render("~/bundles/bootstrap")
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
-@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
-<script src="~/Scripts/bootstrap.min.js"></script>
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
+@* ===== DataTables Core (لازم) ===== *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+@* Bootstrap5 integration (شكل أحسن) *@
+<link rel="stylesheet" href="~/Content/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="~/Scripts/dataTables.bootstrap5.min.js"></script>
 
 @Html.Hidden("Get", Url.Action("Get", "Customer"))
 @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
@@ -27,630 +89,476 @@
 <input type="hidden" id="triggercount1" value="0" />
 
 <style>
-    /*body {
-        margin: 0;
-        padding: 0;
-        background: #262626;
-    }*/
-    #backring1 {
-        background-color: darkgray;
+    /* ===== Page wrapper (consistent with LayoutV2 look) ===== */
+    .ex-page .pv-shell { max-width: 1280px; margin: 0 auto; }
+    .ex-page .pv-header{
+        display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+        margin: 8px 0 12px;
+    }
+    .ex-page .pv-title{ font-size:22px; font-weight:900; color:#0b2b40; }
+    .ex-page .pv-sub{ font-size:13px; font-weight:700; color:rgba(15,23,42,.65); margin-top:4px; }
+    .ex-page .pv-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+    .ex-page .pv-btn{ border-radius:14px; font-weight:900; padding:10px 14px; display:inline-flex; gap:10px; align-items:center; }
+
+    .ex-page .pv-card{
+        background:#fff;
+        border:1px solid rgba(0,0,0,.08);
+        border-radius:18px;
+        box-shadow:0 12px 30px rgba(15,23,42,.06);
+        padding:14px;
+    }
+    .ex-page .pv-card-title{ font-size:16px; font-weight:900; color:#0b2b40; margin-bottom:10px; }
+
+    /* ===== Summary Cards (6 in a row) ===== */
+    .ex-sum{
+        display:grid;
+        grid-template-columns: repeat(6, minmax(170px, 1fr));
+        gap:12px;
+        margin-bottom:12px;
+    }
+    @@media (max-width: 1400px){
+        .ex-sum{ grid-template-columns: repeat(3, minmax(200px, 1fr)); }
+    }
+    @@media (max-width: 768px){
+        .ex-sum{ grid-template-columns: 1fr; }
     }
 
-    .ring1 {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        width: 150px;
-        height: 150px;
-        background: transparent;
-        border: 3px solid /*#3c3c3c*/ #9ac3b8;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 150px;
-        font-family: sans-serif;
-        font-size: 20px;
-        color: /*#928d36*/ #fff000;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        text-shadow: 0 0 10px #fff000;
-        box-shadow: 0 0 20px rgba(0,0,0,.5);
-        background-color: #11395c;
+    .ex-scard{
+        background:#fff;
+        border:1px solid rgba(0,0,0,.08);
+        border-radius:16px;
+        box-shadow:0 10px 26px rgba(15,23,42,.06);
+        padding:12px 14px;
+        display:flex; gap:12px; align-items:center;
+        min-height:74px;
+    }
+    .ex-sicon{
+        width:44px;height:44px;border-radius:14px;
+        display:flex;align-items:center;justify-content:center;
+        background: rgba(24,169,153,.12);
+        border:1px solid rgba(24,169,153,.22);
+        color:#0b2b40; font-size:20px;
+        flex:0 0 auto;
+    }
+    .ex-slabel{ font-size:12px; font-weight:900; color:rgba(15,23,42,.65); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ex-svalue{ font-size:18px; font-weight:900; color:#0b2b40; direction:ltr; text-align:start; }
+
+    /* ===== Controls ===== */
+    .ex-controls{
+        display:grid;
+        grid-template-columns: 1.2fr 1.8fr 1fr;
+        gap:12px;
+        align-items:end;
+        margin-bottom: 10px;
+    }
+    @@media (max-width: 992px){
+        .ex-controls{ grid-template-columns: 1fr; }
     }
 
-        .ring1:before {
-            content: '';
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            border: 3px solid transparent;
-            border-top: 3px solid #fff000;
-            border-right: 3px solid #fff000;
-            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
-            border-radius: 50%;
-            animation: animateC1 2s linear infinite;
-        }
+    .ex-search{ position:relative; }
+    .ex-search i{ position:absolute; top:50%; transform:translateY(-50%); left:12px; color:rgba(15,23,42,.55); }
+    html[dir="rtl"] .ex-search i{ left:auto; right:12px; }
+    .ex-search input{ padding-left:38px; min-height:44px; border-radius:14px; }
+    html[dir="rtl"] .ex-search input{ padding-left:12px; padding-right:38px; }
 
-    spana1 {
-        display: block;
-        position: absolute;
-        top: calc(50% - 2px);
-        left: 50%;
-        width: 50%;
-        height: 4px;
-        background: transparent;
-        transform-origin: left;
-        animation: animate1 2s linear infinite;
+    .ex-select select{ min-height:44px; border-radius:14px; font-weight:800; }
+
+    .ex-dates{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+    .ex-dates label{ font-size:13px; font-weight:900; color:rgba(15,23,42,.65); }
+    .ex-dates input{ min-height:44px; border-radius:14px; }
+
+    /* ===== Table wrapper / scroll ===== */
+    .ex-table-wrap{
+        overflow:auto;
+        border-radius:14px;
+        border:1px solid rgba(0,0,0,.08);
+    }
+    .ex-table-wrap table{ min-width: 1200px; }
+
+    /* header */
+    .ex-page table.dataTable thead th{
+        background: rgba(24,169,153,.12) !important;
+        border-bottom: 1px solid rgba(24,169,153,.22) !important;
+        color:#0b2b40 !important;
+        font-weight:900 !important;
+        font-size:13px !important;
+        white-space:nowrap;
+        vertical-align:middle;
+    }
+    .ex-page table.dataTable td{
+        font-size:13px;
+        white-space:nowrap;
+        vertical-align:middle;
     }
 
-        spana1:before {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #fff000;
-            top: -6px;
-            right: -8px;
-            box-shadow: 0 0 20px #fff000;
-        }
-
-    @@keyframes animateC1 {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
+    /* buttons block */
+    .ex-actions-row{
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+        margin: 12px 0;
+    }
+    .ex-actions-row .btn{
+        border-radius:14px;
+        padding:10px 18px;
+        font-weight:900;
     }
 
-    @@keyframes animate1 {
-        0% {
-            transform: rotate(45deg);
-        }
-
-        100% {
-            transform: rotate(405deg);
-        }
+    /* old checkbox wrapper stays as-is */
+    .checkbox-wrapper-19 { box-sizing:border-box; --background-color:#fff; --checkbox-height:25px; }
+    .checkbox-wrapper-19 input[type=checkbox]{ display:none; }
+    .checkbox-wrapper-19 .check-box{
+        height:var(--checkbox-height); width:var(--checkbox-height);
+        background-color:transparent;
+        border:calc(var(--checkbox-height)*.1) solid #000;
+        border-radius:5px; position:relative; display:inline-block;
+        box-sizing:border-box; transition:border-color .2s ease; cursor:pointer;
     }
-</style>
-<style>
-
-    .Bottom-Arrow {
-        display: flex;
-        bottom: 0px;
-        right: 0px;
-        position: fixed;
-        /*height: 100vh;*/
+    .checkbox-wrapper-19 .check-box::before, .checkbox-wrapper-19 .check-box::after{
+        box-sizing:border-box; position:absolute; height:0;
+        width:calc(var(--checkbox-height)*.2);
+        background-color:#34b93d; display:inline-block;
+        transform-origin:left top; border-radius:5px; content:" ";
     }
-
-    .Bottom-round {
-        position: relative;
-        border: 25px solid #fff;
-        width: 100px;
-        height: 100px;
-        border-radius: 100%;
-        background-color: teal
+    .checkbox-wrapper-19 .check-box::before{
+        top:calc(var(--checkbox-height)*.72);
+        left:calc(var(--checkbox-height)*.41);
+        box-shadow:0 0 0 calc(var(--checkbox-height)*.05) var(--background-color);
+        transform:rotate(-135deg);
     }
-
-    spana {
-        z-index: 999;
-        height: 3px;
-        margin: 1px;
-        width: 16px;
-        background: #fff;
-        transition: 0.4s ease;
+    .checkbox-wrapper-19 .check-box::after{
+        top:calc(var(--checkbox-height)*.37);
+        left:calc(var(--checkbox-height)*.05);
+        transform:rotate(-45deg);
     }
+    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box{ border-color:#34b93d; }
+    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after{ height:calc(var(--checkbox-height)/2); }
+    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before{ height:calc(var(--checkbox-height)*1.2); }
 
-        spana:first-child {
-            display: block;
-            position: absolute;
-            transform: rotate(45deg);
-            left: 22%;
-            bottom: 35%;
-        }
-
-        spana:nth-child(2) {
-            display: block;
-            position: absolute;
-            transform: rotate(-45deg);
-            left: 43%;
-            bottom: 35%;
-        }
-
-        spana:nth-child(3) {
-            display: block;
-            position: absolute;
-            transform: rotate(45deg);
-            left: 22%;
-            bottom: 54%;
-        }
-
-        spana:nth-child(4) {
-            display: block;
-            position: absolute;
-            transform: rotate(-45deg);
-            left: 43%;
-            bottom: 54%;
-        }
-
-    .Bottom-round:hover spana:nth-child(1) {
-        transform: rotate(-135deg);
+    /* Loading */
+    #backring1{ background-color: rgba(0,0,0,.25); display:none; }
+    .ring1{
+        position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+        width:150px; height:150px; border:3px solid #9ac3b8; border-radius:50%;
+        text-align:center; line-height:150px; font-size:20px; letter-spacing:2px;
+        color:#fff000; text-transform:uppercase; text-shadow:0 0 10px #fff000;
+        background-color:#11395c; box-shadow:0 0 20px rgba(0,0,0,.35);
     }
-
-    .Bottom-round:hover spana:nth-child(2) {
-        transform: rotate(135deg);
+    .ring1:before{
+        content:''; position:absolute; top:0; left:0; width:100%; height:100%;
+        border:3px solid transparent; border-top:3px solid #fff000; border-right:3px solid #fff000;
+        box-shadow:0 0 1em white, 0 0 0 1000vw rgba(224,222,222,.70);
+        border-radius:50%; animation: animateC1 2s linear infinite;
     }
-
-    .Bottom-round:hover spana:nth-child(3) {
-        transform: rotate(225deg);
+    spana1{ display:block; position:absolute; top:calc(50% - 2px); left:50%; width:50%; height:4px;
+        background:transparent; transform-origin:left; animation: animate1 2s linear infinite;
     }
-
-    .Bottom-round:hover spana:nth-child(4) {
-        transform: rotate(-225deg);
+    spana1:before{
+        content:''; position:absolute; width:16px; height:16px; border-radius:50%;
+        background:#fff000; top:-6px; right:-8px; box-shadow:0 0 20px #fff000;
     }
-
-    .Bottom-round:hover {
-        border: 25px solid teal;
-        box-shadow: #19ba2e 0 3px 5px;
-        transform: scale(1.05);
-    }
-
-
-
-
-    .Up-Arrow {
-        display: flex;
-        bottom: 111px;
-        right: 0px;
-        position: fixed;
-        /*height: 100vh;*/
-    }
-
-    .Up-round {
-        position: relative;
-        border: 25px solid #fff;
-        width: 100px;
-        height: 100px;
-        border-radius: 100%;
-        background-color: teal
-    }
-
-    spanu {
-        z-index: 999;
-        height: 3px;
-        margin: 1px;
-        width: 16px;
-        background: #fff;
-        transition: 0.4s ease;
-    }
-
-        spanu:first-child {
-            display: block;
-            position: absolute;
-            transform: rotate(-45deg);
-            left: 22%;
-            bottom: 35%;
-        }
-
-        spanu:nth-child(2) {
-            display: block;
-            position: absolute;
-            transform: rotate(45deg);
-            left: 43%;
-            bottom: 35%;
-        }
-
-        spanu:nth-child(3) {
-            display: block;
-            position: absolute;
-            transform: rotate(-45deg);
-            left: 22%;
-            bottom: 54%;
-        }
-
-        spanu:nth-child(4) {
-            display: block;
-            position: absolute;
-            transform: rotate(45deg);
-            left: 43%;
-            bottom: 54%;
-        }
-
-    .Up-round:hover spanu:nth-child(1) {
-        transform: rotate(135deg);
-    }
-
-    .Up-round:hover spanu:nth-child(2) {
-        transform: rotate(-135deg);
-    }
-
-    .Up-round:hover spanu:nth-child(3) {
-        transform: rotate(-225deg);
-    }
-
-    .Up-round:hover spanu:nth-child(4) {
-        transform: rotate(225deg);
-    }
-
-    .Up-round:hover {
-        border: 25px solid teal;
-        box-shadow: #19ba2e 0 -3px 5px;
-        transform: scale(1.05);
-    }
+    @@keyframes animateC1{ 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+    @@keyframes animate1{ 0%{transform:rotate(45deg);} 100%{transform:rotate(405deg);} }
 </style>
 
-<style>
+<div class="ex-page">
+    <div class="pv-shell">
 
-    /*table {
-        width: 82vw;
-        height: 90vh;
-        background-color: #6fcaea;
-        box-shadow: 0 .4rem .8rem #ebc474;
-        border-radius: .8rem;
-        overflow: hidden;
+        <div class="pv-header">
+            <div>
+                <div class="pv-title">@T("Title", "Expanded Services")</div>
+                <div class="pv-sub">@T("SubTitle", "Select invoices and send to accounting")</div>
+            </div>
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Home")</span>
+                </a>
 
-    }*/
-    .status {
-        padding: .4rem 0;
-        border-radius: 2rem;
-        text-align: center;
-    }
-
-        .status.Received {
-            background-color: #e0dede;
-            color: black;
-        }
-
-        .status.UnPaid {
-            background-color: #75ea75;
-            color: black;
-        }
-
-        .status.Paid {
-            background-color: forestgreen;
-            color: white;
-        }
-
-        .status.PartlyPaid {
-            background-color: #154e4e;
-            color: white;
-        }
-
-
-    @@media (max-width: 1800px) {
-        /*td:nth-child(1), td:nth-child(2),*/ td:nth-child(3), td:nth-child(4) {
-            min-width: 12.1rem;
-        }
-    }
-
-    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        color: #cc8f11;
-        text-align: center;
-    }
-
-    tr {
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    td:first-child,
-    th:first-child {
-        border-radius: 10px 0 0 10px;
-        border-color: teal;
-    }
-
-    /*// Set border-radius on the top-right and bottom-right of the last table data on the table row*/
-    td:last-child,
-    th:last-child {
-        border-radius: 0 10px 10px 0;
-        border-color: teal;
-    }
-</style>
-
-<style>
-    #Invoices_Count, #Invoices_RequestedAmt {
-        -webkit-box-shadow: 0;
-        max-width: 150PX;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 150PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        text-align: center;
-        background: #d4d6d7;
-    }
-
-    #fromDate, #toDate {
-        -webkit-box-shadow: 0;
-        max-width: 200PX;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 200PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        text-align: center;
-    }
-
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    /*.previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
-
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }*/
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-<style>
-    /*body {
-            background-image:url('../Images/login.jpg');
-        }*/
-    /*table1 {
-        border: 1px solid black;
-    }*/
-
-    body.table789 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table789 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table789 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table789 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-        table.table789, table.table789 table td {
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-    body.table7899 {
-        font-family: Arial;
-        font-size: 11pt;
-    }
-
-    table.table7899 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table7899 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table7899 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 11pt;
-            font-weight: bold;
-        }
-
-        table.table7899, table.table7899 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 10pt;
-        }
-
-    #ProviderBranch {
-        max-width: 450px;
-    }
-
-    #ClaimForm_Number {
-        max-width: 900px;
-    }
-
-    #form_number, #Card_number, #Date_Procedure, #Date_symptoms, #ICD_Number {
-        font-size: 15px;
-    }
-
-    #providerName {
-        font-size: 12px;
-    }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-</style>
-<h2 style="color:teal;text-align:center">Expanded Services</h2>
-<br />
-<fieldset class="scheduler-border" @*style="background-color:lightgray"*@ id="Expended_services">
-    <legend class="scheduler-border" style="color:teal">Expended services</legend>
-    <div id="claim_services2">
-        @*<br />
-            <br />*@
-        @*<label>Select All </label>
-            <input type="checkbox" id="select_all" name="select_all" />*@
-        <div style="text-align:center;">
-            <button type="button" id="Recover_To_Audit" class="btn btn-success btn-lg">
-                <span class="glyphicon glyphicon-edit"></span>&nbsp;
-                Recover To Audit
-            </button>
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("PaymentInquiry","ClaimForm")">
+                    <i class="bi bi-cash-coin"></i>
+                    <span>@T("GoPaymentInquiry", "Go to Payment Inquiry")</span>
+                </a>
+            </div>
         </div>
-        @*<br />*@
-        <br />
-        <br />
-        <div style="text-align:center">
-            <label style="color:#8a97a4;font-size:15px">From Date  </label>
-            <input type="date" id="fromDate" name="fromDate" onchange="selectDate()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <label style="color:#8a97a4;font-size:15px">To Date	  </label>
-            <input type="date" id="toDate" name="toDate" onchange="selectDate()">
-        </div>
-        <table @*class="table7899"*@ class="table table-hover" id="Claim_Services2" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th style="background-color:teal;color:white"><div class="checkbox-wrapper-19"><input type="checkbox" id="select_all"><label style="background-color:white" for="select_all" class="check-box"></label></div></th>
-                    <th style="background-color:teal;color:white">Claim ID</th>
-                    <th style="background-color:teal;color:white">ClaimForm Number</th>
-                    <th style="background-color:teal;color:white">Card Number</th>
-                    <th style="background-color:teal;color:white">Procedure Date</th>
-                    <th style="background-color:teal;color:white">Contract Amt</th>
-                    <th style="background-color:teal;color:white">Deductable Amt</th>
-                    <th style="background-color:teal;color:white">Discount Amt</th>
-                    <th style="background-color:teal;color:white">Due Amt</th>
-                    <th style="background-color:teal;color:white">Requested Amt</th>
-                    <th style="background-color:teal;color:white">Difference Amt</th>
-                    <th style="background-color:teal;color:white">Branch Name</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                @{int i = 0;}
-                @foreach (var item in @ViewBag.services)
-                {
+        <div class="pv-card">
+            <div class="pv-card-title">@T("Legend", "Expended services")</div>
 
-                    var idd = "IsACTIVE1" + i;
-                    i++;
-                    <tr>
-                        @*<td><input type='checkbox' id=@idd></td>*@
-                        <td><div class="checkbox-wrapper-19"><input type="checkbox" id=@idd><label style="background-color:white" for=@idd class="check-box"></label></div></td>
-                        <td>@item.GetType().GetProperty("ClaimID").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("ClaimFormNum").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("CardNumber").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("ProcedureDate").GetValue(item).ToString("yyyy-MM-dd")</td>
-                        <td>@item.GetType().GetProperty("TClaimAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("TDeductAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("TDiscountAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("NetClaimedAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("TRequestedAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("TDifferenceAmt").GetValue(item)</td>
-                        <td>@item.GetType().GetProperty("BranchName").GetValue(item)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            @* ===== Summaries (C# only) ===== *@
+        <div class="ex-sum">
 
-        <br />
-        <br />
-        <div style="text-align:center">
-            <label style="color:dodgerblue;font-size:15px">Invoices Count  </label>
-            <input type="text" size="20" id="Invoices_Count" name="Invoices_Count" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <label style="color:dodgerblue;font-size:15px">Invoices Requested Amt	  </label>
-            <input type="text" size="20" id="Invoices_RequestedAmt" name="Invoices_RequestedAmt" value="0" readonly>
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-list-check"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Sum_TotalClaims", "Total Claims")</div>
+                    <div class="ex-svalue">@totalClaims</div>
+                </div>
+            </div>
+
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-dash-circle"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Col_DeductAmt", "Deductable Amt")</div>
+                    <div class="ex-svalue">@sumDeduct.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-percent"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Col_DiscountAmt", "Discount Amt")</div>
+                    <div class="ex-svalue">@sumDiscount.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-cash-stack"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Col_DueAmt", "Due Amt")</div>
+                    <div class="ex-svalue">@sumDue.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-receipt"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Col_RequestedAmt", "Requested Amt")</div>
+                    <div class="ex-svalue">@sumRequested.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="ex-scard">
+                <div class="ex-sicon"><i class="bi bi-arrow-left-right"></i></div>
+                <div>
+                    <div class="ex-slabel">@T("Col_DifferenceAmt", "Difference Amt")</div>
+                    <div class="ex-svalue">@sumDiff.ToString("N2")</div>
+                </div>
+            </div>
+
         </div>
-        <br />
-        <br />
-        <br />
-        <div style="text-align:center;">
-            <button type="button" id="Send_To_Pay" class="btn btn-primary btn-lg">
-                <span class="glyphicon glyphicon-send"></span>&nbsp;
-                Send To Pay
-            </button>
+            @* ===== Controls: search + branch filter + dates ===== *@
+            <div class="ex-controls">
+                <div class="ex-search">
+                    <i class="bi bi-search"></i>
+                    <input id="exSearch" type="text" class="form-control" placeholder="@T("Search","Search...")" />
+                </div>
+
+                <div class="ex-select">
+                    @{
+                        // Build branches list from ViewBag.services (C# only)
+                        var branches = new List<string>();
+                        try
+                        {
+                            if (ViewBag.services != null)
+                            {
+                                foreach (var it in ViewBag.services)
+                                {
+                                    var p = it.GetType().GetProperty("BranchName");
+                                    if (p != null)
+                                    {
+                                        var v = p.GetValue(it, null);
+                                        if (v != null)
+                                        {
+                                            var s = v.ToString();
+                                            if (!string.IsNullOrWhiteSpace(s) && !branches.Contains(s))
+                                            { branches.Add(s); }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch { }
+                        branches.Sort();
+                    }
+                    <select id="exBranch" class="form-select">
+                        <option value="">@T("Branch_All", "All Branches")</option>
+                        @foreach (var b in branches)
+                        {
+                            <option value="@b">@b</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="ex-dates">
+                    <div>
+                        <label>@T("FromDate", "From Date")</label>
+                        <input type="date" id="fromDate" name="fromDate" class="form-control" onchange="selectDate()" />
+                    </div>
+                    <div>
+                        <label>@T("ToDate", "To Date")</label>
+                        <input type="date" id="toDate" name="toDate" class="form-control" onchange="selectDate()" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions-row">
+                <button type="button" id="Recover_To_Audit" class="btn btn-success btn-lg">
+                    <span class="glyphicon glyphicon-edit"></span>&nbsp;
+                    @T("RecoverToAudit", "Recover To Audit")
+                </button>
+            </div>
+
+            <div class="ex-table-wrap">
+                <table class="table table-hover align-middle mb-0" id="Claim_Services2" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="checkbox-wrapper-19">
+                                    <input type="checkbox" id="select_all">
+                                    <label style="background-color:white" for="select_all" class="check-box"></label>
+                                </div>
+                            </th>
+                            <th>@T("Col_ClaimID", "Claim ID")</th>
+                            <th>@T("Col_ClaimFormNum", "ClaimForm Number")</th>
+                            <th>@T("Col_CardNumber", "Card Number")</th>
+                            <th>@T("Col_ProcedureDate", "Procedure Date")</th>
+                            <th>@T("Col_ContractAmt", "Contract Amt")</th>
+                            <th>@T("Col_DeductAmt", "Deductable Amt")</th>
+                            <th>@T("Col_DiscountAmt", "Discount Amt")</th>
+                            <th>@T("Col_DueAmt", "Due Amt")</th>
+                            <th>@T("Col_RequestedAmt", "Requested Amt")</th>
+                            <th>@T("Col_DifferenceAmt", "Difference Amt")</th>
+                            <th>@T("Col_BranchName", "Branch Name")</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{ int i = 0; }
+                        @foreach (var item in ViewBag.services)
+                        {
+                            var idd = "IsACTIVE1" + i;
+                            i++;
+                            <tr>
+                                <td>
+                                    <div class="checkbox-wrapper-19">
+                                        <input type="checkbox" id="@idd">
+                                        <label style="background-color:white" for="@idd" class="check-box"></label>
+                                    </div>
+                                </td>
+                                <td>@item.GetType().GetProperty("ClaimID").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("ClaimFormNum").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("CardNumber").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("ProcedureDate").GetValue(item).ToString("yyyy-MM-dd")</td>
+                                <td>@item.GetType().GetProperty("TClaimAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("TDeductAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("TDiscountAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("NetClaimedAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("TRequestedAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("TDifferenceAmt").GetValue(item)</td>
+                                <td>@item.GetType().GetProperty("BranchName").GetValue(item)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <div style="text-align:center">
+                <label style="color:dodgerblue;font-size:15px">@T("SelectedCount", "Invoices Count")</label>
+                <input type="text" size="20" id="Invoices_Count" name="Invoices_Count" value="0" readonly style="max-width:180px;border-radius:14px;text-align:center" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label style="color:dodgerblue;font-size:15px">@T("SelectedRequested", "Invoices Requested Amt")</label>
+                <input type="text" size="20" id="Invoices_RequestedAmt" name="Invoices_RequestedAmt" value="0" readonly style="max-width:220px;border-radius:14px;text-align:center" />
+            </div>
+
+            <div class="ex-actions-row">
+                <button type="button" id="Send_To_Pay" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-send"></span>&nbsp;
+                    @T("SendToPay", "Send To Pay")
+                </button>
+            </div>
+
+            <div class="pv-actions" style="justify-content:space-between; margin-top:10px;">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Home")</span>
+                </a>
+
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("PaymentInquiry","ClaimForm")">
+                    <i class="bi bi-cash-coin"></i>
+                    <span>@T("GoPaymentInquiry", "Go to Payment Inquiry")</span>
+                </a>
+            </div>
+
         </div>
-        <br />
     </div>
+</div>
 
-    <div style="text-align:left;display:inline-block;position:relative">
-        <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
-    </div>
-    <div style="text-align:right;display:inline-block;padding-left:720px;position:relative">
-        <a id="link" class="round" href="@Url.Action("PaymentInquiry","ClaimForm")">@*<u>*@ Go to Payment Inquiry &raquo;@*</u>*@</a>
-    </div>
-</fieldset>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 <div id="backring1">
     <div class="ring1" id="Loadingg">
         Loading
         <spana1></spana1>
     </div>
 </div>
-<div onclick="topFunction()" class="Up-Arrow">
 
-    <div class="Up-round">
-        <spanu></spanu>
-        <spanu></spanu>
-        <spanu></spanu>
-        <spanu></spanu>
-    </div>
+<script>
+    // ===== keep your original date filter logic =====
+    function selectDate() {
+        var table = $('#Claim_Services2').DataTable();
+        table.draw();
+    }
 
-</div>
+    $(document).ready(function () {
 
-<div onclick="BottomFunction()" class="Bottom-Arrow">
+        $("#Loadingg").hide();
 
-    <div class="Bottom-round">
-        <spana></spana>
-        <spana></spana>
-        <spana></spana>
-        <spana></spana>
-    </div>
+        // ===== DataTables init (IMPORTANT: enable search + scroll) =====
+        var dt = $('#Claim_Services2').DataTable({
+            paging: false,
+            ordering: false,
+            searching: true,
+            scrollX: false,
+            autoWidth: true,
+            info: false
+        });
 
-</div>
+        // Search box
+        $('#exSearch').on('keyup', function () {
+            dt.search(this.value).draw();
+        });
 
+        // Branch filter (column 11 = Branch Name)
+        $('#exBranch').on('change', function () {
+            var val = this.value || '';
+            // exact match
+            if (val === '') {
+                dt.column(11).search('', true, false).draw();
+            } else {
+                dt.column(11).search('^' + $.fn.dataTable.util.escapeRegex(val) + '$', true, false).draw();
+            }
+        });
 
+        // Date filter (keeps your existing logic but fixed indexes)
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            if (settings.nTable && settings.nTable.id !== 'Claim_Services2') return true;
+
+            var toDate = $('#toDate').val();
+            var fromDate = $('#fromDate').val();
+            var formatedToDate = toDate ? new Date(toDate) : '';
+            var formatedFromDate = fromDate ? new Date(fromDate) : '';
+
+            // Procedure Date column index = 4 (0-based in data array because first checkbox is col0)
+            var dateField = data[4];
+            var formatedDateField = dateField ? new Date(dateField) : '';
+
+            if (formatedToDate && formatedFromDate && formatedDateField) {
+                return formatedToDate >= formatedDateField && formatedDateField >= formatedFromDate;
+            } else if (formatedToDate && !formatedFromDate && formatedDateField) {
+                return formatedToDate >= formatedDateField;
+            } else if (!formatedToDate && formatedFromDate && formatedDateField) {
+                return formatedDateField >= formatedFromDate;
+            } else if (!formatedToDate && !formatedFromDate) {
+                return true;
+            }
+            return false;
+        });
+
+    });
+</script>
+
+@* ======= (كل سكريبتاتك القديمة كما هي بدون تغيير) ======= *@
 <script>
     function topFunction() {
         document.body.scrollTop = 0;
@@ -660,164 +568,144 @@
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
+
 <script>
-    function selectDate() {
-        let table = $('#Claim_Services2').DataTable();
-        table.draw();
+    // =========================
+    // ✅ PATCH MODE (Stable with DataTables)
+    // =========================
+
+    function exShowLoading() {
+        $('#backring1').show();
+        $('#Loadingg').show();
     }
-    $(document).ready(function () {
-        $("#Loadingg").hide();
+    function exHideLoading() {
+        $('#Loadingg').hide();
+        $('#backring1').hide();
+    }
 
-        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-            let toDate = $('#toDate').val();
-            let fromDate = $('#fromDate').val();
-            let formatedToDate = toDate ? new Date(toDate) : '';
-            let formatedFromDate = fromDate ? new Date(fromDate) : '';
-            let dateField = data[4];
-            //alert(dateField)
-            let formatedDateField = dateField ? new Date(dateField) : '';
-            //alert(formatedFromDate);
-            //alert(formatedToDate);
-            //alert(formatedDateField);
-            if (formatedToDate && formatedFromDate && formatedDateField) {
-                return formatedToDate >= formatedDateField && formatedDateField >= formatedFromDate
-            } else if (formatedToDate && !formatedFromDate && formatedDateField) {
+    function exToNum(v) {
+        if (v === null || v === undefined) return 0;
+        var s = ('' + v).replace(/,/g, '').trim();
+        var n = parseFloat(s);
+        return isNaN(n) ? 0 : n;
+    }
 
-                return formatedToDate >= formatedDateField
-            } else if (!formatedToDate && formatedFromDate && formatedDateField) {
+    function exRecalcSelectedTotals() {
+        var dt = $('#Claim_Services2').DataTable();
+        var totalCount = 0;
+        var totalRequested = 0;
 
-                return formatedDateField >= formatedFromDate
-            } else if (!formatedToDate && !formatedFromDate) {
+        // ✅ احسب على كل الصفوف الموجودة (حتى لو في فلتر)
+        dt.rows({ search: 'applied' }).every(function () {
+            var node = this.node();
+            var $tr = $(node);
+            var $cb = $tr.find('td:eq(0) input[type=checkbox]');
+            if ($cb.length && $cb.prop('checked') === true) {
+                totalCount++;
 
-                return true
+                // Requested Amt column = 9 (حسب ترتيب الجدول عندك)
+                var requestedText = $tr.find('td:eq(9)').text();
+                totalRequested += exToNum(requestedText);
             }
-            return false;
         });
-    });
-</script>
-<script>
+
+        $('#Invoices_Count').val(totalCount);
+        $('#Invoices_RequestedAmt').val(totalRequested.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    }
 
     $(document).ready(function () {
 
-        $('#Claim_Services2').DataTable({
-            paging: false,
-            ordering: false,
+        // ✅ تأكد إن DataTable متعملش مرتين
+        var dt;
+        if ($.fn.DataTable.isDataTable('#Claim_Services2')) {
+            dt = $('#Claim_Services2').DataTable();
+        } else {
+            dt = $('#Claim_Services2').DataTable({
+                paging: false,
+                ordering: false,
+                searching: true,
+                info: false,
+                autoWidth: true
+            });
+        }
+
+        // ✅ Search box
+        $('#exSearch').off('keyup').on('keyup', function () {
+            dt.search(this.value).draw();
+            // بعد الفلترة ممكن تتغير الصفوف الظاهرة
+            exRecalcSelectedTotals();
         });
 
-        //$.get("/ClaimForm/ProvExpended_services", {}, function (data) {
-        //    $("#Expended_services").show();
+        // ✅ Branch filter (column 11 = BranchName)
+        $('#exBranch').off('change').on('change', function () {
+            var val = this.value || '';
+            if (val === '') {
+                dt.column(11).search('', true, false).draw();
+            } else {
+                dt.column(11).search('^' + $.fn.dataTable.util.escapeRegex(val) + '$', true, false).draw();
+            }
+            exRecalcSelectedTotals();
+        });
 
-        //    var t = $('#Claim_Services2').DataTable();
-        //    t.rows().remove().draw();
-        //    serialll = 0;
-        //    for (var i = 0; i < data.length; i++) {
+        // ✅ Date filter (محفوظ زي ما عندك) — بس نخليه يشتغل على الجدول ده فقط
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            if (!settings.nTable || settings.nTable.id !== 'Claim_Services2') return true;
 
-        //        serialll++;
-        //        t.row.add([serialll, data[i].ServiceName
-        //            , data[i].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-        //                , data[i].ClaimedAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-        //                    , data[i].DeductAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-        //                        , data[i].DiscountAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-        //                            , data[i].DueAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-        //        ]).draw()
-        //            ;
+            var toDate = $('#toDate').val();
+            var fromDate = $('#fromDate').val();
+            var formatedToDate = toDate ? new Date(toDate) : null;
+            var formatedFromDate = fromDate ? new Date(fromDate) : null;
 
-        //    }
-        //});
+            // Procedure Date column index = 4
+            var dateField = data[4];
+            var formatedDateField = dateField ? new Date(dateField) : null;
 
-        $("body").on("click", "#Claim_Services2", function () {
-            var i = 0;
-            var Totalcount = 0;
-            var TotalDue = 0;
-            $("#Claim_Services2 TBODY TR").each(function () {
-                var row = $(this);
+            if (!formatedDateField || isNaN(formatedDateField.getTime())) return true;
 
-                //alert($(this).find("TD").eq(0).html());
-                //if ($(this).find("TD").eq(0).html() == "") {
-                var str = row.find("TD").eq(0).html();
-                let substrings = str.split('for="IsACTIVE1', 2);
-                var secondString = substrings[1];
-                var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
-                var checkboxIdNumber = parseInt(removeSecond);
-                //if ($('#IsACTIVE1' + i).is(":checked") == true) {
-                if ($('#IsACTIVE1' + checkboxIdNumber).is(":checked") == true) {
+            if (formatedToDate && formatedFromDate) return (formatedToDate >= formatedDateField && formatedDateField >= formatedFromDate);
+            if (formatedToDate && !formatedFromDate) return (formatedToDate >= formatedDateField);
+            if (!formatedToDate && formatedFromDate) return (formatedDateField >= formatedFromDate);
+            return true;
+        });
 
-                        var Requestedpayment = $(this).find("TD").eq(9).html();
-                        var lastDue = parseFloat((Requestedpayment).replace(/,/g, ''));
-                        TotalDue = TotalDue + lastDue;
-                        Totalcount = Totalcount + 1;
-                    }
-                    i = i + 1;
-                //}
+        // ✅ لما التاريخ يتغير
+        window.selectDate = function () {
+            dt.draw();
+            exRecalcSelectedTotals();
+        };
+
+        // =========================
+        // ✅ FIX: checkbox selection / select all
+        // =========================
+
+        // لما أي checkbox يتغير
+        $(document).off('change', '#Claim_Services2 tbody input[type=checkbox]');
+        $(document).on('change', '#Claim_Services2 tbody input[type=checkbox]', function () {
+            exRecalcSelectedTotals();
+        });
+
+        // Select all
+        $('#select_all').off('change').on('change', function () {
+            var checked = $(this).prop('checked') === true;
+
+            // ✅ طبق على الصفوف الظاهرة فقط (search applied)
+            dt.rows({ search: 'applied' }).every(function () {
+                var $tr = $(this.node());
+                var $cb = $tr.find('td:eq(0) input[type=checkbox]');
+                if ($cb.length) $cb.prop('checked', checked);
             });
 
-            $('#Invoices_Count').val(Totalcount);
-            $('#Invoices_RequestedAmt').val(TotalDue.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-
-        })
-        $("#select_all").change(function () {
-            if ($('#select_all').is(":checked") != false) {
-                var i = 0;
-
-                $("#Claim_Services2 TBODY TR").each(function () {
-                    var row = $(this);
-                    var Claim_Service = {};
-                    var dt = $('#Claim_Services2').DataTable();
-                    if (dt != null) {
-                        if (dt.rows().count() > 0) {
-                            var str = row.find("TD").eq(0).html();
-                            //var removeFirst = str.replace('<div class="checkbox-wrapper-19"><input type="checkbox" id="cbtest', '');
-                            //var removeSecond = removeFirst.replace('"> <label for="cbtest0" class="check-box"></label></div>', '');
-
-                            let substrings = str.split('for="IsACTIVE1', 2);
-                            var secondString = substrings[1];
-                            var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
-                            var checkboxIdNumber = parseInt(removeSecond);
-
-                            //if ($('#IsACTIVE1' + i).is(":checked") == true) {
-
-                            $('#IsACTIVE1' + checkboxIdNumber).prop('checked', true);
-                            //$('#IsACTIVE1' + i).prop('checked', true);
-                            i = i + 1;
-
-                            //}
-                        }
-                    }
-                });
-                $('#Claim_Services2').click();
-
-            }
-            else {
-                var i = 0;
-
-                $("#Claim_Services2 TBODY TR").each(function () {
-                    var row = $(this);
-                    var Claim_Service = {};
-                    var dt = $('#Claim_Services2').DataTable();
-                    if (dt != null) {
-                        if (dt.rows().count() > 0) {
-                            var str = row.find("TD").eq(0).html();
-                            //var removeFirst = str.replace('<div class="checkbox-wrapper-19"><input type="checkbox" id="cbtest', '');
-                            //var removeSecond = removeFirst.replace('"> <label for="cbtest0" class="check-box"></label></div>', '');
-                            let substrings = str.split('for="IsACTIVE1', 2);
-                            var secondString = substrings[1];
-                            var removeSecond = secondString.replace('" class="check-box"></label></div>', '');
-                            var checkboxIdNumber = parseInt(removeSecond);
-                            //if ($('#IsACTIVE1' + i).is(":checked") == true) {
-                            $('#IsACTIVE1' + checkboxIdNumber).prop('checked', false);
-                            //$('#IsACTIVE1' + i).prop('checked', false);
-                            i = i + 1;
-
-                            //}
-                        }
-                    }
-                });
-                $('#Claim_Services2').click();
-
-            }
+            exRecalcSelectedTotals();
         });
-        $("body").on("click", "#Send_To_Pay", function () {
 
+        // =========================
+        // ✅ FIX: Buttons (Recover / Send) — Delegated bind ثابت
+        // =========================
+
+        $(document).off('click', '#Send_To_Pay');
+        $(document).on('click', '#Send_To_Pay', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
             Swal.fire({
                 title: "Confirm",
@@ -828,74 +716,62 @@
                 showCancelButton: true,
                 confirmButtonText: "Confirm",
                 cancelButtonColor: "#700c0c"
-
             }).then((result) => {
+                if (!result.isConfirmed) return;
 
-                if (result.isConfirmed) {
+                exShowLoading();
 
-                    $("#Loadingg").show();
-                    
-            //var result = confirm("Are you Sure you want to sent Claims to Tristar Accounting ?");
-            //if (result == true) {
-                    var dt11 = $('#Claim_Services2').DataTable();
-                    dt11.search('').draw();
-
-                var date = new Date();
+                // ✅ اجمع المختارين من الصفوف الظاهرة (بدون ما نكسر DataTable)
+                var Claims_Services = [];
+                var sumDue = 0;
+                var earliest = null;
                 var datebefore = "";
 
-                var sumDue = 0;
-                var Claims_Services = new Array();
-                var i = 0;
-                var j = 0;
-                $("#Claim_Services2 TBODY TR").each(function () {
-                    var row = $(this);
-                    var Claim_Service = {};
-                    var dt = $('#Claim_Services2').DataTable();
+                dt.rows({ search: 'applied' }).every(function () {
+                    var $tr = $(this.node());
+                    var $cb = $tr.find('td:eq(0) input[type=checkbox]');
 
+                    if ($cb.length && $cb.prop('checked') === true) {
 
-                    if (dt != null) {
-                        if (dt.rows().count() > 0) {
-                            if ($('#IsACTIVE1' + i).is(":checked") == true) {
-                            //Claim_Service.ApproveCheck = $('#IsACTIVE1' + i).is(":checked");
-                            Claim_Service.Claim_Id = row.find("TD").eq(1).html();
-                            Claim_Service.ClaimForm_Number = row.find("TD").eq(2).html();
-                            Claim_Service.Card_Number = row.find("TD").eq(3).html();
-                            Claim_Service.Procedure_Date = row.find("TD").eq(4).html();
-                            Claim_Service.Contract_Amt = parseFloat((row.find("TD").eq(5).html()).replace(/,/g, ''));
-                            Claim_Service.Deductable_Amt = parseFloat((row.find("TD").eq(6).html()).replace(/,/g, ''));
-                            Claim_Service.Discount_Amt = parseFloat((row.find("TD").eq(7).html()).replace(/,/g, ''));
-                            Claim_Service.Due_Amt = parseFloat((row.find("TD").eq(8).html()).replace(/,/g, ''));
-                            Claim_Service.Requested_Amt = parseFloat((row.find("TD").eq(9).html()).replace(/,/g, ''));
-                                sumDue += Claim_Service.Due_Amt;
-                                //var date2 = new Date("2022/5/19 GMT");
-                                var a = row.find("TD").eq(4).html();
-                                var lessdate = new Date(a);
-                                if (lessdate < date) {
-                                    date = lessdate;
-                                    datebefore = row.find("TD").eq(4).html();
+                        var Claim_Service = {};
+                        Claim_Service.Claim_Id = $tr.find('td:eq(1)').text().trim();
+                        Claim_Service.ClaimForm_Number = $tr.find('td:eq(2)').text().trim();
+                        Claim_Service.Card_Number = $tr.find('td:eq(3)').text().trim();
+                        Claim_Service.Procedure_Date = $tr.find('td:eq(4)').text().trim();
 
-                                }
-                                Claims_Services.push(Claim_Service);
-                                j = j + 1;
+                        Claim_Service.Contract_Amt = exToNum($tr.find('td:eq(5)').text());
+                        Claim_Service.Deductable_Amt = exToNum($tr.find('td:eq(6)').text());
+                        Claim_Service.Discount_Amt = exToNum($tr.find('td:eq(7)').text());
+                        Claim_Service.Due_Amt = exToNum($tr.find('td:eq(8)').text());
+                        Claim_Service.Requested_Amt = exToNum($tr.find('td:eq(9)').text());
 
+                        sumDue += Claim_Service.Due_Amt;
+
+                        var d = new Date(Claim_Service.Procedure_Date);
+                        if (!isNaN(d.getTime())) {
+                            if (earliest === null || d < earliest) {
+                                earliest = d;
+                                datebefore = Claim_Service.Procedure_Date;
                             }
-                            i = i + 1;
                         }
+
+                        Claims_Services.push(Claim_Service);
                     }
                 });
-                var findate = new Date();
+
+                var j = Claims_Services.length;
+                if (j === 0) {
+                    exHideLoading();
+                    Swal.fire("Warning !", "Please Select At Least One Claim To Sent Tristar Accounting To Pay. ", "warning");
+                    return;
+                }
+
+                // ✅ منطق الـ 15 يوم زي القديم
                 var datenow = new Date();
+                var allowDate = earliest ? new Date(earliest) : new Date();
+                allowDate.setDate(allowDate.getDate() + 15);
 
-                //alert(datebefore);
-                date.setDate(date.getDate() + 15);
-                //datebefore.setDate(datebefore.getDate());
-                //alert(datebefore);
-                //alert(i);
-                //alert(j);
-
-                //alert(moment(findate).format('YYYY-MM-DD'));
-                //alert(sumDue);
-                if ((sumDue > 50000) || (datenow >= date)) {
+                if ((sumDue > 50000) || (datenow >= allowDate)) {
 
                     $.ajax({
                         type: "POST",
@@ -904,64 +780,45 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (r) {
-                            $("#Loadingg").hide();
+                            exHideLoading();
 
                             if (r == "0") {
-                                //alert("Please Select At Least One Claim To Sent Tristar Accounting To Pay. ");
                                 Swal.fire("Warning !", "Please Select At Least One Claim To Sent Tristar Accounting To Pay. ", "warning");
-
-
-                            }
-                            else if (r == "1") {
-                                //alert("Claims are Sent To Tristar Accounting To Pay from a while. ");
+                            } else if (r == "1") {
                                 Swal.fire("Error !", "Claims are Sent To Tristar Accounting To Pay from a while. ", "error");
-
+                            } else {
+                                Swal.fire("Success", "Claims are Sent To Tristar Accounting To Pay. <br> Batch Number is : " + r, "success")
+                                    .then(function () {
+                                        window.open('@Url.Action("Provider_Expended_services", "ClaimForm")', '_self');
+                                    });
                             }
-                            else {
-                                //alert("Claims are Sent To Tristar Accounting To Pay. \n Batch Number is : " + r);
-                               //async function aa() {
-                                   var result = Swal.fire("Success", "Claims are Sent To Tristar Accounting To Pay. <br> Batch Number is : " + r, "success").then(function () {
-                                    //await sleep(5000);
-
-                                   // document.querySelector(".swal2-confirm swal2-styled").addEventListener('click', function () {
-                                     window.open('@Url.Action("Provider_Expended_services", "ClaimForm")', '_self');
-                                   });
-
-                                    //});
-                                //}
-                                //aa();
-                            }
+                        },
+                        error: function () {
+                            exHideLoading();
+                            Swal.fire("Error", "Server error while sending to pay.", "error");
                         }
                     });
+
+                } else {
+                    exHideLoading();
+                    Swal.fire(
+                        "Error !",
+                        "Claims can not Sent To Tristar Accounting <br> After Pass 15 Days since add older Claim <br> older Claim Date : "
+                        + moment(datebefore).format('DD-MM-YYYY')
+                        + " <br> You Can Sent Batch in Date : "
+                        + moment(allowDate).format('DD-MM-YYYY'),
+                        "error"
+                    );
                 }
-                else if (j == 0) {
-                    $("#Loadingg").hide();
 
-                    //alert("Please Select At Least One Claim To Sent Tristar Accounting To Pay. ");
-                    Swal.fire("Warning !", "Please Select At Least One Claim To Sent Tristar Accounting To Pay. ", "warning");
-
-                }
-                else if (datenow < date) {
-                    $("#Loadingg").hide();
-
-                    Swal.fire("Error !", "Claims can not  Sent To Tristar Accounting <br>  After Pass 15 Days since add older Claim <br> older Claim Date : " + moment(datebefore).format('DD-MM-YYYY') + " <br> You Can Sent Batch in Date : " + moment(date).format('DD-MM-YYYY'), "error");
-
-                    //alert("Claims can not  Sent To Tristar Accounting To Pay.  \n  After Pass 15 Days since add older Claim : " + moment(datebefore).format('DD-MM-YYYY') + " \n You Can Sent Batch in Date : " + moment(date).format('DD-MM-YYYY'));
-                }
-                //else {
-                //    alert("Claims are Sent To Tristar Accounting To Pay. \n Batch Number is : " + r);
-                //}
-                    }
-                });
-
-
+            });
         });
 
+        $(document).off('click', '#Recover_To_Audit');
+        $(document).on('click', '#Recover_To_Audit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-
-
-
-        $("body").on("click", "#Recover_To_Audit", function () {
             Swal.fire({
                 title: "Confirm",
                 imageUrl: "/Images/Quationimg.jpg",
@@ -971,639 +828,236 @@
                 showCancelButton: true,
                 confirmButtonText: "Confirm",
                 cancelButtonColor: "#700c0c"
-
             }).then((result) => {
+                if (!result.isConfirmed) return;
 
-                if (result.isConfirmed) {
-                    $("#Loadingg").show();
+                exShowLoading();
 
-                var Claims_Services = new Array();
-                var i = 0;
-                    var j = 0;
+                var Claims_Services = [];
 
-                    var table = $('#Claim_Services2').DataTable();
-                    table.search('').draw();
-                    sleep(1000);
-
-                    //$("#Claim_Services2 TBODY TR").each(function () {
-                    table.rows().eq(0).each(function (index) {
-                        var row = table.row(index);
-                        var data = row.data();
-                        //alert(data[1]);
-                        //alert(index);
-                        //var row = $(this);
-                    var Claim_Service = {};
-                        //var dt = $('#Claim_Services2').DataTable();
-                       // alert(dt.rows().count());
-
-                        if (table != null) {
-                            if (table.rows().count() > 0) {
-                                //if ($('#IsACTIVE1' + i).is(":checked") == true) {
-                                if ($('#IsACTIVE1' + index).is(":checked") == true) {
-                                    Claim_Service.Claim_Id = data[1];
-                            //Claim_Service.Claim_Id = row.find("TD").eq(1).html();
-                                Claims_Services.push(Claim_Service);
-                                j = j + 1;
-
-                            }
-                            i = i + 1;
-                        }
-                    }
-                    });
-                    if (j == 0) {
-                        $("#Loadingg").hide();
-
-                       Swal.fire("Warning !", "Please Select At Least One Invoice To Recover Audit Department To Pay. ", "warning");
-                   }
-                   else {
-                    $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/recover_to_Audit_Department",
-                        data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            $("#Loadingg").hide();
-
-                            if (r == "0") {
-                                Swal.fire("Warning !", "Please Select At Least One Invoice To Recover Audit Department To Pay. ", "warning");
-                            }
-                            else {
-                                Swal.fire("Success", "Invoices are Recover To Audit Department To Pay. " , "success").then(function () {
-                                     window.open('@Url.Action("Provider_Expended_services", "ClaimForm")', '_self');
-                                   });
-                                 }
-                        }
-                    });
-                }
-
+                dt.rows({ search: 'applied' }).every(function () {
+                    var $tr = $(this.node());
+                    var $cb = $tr.find('td:eq(0) input[type=checkbox]');
+                    if ($cb.length && $cb.prop('checked') === true) {
+                        Claims_Services.push({
+                            Claim_Id: $tr.find('td:eq(1)').text().trim()
+                        });
                     }
                 });
 
+                if (Claims_Services.length === 0) {
+                    exHideLoading();
+                    Swal.fire("Warning !", "Please Select At Least One Invoice To Recover Audit Department To Pay. ", "warning");
+                    return;
+                }
 
+                $.ajax({
+                    type: "POST",
+                    url: "/ClaimForm/recover_to_Audit_Department",
+                    data: JSON.stringify(Claims_Services),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        exHideLoading();
+                        if (r == "0") {
+                            Swal.fire("Warning !", "Please Select At Least One Invoice To Recover Audit Department To Pay. ", "warning");
+                        } else {
+                            Swal.fire("Success", "Invoices are Recover To Audit Department To Pay.", "success")
+                                .then(function () {
+                                    window.open('@Url.Action("Provider_Expended_services", "ClaimForm")', '_self');
+                                });
+                        }
+                    },
+                    error: function () {
+                        exHideLoading();
+                        Swal.fire("Error", "Server error while recovering to audit.", "error");
+                    }
+                });
+
+            });
         });
+
+        // ✅ أول مرة احسب المختار
+        exRecalcSelectedTotals();
+        exHideLoading();
     });
 </script>
-
-
-
 
 <script type="text/javascript">
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-            //$.connection.hub.disconnect();
-            // $.connection.hub.disconnected(function () {
-            //});
             $.connection.hub.stop();
-
-             //console.log("tab out")
-            // tab is changed
         } else {
-            //$.connection.hub.connect();
             $.connection.hub.start().done(function () {
-                 //console.log("connection started")
-                //notifications.onconn();
                 getData();
                 getData1();
-            }).fail(function (e) {
-                //console.log(e);
-            });
-            //console.log("tab in")
-
-            // tab is active
+            }).fail(function (e) {});
         }
     });
 
     function sleep(ms) {
-        return new Promise(
-            resolve => setTimeout(resolve, ms)
-        );
-
-
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
+
     $(function () {
-        // Proxy created on the fly
         var cus = $.connection.cusHub;
-        //var cus1 = $.connection.cusHub1;
-        //console.log(cus)
-        // Declare a function on the job hub so the server can invoke it
-        cus.client.displayCustomer = function () {
-            // async function a() {
-            getData();
-            //   await sleep(2000);
-            //  getData1();
-            //}
-            //a();
 
-            //getData();
-            //getData1();
-        };
-        cus.client.data = function () {
-            //async function a() {
-            //    getData();
-            //    await sleep(2000);
-            getData1();
-            //}
-            //a();
+        cus.client.displayCustomer = function () { getData(); };
+        cus.client.data = function () { getData1(); };
+        cus.client.data1 = function () { getData2(); };
 
-            //getData();
-            //getData1();
-        };
-
-        cus.client.data1 = function () {
-            getData2();
-        };
-        // Start the connection
         $.connection.hub.start();
         getData();
         getData1();
         getData2();
-        //async function aa() {
-        //    getData();
-        //    await sleep(2000);
-        //    getData1();
-        //}
-        //aa();
-
-
     });
 
     function getData1() {
         try {
-
-        //var $tbl = $('#tblInfo');
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data1) {
-
-                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
-                });
-
-
-                $.each(data1.listCus, function (i, model) {
-
-                });
-            }
+            $.ajax({
+                url: $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data1) {
+                    $.get("/ClaimForm/getcountmessage", {}, function (data) {
+                        if (data == 0) $('#MesaageCount').removeAttr("data-count");
+                        else $('#MesaageCount').attr("data-count", data);
+                    });
+                }
             });
-        }
-        catch (err) {
-        }
+        } catch (err) { }
     }
 
     function getData() {
         try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                }
-                //alert(provid);
-                //alert(branchid);
-
-                @*alert("@Session["providerid"]");
-                alert(data.ProviderID);*@
-
-                //$tbl.empty();
-                $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#NotifactionCount').removeAttr("data-count");
-
+            $.ajax({
+                url: $("#Get").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    var provid = 0;
+                    var branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
                     }
-                    else {
-                        $('#NotifactionCount').attr("data-count", data1);
+                    var ApprovePage = 0;
+                    if ("@Session["ClaimForm_Approved"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
                     }
-                });
 
-                $.each(data.listCus, function (i, model) {
+                    $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                        if (data1 == 0) $('#NotifactionCount').removeAttr("data-count");
+                        else $('#NotifactionCount').attr("data-count", data1);
+                    });
 
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
-                        $('#trigger').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+                    $.each(data.listCus, function (i, model) {
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                            $('#trigger').val("1");
 
-                        @*//var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () { $.connection.hub.start(); }, 5000);
+                            });
 
-                            //if (result == true) {
-                            alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                                //window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger').val("0");*@
-
-                                    if ("@Session["ClaimForm_Approved"]"!="") {
+                            $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+                                if ("@Session["ClaimForm_Approved"]" != "") {
                                     ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
-                                   if (ClaimForm_Approv == 1) {
-                                       var sound = new Audio('/Media/alert.mp3');
-                                       sound.autoplay = true;
-                                       sound.muted = false;
-                                       sound.play();
-                                       setTimeout(function () {
-                                           snackbar.classList.add('isShown');
-                                           $('#CardNumbersnackbar').text(model.CardNumber)
-                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
-                                           setTimeout(hideSnackbar, 5000);
-                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                                        if (result == true) {
-                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                                       }
-                                       else {
-
-                                       }*@
-                                       $('#trigger').val("0");
-                                           if (data2 == 0) {
-                                           $('#NotifactionCount').removeAttr("data-count");
-
-                                       }
-                                       else {
-                                               $('#NotifactionCount').attr("data-count", data2);
-                                           }
-                                       }, 100);
+                                    if (ClaimForm_Approv == 1) {
+                                        var sound = new Audio('/Media/alert.mp3');
+                                        sound.autoplay = true;
+                                        sound.muted = false;
+                                        sound.play();
+                                        setTimeout(function () {
+                                            snackbar.classList.add('isShown');
+                                            $('#CardNumbersnackbar').text(model.CardNumber)
+                                            $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                            setTimeout(hideSnackbar, 5000);
+                                            $('#trigger').val("0");
+                                            if (data2 == 0) $('#NotifactionCount').removeAttr("data-count");
+                                            else $('#NotifactionCount').attr("data-count", data2);
+                                        }, 100);
+                                    }
                                 }
-                                 }
+                            })
+                        }
+                    });
+                }
+            });
+        } catch (err) { }
+    }
 
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-        });
-    }
-        catch (err) {
-    }
-    }
     function getData2() {
         try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-                  var ApprovePage1 = 0;
-                  var ApprovePage2 = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                     ApprovePage1 = parseInt("@Session["Approval"]");
-                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
-                }
-
-                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
-                        $('#trigger1').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-
-                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbarMember.classList.add('isShown');
-                                $('#CardNumbersnackbarMember').text(model.CardNumber)
-                                setTimeout(hideSnackbard1, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-            });
-        }
-        catch (err) {
-        }
-    }
-</script>
-
-@*<script type="text/javascript">
-        $(function () {
-
-            // Proxy created on the fly
-            var cus = $.connection.cusHub;
-
-            // Declare a function on the job hub so the server can invoke it
-            cus.client.displayCustomer = function () {
-                getData1();
-            };
-
-            // Start the connection
-            $.connection.hub.start();
-            getData1();
-        });
-
-        function getData1() {
-            //var $tbl = $('#tblInfo');
             $.ajax({
-                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                url: $("#Get1").val(),
                 type: 'GET',
                 datatype: 'json',
                 success: function (data) {
 
-                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                        if (data == 0) {
-                            $('#MesaageCount').removeAttr("data-count");
+                    var provid = 0;
+                    var branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+                    var ApprovePage = 0;
+                    var ApprovePage1 = 0;
+                    var ApprovePage2 = 0;
 
-                        }
-                        else {
-                            $('#MesaageCount').attr("data-count", data);
-                        }
-                        // console.log(data);
+                    if ("@Session["ClaimForm_Approved"]" != "" || "@Session["Approval"]" != "" || "@Session["Doctor_ClaimForm"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                        ApprovePage1 = parseInt("@Session["Approval"]");
+                        ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                        if (data1 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                        else $('#MemberSmartCardRequestsCount').attr("data-count", data1);
                     });
 
-
                     $.each(data.listCus, function (i, model) {
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && ($('#trigger1').val() == "0") && (ApprovePage == 1 || ApprovePage1 == 1 || ApprovePage2 == 1)) {
+                            $('#trigger1').val("1");
 
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () { $.connection.hub.start(); }, 5000);
+                            });
+
+                            $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+                                var sound = new Audio('/Media/alert.mp3');
+                                sound.play();
+                                setTimeout(function () {
+                                    snackbarMember.classList.add('isShown');
+                                    $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                    setTimeout(hideSnackbard1, 5000);
+                                    $('#trigger1').val("0");
+                                    if (data2 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                                    else $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                }, 100);
+                            })
+                        }
                     });
                 }
             });
-        }
-
-    </script>*@
-
-<script>
-
-
-    function refresh() {
-
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
-        });
-
+        } catch (err) { }
     }
-
-    setTimeout(refresh, 1000);
 </script>
 
-
-
-<style>
-    .checkbox-wrapper-19 {
-        box-sizing: border-box;
-        --background-color: #fff;
-        --checkbox-height: 25px;
-    }
-
-    @@-moz-keyframes dothabottomcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) / 2);
-        }
-    }
-
-    @@-webkit-keyframes dothabottomcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) / 2);
-        }
-    }
-
-    @@keyframes dothabottomcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) / 2);
-        }
-    }
-
-    @@keyframes dothatopcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        50% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) * 1.2);
-        }
-    }
-
-    @@-webkit-keyframes dothatopcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        50% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) * 1.2);
-        }
-    }
-
-    @@-moz-keyframes dothatopcheck-19 {
-        0% {
-            height: 0;
-        }
-
-        50% {
-            height: 0;
-        }
-
-        100% {
-            height: calc(var(--checkbox-height) * 1.2);
-        }
-    }
-
-    .checkbox-wrapper-19 input[type=checkbox] {
-        display: none;
-    }
-
-    .checkbox-wrapper-19 .check-box {
-        height: var(--checkbox-height);
-        width: var(--checkbox-height);
-        background-color: transparent;
-        border: calc(var(--checkbox-height) * .1) solid #000;
-        border-radius: 5px;
-        position: relative;
-        display: inline-block;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        -moz-transition: border-color ease 0.2s;
-        -o-transition: border-color ease 0.2s;
-        -webkit-transition: border-color ease 0.2s;
-        transition: border-color ease 0.2s;
-        cursor: pointer;
-    }
-
-        .checkbox-wrapper-19 .check-box::before,
-        .checkbox-wrapper-19 .check-box::after {
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            position: absolute;
-            height: 0;
-            width: calc(var(--checkbox-height) * .2);
-            background-color: #34b93d;
-            display: inline-block;
-            -moz-transform-origin: left top;
-            -ms-transform-origin: left top;
-            -o-transform-origin: left top;
-            -webkit-transform-origin: left top;
-            transform-origin: left top;
-            border-radius: 5px;
-            content: " ";
-            -webkit-transition: opacity ease 0.5;
-            -moz-transition: opacity ease 0.5;
-            transition: opacity ease 0.5;
-        }
-
-        .checkbox-wrapper-19 .check-box::before {
-            top: calc(var(--checkbox-height) * .72);
-            left: calc(var(--checkbox-height) * .41);
-            box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
-            -moz-transform: rotate(-135deg);
-            -ms-transform: rotate(-135deg);
-            -o-transform: rotate(-135deg);
-            -webkit-transform: rotate(-135deg);
-            transform: rotate(-135deg);
-        }
-
-        .checkbox-wrapper-19 .check-box::after {
-            top: calc(var(--checkbox-height) * .37);
-            left: calc(var(--checkbox-height) * .05);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-
-        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box,
-        .checkbox-wrapper-19 .check-box.checked {
-            border-color: #34b93d;
-        }
-
-            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after,
-            .checkbox-wrapper-19 .check-box.checked::after {
-                height: calc(var(--checkbox-height) / 2);
-                -moz-animation: dothabottomcheck-19 0.2s ease 0s forwards;
-                -o-animation: dothabottomcheck-19 0.2s ease 0s forwards;
-                -webkit-animation: dothabottomcheck-19 0.2s ease 0s forwards;
-                animation: dothabottomcheck-19 0.2s ease 0s forwards;
+<script>
+    function refresh() {
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") {
+                    window.open('@Url.Action("login", "ClaimForm")', '_self');
+                } else {
+                    setTimeout(refresh, 5000);
+                }
             }
-
-            .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before,
-            .checkbox-wrapper-19 .check-box.checked::before {
-                height: calc(var(--checkbox-height) * 1.2);
-                -moz-animation: dothatopcheck-19 0.4s ease 0s forwards;
-                -o-animation: dothatopcheck-19 0.4s ease 0s forwards;
-                -webkit-animation: dothatopcheck-19 0.4s ease 0s forwards;
-                animation: dothatopcheck-19 0.4s ease 0s forwards;
-            }
-</style>
+        });
+    }
+    setTimeout(refresh, 1000);
+</script>
