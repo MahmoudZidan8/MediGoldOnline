@@ -298,13 +298,7 @@
                         success: function (data1) {
 
                             $.get("/ClaimForm/getcountmessage", {}, function (data) {
-                                if (data == 0) {
-                                    $('#MesaageCount').removeAttr("data-count");
-
-                                }
-                                else {
-                                    $('#MesaageCount').attr("data-count", data);
-                                }
+                                setBadgeCount('MesaageCount', data);
                             });
 
 

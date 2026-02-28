@@ -938,8 +938,7 @@
                 datatype: 'json',
                 success: function (data1) {
                     $.get("/ClaimForm/getcountmessage", {}, function (data) {
-                        if (data == 0) $('#MesaageCount').removeAttr("data-count");
-                        else $('#MesaageCount').attr("data-count", data);
+                        setBadgeCount('MesaageCount', data);
                     });
                 }
             });
@@ -965,8 +964,7 @@
                     }
 
                     $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                        if (data1 == 0) $('#NotifactionCount').removeAttr("data-count");
-                        else $('#NotifactionCount').attr("data-count", data1);
+                        setBadgeCount('NotifactionCount', data1);
                     });
 
                     $.each(data.listCus, function (i, model) {
@@ -991,8 +989,7 @@
                                             $('#Claimformsnackbar').text(model.ClaimFormNum)
                                             setTimeout(hideSnackbar, 5000);
                                             $('#trigger').val("0");
-                                            if (data2 == 0) $('#NotifactionCount').removeAttr("data-count");
-                                            else $('#NotifactionCount').attr("data-count", data2);
+                                            setBadgeCount('NotifactionCount', data2);
                                         }, 100);
                                     }
                                 }
@@ -1028,8 +1025,7 @@
                     }
 
                     $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                        if (data1 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-                        else $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+                        setBadgeCount('MemberSmartCardRequestsCount', data1);
                     });
 
                     $.each(data.listCus, function (i, model) {
@@ -1048,8 +1044,7 @@
                                     $('#CardNumbersnackbarMember').text(model.CardNumber)
                                     setTimeout(hideSnackbard1, 5000);
                                     $('#trigger1').val("0");
-                                    if (data2 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-                                    else $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                                    setBadgeCount('MemberSmartCardRequestsCount', data2);
                                 }, 100);
                             })
                         }

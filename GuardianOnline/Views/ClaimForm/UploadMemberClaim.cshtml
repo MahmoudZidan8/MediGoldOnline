@@ -337,14 +337,7 @@
             success: function (data1) {
 
                 $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
+                    setBadgeCount('MesaageCount', data);
                 });
 
 
@@ -386,13 +379,7 @@
 
                 //$tbl.empty();
                 $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#NotifactionCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#NotifactionCount').attr("data-count", data1);
-                    }
+                    setBadgeCount('NotifactionCount', data1);
                 });
 
                 $.each(data.listCus, function (i, model) {
@@ -436,13 +423,7 @@
 
                                        }*@
                                        $('#trigger').val("0");
-                                           if (data2 == 0) {
-                                           $('#NotifactionCount').removeAttr("data-count");
-
-                                       }
-                                       else {
-                                               $('#NotifactionCount').attr("data-count", data2);
-                                           }
+                                           setBadgeCount('NotifactionCount', data2);
                                        }, 100);
                                 }
                                  }
@@ -492,13 +473,7 @@
                 }
 
                 $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
+                    setBadgeCount('MemberSmartCardRequestsCount', data1);
                 });
                 $.each(data.listCus, function (i, model) {
 
@@ -530,13 +505,7 @@
 
                         //}
                             $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
+                                setBadgeCount('MemberSmartCardRequestsCount', data2);
                             }, 100);
 
                         })

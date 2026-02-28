@@ -958,13 +958,7 @@
                         $("#button_Close_div").hide();
 
                         $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            if (data == 0) {
-                                $('#NotifactionCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                $('#NotifactionCount').attr("data-count", data);
-                            }
+                            setBadgeCount('NotifactionCount', data);
                         });
                     }
                     else if (data[0] == "bbbb") {
@@ -1006,13 +1000,7 @@
                         $("#button_Close_div").hide();
 
                         $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            if (data == 0) {
-                                $('#NotifactionCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                $('#NotifactionCount').attr("data-count", data);
-                            }
+                            setBadgeCount('NotifactionCount', data);
                         });
                     }
                     else {
@@ -1055,13 +1043,7 @@
                         Swal.fire("Success", "Claim Form is inserted.<br>Claim Form Amt is :  " + data[2] + "<br> Member Deductable Percentage is :  " + data[0] + " % <br> Member Deductable is :  " + data[1] + "     ", "success");
 
                         $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            if (data == 0) {
-                                $('#NotifactionCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                $('#NotifactionCount').attr("data-count", data);
-                            }
+                            setBadgeCount('NotifactionCount', data);
                         });
                          var ClaimID = data[4];
                         window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
@@ -1144,13 +1126,7 @@
                             $("#button_Close_div").hide();
 
                             $.get("/ClaimForm/getcountallert", {}, function (data) {
-                                if (data == 0) {
-                                    $('#NotifactionCount').removeAttr("data-count");
-
-                                }
-                                else {
-                                    $('#NotifactionCount').attr("data-count", data);
-                                }
+                                setBadgeCount('NotifactionCount', data);
                             });
 
 
@@ -1235,13 +1211,7 @@
                     $("#button_Close_div").hide();
 
                     $.get("/ClaimForm/getcountallert", {}, function (data) {
-                        if (data == 0) {
-                            $('#NotifactionCount').removeAttr("data-count");
-
-                        }
-                        else {
-                            $('#NotifactionCount').attr("data-count", data);
-                        }
+                        setBadgeCount('NotifactionCount', data);
                     });
 
 
@@ -1368,14 +1338,7 @@
             success: function (data1) {
 
                 $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
+                    setBadgeCount('MesaageCount', data);
                 });
 
 
@@ -1417,13 +1380,7 @@
 
                 //$tbl.empty();
                 $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#NotifactionCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#NotifactionCount').attr("data-count", data1);
-                    }
+                    setBadgeCount('NotifactionCount', data1);
                 });
                 $.each(data.listCus, function (i, model) {
 
@@ -1477,13 +1434,7 @@
 
                         //}
                             $('#trigger').val("0");
-                                if (data2 == 0) {
-                                $('#NotifactionCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#NotifactionCount').attr("data-count", data2);
-                                }
+                                setBadgeCount('NotifactionCount', data2);
                             }, 100);
 
                         })
@@ -1532,13 +1483,7 @@
                 }
 
                 $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
+                    setBadgeCount('MemberSmartCardRequestsCount', data1);
                 });
                 $.each(data.listCus, function (i, model) {
 
@@ -1570,13 +1515,7 @@
 
                         //}
                             $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                            }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
+                                setBadgeCount('MemberSmartCardRequestsCount', data2);
                             }, 100);
 
                         })
