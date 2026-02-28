@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>موافقات الأمراض المزمنة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>راجع الموافقات المزمنة، عدّل السعر المطلوب، ثم اعتمد</value></data>
+
+  <data name="CardTitle" xml:space="preserve"><value>محتوى موافقات الأمراض المزمنة</value></data>
+
+  <data name="FromDate" xml:space="preserve"><value>من تاريخ</value></data>
+  <data name="ToDate" xml:space="preserve"><value>إلى تاريخ</value></data>
+
+  <data name="InvoicesCount" xml:space="preserve"><value>عدد الفواتير</value></data>
+  <data name="InvoicesDeductAmt" xml:space="preserve"><value>إجمالي مبلغ التحمل</value></data>
+
+  <data name="Col_ClaimID" xml:space="preserve"><value>رقم المطالبة</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>رقم نموذج المطالبة</value></data>
+  <data name="Col_CustomerName" xml:space="preserve"><value>اسم العميل</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="Col_ContractAmt" xml:space="preserve"><value>مبلغ التعاقد</value></data>
+  <data name="Col_RequestedAmt" xml:space="preserve"><value>المبلغ المطلوب</value></data>
+  <data name="Col_DeductPerc" xml:space="preserve"><value>نسبة التحمل</value></data>
+  <data name="Col_DeductAmt" xml:space="preserve"><value>مبلغ التحمل</value></data>
+
+  <data name="AcceptChronic" xml:space="preserve"><value>اعتماد الموافقات المزمنة</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>الرجوع للرئيسية</value></data>
+  <data name="GoPrintCancel" xml:space="preserve"><value>الذهاب إلى طباعة/إلغاء الموافقات</value></data>
+
+  <data name="Child_ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="Child_ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Child_UnitPrice" xml:space="preserve"><value>سعر الوحدة</value></data>
+  <data name="Child_ServiceAmt" xml:space="preserve"><value>إجمالي الخدمة</value></data>
+  <data name="Child_RequestedPrice" xml:space="preserve"><value>السعر المطلوب</value></data>
+  <data name="Child_RequestedAmt" xml:space="preserve"><value>المبلغ المطلوب</value></data>
+  <data name="Child_DeductPerc" xml:space="preserve"><value>نسبة التحمل</value></data>
+  <data name="Child_DeductAmt" xml:space="preserve"><value>مبلغ التحمل</value></data>
+  <data name="Child_ServiceNote" xml:space="preserve"><value>ملاحظة</value></data>
+  <data name="Child_Edit" xml:space="preserve"><value>تعديل</value></data>
+
+  <data name="Save" xml:space="preserve"><value>حفظ</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="Warning" xml:space="preserve"><value>تنبيه</value></data>
+  <data name="Error" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Success" xml:space="preserve"><value>تم بنجاح</value></data>
+
+  <data name="Q_Accept" xml:space="preserve"><value>هل أنت متأكد أنك تريد اعتماد الموافقات المزمنة المحددة؟</value></data>
+  <data name="Msg_SelectOne" xml:space="preserve"><value>من فضلك اختر فاتورة واحدة على الأقل.</value></data>
+  <data name="Msg_Accepted" xml:space="preserve"><value>تم اعتماد الفواتير للمرض المزمن.</value></data>
+  <data name="Msg_ServerError" xml:space="preserve"><value>حدث خطأ بالسيرفر أثناء الاعتماد.</value></data>
+  <data name="Msg_LoadFailed" xml:space="preserve"><value>فشل تحميل قائمة الموافقات.</value></data>
+  <data name="Msg_InvalidRequested" xml:space="preserve"><value>من فضلك اختر قيمة صحيحة مرة أخرى.</value></data>
+</root>
