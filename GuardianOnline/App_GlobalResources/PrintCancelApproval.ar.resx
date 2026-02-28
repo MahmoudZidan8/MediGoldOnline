@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>طباعة وإلغاء الفاتورة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>اختر نطاق تاريخ لعرض الفواتير ثم اطبع أو قم بالإلغاء</value></data>
+  <data name="CardTitle" xml:space="preserve"><value>بيانات الفاتورة</value></data>
+
+  <data name="SelectDateRange" xml:space="preserve"><value>اختر نطاق التاريخ</value></data>
+  <data name="Search" xml:space="preserve"><value>بحث</value></data>
+  <data name="PrintAll" xml:space="preserve"><value>طباعة كل الفواتير PDF</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>العودة للرئيسية</value></data>
+  <data name="GoMedicalServices" xml:space="preserve"><value>الذهاب للخدمات الطبية</value></data>
+  <data name="GoDoctorClaimForm" xml:space="preserve"><value>الذهاب لمطالبات الطبيب</value></data>
+
+  <data name="Col_Serial" xml:space="preserve"><value>مسلسل</value></data>
+  <data name="Col_InvoiceID" xml:space="preserve"><value>رقم الفاتورة</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>رقم نموذج المطالبة</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="Col_InvoiceAmt" xml:space="preserve"><value>مبلغ الفاتورة</value></data>
+  <data name="Col_InvoiceDeduct" xml:space="preserve"><value>تحمل الفاتورة</value></data>
+  <data name="Col_Show" xml:space="preserve"><value>عرض</value></data>
+  <data name="Col_Print" xml:space="preserve"><value>طباعة</value></data>
+  <data name="Col_Delete" xml:space="preserve"><value>حذف</value></data>
+
+  <data name="ModalTitle" xml:space="preserve"><value>خدمات الفاتورة</value></data>
+  <data name="ModalClose" xml:space="preserve"><value>إغلاق</value></data>
+
+  <data name="Svc_Serial" xml:space="preserve"><value>مسلسل</value></data>
+  <data name="Svc_Name" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="Svc_Price" xml:space="preserve"><value>سعر الخدمة</value></data>
+  <data name="Svc_Qnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Svc_Amt" xml:space="preserve"><value>مبلغ الخدمة</value></data>
+  <data name="Svc_Deduct" xml:space="preserve"><value>تحمل الخدمة</value></data>
+  <data name="Svc_Note" xml:space="preserve"><value>ملاحظة</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+
+  <data name="Msg_InvalidDateRange" xml:space="preserve"><value>من فضلك اختر نطاق تاريخ صحيح مرة أخرى.</value></data>
+  <data name="Msg_ConfirmPrintAll" xml:space="preserve"><value>هل أنت متأكد أنك تريد طباعة كل الفواتير PDF؟</value></data>
+  <data name="Msg_ConfirmPrintOne" xml:space="preserve"><value>هل أنت متأكد أنك تريد طباعة الفاتورة PDF؟</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>هل أنت متأكد أنك تريد حذف الفاتورة؟</value></data>
+
+  <data name="Msg_CancelReasonPlaceholder" xml:space="preserve"><value>اكتب سبب الإلغاء هنا...</value></data>
+  <data name="Msg_CancelReasonAria" xml:space="preserve"><value>اكتب سبب الإلغاء هنا</value></data>
+
+  <data name="Msg_DeletedOk" xml:space="preserve"><value>تم حذف الفاتورة بنجاح.</value></data>
+  <data name="Msg_DeleteError" xml:space="preserve"><value>يوجد خطأ في هذه المطالبة.</value></data>
+  <data name="Msg_CannotDeleteSent" xml:space="preserve"><value>لا يمكن حذف المطالبة لأنها تم إرسالها للمحاسبة للدفع.</value></data>
+  <data name="Msg_ReasonRequired" xml:space="preserve"><value>لا يمكن الإلغاء بدون إدخال سبب الإلغاء.</value></data>
+<data name="Sum_TotalInvoices" xml:space="preserve"><value>إجمالي الفواتير</value></data>
+<data name="Sum_TotalInvoiceAmt" xml:space="preserve"><value>إجمالي مبلغ الفواتير</value></data>
+<data name="Sum_TotalDeduct" xml:space="preserve"><value>إجمالي التحمل</value></data>
+
+<data name="SearchPlaceholder" xml:space="preserve"><value>بحث...</value></data>
+</root>

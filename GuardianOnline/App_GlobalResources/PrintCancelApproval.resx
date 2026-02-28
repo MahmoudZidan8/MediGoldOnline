@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>Print &amp; Cancel Invoice</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Select a date range to list invoices, then print or cancel</value></data>
+  <data name="CardTitle" xml:space="preserve"><value>Invoice Data</value></data>
+
+  <data name="SelectDateRange" xml:space="preserve"><value>Select Date Range</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="PrintAll" xml:space="preserve"><value>Print All Invoices Pdf</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>Back to Main Home</value></data>
+  <data name="GoMedicalServices" xml:space="preserve"><value>Go to Medical Services</value></data>
+  <data name="GoDoctorClaimForm" xml:space="preserve"><value>Go to Doctor ClaimForm</value></data>
+
+  <data name="Col_Serial" xml:space="preserve"><value>Serial</value></data>
+  <data name="Col_InvoiceID" xml:space="preserve"><value>Invoice ID</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>Procedure Date</value></data>
+  <data name="Col_InvoiceAmt" xml:space="preserve"><value>Invoice Amt</value></data>
+  <data name="Col_InvoiceDeduct" xml:space="preserve"><value>Invoice Deductable</value></data>
+  <data name="Col_Show" xml:space="preserve"><value>Show</value></data>
+  <data name="Col_Print" xml:space="preserve"><value>Print</value></data>
+  <data name="Col_Delete" xml:space="preserve"><value>Delete</value></data>
+
+  <data name="ModalTitle" xml:space="preserve"><value>Invoice Services</value></data>
+  <data name="ModalClose" xml:space="preserve"><value>Close</value></data>
+
+  <data name="Svc_Serial" xml:space="preserve"><value>Serial</value></data>
+  <data name="Svc_Name" xml:space="preserve"><value>Service Name</value></data>
+  <data name="Svc_Price" xml:space="preserve"><value>Service Price</value></data>
+  <data name="Svc_Qnt" xml:space="preserve"><value>Service Qnt</value></data>
+  <data name="Svc_Amt" xml:space="preserve"><value>Service Amt</value></data>
+  <data name="Svc_Deduct" xml:space="preserve"><value>Service Deductable</value></data>
+  <data name="Svc_Note" xml:space="preserve"><value>Service Note</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+
+  <data name="Msg_InvalidDateRange" xml:space="preserve"><value>Select a valid date range again.</value></data>
+  <data name="Msg_ConfirmPrintAll" xml:space="preserve"><value>Are you sure you want to print all invoices PDF?</value></data>
+  <data name="Msg_ConfirmPrintOne" xml:space="preserve"><value>Are you sure you want to print invoice PDF?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Are you sure you want to delete invoice?</value></data>
+
+  <data name="Msg_CancelReasonPlaceholder" xml:space="preserve"><value>Type your cancel reason here...</value></data>
+  <data name="Msg_CancelReasonAria" xml:space="preserve"><value>Type your cancel reason here</value></data>
+
+  <data name="Msg_DeletedOk" xml:space="preserve"><value>Invoice is deleted successfully.</value></data>
+  <data name="Msg_DeleteError" xml:space="preserve"><value>There is an error in this claim.</value></data>
+  <data name="Msg_CannotDeleteSent" xml:space="preserve"><value>Claim cannot be deleted because it was sent to Accounting to pay.</value></data>
+  <data name="Msg_ReasonRequired" xml:space="preserve"><value>You cannot cancel claim form without entering a cancel reason.</value></data>
+<data name="Sum_TotalInvoices" xml:space="preserve"><value>Total Invoices</value></data>
+<data name="Sum_TotalInvoiceAmt" xml:space="preserve"><value>Total Invoice Amt</value></data>
+<data name="Sum_TotalDeduct" xml:space="preserve"><value>Total Deductable</value></data>
+
+<data name="SearchPlaceholder" xml:space="preserve"><value>Search...</value></data>
+</root>

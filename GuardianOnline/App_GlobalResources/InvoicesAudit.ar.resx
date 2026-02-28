@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>مراجعة الفواتير</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>راجع الفواتير، عدّل المبلغ المطلوب، ثم أرسل للمحاسبة</value></data>
+  <data name="CardTitle" xml:space="preserve"><value>محتوى مراجعة الفواتير</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>العودة للرئيسية</value></data>
+  <data name="GoExpended" xml:space="preserve"><value>الذهاب للخدمات المصروفة</value></data>
+  <data name="SendToPay" xml:space="preserve"><value>إرسال للدفع</value></data>
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+
+  <data name="Sum_TotalInvoices" xml:space="preserve"><value>إجمالي الفواتير</value></data>
+  <data name="Sum_SelectedCount" xml:space="preserve"><value>عدد المحدد</value></data>
+  <data name="Sum_SelectedRequested" xml:space="preserve"><value>إجمالي المطلوب للمحدد</value></data>
+  <data name="Sum_SelectedDifference" xml:space="preserve"><value>إجمالي الفرق للمحدد</value></data>
+
+  <data name="Search" xml:space="preserve"><value>بحث...</value></data>
+  <data name="Branch_All" xml:space="preserve"><value>كل الفروع</value></data>
+  <data name="FromDate" xml:space="preserve"><value>من تاريخ</value></data>
+  <data name="ToDate" xml:space="preserve"><value>إلى تاريخ</value></data>
+
+  <data name="Col_ClaimID" xml:space="preserve"><value>رقم المطالبة</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>رقم نموذج المطالبة</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="Col_ContractAmt" xml:space="preserve"><value>مبلغ التعاقد</value></data>
+  <data name="Col_DeductAmt" xml:space="preserve"><value>مبلغ التحمل</value></data>
+  <data name="Col_DiscountAmt" xml:space="preserve"><value>مبلغ الخصم</value></data>
+  <data name="Col_DueAmt" xml:space="preserve"><value>المبلغ المستحق</value></data>
+  <data name="Col_RequestedAmt" xml:space="preserve"><value>المبلغ المطلوب</value></data>
+  <data name="Col_DifferenceAmt" xml:space="preserve"><value>الفرق</value></data>
+  <data name="Col_BranchName" xml:space="preserve"><value>اسم الفرع</value></data>
+
+  <data name="Child_ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="Child_ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Child_UnitAmt" xml:space="preserve"><value>سعر الوحدة</value></data>
+  <data name="Child_ServiceAmt" xml:space="preserve"><value>مبلغ الخدمة</value></data>
+  <data name="Child_DeductAmt" xml:space="preserve"><value>التحمل</value></data>
+  <data name="Child_DiscountAmt" xml:space="preserve"><value>الخصم</value></data>
+  <data name="Child_DueAmt" xml:space="preserve"><value>المستحق</value></data>
+  <data name="Child_RequestedAmt" xml:space="preserve"><value>المطلوب</value></data>
+  <data name="Child_DifferenceAmt" xml:space="preserve"><value>الفرق</value></data>
+  <data name="Child_ServiceNote" xml:space="preserve"><value>ملاحظة</value></data>
+  <data name="Child_Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="Child_Save" xml:space="preserve"><value>حفظ</value></data>
+
+  <data name="Msg_ConfirmSend" xml:space="preserve"><value>هل أنت متأكد أنك تريد إرسال الفواتير إلى قسم المحاسبة؟</value></data>
+  <data name="Msg_SelectAtLeastOne" xml:space="preserve"><value>من فضلك اختر فاتورة واحدة على الأقل.</value></data>
+  <data name="Msg_SuccessSent" xml:space="preserve"><value>تم إرسال الفواتير بنجاح.</value></data>
+  <data name="Msg_ServerErrorSend" xml:space="preserve"><value>حدث خطأ في السيرفر أثناء الإرسال للمحاسبة.</value></data>
+  <data name="Msg_LoadFailed" xml:space="preserve"><value>فشل تحميل قائمة الفواتير.</value></data>
+  <data name="Msg_InvalidRequested" xml:space="preserve"><value>من فضلك أدخل مبلغ مطلوب صحيح مرة أخرى.</value></data>
+</root>

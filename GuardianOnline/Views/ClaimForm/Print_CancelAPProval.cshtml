@@ -1,47 +1,294 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Print_CancelAPProval";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("PrintCancelApproval", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
 
+@* لازم jQuery قبل أي plugin *@
+@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
-@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
 
-<script src="~/Scripts/bootstrap.min.js"></script>
-@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
+@* ✅ DataTables Core (حل مشكلة DataTable is not a function) *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+@* (اختياري) Bootstrap 5 integration لو موجودة عندك *@
+<link rel="stylesheet" href="~/Content/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="~/Scripts/dataTables.bootstrap5.min.js"></script>
+
 <link rel="stylesheet" href="~/Content/select2.min.css">
 <script type="text/javascript" src="~/Scripts/select2.min.js"></script>
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
-
-<input type="hidden" id="trigger" value="0" />
-<input type="hidden" id="triggercount" value="0" />
-
-<input type="hidden" id="trigger1" value="0" />
-<input type="hidden" id="triggercount1" value="0" />
+<script src="~/Scripts/daterangepicker.js"></script>
+<link rel="stylesheet" href="~/Content/daterangepicker.css">
 
 @Html.Hidden("Get", Url.Action("Get", "Customer"))
 @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
 @Html.Hidden("Get1", Url.Action("Get1", "Customer"))
 
-
-<script src="~/Scripts/daterangepicker.js"></script>
-<link rel="stylesheet" href="~/Content/daterangepicker.css">
+<input type="hidden" id="trigger" value="0" />
+<input type="hidden" id="triggercount" value="0" />
+<input type="hidden" id="trigger1" value="0" />
+<input type="hidden" id="triggercount1" value="0" />
 
 <style>
-    /*body {
-        margin: 0;
-        padding: 0;
-        background: #262626;
-    }*/
+    /* ==== V2 consistent wrapper ==== */
+    .ex-page .pv-shell {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .ex-page .pv-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 8px 0 12px;
+    }
+
+    .ex-page .pv-title {
+        font-size: 22px;
+        font-weight: 900;
+        color: #0b2b40;
+    }
+
+    .ex-page .pv-sub {
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(15,23,42,.65);
+        margin-top: 4px;
+    }
+
+    .ex-page .pv-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .ex-page .pv-btn {
+        border-radius: 14px;
+        font-weight: 900;
+        padding: 10px 14px;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .ex-page .pv-card {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15,23,42,.06);
+        padding: 14px;
+    }
+
+    .ex-page .pv-card-title {
+        font-size: 16px;
+        font-weight: 900;
+        color: #0b2b40;
+        margin-bottom: 10px;
+    }
+
+    /* Summary Cards */
+    .ex-sum {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    @@media (max-width: 992px) {
+        .ex-sum {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .ex-scard {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 16px;
+        box-shadow: 0 10px 26px rgba(15,23,42,.06);
+        padding: 12px 14px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        min-height: 74px;
+    }
+
+    .ex-sicon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(24,169,153,.12);
+        border: 1px solid rgba(24,169,153,.22);
+        color: #0b2b40;
+        font-size: 20px;
+        flex: 0 0 auto;
+    }
+
+    .ex-slabel {
+        font-size: 12px;
+        font-weight: 900;
+        color: rgba(15,23,42,.65);
+    }
+
+    .ex-svalue {
+        font-size: 18px;
+        font-weight: 900;
+        color: #0b2b40;
+        direction: ltr;
+        text-align: start;
+    }
+
+    /* Controls */
+    .ex-controls {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        margin: 10px 0 12px;
+    }
+
+        .ex-controls label {
+            font-size: 13px;
+            font-weight: 900;
+            color: rgba(15,23,42,.65);
+        }
+
+    #daterange {
+        width: 320px;
+        min-height: 44px;
+        border-radius: 14px;
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+
+    #Search {
+        min-height: 44px;
+        border-radius: 14px;
+        font-weight: 900;
+        padding: 8px 18px;
+        white-space: nowrap;
+    }
+
+    .ex-search {
+        position: relative;
+        min-width: 260px;
+        flex: 1;
+    }
+
+        .ex-search i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 12px;
+            color: rgba(15,23,42,.55);
+        }
+
+    html[dir="rtl"] .ex-search i {
+        left: auto;
+        right: 12px;
+    }
+
+    .ex-search input {
+        min-height: 44px;
+        border-radius: 14px;
+        padding-left: 38px;
+    }
+
+    html[dir="rtl"] .ex-search input {
+        padding-left: 12px;
+        padding-right: 38px;
+    }
+
+    /* Table wrap */
+    .ex-table-wrap {
+        overflow: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,.08);
+    }
+
+        .ex-table-wrap table {
+            min-width: 1100px;
+        }
+
+    table.table7899 {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+        table.table7899 th {
+            background: rgba(24,169,153,.12);
+            color: #0b2b40;
+            font-weight: 900;
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        table.table7899 td {
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+    table.table78991 {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+        table.table78991 th {
+            background: rgba(24,169,153,.12);
+            color: #0b2b40;
+            font-weight: 900;
+            padding: 8px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        table.table78991 td {
+            padding: 8px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+    #PrintAll {
+        border-radius: 14px;
+        font-weight: 900;
+        min-height: 46px;
+        padding: 10px 18px;
+    }
+
+    /* Loading overlay */
     #backring1 {
-        background-color: darkgray;
+        background-color: rgba(0,0,0,.25);
+        display: none;
     }
 
     .ring1 {
@@ -51,32 +298,30 @@
         transform: translate(-50%,-50%);
         width: 150px;
         height: 150px;
-        background: transparent;
-        border: 3px solid /*#3c3c3c*/ #9ac3b8;
+        border: 3px solid #9ac3b8;
         border-radius: 50%;
         text-align: center;
         line-height: 150px;
-        font-family: sans-serif;
         font-size: 20px;
-        color: /*#928d36*/ #fff000;
-        letter-spacing: 4px;
+        letter-spacing: 2px;
+        color: #fff000;
         text-transform: uppercase;
         text-shadow: 0 0 10px #fff000;
-        box-shadow: 0 0 20px rgba(0,0,0,.5);
         background-color: #11395c;
+        box-shadow: 0 0 20px rgba(0,0,0,.35);
     }
 
         .ring1:before {
             content: '';
             position: absolute;
-            top: 0px;
-            left: 0px;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 3px solid transparent;
             border-top: 3px solid #fff000;
             border-right: 3px solid #fff000;
-            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
+            box-shadow: 0 0 1em white, 0 0 0 1000vw rgba(224,222,222,.70);
             border-radius: 50%;
             animation: animateC1 2s linear infinite;
         }
@@ -126,383 +371,156 @@
     }
 </style>
 
-<style>
+<div class="ex-page">
+    <div class="pv-shell">
 
-    * {
-        box-sizing: border-box;
-    }
+        <div class="pv-header">
+            <div>
+                <div class="pv-title">@T("Title", "Print & Cancel Invoice")</div>
+                <div class="pv-sub">@T("SubTitle", "Select a date range to list invoices, then print or cancel")</div>
+            </div>
 
-    /*body {
-        margin: 0;
-        padding: 0;
-        font-size: 1rem;
-        background-color: #f4f4f4;
-        height: 100vh;
-    }
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Main Home")</span>
+                </a>
 
-    header {
-        padding: 0;
-        height: 56px;
-    }
-
-    nav {
-        background: #1c2024;
-        margin: 0;
-        display: flex;
-        padding: 16px 32px;
-        color: white;
-    }*/
-
-    /*h1.nav-brand {
-        margin: 0;
-        padding: 0;
-    }*/
-
-    /*.container {
-        margin-top: 32px;
-        display: flex;
-        flex-direction: column;
-        width: 90vw;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .row {
-        display: block;
-        width: 100%;
-        margin-bottom: 32px;
-    }*/
-
-    #daterange {
-        width: 300px;
-        margin-left: 16px;
-        /*padding: 4px 8px;*/
-        font-size: 20px;
-        outline: none;
-        border-radius: .7rem;
-    }
-
-    #Search {
-        width: 200px;
-        margin-left: 16px;
-        padding: 4px 8px;
-        font-size: 20px;
-        outline: none;
-        border-radius: .7rem;
-    }
-
-    #PrintAll {
-        width: 300px;
-        margin-left: 36px;
-        text-align: center;
-        /*padding: 4px 8px;*/
-        font-size: 20px;
-        /*outline: none;
-        border-radius: .7rem;*/
-    }
-</style>
-
-
-<style>
-
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    #link1 {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link1:hover {
-            background-color: #ddd;
-            color: black;
-        }
-    /*.previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
-
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }*/
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-<style>
-    /*body {
-            background-image:url('../Images/login.jpg');
-        }*/
-    /*table1 {
-        border: 1px solid black;
-    }*/
-
-    body.table789 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table789 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table789 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table789 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-        table.table789, table.table789 table td {
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-    body.table7899 {
-        font-family: Arial;
-        font-size: 11pt;
-    }
-
-    table.table7899 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table7899 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 15pt;
-        }
-
-        table.table7899 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-            /*font-weight: bold;*/
-        }
-
-        table.table7899, table.table7899 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-            /*font-weight: bold;*/
-            /*color: black;*/
-        }
-
-    body.table78991 {
-        font-family: Arial;
-        font-size: 9pt;
-    }
-
-    table.table78991 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table78991 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 11pt;
-        }
-
-        table.table78991 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 9pt;
-            /*font-weight: bold;*/
-        }
-
-        table.table78991, table.table78991 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 9pt;
-            /*font-weight: bold;*/
-            /*color: black;*/
-        }
-
-    #ProviderBranch {
-        max-width: 450px;
-    }
-
-    #ClaimForm_Number {
-        max-width: 900px;
-    }
-
-    #form_number, #Card_number, #ClaimForm_Number, #Date_Procedure, #Date_symptoms, #ICD_Number {
-        font-size: 18px;
-        color: black;
-    }
-
-    #providerName {
-        font-size: 12px;
-    }
-
-    #Card_numberLabel {
-        font-size: 18px;
-        color: black;
-    }
-
-    #ClaimForm_NumberLabel {
-        font-size: 18px;
-        color: black;
-    }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-</style>
-<h2 style="color:teal;text-align:center">Print & Cancel Invoice</h2>
-
-<br />
-<fieldset class="scheduler-border">
-    <legend class="scheduler-border" style="color:teal">Invoice Data</legend>
-    <br />
-    @*<main class="container">*@
-    <div @*class="row"*@ style="display:inline-block">
-        <label style="font-size:20px" for="daterange">Select Date Range</label>
-        <input type="text" name="daterange" id="daterange" class="daterange">
-        <input type="submit" value="Search" id="Search" class="btn btn-primary">
-    </div>
-    @*</main>*@
-    <br />
-    <br />
-    <br />
-
-    <table class="table7899" id="ClaimFormTable" cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Serial</th>
-                <th>Invoice ID</th>
-                <th>ClaimForm Number</th>
-                <th>Card Number</th>
-                <th>Member Name</th>
-                <th>Procedure Date</th>
-                <th>Invoice Amt</th>
-                <th>Invoice Deductable</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody></tbody>
-    </table>
-
-    <br />
-    <div class="modal" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h2 class="modal-title">Invoice Services</h2>
-                    <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-
-                    <table class="table78991" id="ClaimServicesTable" cellpadding="0" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Serial</th>
-                                <th>Service Name</th>
-                                <th>Service Price</th>
-                                <th>Service Qnt</th>
-                                <th>Service Amt</th>
-                                <th>Service Deductable</th>
-                                <th>Service Note</th>
-                            </tr>
-                        </thead>
-
-                        <tbody></tbody>
-                    </table>
-
-                </div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                </div>
-
+                @if (int.Parse(Session["Medical_Services"].ToString()) == 1)
+                {
+                    <a class="btn btn-outline-primary pv-btn" href="@Url.Action("ClaimServices","ClaimForm")">
+                        <i class="bi bi-heart-pulse"></i>
+                        <span>@T("GoMedicalServices", "Go to Medical Services")</span>
+                    </a>
+                }
+                else if (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
+                {
+                    <a class="btn btn-outline-primary pv-btn" href="@Url.Action("Doctor_ClaimForm","ClaimForm")">
+                        <i class="bi bi-person-badge"></i>
+                        <span>@T("GoDoctorClaimForm", "Go to Doctor ClaimForm")</span>
+                    </a>
+                }
             </div>
         </div>
-    </div>
-    <br />
-    <div style="text-align:center" id="diagnosis">
 
-        <input type="submit" value="Print All Invoices Pdf" id="PrintAll" class="btn btn-info btn-lg">
-    </div>
-    <br />
+        <div class="pv-card">
+            <div class="pv-card-title">@T("CardTitle", "Invoice Data")</div>
 
-    <div style="text-align:left;display:inline-block;position:relative">
-        <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
-    </div>
-    @if (int.Parse(Session["Medical_Services"].ToString()) == 1)
-    {
-        <div style="text-align:right;display:inline-block;padding-left:720px;position:relative">
-            <a id="link" class="round" href="@Url.Action("ClaimServices","ClaimForm")">@*<u>*@ Go to Medical Services &raquo;@*</u>*@</a>
+            @* ===== Summary Totals ===== *@
+            <div class="ex-sum">
+                <div class="ex-scard">
+                    <div class="ex-sicon"><i class="bi bi-list-check"></i></div>
+                    <div>
+                        <div class="ex-slabel">@T("Sum_TotalInvoices", "Total Invoices")</div>
+                        <div class="ex-svalue" id="sumTotalRows">0</div>
+                    </div>
+                </div>
+
+                <div class="ex-scard">
+                    <div class="ex-sicon"><i class="bi bi-cash-stack"></i></div>
+                    <div>
+                        <div class="ex-slabel">@T("Sum_TotalInvoiceAmt", "Total Invoice Amt")</div>
+                        <div class="ex-svalue" id="sumTotalAmt">0.00</div>
+                    </div>
+                </div>
+
+                <div class="ex-scard">
+                    <div class="ex-sicon"><i class="bi bi-dash-circle"></i></div>
+                    <div>
+                        <div class="ex-slabel">@T("Sum_TotalDeduct", "Total Deductable")</div>
+                        <div class="ex-svalue" id="sumTotalDeduct">0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            @* ===== Controls ===== *@
+            <div class="ex-controls">
+                <div>
+                    <label for="daterange">@T("SelectDateRange", "Select Date Range")</label><br />
+                    <input type="text" name="daterange" id="daterange" class="daterange" />
+                </div>
+
+                <div class="ex-search">
+                    <i class="bi bi-search"></i>
+                    <input id="exSearch" type="text" class="form-control" placeholder="@T("SearchPlaceholder","Search...")" />
+                </div>
+
+                <div>
+                    <button type="button" id="Search" class="btn btn-primary">
+                        <i class="bi bi-search"></i> @T("Search", "Search")
+                    </button>
+                </div>
+            </div>
+
+            <div class="ex-table-wrap">
+                <table class="table7899" id="ClaimFormTable" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@T("Col_Serial", "Serial")</th>
+                            <th>@T("Col_InvoiceID", "Invoice ID")</th>
+                            <th>@T("Col_ClaimFormNum", "ClaimForm Number")</th>
+                            <th>@T("Col_CardNumber", "Card Number")</th>
+                            <th>@T("Col_MemberName", "Member Name")</th>
+                            <th>@T("Col_ProcedureDate", "Procedure Date")</th>
+                            <th>@T("Col_InvoiceAmt", "Invoice Amt")</th>
+                            <th>@T("Col_InvoiceDeduct", "Invoice Deductable")</th>
+                            <th>@T("Col_Show", "Show")</th>
+                            <th>@T("Col_Print", "Print")</th>
+                            <th>@T("Col_Delete", "Delete")</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="button" id="PrintAll" class="btn btn-info btn-lg">
+                    <i class="bi bi-printer"></i> @T("PrintAll", "Print All Invoices Pdf")
+                </button>
+            </div>
         </div>
-    }
-    else if (int.Parse(Session["Doctor_ClaimForm"].ToString()) == 1)
-    {
-        <div style="text-align:right;display:inline-block;padding-left:720px;position:relative">
-            <a id="link" class="round" href="@Url.Action("Doctor_ClaimForm","ClaimForm")">@*<u>*@ Go to Doctor ClaimForm &raquo;@*</u>*@</a>
+
+        @* Modal *@
+        <div class="modal" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight:900">@T("ModalTitle", "Invoice Services")</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="ex-table-wrap">
+                            <table class="table78991" id="ClaimServicesTable" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>@T("Svc_Serial", "Serial")</th>
+                                        <th>@T("Svc_Name", "Service Name")</th>
+                                        <th>@T("Svc_Price", "Service Price")</th>
+                                        <th>@T("Svc_Qnt", "Service Qnt")</th>
+                                        <th>@T("Svc_Amt", "Service Amt")</th>
+                                        <th>@T("Svc_Deduct", "Service Deductable")</th>
+                                        <th>@T("Svc_Note", "Service Note")</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">
+                            @T("ModalClose", "Close")
+                        </button>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    }
-    <br />
 
-    <br />
-</fieldset>
-<br />
-
+    </div>
+</div>
 
 <div id="backring1">
     <div class="ring1" id="Loadingg">
@@ -511,619 +529,383 @@
     </div>
 </div>
 
-
-
 <script>
+    function exShowLoading(){ $('#backring1').show(); $('#Loadingg').show(); }
+    function exHideLoading(){ $('#Loadingg').hide(); $('#backring1').hide(); }
+
+    function exToNum(v) {
+        if (v === null || v === undefined) return 0;
+        var s = ('' + v).replace(/,/g, '').trim();
+        var n = parseFloat(s);
+        return isNaN(n) ? 0 : n;
+    }
+
+    var dtInvoices = null;
+    var dtServices = null;
+
+    function exRecalcTotals() {
+        if (!dtInvoices) return;
+
+        var totalRows = 0;
+        var totalAmt = 0;
+        var totalDeduct = 0;
+
+        dtInvoices.rows({ search: 'applied' }).every(function () {
+            var row = this.data(); // array
+            if (!row || row.length < 8) return;
+
+            totalRows++;
+            totalAmt += exToNum(row[6]);     // Invoice Amt
+            totalDeduct += exToNum(row[7]);  // Deduct
+        });
+
+        $('#sumTotalRows').text(totalRows);
+        $('#sumTotalAmt').text(totalAmt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        $('#sumTotalDeduct').text(totalDeduct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    }
+
     $(document).ready(function () {
-        $("#Loadingg").hide();
 
-        $('#ClaimFormTable').DataTable({
+        exHideLoading();
+
+        // ✅ DataTables init
+        if (!$.fn.DataTable) {
+            console.error("DataTables not loaded.");
+            return;
+        }
+
+        dtInvoices = $('#ClaimFormTable').DataTable({
             paging: true,
+            ordering: false,
+            searching: false,
+            info: true
         });
 
-        $('#ClaimServicesTable').DataTable({
+        dtServices = $('#ClaimServicesTable').DataTable({
             paging: false,
+            ordering: false,
+            searching: false,
+            info: false
         });
 
-        $("body").on("click", "#Search", function () {
-            $("#Loadingg").show();
+        // external search
+        $('#exSearch').off('keyup').on('keyup', function () {
+            dtInvoices.search(this.value).draw();
+            exRecalcTotals();
+        });
+
+        dtInvoices.on('draw', function () {
+            exRecalcTotals();
+        });
+
+        $("body").off("click", "#Search").on("click", "#Search", function () {
+            exShowLoading();
 
             $.get("/ClaimForm/GetApprovalsDateRange", { id: $('#daterange').val() }, function (data) {
-                $("#Loadingg").hide();
+                exHideLoading();
 
-            var t = $('#ClaimFormTable').DataTable();
-                t.rows().remove().draw();
+                dtInvoices.clear().draw();
+
                 if (data == "Falsee") {
-                    Swal.fire("Warning !", "Select A Valid Date Range Again", "warning");
-
+                    Swal.fire("Warning !", "@T("Msg_InvalidDateRange","Select a valid date range again.")", "warning");
+                    exRecalcTotals();
+                    return;
                 }
-                else {
-                    if (data.length != 0) {
 
-                        serialll11 = 0;
+                if (data && data.length) {
+                    var serialll11 = 0;
 
-                        for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data.length; i++) {
+                        serialll11++;
 
-                            serialll11++;
-                            var btnshow =  "<button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#myModal' style='text-align:center' onclick='show(this);'>Show</button>";
-                            var btnPrint = "<button type='button' class='btn btn-success' style='text-align:center' onclick='Print(this);'>Print</button>";
-                            var btnDelete ="<button type='button' class='btn btn-danger' style='text-align:center' onclick='Delete(this);'>Delete</button>";
-                            //var btnEdit = "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal' onclick='edited(this);'>Edit</button>";
+                        var btnshow = "<button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#myModal' style='text-align:center' onclick='show(this);'>@T("Col_Show","Show")</button>";
+                        var btnPrint = "<button type='button' class='btn btn-success' style='text-align:center' onclick='Print(this);'>@T("Col_Print","Print")</button>";
+                        var btnDelete = "<button type='button' class='btn btn-danger' style='text-align:center' onclick='Delete(this);'>@T("Col_Delete","Delete")</button>";
 
-                            t.row.add([serialll11, data[i].ClaimID, data[i].ClaimFormNum, data[i].CardNumber, data[i].MemberName, moment(data[i].ProcedureDate).format("DD-MM-YYYY"),
-                                data[i].TClaimAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }), data[i].TDeductAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                                , btnshow, btnPrint, btnDelete
-
-                            ]).draw()
-                                ;
-
-                        }
+                        dtInvoices.row.add([
+                            serialll11,
+                            data[i].ClaimID,
+                            data[i].ClaimFormNum,
+                            data[i].CardNumber,
+                            data[i].MemberName,
+                            moment(data[i].ProcedureDate).format("DD-MM-YYYY"),
+                            data[i].TClaimAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                            data[i].TDeductAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                            btnshow,
+                            btnPrint,
+                            btnDelete
+                        ]);
                     }
-                    else {
-                        ////$("#ClaimForm_image").hide();
-                        ////$("#Expended_services").hide();
-                        //$("#imgpost").hide();
-                        //$("#button_open_div").hide();
-                        //$("#button_Close_div").hide();
 
-                        //$("#Provider_services").hide();
-                        //$("#Expended_services").hide();
-                        //$("#Expended_services_Stoped").hide();
-                        //$("#Expended_services_Done").hide();
-
-                    }
+                    dtInvoices.draw();
                 }
-            })
+
+                exRecalcTotals();
+            });
         });
 
-
-        $("body").on("click", "#PrintAll", function () {
+        $("body").off("click", "#PrintAll").on("click", "#PrintAll", function () {
 
             Swal.fire({
-                title: "Confirm",
+                title: "@T("Confirm","Confirm")",
                 imageUrl: "/Images/Quationimg.jpg",
                 imageWidth: 550,
                 imageHeight: 225,
-                text: "Are you Sure you want to Print All Invoices Pdf?",
+                text: "@T("Msg_ConfirmPrintAll","Are you sure you want to print all invoices PDF?")",
                 showCancelButton: true,
-                confirmButtonText: "Confirm",
+                confirmButtonText: "@T("Confirm","Confirm")",
+                cancelButtonText: "@T("Cancel","Cancel")",
                 cancelButtonColor: "#700c0c"
-
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                    $("#Loadingg").show();
+                    exShowLoading();
 
-            var table = $('#ClaimFormTable').DataTable();
+                    var delay = 2000;
 
-            //const Claimids = [];
-            //var array_index = 0;
-                    let delay = 2000;
-            table.rows().every(function () {
+                    dtInvoices.rows().every(function () {
+                        var Row = this.data();
+                        var Claim_ID = Row[1];
 
-                setTimeout(() => {
-                var Row = this.data();//store every row data in a variable
+                        setTimeout(() => {
+                            window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + Claim_ID, '_blank');
+                        }, delay);
 
-                //console.log(Row[1]);//show Row + Cell index
-                var Claim_ID = Row[1];
-                //Claimids[array_index] = Claim_ID;
-                //array_index = array_index + 1;
-                //$.get("/ClaimForm/GenerateReport_PrintInvoice", { typeOfReport: "PDF", ClaimId: Claim_ID }, function (data) {
+                        delay += 2000;
+                    });
 
-                //})
-
-                //setTimeout(() => {
-                    window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + Claim_ID, '_blank');
-                }, delay);
-
-                delay += 2000;
-                //}, 2000);
+                    exHideLoading();
+                }
             });
-                    $("#Loadingg").hide();
-
-
-                    }
-                });
-
-            //jQuery.ajaxSettings.traditional = true;
-            //$.get("/ClaimForm/PrintAll_DateRange", { Claimids_print: Claimids }, function (data) {
-
-            //})
         });
 
-
     });
+
     function show(button) {
-        $("#Loadingg").show();
+        exShowLoading();
 
-        //Determine the reference of the Row using the Button.
-        //var row = $(button).closest("TR");
         var row = $(button).closest("TR");
-        //.find("td")
-        //Delete the Table row using it's Index.
-
-        var rowindexx = row[0].rowIndex;
-        //alert(row[0].cells.item(1).innerHTML);
-        //var table = $('#ClaimFormTable').DataTable();
-
-        //var ClaimID = table.cell(row[0].rowIndex - 1, 1).data();
         var ClaimID = row[0].cells.item(1).innerHTML;
-        //alert($("TD", row).eq(1).html());
-        //alert(ClaimID);
+
         $.get("/ClaimForm/Get_ClaimServices", { CLaimID: ClaimID }, function (data) {
-            $("#Loadingg").hide();
+            exHideLoading();
 
-            var t1 = $('#ClaimServicesTable').DataTable();
-            t1.rows().remove().draw();
-                if (data.length != 0) {
-                    seria1 = 0;
-                    for (var i = 0; i < data.length; i++) {
-                        seria1++;
-                        t1.row.add([seria1, data[i].ServiceName, data[i].ServiceUnitAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[i].ServiceQnt, data[i].ClaimedAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
-                            data[i].DeductAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }), data[i].RejectNotes
-                        ]).draw()
-                            ;
+            dtServices.clear().draw();
 
-                    }
+            if (data && data.length) {
+                var seria1 = 0;
+                for (var i = 0; i < data.length; i++) {
+                    seria1++;
+                    dtServices.row.add([
+                        seria1,
+                        data[i].ServiceName,
+                        data[i].ServiceUnitAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                        data[i].ServiceQnt,
+                        data[i].ClaimedAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                        data[i].DeductAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                        data[i].RejectNotes
+                    ]);
                 }
-
-        })
-
-
-
-    }
-
-    function Print(button) {
-        //Determine the reference of the Row using the Button.
-
-        Swal.fire({
-            title: "Confirm",
-            imageUrl: "/Images/Quationimg.jpg",
-            imageWidth: 550,
-            imageHeight: 225,
-            text: "Are you Sure you want to Print Invoice Pdf?",
-            showCancelButton: true,
-            confirmButtonText: "Confirm",
-            cancelButtonColor: "#700c0c"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                    var row = $(button).closest("TR");
-                    var ClaimID = row[0].cells.item(1).innerHTML;
-                    window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
-
+                dtServices.draw();
             }
         });
     }
 
+    function Print(button) {
+        Swal.fire({
+            title: "@T("Confirm","Confirm")",
+            imageUrl: "/Images/Quationimg.jpg",
+            imageWidth: 550,
+            imageHeight: 225,
+            text: "@T("Msg_ConfirmPrintOne","Are you sure you want to print invoice PDF?")",
+            showCancelButton: true,
+            confirmButtonText: "@T("Confirm","Confirm")",
+            cancelButtonText: "@T("Cancel","Cancel")",
+            cancelButtonColor: "#700c0c"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var row = $(button).closest("TR");
+                var ClaimID = row[0].cells.item(1).innerHTML;
+                window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
+            }
+        });
+    }
 
     function Delete(button) {
-        //Determine the reference of the Row using the Button.
-
-
         (async () => {
             const { value: text, isConfirmed: isconfirmedd } = await Swal.fire({
-                title: "Confirm",
+                title: "@T("Confirm","Confirm")",
                 input: "textarea",
-                inputPlaceholder: "Type your Cancel Reason here...",
+                inputPlaceholder: "@T("Msg_CancelReasonPlaceholder","Type your cancel reason here...")",
                 inputAttributes: {
-                    "aria-label": "Type your Cancel Reason here"
+                    "aria-label": "@T("Msg_CancelReasonAria","Type your cancel reason here")"
                 },
                 imageUrl: "/Images/Quationimg.jpg",
                 imageWidth: 550,
                 imageHeight: 225,
-                text: "Are you Sure you want to Delete Invoice?",
+                text: "@T("Msg_ConfirmDelete","Are you sure you want to delete invoice?")",
                 showCancelButton: true,
-                confirmButtonText: "Confirm",
+                confirmButtonText: "@T("Confirm","Confirm")",
+                cancelButtonText: "@T("Cancel","Cancel")",
                 cancelButtonColor: "#700c0c"
             });
+
             if (text && isconfirmedd == true) {
                 var row = $(button).closest("TR");
                 var ClaimID = row[0].cells.item(1).innerHTML;
-                $("#Loadingg").show();
+                exShowLoading();
 
                 $.get("/ClaimForm/Delete_Invoice", { CLaimID: ClaimID, ReasonText: text }, function (data) {
-                    $("#Loadingg").hide();
+                    exHideLoading();
 
                     if (data == "Done") {
-                        Swal.fire("Success", "Invoice is Deleted Successfuly", "success");
+                        Swal.fire("Success", "@T("Msg_DeletedOk","Invoice is deleted successfully.")", "success");
                         $('#Search').click();
                     }
                     else if (data == "Error") {
-                        Swal.fire("Warning !", "Make Error In This Claim", "warning");
+                        Swal.fire("Warning !", "@T("Msg_DeleteError","There is an error in this claim.")", "warning");
                     }
                     else {
                         var batchNumber = data[0];
                         var RecDate = moment(data[1]).format("DD-MM-YYYY");
 
-                        var errortext = "Claim Can not Deleted Because Claim are Sent To Tristar Accounting To Pay <br> Batch Number : " + batchNumber + "<br> Batch Date : " + RecDate;
+                        var errortext = "@T("Msg_CannotDeleteSent","Claim cannot be deleted because it was sent to Accounting to pay.")"
+                            + "<br> Batch Number : " + batchNumber
+                            + "<br> Batch Date : " + RecDate;
+
                         Swal.fire("Warning !", errortext, "warning");
-
                     }
+                });
 
-                })
-
-
+            } else if (isconfirmedd == true) {
+                Swal.fire("Warning !", "@T("Msg_ReasonRequired","You cannot cancel claim form without entering a cancel reason.")", "warning");
             }
-            else if (isconfirmedd == true) {
-                Swal.fire("Warning !", "You Can not Cancel Claim Form <br> Without Enter Cancel Reason Message", "warning");
-            }
-        })()
-
-        //Swal.fire({
-        //    title: "Confirm",
-        //    imageUrl: "/Images/Quationimg.jpg",
-        //    imageWidth: 550,
-        //    imageHeight: 225,
-        //    text: "Are you Sure you want to Delete Invoice?",
-        //    showCancelButton: true,
-        //    confirmButtonText: "Confirm",
-        //    cancelButtonColor: "#700c0c"
-        //}).then((result) => {
-        //if (result.isConfirmed) {
-        //var row = $(button).closest("TR");
-        //var ClaimID = row[0].cells.item(1).innerHTML;
-
-        //$.get("/ClaimForm/Delete_Invoice", { CLaimID: ClaimID }, function (data) {
-
-        //    if (data == "Done") {
-        //        Swal.fire("Success", "Invoice is Deleted Successfuly", "success");
-        //        $('#Search').click();
-        //    }
-        //    else if (data == "Error") {
-        //        Swal.fire("Warning !", "Make Error In This Claim", "warning");
-        //    }
-        //    else {
-        //        var batchNumber = data[0];
-        //        var RecDate = moment(data[1]).format("DD-MM-YYYY");
-
-        //        var errortext = "Claim Can not Deleted Because Claim are Sent To Tristar Accounting To Pay <br> Batch Number : " + batchNumber + "<br> Batch Date : " + RecDate;
-        //        Swal.fire("Warning !", errortext, "warning");
-
-        //    }
-
-        //})
-
-
-        //}
-        //});
+        })();
     }
 </script>
 
-
-
-
-
 <script type="text/javascript">
-    //const periodeValue = document.querySelector('.periode-value');
+    // لو الكلاس عندك مختلف، ابعتلي رسالة الخطأ وهنعدله
     const picker = new DateRangePicker('#daterange', {
-        start: Date.now()/*"2022-01-01"*/,
-        end: Date.now()/* "2022-09-19"*/,
-        //onchange: (start, end) => {
-        //    periodeValue.innerHTML = `
-        //                    Début: ${start}
-        //                    <br/>
-        //                    Fin: ${end}
-        //                `;
-        //},
-        //args: []
+        start: Date.now(),
+        end: Date.now()
     });
 </script>
 
-
+@* ===== SignalR + notifications (زي ما هو) ===== *@
 <script type="text/javascript">
-    function sleep(ms) {
-        return new Promise(
-            resolve => setTimeout(resolve, ms)
-        );
+    function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-
-    }
     $(function () {
-
-        // Proxy created on the fly
         var cus = $.connection.cusHub;
-        //var cus1 = $.connection.cusHub1;
-        //console.log(cus)
-        // Declare a function on the job hub so the server can invoke it
-        cus.client.displayCustomer = function () {
-            // async function a() {
-            getData();
-            //   await sleep(2000);
-            //  getData1();
-            //}
-            //a();
 
-            //getData();
-            //getData1();
-        };
-        cus.client.data = function () {
-            //async function a() {
-            //    getData();
-            //    await sleep(2000);
-            getData1();
-            //}
-            //a();
+        cus.client.displayCustomer = function () { getData(); };
+        cus.client.data = function () { getData1(); };
+        cus.client.data1 = function () { getData2(); };
 
-            //getData();
-            //getData1();
-        };
-
-        cus.client.data1 = function () {
-            getData2();
-        };
-        // Start the connection
         $.connection.hub.start();
         getData();
         getData1();
         getData2();
-        //async function aa() {
-        //    getData();
-        //    await sleep(2000);
-        //    getData1();
-        //}
-        //aa();
-
     });
-    function getData1() {
-        try {
 
-        //var $tbl = $('#tblInfo');
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data1) {
+    function getData1() { try { $.ajax({ url: $("#Getmessages").val(), type: 'GET', datatype: 'json',
+        success: function () { $.get("/ClaimForm/getcountmessage", {}, function (data) {
+            if (data == 0) $('#MesaageCount').removeAttr("data-count"); else $('#MesaageCount').attr("data-count", data);
+        }); } }); } catch (err) { } }
 
-                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    if (data == 0) {
-                        $('#MesaageCount').removeAttr("data-count");
+    function getData() { try { $.ajax({ url: $("#Get").val(), type: 'GET', datatype: 'json',
+        success: function (data) {
 
-                    }
-                    else {
-                        $('#MesaageCount').attr("data-count", data);
-                    }
-                    // console.log(data);
-                });
-
-
-                $.each(data1.listCus, function (i, model) {
-
-                });
+            var provid = 0, branchid = 0;
+            if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                provid = parseInt("@Session["providerid"]"); branchid = parseInt("@Session["BranchID"]");
             }
+            var ApprovePage = 0;
+            if ("@Session["ClaimForm_Approved"]" != "" ) { ApprovePage = parseInt("@Session["ClaimForm_Approved"]"); }
+
+            $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                if (data1 == 0) $('#NotifactionCount').removeAttr("data-count");
+                else $('#NotifactionCount').attr("data-count", data1);
             });
-        }
-        catch (err) {
-        }
-    }
 
-    function getData() {
-        try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                }
-                //alert(provid);
-                //alert(branchid);
-
-                @*alert("@Session["providerid"]");
-                alert(data.ProviderID);*@
-
-                //$tbl.empty();
-                $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#NotifactionCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#NotifactionCount').attr("data-count", data1);
-                    }
-                });
-
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
-                        $('#trigger').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
-
-                        @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                        if (result == true) {
-                                window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        }
-                        else {
-
-                        }
-                            $('#trigger').val("0");*@
-                                    if ("@Session["ClaimForm_Approved"]"!="") {
-                                    ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
-                                   if (ClaimForm_Approv == 1) {
-                                       var sound = new Audio('/Media/alert.mp3');
-                                       sound.autoplay = true;
-                                       sound.muted = false;
-                                       sound.play();
-                                       setTimeout(function () {
-                                           snackbar.classList.add('isShown');
-                                           $('#CardNumbersnackbar').text(model.CardNumber)
-                                           $('#Claimformsnackbar').text(model.ClaimFormNum)
-                                           setTimeout(hideSnackbar, 5000);
-                                    @*var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-                                        if (result == true) {
-                                                    window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                                       }
-                                       else {
-
-                                       }*@
-                                       $('#trigger').val("0");
-                                           if (data2 == 0) {
-                                           $('#NotifactionCount').removeAttr("data-count");
-
-                                       }
-                                       else {
-                                               $('#NotifactionCount').attr("data-count", data2);
-                                           }
-                                       }, 100);
-                                }
-                                 }
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-        });
-    }
-        catch (err) {
-    }
-    }
-    function getData2() {
-        try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-                  var ApprovePage1 = 0;
-                  var ApprovePage2 = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                     ApprovePage1 = parseInt("@Session["Approval"]");
-                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
-                }
-
-                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    if (data1 == 0) {
-                        $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
-                    }
-                    else {
-                        $('#MemberSmartCardRequestsCount').attr("data-count", data1);
-                    }
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
-                        $('#trigger1').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-
-                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbarMember.classList.add('isShown');
-                                $('#CardNumbersnackbarMember').text(model.CardNumber)
-                                setTimeout(hideSnackbard1, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger1').val("0");
-                                if (data2 == 0) {
-                                $('#MemberSmartCardRequestsCount').removeAttr("data-count");
-
+            $.each(data.listCus, function (i, model) {
+                if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
+                    $('#trigger').val("1");
+                    $.connection.hub.disconnected(function () { setTimeout(function () { $.connection.hub.start(); }, 5000); });
+                    $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+                        if ("@Session["ClaimForm_Approved"]"!="") {
+                            ClaimForm_Approv = parseInt("@Session["ClaimForm_Approved"]");
+                            if (ClaimForm_Approv == 1) {
+                                var sound = new Audio('/Media/alert.mp3'); sound.autoplay = true; sound.muted = false; sound.play();
+                                setTimeout(function () {
+                                    snackbar.classList.add('isShown');
+                                    $('#CardNumbersnackbar').text(model.CardNumber)
+                                    $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                    setTimeout(hideSnackbar, 5000);
+                                    $('#trigger').val("0");
+                                    if (data2 == 0) $('#NotifactionCount').removeAttr("data-count");
+                                    else $('#NotifactionCount').attr("data-count", data2);
+                                }, 100);
                             }
-                            else {
-                                    $('#MemberSmartCardRequestsCount').attr("data-count", data2);
-                                }
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
+                        }
+                    });
+                }
             });
-        }
-        catch (err) {
-        }
-    }
+        } }); } catch (err) { } }
+
+    function getData2() { try { $.ajax({ url: $("#Get1").val(), type: 'GET', datatype: 'json',
+        success: function (data) {
+
+            var provid = 0, branchid = 0;
+            if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                provid = parseInt("@Session["providerid"]"); branchid = parseInt("@Session["BranchID"]");
+            }
+            var ApprovePage = 0, ApprovePage1 = 0, ApprovePage2 = 0;
+            if ("@Session["ClaimForm_Approved"]" != ""|| "@Session["Approval"]" != ""|| "@Session["Doctor_ClaimForm"]" != "" ) {
+                ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                ApprovePage1 = parseInt("@Session["Approval"]");
+                ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+            }
+
+            $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                if (data1 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                else $('#MemberSmartCardRequestsCount').attr("data-count", data1);
+            });
+
+            $.each(data.listCus, function (i, model) {
+                if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
+                    $('#trigger1').val("1");
+                    $.connection.hub.disconnected(function () { setTimeout(function () { $.connection.hub.start(); }, 5000); });
+
+                    $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+                        var sound = new Audio('/Media/alert.mp3'); sound.play();
+                        setTimeout(function () {
+                            snackbarMember.classList.add('isShown');
+                            $('#CardNumbersnackbarMember').text(model.CardNumber)
+                            setTimeout(hideSnackbard1, 5000);
+                            $('#trigger1').val("0");
+                            if (data2 == 0) $('#MemberSmartCardRequestsCount').removeAttr("data-count");
+                            else $('#MemberSmartCardRequestsCount').attr("data-count", data2);
+                        }, 100);
+                    });
+                }
+            });
+        } }); } catch (err) { } }
 </script>
 
 <script>
-
-
     function refresh() {
-
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") window.open('@Url.Action("login", "ClaimForm")', '_self');
+                else setTimeout(refresh, 5000);
+            }
         });
-
     }
-
     setTimeout(refresh, 1000);
 </script>
-
-

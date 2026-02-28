@@ -195,6 +195,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\InvoicesAudit.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoicesAudit.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\InvoicesAudit.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoicesAudit.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PaymentInquiry.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +214,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PaymentInquiry.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PrintCancelApproval.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintCancelApproval.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PrintCancelApproval.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintCancelApproval.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ProviderExpandedServices.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -652,6 +672,22 @@
     <Content Include="App_GlobalResources\ProviderExpandedServices.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ProviderExpandedServices.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\InvoicesAudit.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>InvoicesAudit.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\InvoicesAudit.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>InvoicesAudit.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PrintCancelApproval.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PrintCancelApproval.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PrintCancelApproval.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PrintCancelApproval.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />
