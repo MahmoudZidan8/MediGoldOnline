@@ -340,6 +340,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        internal static string SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Date Range.
         /// </summary>
         internal static string SelectDateRange {
@@ -354,6 +363,33 @@ namespace Resources {
         internal static string SubTitle {
             get {
                 return ResourceManager.GetString("SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Deductable.
+        /// </summary>
+        internal static string Sum_TotalDeduct {
+            get {
+                return ResourceManager.GetString("Sum_TotalDeduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Invoice Amt.
+        /// </summary>
+        internal static string Sum_TotalInvoiceAmt {
+            get {
+                return ResourceManager.GetString("Sum_TotalInvoiceAmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Invoices.
+        /// </summary>
+        internal static string Sum_TotalInvoices {
+            get {
+                return ResourceManager.GetString("Sum_TotalInvoices", resourceCulture);
             }
         }
         

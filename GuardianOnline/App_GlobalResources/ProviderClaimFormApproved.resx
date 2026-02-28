@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>Provider ClaimForm Approved</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Select ClaimForm then view image and approve/cancel/resend</value></data>
+
+  <data name="CardTitle" xml:space="preserve"><value>Member ClaimForm Image</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="SelectClaimForm" xml:space="preserve"><value>-- Select ClaimForm Number --</value></data>
+
+  <data name="ShowImage" xml:space="preserve"><value>Show ClaimForm Image</value></data>
+  <data name="ClickHere" xml:space="preserve"><value>Click Here</value></data>
+  <data name="OpenImage" xml:space="preserve"><value>Open Image</value></data>
+  <data name="CloseImage" xml:space="preserve"><value>Close Image</value></data>
+
+  <data name="Diag1" xml:space="preserve"><value>First Diagnosis</value></data>
+  <data name="ICD1" xml:space="preserve"><value>First ICD Number</value></data>
+  <data name="Diag2" xml:space="preserve"><value>Second Diagnosis</value></data>
+  <data name="ICD2" xml:space="preserve"><value>Second ICD Number</value></data>
+  <data name="Diag3" xml:space="preserve"><value>Third Diagnosis</value></data>
+  <data name="ICD3" xml:space="preserve"><value>Third ICD Number</value></data>
+
+  <data name="ServicesStopped" xml:space="preserve"><value>Approval Services Stopped</value></data>
+  <data name="ServicesDone" xml:space="preserve"><value>Approval Services Done</value></data>
+  <data name="MemberInvoice" xml:space="preserve"><value>Approval Member Invoice</value></data>
+
+  <data name="Serial" xml:space="preserve"><value>Serial</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>Service Price</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+  <data name="ServiceAmt" xml:space="preserve"><value>Service Amt</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>Requested Price</value></data>
+  <data name="RefuseNote" xml:space="preserve"><value>Refuse Note</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+
+  <data name="ClaimFormAmt" xml:space="preserve"><value>Claim Form Amt</value></data>
+  <data name="DeductPct" xml:space="preserve"><value>Member Deductable Percentage</value></data>
+  <data name="DeductAmt" xml:space="preserve"><value>Member Deductable</value></data>
+
+  <data name="ApprovePrint" xml:space="preserve"><value>Accept ClaimForm &amp; Print Invoice</value></data>
+  <data name="CancelClaim" xml:space="preserve"><value>Cancel ClaimForm</value></data>
+  <data name="ResendCMC" xml:space="preserve"><value>Resend To CMC</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>Back to Main Home</value></data>
+  <data name="GoMedicalServices" xml:space="preserve"><value>Go to Medical Services</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Msg_NotExist" xml:space="preserve"><value>ClaimForm Number is not exist</value></data>
+
+  <data name="Q_Approve" xml:space="preserve"><value>Are you sure you want to approve ClaimForm?</value></data>
+  <data name="Q_Cancel" xml:space="preserve"><value>Are you sure you want to cancel ClaimForm?</value></data>
+  <data name="Q_Resend" xml:space="preserve"><value>Are you sure you want to resend ClaimForm to CMC again?</value></data>
+</root>

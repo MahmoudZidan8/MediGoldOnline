@@ -1,44 +1,220 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ProviderClaimFormApproved";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("ProviderClaimFormApproved", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
 
-@*@Scripts.Render("~/bundles/jquery")*@
+@* ✅ مهم: jQuery قبل أي plugin *@
+@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
 
-@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
-
-<script src="~/Scripts/bootstrap.min.js"></script>
-
-@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
 <link rel="stylesheet" href="~/Content/select2.min.css">
 <script type="text/javascript" src="~/Scripts/select2.min.js"></script>
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+@* DataTables (عشان الصفحة دي فيها DataTable) *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
+@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
+@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
 
 <input type="hidden" id="trigger" value="0" />
 <input type="hidden" id="triggercount" value="0" />
 <input type="hidden" id="trigger1" value="0" />
 <input type="hidden" id="triggercount1" value="0" />
 
-@Html.Hidden("Get", Url.Action("Get", "Customer"))
-@Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
-@Html.Hidden("Get1", Url.Action("Get1", "Customer"))
-
 <style>
-    /*body {
-        margin: 0;
-        padding: 0;
-        background: #262626;
-    }*/
+    /* ===== V2 wrapper ===== */
+    .ex-page .pv-shell {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .ex-page .pv-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 8px 0 12px;
+    }
+
+    .ex-page .pv-title {
+        font-size: 22px;
+        font-weight: 900;
+        color: #0b2b40;
+    }
+
+    .ex-page .pv-sub {
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(15,23,42,.65);
+        margin-top: 4px;
+    }
+
+    .ex-page .pv-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .ex-page .pv-btn {
+        border-radius: 14px;
+        font-weight: 900;
+        padding: 10px 14px;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .ex-page .pv-card {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15,23,42,.06);
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .ex-page .pv-card-title {
+        font-size: 16px;
+        font-weight: 900;
+        color: #0b2b40;
+        margin-bottom: 10px;
+    }
+
+    /* Controls */
+    .ex-controls {
+        display: grid;
+        grid-template-columns: 1.5fr .8fr;
+        gap: 12px;
+        align-items: end;
+        margin-bottom: 12px;
+    }
+
+    @@media (max-width: 992px) {
+        .ex-controls {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    #ClaimForm_Number {
+        min-height: 46px;
+        border-radius: 14px;
+        font-weight: 800;
+    }
+
+    .select2-container .select2-selection--single {
+        min-height: 46px;
+        border-radius: 14px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 46px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 46px;
+    }
+
+    .ex-actions-row {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 10px 0;
+    }
+
+        .ex-actions-row .btn {
+            border-radius: 14px;
+            padding: 10px 18px;
+            font-weight: 900;
+        }
+
+    /* Image box */
+    #boxx {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 12px auto;
+        width: 260px;
+        height: 240px;
+        background: #fff;
+        border-radius: 22px;
+        border: 1px solid rgba(0,0,0,.08);
+        box-shadow: 0 10px 26px rgba(15,23,42,.06);
+        transition: .2s ease;
+    }
+
+        #boxx:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 36px rgba(15,23,42,.10);
+        }
+
+    /* Diagnosis inputs */
+    #Diagnosis, #ICD_Number, #Diagnosis2, #ICD_Number2, #Diagnosis3, #ICD_Number3,
+    #Claim_FormAmt, #Member_DeductablePercentage, #Member_Deductable {
+        min-height: 44px;
+        border-radius: 14px;
+        font-size: 15px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    /* Tables */
+    .ex-table-wrap {
+        overflow: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,.08);
+    }
+
+        .ex-table-wrap table {
+            min-width: 900px;
+        }
+
+    table.table7899 {
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.08);
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+        table.table7899 th {
+            background: rgba(24,169,153,.12);
+            color: #0b2b40;
+            font-weight: 900;
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        table.table7899 td {
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            text-align: center;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+    /* Loading overlay (same logic) */
     #backring1 {
-        background-color: darkgray;
+        background-color: rgba(0,0,0,.25);
+        display: none;
     }
 
     .ring1 {
@@ -48,32 +224,30 @@
         transform: translate(-50%,-50%);
         width: 150px;
         height: 150px;
-        background: transparent;
-        border: 3px solid /*#3c3c3c*/ #9ac3b8;
+        border: 3px solid #9ac3b8;
         border-radius: 50%;
         text-align: center;
         line-height: 150px;
-        font-family: sans-serif;
         font-size: 20px;
-        color: /*#928d36*/ #fff000;
-        letter-spacing: 4px;
+        letter-spacing: 2px;
+        color: #fff000;
         text-transform: uppercase;
         text-shadow: 0 0 10px #fff000;
-        box-shadow: 0 0 20px rgba(0,0,0,.5);
         background-color: #11395c;
+        box-shadow: 0 0 20px rgba(0,0,0,.35);
     }
 
         .ring1:before {
             content: '';
             position: absolute;
-            top: 0px;
-            left: 0px;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 3px solid transparent;
             border-top: 3px solid #fff000;
             border-right: 3px solid #fff000;
-            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
+            box-shadow: 0 0 1em white, 0 0 0 1000vw rgba(224,222,222,.70);
             border-radius: 50%;
             animation: animateC1 2s linear infinite;
         }
@@ -122,553 +296,169 @@
         }
     }
 </style>
-<style>
-    #Diagnosis, #ICD_Number, #Diagnosis2, #ICD_Number2, #Diagnosis3, #ICD_Number3 {
-        -webkit-box-shadow: 0;
-        max-width: 450px;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 300PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        padding-left: 10PX;
-    }
-    #Claim_FormAmt, #Member_DeductablePercentage, #Member_Deductable {
-        -webkit-box-shadow: 0;
-        max-width: 100px;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 150PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        text-align: center;
-    }
-    /*#boxx {
-        background-color: white;
-        color: black;
-    }
-        #boxx:hover {
-            background-color: teal;
-            color: white;
-            border: 3px solid #ffe121;
-        }*/
 
+<div class="ex-page">
+    <div class="pv-shell">
 
-    #boxx {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        margin: 20px auto;
-        width: 250px;
-        height: 250px;
-        background: white;
-        border-radius: 75px;
-        border: 3px solid #e5e5e5;
-        /*border: 3px solid #ffe121;*/
-        font-family: 'Montserrat', sans-serif;
-        font-size: 20px;
-        font-weight: lighter;
-        letter-spacing: 2px;
-        transition: 1s box-shadow;
-    }
+        <div class="pv-header">
+            <div>
+                <div class="pv-title">@T("Title", "Provider ClaimForm Approved")</div>
+                <div class="pv-sub">@T("SubTitle", "Select ClaimForm then view image and approve/cancel/resend")</div>
+            </div>
 
-        #boxx:hover {
-            box-shadow: 0 5px 35px 0px rgba(0,0,0,.1);
-            border: 3px solid #ffffff;
-        }
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Main Home")</span>
+                </a>
 
-            #boxx:hover::before, #boxx:hover::after {
-                display: block;
-                content: '';
-                position: absolute;
-                width: 250px;
-                height: 250px;
-                background: #FDA8CF;
-                border-radius: 75px;
-                z-index: -1;
-                animation: 1s clockwise infinite;
-            }
-
-            #boxx:hover:after {
-                background: #F3CE5E;
-                animation: 2s counterclockwise infinite;
-            }
-
-    @@keyframes clockwise {
-        0% {
-            top: -5px;
-            left: 0;
-        }
-
-        12% {
-            top: -2px;
-            left: 2px;
-        }
-
-        25% {
-            top: 0;
-            left: 5px;
-        }
-
-        37% {
-            top: 2px;
-            left: 2px;
-        }
-
-        50% {
-            top: 5px;
-            left: 0;
-        }
-
-        62% {
-            top: 2px;
-            left: -2px;
-        }
-
-        75% {
-            top: 0;
-            left: -5px;
-        }
-
-        87% {
-            top: -2px;
-            left: -2px;
-        }
-
-        100% {
-            top: -5px;
-            left: 0;
-        }
-    }
-
-    @@keyframes counterclockwise {
-        0% {
-            top: -5px;
-            right: 0;
-        }
-
-        12% {
-            top: -2px;
-            right: 2px;
-        }
-
-        25% {
-            top: 0;
-            right: 5px;
-        }
-
-        37% {
-            top: 2px;
-            right: 2px;
-        }
-
-        50% {
-            top: 5px;
-            right: 0;
-        }
-
-        62% {
-            top: 2px;
-            right: -2px;
-        }
-
-        75% {
-            top: 0;
-            right: -5px;
-        }
-
-        87% {
-            top: -2px;
-            right: -2px;
-        }
-
-        100% {
-            top: -5px;
-            right: 0;
-        }
-    }
-</style>
-<style>
-
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
-
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-<style>
-    /*body {
-            background-image:url('../Images/login.jpg');
-        }*/
-    /*table1 {
-        border: 1px solid black;
-    }*/
-
-    body.table789 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table789 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table789 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table789 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-        table.table789, table.table789 table td {
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-    body.table7899 {
-        font-family: Arial;
-        font-size: 11pt;
-    }
-
-    table.table7899 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table7899 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table7899 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 11pt;
-            font-weight: bold;
-        }
-
-        table.table7899, table.table7899 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 10pt;
-        }
-
-    #ProviderBranch {
-        max-width: 450px;
-    }
-
-    #ClaimForm_Number {
-        max-width: 900px;
-    }
-
-    #form_number, #Card_number, #Date_Procedure, #Date_symptoms, #ICD_Number {
-        font-size: 15px;
-    }
-
-    #providerName {
-        font-size: 12px;
-    }
-
-    #ClaimForm_Number {
-        font-size: 30px;
-    }
-
-    #ClaimForm_NumberLabel {
-        font-size: 20px;
-        color: black;
-    }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 5px 5px 5px 5px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-</style>
-<h2 style="color:teal;text-align:center">Provider ClaimForm Approved</h2>
-<br />
-<fieldset class="scheduler-border">
-    <legend class="scheduler-border" style="color:teal">Member ClaimForm Image Content</legend>
-    <br />
-    <div>
-        <div class="form-group">
-            @Html.Label("ClaimForm Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "ClaimForm_NumberLabel" })
-            <div class="col-md-8">
-                @Html.DropDownList("c1", new SelectList(ViewBag.lis), "--Select ClaimForm Number--", htmlAttributes: new { @class = "form-control", @id = "ClaimForm_Number", @Name = "ClaimForm_Number" })
-                @*@Html.Editor("c1", new { htmlAttributes = new { @class = "form-control", @id = "ClaimForm_Number", required = "required" } })*@
-                @Html.ValidationMessage("c1", "", new { @class = "text-danger" })
+                <a class="btn btn-outline-primary pv-btn" href="@Url.Action("ClaimServices","ClaimForm")">
+                    <i class="bi bi-heart-pulse"></i>
+                    <span>@T("GoMedicalServices", "Go to Medical Services")</span>
+                </a>
             </div>
         </div>
-        <br />
-        <br />
-        <div style="text-align:center;padding-top:50px;padding-left:100px">
 
-            <button type="button"
-                    @*onclick="show()"*@ id="btnID" class="btn btn-primary btn-lg" style="width:250px;height:50px;font-size:18px">
-                Show ClaimForm Image
-            </button>
-        </div>
-        <br />
-        <!-- img element without src attribute -->
-        <div style="text-align:center;" id="imgpost">
-            @*<img id="image" src="" style="width:900px;height:900px;border:1px solid darkblue" />*@
+        <div class="pv-card">
+            <div class="pv-card-title">@T("CardTitle", "Member ClaimForm Image")</div>
 
-            <div class="row justify-content-center" @*style="padding-left:50px"*@>
+            <div class="ex-controls">
+                <div>
+                    <label class="fw-bold mb-1">@T("ClaimFormNumber", "ClaimForm Number")</label>
+                    @Html.DropDownList(
+                        "c1",
+                        new SelectList(ViewBag.lis),
+                        T("SelectClaimForm", "--Select ClaimForm Number--"),
+                        new { @class = "form-control", @id = "ClaimForm_Number", @Name = "ClaimForm_Number" }
+                    )
+                </div>
 
-                <div class="col-sm-4 col-md-2" @*style="padding-left:15px"*@>
-                    <div id="boxx">
-                        <a id="image" href="" @*src=""*@ @*style="width:900px;height:900px;border:1px solid darkblue"*@ target="_blank">
-
-                            <div @*class="thumbnail"*@>
-
-                                <img src="~/Images/ClaimFormImg.jpg" width="200" height="110" />
-                                <br />
-                                <div class="caption" style="text-align:center">
-                                    <h1 style="color:#ffe121 ;font:bold">Click Here</h1>
-                                    <h5 style="color:#000000;font:bold">Show ClaimForm Image</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <div class="text-center">
+                    <button type="button" id="btnID" class="btn btn-primary btn-lg w-100">
+                        <i class="bi bi-image"></i> @T("ShowImage", "Show ClaimForm Image")
+                    </button>
                 </div>
             </div>
 
-        </div>
+            <div class="text-center" id="imgpost">
+                <div id="boxx">
+                    <a id="image" href="" target="_blank" style="text-decoration:none">
+                        <div>
+                            <img src="~/Images/ClaimFormImg.jpg" width="200" height="110" />
+                            <div class="caption text-center mt-2">
+                                <h5 style="color:#0b2b40;font-weight:900">@T("ClickHere", "Click Here")</h5>
+                                <div style="color:rgba(15,23,42,.65);font-weight:800">@T("ShowImage", "Show ClaimForm Image")</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-
-        <table class="table369" id="Diagnosess">
-
-            <tr>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("First Diagnosis")
-                </td>
-                <td style="width: 400px;font-size:15px;padding-bottom:5px">
-                    <input list="Diagnosis_List" type="text" id="Diagnosis" name="Diagnosis" size="400"  style="max-width:400px" readonly>
-                    <datalist id="Diagnosis_List"></datalist>
-                    @* @Html.DropDownList("Citydropdown3", new SelectList(ViewBag.diagnosi), "----Select Diagnosis----", htmlAttributes: new { @class = "form-control", @id = "Diagnosis", @Name = "Diagnosis" })*@
-
-                </td>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("First ICD Number")
-                </td>
-                <td style="width: 250px;font-size:15px;padding-bottom:5px">
-                    @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control", @id = "ICD_Number", @Name = "ICD_Number", @readonly = "readonly" } })
-
-                </td>
-
-            </tr>
-            <tr>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("Second Diagnosis")
-                </td>
-                <td style="width: 400px;font-size:15px;padding-bottom:5px">
-                    <input @*list="Diagnosis_List"*@ type="text" id="Diagnosis2" name="Diagnosis2" size="400" @*class="deletable"*@ style="max-width:400px" readonly>
-
-                    @*<datalist id="Diagnosis_List"></datalist>*@
-                    @* @Html.DropDownList("Citydropdown3", new SelectList(ViewBag.diagnosi), "----Select Diagnosis----", htmlAttributes: new { @class = "form-control", @id = "Diagnosis", @Name = "Diagnosis" })*@
-
-                </td>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("Second ICD Number")
-                </td>
-                <td style="width: 250px;font-size:15px;padding-bottom:5px">
-                    @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control", @id = "ICD_Number2", @Name = "ICD_Number2", @readonly = "readonly" } })
-
-                </td>
-
-            </tr>
-            <tr>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("Third Diagnosis")
-                </td>
-                <td style="width: 400px;font-size:15px;padding-bottom:5px">
-                    <input @*list="Diagnosis_List"*@ type="text" id="Diagnosis3" name="Diagnosis3" size="400" @*class="deletable"*@ style="max-width:400px" readonly>
-                    @*<datalist id="Diagnosis_List"></datalist>*@
-                    @* @Html.DropDownList("Citydropdown3", new SelectList(ViewBag.diagnosi), "----Select Diagnosis----", htmlAttributes: new { @class = "form-control", @id = "Diagnosis", @Name = "Diagnosis" })*@
-
-                </td>
-                <td style="width: 170px;font-size:15px;padding-bottom:5px">
-                    @Html.Label("Third ICD Number")
-                </td>
-                <td style="width: 250px;font-size:15px;padding-bottom:5px">
-                    @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control", @id = "ICD_Number3", @Name = "ICD_Number3", @readonly = "readonly" } })
-
-                </td>
-
-            </tr>
-         
-
-        </table>
-        <div style="text-align:right;" id="button_open_div">
-            <button type="button" id="button_open" class="btn btn-success">
-                Open Image
-            </button>
-        </div>
-
-        <div style="text-align:right;" id="button_Close_div">
-            <button type="button" id="button_Close" class="btn btn-danger">
-                Close Image
-            </button>
-        </div>
-    </div>
-
-
-
-</fieldset>
-<br />
-
-<br />
-<fieldset class="scheduler-border" style="background-color:red" id="Expended_services_Stoped">
-    <legend class="scheduler-border" style="color:black">Approval Services Stopped</legend>
-    <div id="claim_services2_Stoped">
-        <br />
-        <table class="table7899" id="Claim_Services2_Stoped" cellpadding="0" cellspacing="0">
-            <thead>
+            <table class="table table-borderless" id="Diagnosess">
                 <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Price</th>
-                    <th>Service Qnt</th>
-                    <th>Service Amt</th>
-                    <th>Requested Price</th>
-                    <th>Refuse Note</th>
+                    <td class="fw-bold">@T("Diag1", "First Diagnosis")</td>
+                    <td><input type="text" id="Diagnosis" readonly class="form-control" /></td>
+                    <td class="fw-bold">@T("ICD1", "First ICD Number")</td>
+                    <td><input type="text" id="ICD_Number" readonly class="form-control" /></td>
                 </tr>
-            </thead>
-
-            <tbody></tbody>
-        </table>
-
-
-    </div>
-
-
-</fieldset>
-
-<br />
-<fieldset class="scheduler-border" style="background-color:green" id="Expended_services_Done">
-    <legend class="scheduler-border" style="color:black">Approval Service Done</legend>
-    <div id="claim_services2_Done">
-        <br />
-        <table class="table7899" id="Claim_Services2_Done" cellpadding="0" cellspacing="0">
-            <thead>
                 <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Price</th>
-                    <th>Service Qnt</th>
-                    <th>Service Amt</th>
-                    <th>Requested Price</th>
-                    <th>Note</th>
+                    <td class="fw-bold">@T("Diag2", "Second Diagnosis")</td>
+                    <td><input type="text" id="Diagnosis2" readonly class="form-control" /></td>
+                    <td class="fw-bold">@T("ICD2", "Second ICD Number")</td>
+                    <td><input type="text" id="ICD_Number2" readonly class="form-control" /></td>
                 </tr>
-            </thead>
+                <tr>
+                    <td class="fw-bold">@T("Diag3", "Third Diagnosis")</td>
+                    <td><input type="text" id="Diagnosis3" readonly class="form-control" /></td>
+                    <td class="fw-bold">@T("ICD3", "Third ICD Number")</td>
+                    <td><input type="text" id="ICD_Number3" readonly class="form-control" /></td>
+                </tr>
+            </table>
 
-            <tbody></tbody>
-        </table>
+            <div class="ex-actions-row">
+                <button type="button" id="button_open" class="btn btn-success">
+                    <i class="bi bi-box-arrow-up-right"></i> @T("OpenImage", "Open Image")
+                </button>
+                <button type="button" id="button_Close" class="btn btn-danger">
+                    <i class="bi bi-x-circle"></i> @T("CloseImage", "Close Image")
+                </button>
+            </div>
+        </div>
 
+        <div class="pv-card" id="Expended_services_Stoped" style="border-left:6px solid #dc3545;">
+            <div class="pv-card-title">@T("ServicesStopped", "Approval Services Stopped")</div>
+            <div class="ex-table-wrap">
+                <table class="table7899" id="Claim_Services2_Stoped" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@T("Serial", "Serial")</th>
+                            <th>@T("ServiceName", "Service Name")</th>
+                            <th>@T("ServicePrice", "Service Price")</th>
+                            <th>@T("ServiceQnt", "Service Qnt")</th>
+                            <th>@T("ServiceAmt", "Service Amt")</th>
+                            <th>@T("RequestedPrice", "Requested Price")</th>
+                            <th>@T("RefuseNote", "Refuse Note")</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pv-card" id="Expended_services_Done" style="border-left:6px solid #198754;">
+            <div class="pv-card-title">@T("ServicesDone", "Approval Services Done")</div>
+            <div class="ex-table-wrap">
+                <table class="table7899" id="Claim_Services2_Done" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@T("Serial", "Serial")</th>
+                            <th>@T("ServiceName", "Service Name")</th>
+                            <th>@T("ServicePrice", "Service Price")</th>
+                            <th>@T("ServiceQnt", "Service Qnt")</th>
+                            <th>@T("ServiceAmt", "Service Amt")</th>
+                            <th>@T("RequestedPrice", "Requested Price")</th>
+                            <th>@T("Note", "Note")</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="pv-card" id="Expended_Invoice">
+            <div class="pv-card-title">@T("MemberInvoice", "Approval Member Invoice")</div>
+
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-4">
+                    <label class="fw-bold text-danger">@T("ClaimFormAmt", "Claim Form Amt")</label>
+                    <input type="text" id="Claim_FormAmt" value="0" readonly class="form-control" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="fw-bold text-danger">@T("DeductPct", "Member Deductable Percentage")</label>
+                    <input type="text" id="Member_DeductablePercentage" value="0" readonly class="form-control" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="fw-bold text-danger">@T("DeductAmt", "Member Deductable")</label>
+                    <input type="text" id="Member_Deductable" value="0" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="ex-actions-row" id="Approve_Claim">
+                <button type="button" id="Approve_ClaimForm" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check2-circle"></i> @T("ApprovePrint", "Accept ClaimForm & Print Invoice")
+                </button>
+
+                <button type="button" id="Cancel_ClaimForm" class="btn btn-success btn-lg">
+                    <i class="bi bi-x-circle"></i> @T("CancelClaim", "Cancel ClaimForm")
+                </button>
+
+                <button type="button" id="Resend_CMC" class="btn btn-warning btn-lg">
+                    <i class="bi bi-arrow-repeat"></i> @T("ResendCMC", "Resend To CMC")
+                </button>
+            </div>
+        </div>
 
     </div>
-
-
-</fieldset>
-<br />
-<fieldset class="scheduler-border" @*style="background-color:green"*@ id="Expended_Invoice">
-    <legend class="scheduler-border" style="color:teal">Approval Member Invoice</legend>
-    <br />
-    <br />
-
-    <label style="color:red">Claim Form Amt : </label>
-    <input type="text" size="20" id="Claim_FormAmt" name="Claim_FormAmt" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="color:red">Member Deductable Percentage : </label>
-    <input type="text" size="20" id="Member_DeductablePercentage" name="Member_DeductablePercentage" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="color:red">Member Deductable : </label>
-    <input type="text" size="20" id="Member_Deductable" name="Member_Deductable" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-
-</fieldset>
-<div style="text-align:center;" id="Approve_Claim">
-    <button type="button" id="Approve_ClaimForm" class="btn btn-primary btn-lg">
-        Accept ClaimForm & Print Invoice
-    </button>
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <button type="button" id="Cancel_ClaimForm" class="btn btn-success btn-lg">
-        Cancel ClaimForm
-    </button>
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <button type="button" id="Resend_CMC" class="btn btn-warning btn-lg">
-        Resend To CMC
-    </button>
-</div>
-<br />
-<br />
-<br />
-<br />
-<div style="text-align:left;display:inline-block;position:relative">
-    <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main Home@*</u>*@</a>
-</div>
-<div style="text-align:right;display:inline-block;padding-left:750px;position:relative">
-    <a id="link" class="round" href="@Url.Action("ClaimServices","ClaimForm")">@*<u>*@ Go to Medical Services &raquo;@*</u>*@</a>
 </div>
 
 <div id="backring1">
@@ -677,938 +467,543 @@
         <spana1></spana1>
     </div>
 </div>
-<br />
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
 <script>
-    //function show() {
+    function exShowLoading(){ $('#backring1').show(); $('#Loadingg').show(); }
+    function exHideLoading(){ $('#Loadingg').hide(); $('#backring1').hide(); }
 
-    /* Get image and change value
-    of src attribute */
+    // ===== Same initial behavior as old =====
     $("#Diagnosess").hide();
     $("#imgpost").hide();
-    $("#button_open_div").hide();
-    $("#button_Close_div").hide();
+    $("#button_open").hide();
+    $("#button_Close").hide();
 
     $("#Expended_services_Stoped").hide();
     $("#Expended_services_Done").hide();
     $("#Expended_Invoice").hide();
     $("#Approve_Claim").hide();
 
-    $("#ClaimForm_Number").select2();
-    $("#Loadingg").hide();
+    exHideLoading();
 
-    $("body").on("click", "#btnID", function () {
-        $("#Diagnosess").hide();
-        $("#imgpost").hide();
-        $("#button_open_div").hide();
-        $("#button_Close_div").hide();
-
-        $("#Expended_services_Stoped").hide();
-        $("#Expended_services_Done").hide();
-        $("#Expended_Invoice").hide();
-        $("#Approve_Claim").hide();
-        $("#Loadingg").show();
-
-        var Cmc_Triger = 3;
-        $.get("/ClaimForm/Get_ClaimFormImage", { id: $('#ClaimForm_Number').val(), CmcTriger: Cmc_Triger }, function (data) {
-            $("#Loadingg").hide();
-
-            if (data != "") {
-                let image = document.getElementById("image");
-
-                if (data[0] != "WithoutImage") {
-
-                    //src = "~/Images/medicalservices.jpg"
-                    //alert(data);
-                    //image.src = data[0];
-                    image.href = data[0];
-                    //$("#Diagnosess").show();
-                    //$("#imgpost").show();
-                    //$("#button_open_div").hide();
-                    //$("#button_Close_div").show();
-                }
-                else {
-                    image.href = '';
-
-                    //$("#Diagnosess").show();
-                    //$("#imgpost").show();
-                    //$("#button_open_div").hide();
-                    //$("#button_Close_div").hide();
-                }
-                //"../Images/medicalservices.jpg";
-                // "https://media.geeksforgeeks.org/wp-content/uploads/20210915115837/gfg3.png"
-
-                //document.getElementById("btnID")
-                //    .style.display = "none";
-                //document.getElementById("image").style.display = "true";
-                if (data[1].length != 0) {
-
-                    $("#Expended_services_Stoped").show();
-
-                    var t = $('#Claim_Services2_Stoped').DataTable();
-                    t.rows().remove().draw();
-                    serialll = 0;
-                    for (var i = 0; i < data[1].length; i++) {
-
-                        serialll++;
-                        t.row.add([serialll, data[1][i].ServiceName
-                            , data[1][i].ServicePrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[1][i].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[1][i].ServiceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[1][i].RequestedPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[1][i].Refuse_Note
-                        ]).draw()
-                            ;
-
-                    }
-
-                }
-                if (data[2].length != 0) {
-
-                    $("#Expended_services_Done").show();
-
-                    var t = $('#Claim_Services2_Done').DataTable();
-                    t.rows().remove().draw();
-                    serialll = 0;
-                    for (var i = 0; i < data[2].length; i++) {
-
-                        serialll++;
-                        t.row.add([serialll, data[2][i].ServiceName
-                            , data[2][i].ServicePrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[2][i].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[2][i].ServiceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[2][i].RequestedPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
-                            , data[2][i].Refuse_Note
-                        ]).draw()
-                            ;
-
-                    }
-
-                }
-
-                $("#Diagnosis").val(data[3]);
-                $("#ICD_Number").val(data[4]);
-                $("#Diagnosis2").val(data[5]);
-                $("#ICD_Number2").val(data[6]);
-                $("#Diagnosis3").val(data[7]);
-                $("#ICD_Number3").val(data[8]);
-                $("#imgpost").show();
-                $("#Diagnosess").show();
-                $("#button_open_div").hide();
-                $("#button_Close_div").show();
-                $("#Approve_Claim").show();
-
-
-            }
-            else {
-                Swal.fire("Warning !", "ClaimForm Number is not Exist", "warning");
-
-                //alert("ClaimForm Number is not Exist")
-                //document.getElementById("image").style.display = "none";
-                $("#imgpost").hide();
-                $("#Diagnosess").hide();
-                $("#button_open_div").hide();
-                $("#button_Close_div").hide();
-
-
-                $("#Expended_services_Stoped").hide();
-                $("#Expended_services_Done").hide();
-                $("#Approve_Claim").hide();
-
-            }
-        })
-
-        $.get("/ClaimForm/Get_Deductable", { id: $('#ClaimForm_Number').val() }, function (data) {
-            //if (data != "") {
-            //    if (data[2].length != 0) {
-            if (data != "falsee") {
-
-                $("#Expended_Invoice").show();
-                $('#Claim_FormAmt').val(data[2]);
-                $('#Member_DeductablePercentage').val(data[0] + " %");
-                $('#Member_Deductable').val(data[1]);
-
-
-            }
-
-
-            //}
-
-        })
-
-
-    });
-    $("body").on("click", "#button_open_div", function () {
-        $("#Diagnosess").show();
-        $("#imgpost").show();
-        $("#button_open_div").hide();
-        $("#button_Close_div").show();
-    });
-
-    $("body").on("click", "#button_Close_div", function () {
-        $("#Diagnosess").hide();
-        $("#imgpost").hide();
-        $("#button_open_div").show();
-        $("#button_Close_div").hide();
-    });
-
-
-</script>
-
-
-
-<script type="text/javascript">
     $(document).ready(function () {
 
-        $('#Claim_Services2').DataTable({
-            paging: false,
-            ordering: false,
-        });
-        $('#Claim_Services2_Stoped').DataTable({
-            //paging: false,
-            //ordering: false,
-        });
-        $('#Claim_Services2_Done').DataTable({
-            paging: false,
-            //ordering: false,
+        // select2
+        $("#ClaimForm_Number").select2();
+        $(document).on('select2:open', () => {
+            var f = document.querySelector('.select2-search__field');
+            if (f) f.focus();
         });
 
-    });
+        // DataTables init (old logic safe)
+        $('#Claim_Services2_Stoped').DataTable({ paging: false, ordering: false, info: false, searching: false });
+        $('#Claim_Services2_Done').DataTable({ paging: false, ordering: false, info: false, searching: false });
 
-</script>
+        // Toggle open/close image blocks
+        $("body").on("click", "#button_open", function () {
+            $("#Diagnosess").show();
+            $("#imgpost").show();
+            $("#button_open").hide();
+            $("#button_Close").show();
+        });
+        $("body").on("click", "#button_Close", function () {
+            $("#Diagnosess").hide();
+            $("#imgpost").hide();
+            $("#button_open").show();
+            $("#button_Close").hide();
+        });
 
+        // ===== Show ClaimForm Image (same endpoints + data structure) =====
+        $("body").on("click", "#btnID", function () {
 
-<script type="text/javascript">
-    $(document).ready(function () {
+            $("#Diagnosess").hide();
+            $("#imgpost").hide();
+            $("#button_open").hide();
+            $("#button_Close").hide();
+            $("#Expended_services_Stoped").hide();
+            $("#Expended_services_Done").hide();
+            $("#Expended_Invoice").hide();
+            $("#Approve_Claim").hide();
+
+            exShowLoading();
+
+            var Cmc_Triger = 3;
+
+            $.get("/ClaimForm/Get_ClaimFormImage",
+                { id: $('#ClaimForm_Number').val(), CmcTriger: Cmc_Triger },
+                function (data) {
+
+                    exHideLoading();
+
+                    if (data != "") {
+
+                        var image = document.getElementById("image");
+
+                        if (data[0] != "WithoutImage") {
+                            image.href = data[0];
+                            $("#imgpost").show();
+
+                        } else {
+                            image.href = '';
+                            $("#imgpost").hide();
+                        }
+
+                        // stopped
+                        if (data[1] && data[1].length != 0) {
+                            $("#Expended_services_Stoped").show();
+                            var tStop = $('#Claim_Services2_Stoped').DataTable();
+                            tStop.rows().remove().draw();
+                            var serialll = 0;
+
+                            for (var i = 0; i < data[1].length; i++) {
+                                serialll++;
+                                tStop.row.add([
+                                    serialll,
+                                    data[1][i].ServiceName,
+                                    data[1][i].ServicePrice.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[1][i].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[1][i].ServiceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[1][i].RequestedPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[1][i].Refuse_Note
+                                ]).draw();
+                            }
+                        }
+
+                        // done
+                        if (data[2] && data[2].length != 0) {
+                            $("#Expended_services_Done").show();
+                            var tDone = $('#Claim_Services2_Done').DataTable();
+                            tDone.rows().remove().draw();
+                            var serialll2 = 0;
+
+                            for (var j = 0; j < data[2].length; j++) {
+                                serialll2++;
+                                tDone.row.add([
+                                    serialll2,
+                                    data[2][j].ServiceName,
+                                    data[2][j].ServicePrice.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[2][j].ServiceQnt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[2][j].ServiceAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[2][j].RequestedPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }),
+                                    data[2][j].Refuse_Note
+                                ]).draw();
+                            }
+                        }
+
+                        $("#Diagnosis").val(data[3]);
+                        $("#ICD_Number").val(data[4]);
+                        $("#Diagnosis2").val(data[5]);
+                        $("#ICD_Number2").val(data[6]);
+                        $("#Diagnosis3").val(data[7]);
+                        $("#ICD_Number3").val(data[8]);
+
+                        $("#Diagnosess").show();
+                        $("#button_open").hide();
+                        $("#button_Close").show();
+                        $("#Approve_Claim").show();
+
+                    } else {
+                        Swal.fire("Warning !", "@T("Msg_NotExist","ClaimForm Number is not Exist")", "warning");
+                        $("#imgpost").hide();
+                        $("#Diagnosess").hide();
+                        $("#button_open").hide();
+                        $("#button_Close").hide();
+                        $("#Expended_services_Stoped").hide();
+                        $("#Expended_services_Done").hide();
+                        $("#Approve_Claim").hide();
+                    }
+                }
+            );
+
+            // deductable
+            $.get("/ClaimForm/Get_Deductable", { id: $('#ClaimForm_Number').val() }, function (data) {
+                if (data != "falsee") {
+                    $("#Expended_Invoice").show();
+                    $('#Claim_FormAmt').val(data[2]);
+                    $('#Member_DeductablePercentage').val(data[0] + " %");
+                    $('#Member_Deductable').val(data[1]);
+                }
+            });
+
+        });
+
+        // ===== Approve / Cancel / Resend (same logic) =====
         $("body").on("click", "#Approve_ClaimForm", function () {
 
             Swal.fire({
-                title: "Confirm",
+                title: "@T("Confirm","Confirm")",
                 imageUrl: "/Images/Quationimg.jpg",
                 imageWidth: 550,
                 imageHeight: 225,
-                text: "Are you Sure you want to Approval ClaimForm ?",
+                text: "@T("Q_Approve","Are you sure you want to approve ClaimForm?")",
                 showCancelButton: true,
-                confirmButtonText: "Confirm",
+                confirmButtonText: "@T("Confirm","Confirm")",
                 cancelButtonColor: "#700c0c"
-
             }).then((result) => {
 
-                if (result.isConfirmed) {
-                    $("#Loadingg").show();
-                let ClaimForm_Numb = $('#ClaimForm_Number').val();
-                const myArray = ClaimForm_Numb.split(' ## ');
-                var ClaimFormselect = myArray[0];
-                var cardnumberselect = myArray[1];
-                var claimidselect = myArray[2];
+                if (!result.isConfirmed) return;
 
-                    $.get("/ClaimForm/Provider_Approve_ClaimForm", { claim_id: claimidselect }, function (data) {
-                        $("#Loadingg").hide();
-                    if (data[0] == "aaaa") {
-                        Swal.fire("Error !", "Claim Form is not inserted <br> because All Approval Services is Stopped", "error");
-
-                        $("#Expended_services_Stoped").hide();
-                        $("#Expended_services_Done").hide();
-                        $("#Expended_Invoice").hide();
-                        $("#Approve_Claim").hide();
-
-                        var t1 = $('#Claim_Services2_Stoped').DataTable();
-                        t1.rows().remove().draw();
-
-                        var t2 = $('#Claim_Services2_Done').DataTable();
-                        t2.rows().remove().draw();
-
-                        $('#ClaimForm_Number')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="whatever">--Select ClaimForm Number--</option>')
-                            .val('whatever')
-                            ;
-                        var select = document.getElementById("ClaimForm_Number"), data;
-
-
-                        for (var i = 0; i < data[1].length; i++) {
-                            var opt = document.createElement("option");
-
-                            txt = document.createTextNode(data[1][i]);
-                            opt.appendChild(txt);
-                            opt.setAttribute("value", data[1][i]);
-                            select.insertBefore(opt, select.lastChild);
-
-                        }
-                        $("#Diagnosess").hide();
-                        $("#imgpost").hide();
-                        $("#button_open_div").hide();
-                        $("#button_Close_div").hide();
-
-                        $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            setBadgeCount('NotifactionCount', data);
-                        });
-                    }
-                    else if (data[0] == "bbbb") {
-                        //Swal.fire("Error !", "Claim Form is not inserted <br> because All Approval Services is Stopped", "error");
-
-                        $("#Expended_services_Stoped").hide();
-                        $("#Expended_services_Done").hide();
-                        $("#Expended_Invoice").hide();
-                        $("#Approve_Claim").hide();
-
-                        var t1 = $('#Claim_Services2_Stoped').DataTable();
-                        t1.rows().remove().draw();
-
-                        var t2 = $('#Claim_Services2_Done').DataTable();
-                        t2.rows().remove().draw();
-
-                        $('#ClaimForm_Number')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="whatever">--Select ClaimForm Number--</option>')
-                            .val('whatever')
-                            ;
-                        var select = document.getElementById("ClaimForm_Number"), data;
-
-
-                        for (var i = 0; i < data[1].length; i++) {
-                            var opt = document.createElement("option");
-
-                            txt = document.createTextNode(data[1][i]);
-                            opt.appendChild(txt);
-                            opt.setAttribute("value", data[1][i]);
-                            select.insertBefore(opt, select.lastChild);
-
-                        }
-                        $("#Diagnosess").hide();
-                        $("#imgpost").hide();
-                        $("#button_open_div").hide();
-                        $("#button_Close_div").hide();
-
-                        $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            setBadgeCount('NotifactionCount', data);
-                        });
-                    }
-                    else {
-                        $("#Expended_services_Stoped").hide();
-                        $("#Expended_services_Done").hide();
-                        $("#Expended_Invoice").hide();
-                        $("#Approve_Claim").hide();
-
-                        var t1 = $('#Claim_Services2_Stoped').DataTable();
-                        t1.rows().remove().draw();
-
-                        var t2 = $('#Claim_Services2_Done').DataTable();
-                        t2.rows().remove().draw();
-
-                        $('#ClaimForm_Number')
-                            .find('option')
-                            .remove()
-                            .end()
-                            .append('<option value="whatever">--Select ClaimForm Number--</option>')
-                            .val('whatever')
-                            ;
-                        var select = document.getElementById("ClaimForm_Number"), data;
-
-
-                        for (var i = 0; i < data[3].length; i++) {
-                            var opt = document.createElement("option");
-
-                            txt = document.createTextNode(data[3][i]);
-                            opt.appendChild(txt);
-                            opt.setAttribute("value", data[3][i]);
-                            select.insertBefore(opt, select.lastChild);
-
-                        }
-                        $("#Diagnosess").hide();
-                        $("#imgpost").hide();
-                        $("#button_open_div").hide();
-                        $("#button_Close_div").hide();
-
-                        //alert("Claim Form is inserted. \n Claim Form Amt is :  " + data[2] + "\n Member Deductable Percentage is :  " + data[0] + " % \n Member Deductable is :  " + data[1] + "      .");
-                        Swal.fire("Success", "Claim Form is inserted.<br>Claim Form Amt is :  " + data[2] + "<br> Member Deductable Percentage is :  " + data[0] + " % <br> Member Deductable is :  " + data[1] + "     ", "success");
-
-                        $.get("/ClaimForm/getcountallert", {}, function (data) {
-                            setBadgeCount('NotifactionCount', data);
-                        });
-                         var ClaimID = data[4];
-                        window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
-
-
-                    }
-                })
-
-
-
-
-                }
-                });
-
-
-        });
-
-        $("body").on("click", "#Cancel_ClaimForm", function () {
-
-           
-                Swal.fire({
-                    title: "Confirm",
-                    imageUrl: "/Images/Quationimg.jpg",
-                    imageWidth: 550,
-                    imageHeight: 225,
-                    text: "Are you Sure you want to Cancel ClaimForm ?",
-                    showCancelButton: true,
-                    confirmButtonText: "Confirm",
-                    cancelButtonColor: "#700c0c"
-
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        //var result = confirm("Are you Sure you want to Cancel ClaimForm ?");
-                        //if (result == true) {
-                        $("#Loadingg").show();
-                        let ClaimForm_Numb = $('#ClaimForm_Number').val();
-                        const myArray = ClaimForm_Numb.split(' ## ');
-                        var ClaimFormselect = myArray[0];
-                        var cardnumberselect = myArray[1];
-                        var claimidselect = myArray[2];
-
-                        $.get("/ClaimForm/Provider_Cancel_ClaimForm", { claim_id: claimidselect }, function (data) {
-                            $("#Loadingg").hide();
-                            Swal.fire("Success", "Claim Form is Cancelled Successfuly", "success");
-
-                            //alert("Claim Form is Cancelled Successfuly");
-                            $("#Expended_services_Stoped").hide();
-                            $("#Expended_services_Done").hide();
-                            $("#Expended_Invoice").hide();
-                            $("#Approve_Claim").hide();
-
-                            var t1 = $('#Claim_Services2_Stoped').DataTable();
-                            t1.rows().remove().draw();
-
-                            var t2 = $('#Claim_Services2_Done').DataTable();
-                            t2.rows().remove().draw();
-
-                            $('#ClaimForm_Number')
-                                .find('option')
-                                .remove()
-                                .end()
-                                .append('<option value="whatever">--Select ClaimForm Number--</option>')
-                                .val('whatever')
-                                ;
-                            var select = document.getElementById("ClaimForm_Number"), data;
-
-
-                            for (var i = 0; i < data.length; i++) {
-                                var opt = document.createElement("option");
-
-                                txt = document.createTextNode(data[i]);
-                                opt.appendChild(txt);
-                                opt.setAttribute("value", data[i]);
-                                select.insertBefore(opt, select.lastChild);
-
-                            }
-                            $("#Diagnosess").hide();
-                            $("#imgpost").hide();
-                            $("#button_open_div").hide();
-                            $("#button_Close_div").hide();
-
-                            $.get("/ClaimForm/getcountallert", {}, function (data) {
-                                setBadgeCount('NotifactionCount', data);
-                            });
-
-
-
-
-
-
-                        })
-
-
-
-
-                    }
-                });
-
-        });
-
-
-        $("body").on("click", "#Resend_CMC", function () {
-
-            Swal.fire({
-                title: "Confirm",
-                imageUrl: "/Images/Quationimg.jpg",
-                imageWidth: 550,
-                imageHeight: 225,
-                text: "Are you Sure you want to Resend ClaimForm To CMC Again ?",
-                showCancelButton: true,
-                confirmButtonText: "Confirm",
-                cancelButtonColor: "#700c0c"
-
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-                    $("#Loadingg").show();
-            //var result = confirm("Are you Sure you want to Resend ClaimForm To CMC Again ?");
-            //if (result == true) {
+                exShowLoading();
 
                 let ClaimForm_Numb = $('#ClaimForm_Number').val();
                 const myArray = ClaimForm_Numb.split(' ## ');
-                var ClaimFormselect = myArray[0];
-                var cardnumberselect = myArray[1];
                 var claimidselect = myArray[2];
 
-                    $.get("/ClaimForm/Provider_Resend_ClaimForm", { claim_id: claimidselect }, function (data) {
-                        $("#Loadingg").hide();
-                    Swal.fire("Success", "Claim Form is Resended To CMC Successfuly", "success");
+                $.get("/ClaimForm/Provider_Approve_ClaimForm", { claim_id: claimidselect }, function (data) {
 
-                    //alert("Claim Form is Reseded To CMC Successfuly");
+                    exHideLoading();
+
+                    // reset UI blocks (same as old)
                     $("#Expended_services_Stoped").hide();
                     $("#Expended_services_Done").hide();
                     $("#Expended_Invoice").hide();
                     $("#Approve_Claim").hide();
 
-                    var t1 = $('#Claim_Services2_Stoped').DataTable();
-                    t1.rows().remove().draw();
+                    var t1 = $('#Claim_Services2_Stoped').DataTable(); t1.rows().remove().draw();
+                    var t2 = $('#Claim_Services2_Done').DataTable(); t2.rows().remove().draw();
 
-                    var t2 = $('#Claim_Services2_Done').DataTable();
-                    t2.rows().remove().draw();
+                    $('#ClaimForm_Number').find('option').remove().end()
+                        .append('<option value="whatever">@T("SelectClaimForm","--Select ClaimForm Number--")</option>')
+                        .val('whatever');
 
-                    $('#ClaimForm_Number')
-                        .find('option')
-                        .remove()
-                        .end()
-                        .append('<option value="whatever">--Select ClaimForm Number--</option>')
-                        .val('whatever')
-                        ;
-                    var select = document.getElementById("ClaimForm_Number"), data;
+                    var select = document.getElementById("ClaimForm_Number");
 
+                    if (data[0] == "aaaa") {
+                        Swal.fire("Error !", "Claim Form is not inserted <br> because All Approval Services is Stopped", "error");
 
-                    for (var i = 0; i < data.length; i++) {
-                        var opt = document.createElement("option");
+                        for (var i = 0; i < data[1].length; i++) {
+                            var opt = document.createElement("option");
+                            opt.appendChild(document.createTextNode(data[1][i]));
+                            opt.setAttribute("value", data[1][i]);
+                            select.insertBefore(opt, select.lastChild);
+                        }
 
-                        txt = document.createTextNode(data[i]);
-                        opt.appendChild(txt);
-                        opt.setAttribute("value", data[i]);
-                        select.insertBefore(opt, select.lastChild);
+                        $("#Diagnosess").hide(); $("#imgpost").hide(); $("#button_open").hide(); $("#button_Close").hide();
+                        $.get("/ClaimForm/getcountallert", {}, function (c) { setBadgeCount('NotifactionCount', c); });
 
+                    } else if (data[0] == "bbbb") {
+
+                        for (var i2 = 0; i2 < data[1].length; i2++) {
+                            var opt2 = document.createElement("option");
+                            opt2.appendChild(document.createTextNode(data[1][i2]));
+                            opt2.setAttribute("value", data[1][i2]);
+                            select.insertBefore(opt2, select.lastChild);
+                        }
+
+                        $("#Diagnosess").hide(); $("#imgpost").hide(); $("#button_open").hide(); $("#button_Close").hide();
+                        $.get("/ClaimForm/getcountallert", {}, function (c2) { setBadgeCount('NotifactionCount', c2); });
+
+                    } else {
+
+                        for (var i3 = 0; i3 < data[3].length; i3++) {
+                            var opt3 = document.createElement("option");
+                            opt3.appendChild(document.createTextNode(data[3][i3]));
+                            opt3.setAttribute("value", data[3][i3]);
+                            select.insertBefore(opt3, select.lastChild);
+                        }
+
+                        $("#Diagnosess").hide(); $("#imgpost").hide(); $("#button_open").hide(); $("#button_Close").hide();
+
+                        Swal.fire("Success",
+                            "Claim Form is inserted.<br>Claim Form Amt is :  " + data[2] +
+                            "<br> Member Deductable Percentage is :  " + data[0] + " % " +
+                            "<br> Member Deductable is :  " + data[1],
+                            "success");
+
+                        $.get("/ClaimForm/getcountallert", {}, function (c3) { setBadgeCount('NotifactionCount', c3); });
+
+                        var ClaimID = data[4];
+                        window.open('@Url.Action("GenerateReport_PrintInvoice", "ClaimForm")?typeOfReport=PDF' + '&ClaimId=' + ClaimID, '_self');
                     }
-                    $("#Diagnosess").hide();
-                    $("#imgpost").hide();
-                    $("#button_open_div").hide();
-                    $("#button_Close_div").hide();
-
-                    $.get("/ClaimForm/getcountallert", {}, function (data) {
-                        setBadgeCount('NotifactionCount', data);
-                    });
-
-
-
-
-
-
-                })
-
-
-
-
-                }
                 });
-
-
+            });
         });
 
+        $("body").on("click", "#Cancel_ClaimForm", function () {
+
+            Swal.fire({
+                title: "@T("Confirm","Confirm")",
+                imageUrl: "/Images/Quationimg.jpg",
+                imageWidth: 550,
+                imageHeight: 225,
+                text: "@T("Q_Cancel","Are you sure you want to cancel ClaimForm?")",
+                showCancelButton: true,
+                confirmButtonText: "@T("Confirm","Confirm")",
+                cancelButtonColor: "#700c0c"
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                exShowLoading();
+
+                let ClaimForm_Numb = $('#ClaimForm_Number').val();
+                const myArray = ClaimForm_Numb.split(' ## ');
+                var claimidselect = myArray[2];
+
+                $.get("/ClaimForm/Provider_Cancel_ClaimForm", { claim_id: claimidselect }, function (data) {
+
+                    exHideLoading();
+                    Swal.fire("Success", "Claim Form is Cancelled Successfuly", "success");
+
+                    $("#Expended_services_Stoped").hide();
+                    $("#Expended_services_Done").hide();
+                    $("#Expended_Invoice").hide();
+                    $("#Approve_Claim").hide();
+
+                    var t1 = $('#Claim_Services2_Stoped').DataTable(); t1.rows().remove().draw();
+                    var t2 = $('#Claim_Services2_Done').DataTable(); t2.rows().remove().draw();
+
+                    $('#ClaimForm_Number').find('option').remove().end()
+                        .append('<option value="whatever">@T("SelectClaimForm","--Select ClaimForm Number--")</option>')
+                        .val('whatever');
+
+                    var select = document.getElementById("ClaimForm_Number");
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.appendChild(document.createTextNode(data[i]));
+                        opt.setAttribute("value", data[i]);
+                        select.insertBefore(opt, select.lastChild);
+                    }
+
+                    $("#Diagnosess").hide(); $("#imgpost").hide(); $("#button_open").hide(); $("#button_Close").hide();
+                    $.get("/ClaimForm/getcountallert", {}, function (c) { setBadgeCount('NotifactionCount', c); });
+                });
+            });
+        });
+
+        $("body").on("click", "#Resend_CMC", function () {
+
+            Swal.fire({
+                title: "@T("Confirm","Confirm")",
+                imageUrl: "/Images/Quationimg.jpg",
+                imageWidth: 550,
+                imageHeight: 225,
+                text: "@T("Q_Resend","Are you sure you want to resend ClaimForm to CMC again?")",
+                showCancelButton: true,
+                confirmButtonText: "@T("Confirm","Confirm")",
+                cancelButtonColor: "#700c0c"
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                exShowLoading();
+
+                let ClaimForm_Numb = $('#ClaimForm_Number').val();
+                const myArray = ClaimForm_Numb.split(' ## ');
+                var claimidselect = myArray[2];
+
+                $.get("/ClaimForm/Provider_Resend_ClaimForm", { claim_id: claimidselect }, function (data) {
+
+                    exHideLoading();
+                    Swal.fire("Success", "Claim Form is Resended To CMC Successfuly", "success");
+
+                    $("#Expended_services_Stoped").hide();
+                    $("#Expended_services_Done").hide();
+                    $("#Expended_Invoice").hide();
+                    $("#Approve_Claim").hide();
+
+                    var t1 = $('#Claim_Services2_Stoped').DataTable(); t1.rows().remove().draw();
+                    var t2 = $('#Claim_Services2_Done').DataTable(); t2.rows().remove().draw();
+
+                    $('#ClaimForm_Number').find('option').remove().end()
+                        .append('<option value="whatever">@T("SelectClaimForm","--Select ClaimForm Number--")</option>')
+                        .val('whatever');
+
+                    var select = document.getElementById("ClaimForm_Number");
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.appendChild(document.createTextNode(data[i]));
+                        opt.setAttribute("value", data[i]);
+                        select.insertBefore(opt, select.lastChild);
+                    }
+
+                    $("#Diagnosess").hide(); $("#imgpost").hide(); $("#button_open").hide(); $("#button_Close").hide();
+                    $.get("/ClaimForm/getcountallert", {}, function (c) { setBadgeCount('NotifactionCount', c); });
+                });
+            });
+        });
 
     });
-
-
 </script>
 
-
-
-
-<script type="text/javascript">
-    $(document).on('select2:open', () => {
-        document.querySelector('.select2-search__field').focus();
-    });
-</script>
-
-
-
-
+@* ===== SignalR + counters/snackbars (Same endpoints, V2 counters) ===== *@
 <script type="text/javascript">
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-            //$.connection.hub.disconnect();
-            // $.connection.hub.disconnected(function () {
-            //});
             $.connection.hub.stop();
-
-             //console.log("tab out")
-            // tab is changed
         } else {
-            //$.connection.hub.connect();
             $.connection.hub.start().done(function () {
-                 //console.log("connection started")
-                //notifications.onconn();
                 getData();
                 getData1();
-            }).fail(function (e) {
-                //console.log(e);
-            });
-            //console.log("tab in")
-
-            // tab is active
+            }).fail(function (e) { });
         }
     });
 
-    function sleep(ms) {
-        return new Promise(
-            resolve => setTimeout(resolve, ms)
-        );
-
-
-    }
     $(function () {
-        // Proxy created on the fly
         var cus = $.connection.cusHub;
-        //var cus1 = $.connection.cusHub1;
-        //console.log(cus)
-        // Declare a function on the job hub so the server can invoke it
-        cus.client.displayCustomer = function () {
-            // async function a() {
-            getData();
-            //   await sleep(2000);
-            //  getData1();
-            //}
-            //a();
 
-            //getData();
-            //getData1();
-        };
-        cus.client.data = function () {
-            //async function a() {
-            //    getData();
-            //    await sleep(2000);
-            getData1();
-            //}
-            //a();
+        cus.client.displayCustomer = function () { getData(); };
+        cus.client.data = function () { getData1(); };
+        cus.client.data1 = function () { getData2(); };
 
-            //getData();
-            //getData1();
-        };
-
-        cus.client.data1 = function () {
-            getData2();
-        };
-        // Start the connection
         $.connection.hub.start();
         getData();
         getData1();
         getData2();
-        //async function aa() {
-        //    getData();
-        //    await sleep(2000);
-        //    getData1();
-        //}
-        //aa();
-
-
     });
+
     function getData1() {
         try {
-
-        //var $tbl = $('#tblInfo');
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data1) {
-
-                $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                    setBadgeCount('MesaageCount', data);
-                });
-
-
-                $.each(data1.listCus, function (i, model) {
-
-                });
-            }
+            $.ajax({
+                url: $("#Getmessages").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function () {
+                    $.get("/ClaimForm/getcountmessage", {}, function (data) {
+                        setBadgeCount('MesaageCount', data);
+                    });
+                }
             });
-        }
-        catch (err) {
-        }
+        } catch (err) { }
     }
 
     function getData() {
         try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                }
-                //alert(provid);
-                //alert(branchid);
-
-                @*alert("@Session["providerid"]");
-                alert(data.ProviderID);*@
-
-                //$tbl.empty();
-                $.get("/ClaimForm/getcountallert", {}, function (data1) {
-                    setBadgeCount('NotifactionCount', data1);
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
-                        $('#trigger').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                        $.get("/ClaimForm/AddRealtimeApproval", { Card_Number: model.CardNumber, ClaimForm_Num: model.ClaimFormNum, Provider_ID: model.ProviderID, Branch_ID: model.BranchID }, function (data) {
-
-                            if (data != "") {
-                                var select = document.getElementById("ClaimForm_Number"), data;
-                                var triggger = 1;
-                                for (i = 0; i < select.options.length; i++) {
-                                    if (select.options[i].value == data) {
-                                        triggger = 0;
-                                    }
-
-                                }
-                                if (triggger == 1) {
-                                    var opt = document.createElement("option");
-                                    txt = document.createTextNode(data);
-                                    opt.appendChild(txt);
-                                    opt.setAttribute("value", data);
-                                    select.insertBefore(opt, select.lastChild);
-                                }
-                            }
-
-
-                        })
-                        $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbar.classList.add('isShown');
-                                $('#CardNumbersnackbar').text(model.CardNumber)
-                                $('#Claimformsnackbar').text(model.ClaimFormNum)
-                                setTimeout(hideSnackbar, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger').val("0");
-                                setBadgeCount('NotifactionCount', data2);
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-        });
-    }
-        catch (err) {
-    }
-    }
-    function getData2() {
-        try {
-
-        $.ajax({
-            url: /*"/Customer/Send_to_payy"*/ $("#Get1").val(),
-            type: 'GET',
-            datatype: 'json',
-            success: function (data) {
-
-                var provid = 0;
-                var branchid = 0;
-                if ("@Session["providerid"]" != "" &&"@Session["BranchID"]" != "") {
-                     provid = parseInt("@Session["providerid"]");
-                     branchid = parseInt("@Session["BranchID"]");
-                }
-                  var ApprovePage = 0;
-                  var ApprovePage1 = 0;
-                  var ApprovePage2 = 0;
-
-                if ("@Session["ClaimForm_Approved"]" != ""||"@Session["Approval"]" != ""||"@Session["Doctor_ClaimForm"]" != "" ) {
-                     ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
-                     ApprovePage1 = parseInt("@Session["Approval"]");
-                     ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
-                }
-
-                $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
-                    setBadgeCount('MemberSmartCardRequestsCount', data1);
-                });
-                $.each(data.listCus, function (i, model) {
-
-                    //if ((provid == model.ProviderID) && (branchid == model.BranchID)) {
-                    //}
-                    if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0")  && ($('#trigger1').val() == "0") && (ApprovePage == 1||ApprovePage1 == 1||ApprovePage2 == 1)) {
-                        $('#trigger1').val("1");
-                        $.connection.hub.disconnected(function () {
-                            setTimeout(function () {
-                                $.connection.hub.start();
-                            }, 5000); // Restart connection after 5 seconds.
-                        });
-                      
-                        $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
-
-                        //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
-
-                            //if (result == true) {
-                            var sound = new Audio('/Media/alert.mp3');
-                            sound.play();
-                            setTimeout(function () {
-                                snackbarMember.classList.add('isShown');
-                                $('#CardNumbersnackbarMember').text(model.CardNumber)
-                                setTimeout(hideSnackbard1, 5000);
-                           // alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum );
-                               // window.open('@Url.Action("ProviderClaimFormApproved", "ClaimForm")', '_self');
-                        //}
-                        //else {
-
-                        //}
-                            $('#trigger1').val("0");
-                                setBadgeCount('MemberSmartCardRequestsCount', data2);
-                            }, 100);
-
-                        })
-                        //alert("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber +"\n Claim Form Is :"+model.ClaimFormNum);
-
-                    }
-                    //$tbl.append
-                    //    (
-                    //    '<tr>' +
-                    //        '<td>' + model.ClaimFormNum + '</td>' +
-                    //        '<td>' + model.CardNumber + '</td>' +
-                    //        '<td>' + model.ProviderID + '</td>' +
-                    //        '<td>' + model.BranchID + '</td>' +
-                    //    '<tr>'
-                    //    );
-                });
-            }
-            });
-        }
-        catch (err) {
-        }
-    }
-</script>
-
-<script>
-
-
-    function refresh() {
-
-              $.ajax({
-                        type: "POST",
-                        url: "/ClaimForm/CheckIfSessionValid",
-                        //data: JSON.stringify(Claims_Services),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (r) {
-                            if (r == "False") {
-                                window.open('@Url.Action("login", "ClaimForm")', '_self');
-                            }
-                            else {
-                                setTimeout(refresh, 5000);
-                                 }
-                        }
-        });
-
-    }
-
-    setTimeout(refresh, 1000);
-</script>
-
-
-
-@*<script type="text/javascript">
-        $(function () {
-
-            // Proxy created on the fly
-            var cus = $.connection.cusHub;
-
-            // Declare a function on the job hub so the server can invoke it
-            cus.client.displayCustomer = function () {
-                getData1();
-            };
-
-            // Start the connection
-            $.connection.hub.start();
-            getData1();
-        });
-
-        function getData1() {
-            //var $tbl = $('#tblInfo');
             $.ajax({
-                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
+                url: $("#Get").val(),
                 type: 'GET',
                 datatype: 'json',
                 success: function (data) {
 
-                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                        if (data == 0) {
-                            $('#MesaageCount').removeAttr("data-count");
+                    var provid = 0, branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+                    var ApprovePage = 0;
+                    if ("@Session["ClaimForm_Approved"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                    }
 
-                        }
-                        else {
-                            $('#MesaageCount').attr("data-count", data);
-                        }
-                        // console.log(data);
+                    $.get("/ClaimForm/getcountallert", {}, function (data1) {
+                        setBadgeCount('NotifactionCount', data1);
                     });
 
-
                     $.each(data.listCus, function (i, model) {
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && (model.ClaimFormNum != 0) && ($('#trigger').val() == "0") && (ApprovePage == 1)) {
 
+                            $('#trigger').val("1");
+
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () { $.connection.hub.start(); }, 5000);
+                            });
+
+                            $.get("/ClaimForm/AddRealtimeApproval",
+                                { Card_Number: model.CardNumber, ClaimForm_Num: model.ClaimFormNum, Provider_ID: model.ProviderID, Branch_ID: model.BranchID },
+                                function (resp) {
+                                    if (resp != "") {
+                                        var select = document.getElementById("ClaimForm_Number");
+                                        var exists = false;
+                                        for (var x = 0; x < select.options.length; x++) {
+                                            if (select.options[x].value == resp) { exists = true; break; }
+                                        }
+                                        if (!exists) {
+                                            var opt = document.createElement("option");
+                                            opt.appendChild(document.createTextNode(resp));
+                                            opt.setAttribute("value", resp);
+                                            select.insertBefore(opt, select.lastChild);
+                                        }
+                                    }
+                                });
+
+                            $.get("/ClaimForm/DeactiveAlert", {}, function (data2) {
+                                var sound = new Audio('/Media/alert.mp3');
+                                sound.play();
+                                setTimeout(function () {
+                                    snackbar.classList.add('isShown');
+                                    $('#CardNumbersnackbar').text(model.CardNumber)
+                                    $('#Claimformsnackbar').text(model.ClaimFormNum)
+                                    setTimeout(hideSnackbar, 5000);
+
+                                    $('#trigger').val("0");
+                                    setBadgeCount('NotifactionCount', data2);
+                                }, 100);
+                            });
+                        }
                     });
                 }
             });
-        }
+        } catch (err) { }
+    }
 
-    </script>*@
+    function getData2() {
+        try {
+            $.ajax({
+                url: $("#Get1").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+
+                    var provid = 0, branchid = 0;
+                    if ("@Session["providerid"]" != "" && "@Session["BranchID"]" != "") {
+                        provid = parseInt("@Session["providerid"]");
+                        branchid = parseInt("@Session["BranchID"]");
+                    }
+                    var ApprovePage = 0, ApprovePage1 = 0, ApprovePage2 = 0;
+                    if ("@Session["ClaimForm_Approved"]" != "" || "@Session["Approval"]" != "" || "@Session["Doctor_ClaimForm"]" != "") {
+                        ApprovePage = parseInt("@Session["ClaimForm_Approved"]");
+                        ApprovePage1 = parseInt("@Session["Approval"]");
+                        ApprovePage2 = parseInt("@Session["Doctor_ClaimForm"]");
+                    }
+
+                    $.get("/ClaimForm/getcountallertSmartCard", {}, function (data1) {
+                        setBadgeCount('MemberSmartCardRequestsCount', data1);
+                    });
+
+                    $.each(data.listCus, function (i, model) {
+                        if ((provid == model.ProviderID) && (branchid == model.BranchID) && (model.CardNumber != "0") && ($('#trigger1').val() == "0")
+                            && (ApprovePage == 1 || ApprovePage1 == 1 || ApprovePage2 == 1)) {
+
+                            $('#trigger1').val("1");
+
+                            $.connection.hub.disconnected(function () {
+                                setTimeout(function () { $.connection.hub.start(); }, 5000);
+                            });
+
+                            $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
+                                var sound = new Audio('/Media/alert.mp3');
+                                sound.play();
+                                setTimeout(function () {
+                                    snackbarMember.classList.add('isShown');
+                                    $('#CardNumbersnackbarMember').text(model.CardNumber)
+                                    setTimeout(hideSnackbard1, 5000);
+
+                                    $('#trigger1').val("0");
+                                    setBadgeCount('MemberSmartCardRequestsCount', data2);
+                                }, 100);
+                            });
+                        }
+                    });
+                }
+            });
+        } catch (err) { }
+    }
+</script>
+
+<script>
+    function refresh() {
+        $.ajax({
+            type: "POST",
+            url: "/ClaimForm/CheckIfSessionValid",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == "False") {
+                    window.open('@Url.Action("login", "ClaimForm")', '_self');
+                } else {
+                    setTimeout(refresh, 5000);
+                }
+            }
+        });
+    }
+    setTimeout(refresh, 1000);
+</script>

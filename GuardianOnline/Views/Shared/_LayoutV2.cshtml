@@ -405,6 +405,56 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            /* ===========================
+   RTL support for Snackbars
+   English (LTR): right
+   Arabic  (RTL): left
+   =========================== */
+
+/* Desktop */
+html[dir="rtl"] .snackbar,
+html[dir="rtl"] .snackbarMember{
+    right: auto !important;
+    left: 30px !important;
+}
+
+/* Mobile */
+@@media (max-width: 575.9px){
+    html[dir="rtl"] .snackbar,
+    html[dir="rtl"] .snackbarMember{
+        right: auto !important;
+        left: 16px !important;
+    }
+}
+
+/* Close button position mirrored (اختياري لكنه أفضل) */
+html[dir="rtl"] .snackbar-close-btn,
+html[dir="rtl"] .snackbarMember-close-btn{
+    left: 10px !important;
+    right: auto !important;
+    transform: translate(0, -50%) !important;
+}
+
+/* Mirror icon/text alignment inside snackbar (اختياري) */
+html[dir="rtl"] .snackbar-icon,
+html[dir="rtl"] .snackbarMember-icon{
+    left: auto !important;
+    right: 10px !important;
+}
+
+html[dir="rtl"] .snackbar-text,
+html[dir="rtl"] .snackbarMember-text{
+    left: auto !important;
+    right: 90px !important;
+    text-align: right;
+}
+
+@@media (max-width: 575.9px){
+    html[dir="rtl"] .snackbar-text,
+    html[dir="rtl"] .snackbarMember-text{
+        right: 20px !important;
+    }
+}
     </style>
     <style>
         /* OLD style count: works when element is .fa-stack and we set data-count */

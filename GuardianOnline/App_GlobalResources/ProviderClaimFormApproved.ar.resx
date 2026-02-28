@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>موافقات نموذج المطالبة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>اختر رقم النموذج ثم اعرض الصورة واعتمد/ألغي/أعد الإرسال</value></data>
+
+  <data name="CardTitle" xml:space="preserve"><value>صورة نموذج المطالبة</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>رقم نموذج المطالبة</value></data>
+  <data name="SelectClaimForm" xml:space="preserve"><value>-- اختر رقم نموذج المطالبة --</value></data>
+
+  <data name="ShowImage" xml:space="preserve"><value>عرض صورة النموذج</value></data>
+  <data name="ClickHere" xml:space="preserve"><value>اضغط هنا</value></data>
+  <data name="OpenImage" xml:space="preserve"><value>فتح الصورة</value></data>
+  <data name="CloseImage" xml:space="preserve"><value>إغلاق الصورة</value></data>
+
+  <data name="Diag1" xml:space="preserve"><value>التشخيص الأول</value></data>
+  <data name="ICD1" xml:space="preserve"><value>كود ICD الأول</value></data>
+  <data name="Diag2" xml:space="preserve"><value>التشخيص الثاني</value></data>
+  <data name="ICD2" xml:space="preserve"><value>كود ICD الثاني</value></data>
+  <data name="Diag3" xml:space="preserve"><value>التشخيص الثالث</value></data>
+  <data name="ICD3" xml:space="preserve"><value>كود ICD الثالث</value></data>
+
+  <data name="ServicesStopped" xml:space="preserve"><value>خدمات الموافقة المرفوضة</value></data>
+  <data name="ServicesDone" xml:space="preserve"><value>خدمات الموافقة المقبولة</value></data>
+  <data name="MemberInvoice" xml:space="preserve"><value>فاتورة العضو</value></data>
+
+  <data name="Serial" xml:space="preserve"><value>م</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>سعر الخدمة</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="ServiceAmt" xml:space="preserve"><value>إجمالي الخدمة</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>السعر المطلوب</value></data>
+  <data name="RefuseNote" xml:space="preserve"><value>سبب الرفض</value></data>
+  <data name="Note" xml:space="preserve"><value>ملاحظة</value></data>
+
+  <data name="ClaimFormAmt" xml:space="preserve"><value>إجمالي النموذج</value></data>
+  <data name="DeductPct" xml:space="preserve"><value>نسبة التحمل</value></data>
+  <data name="DeductAmt" xml:space="preserve"><value>قيمة التحمل</value></data>
+
+  <data name="ApprovePrint" xml:space="preserve"><value>اعتماد النموذج وطباعة الفاتورة</value></data>
+  <data name="CancelClaim" xml:space="preserve"><value>إلغاء النموذج</value></data>
+  <data name="ResendCMC" xml:space="preserve"><value>إعادة الإرسال لـ CMC</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>العودة للرئيسية</value></data>
+  <data name="GoMedicalServices" xml:space="preserve"><value>الذهاب للخدمات الطبية</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Msg_NotExist" xml:space="preserve"><value>رقم نموذج المطالبة غير موجود</value></data>
+
+  <data name="Q_Approve" xml:space="preserve"><value>هل أنت متأكد من اعتماد نموذج المطالبة؟</value></data>
+  <data name="Q_Cancel" xml:space="preserve"><value>هل أنت متأكد من إلغاء نموذج المطالبة؟</value></data>
+  <data name="Q_Resend" xml:space="preserve"><value>هل أنت متأكد من إعادة إرسال نموذج المطالبة إلى CMC؟</value></data>
+</root>
