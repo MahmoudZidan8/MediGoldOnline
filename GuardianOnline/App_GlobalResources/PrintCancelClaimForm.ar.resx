@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>طباعة نموذج المطالبة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>اختر فترة تاريخ لعرض النماذج ثم اعرض أو اطبع</value></data>
+  <data name="BackHome" xml:space="preserve"><value>رجوع للصفحة الرئيسية</value></data>
+
+  <data name="CardTitle" xml:space="preserve"><value>بيانات نموذج المطالبة</value></data>
+
+  <data name="SelectDateRange" xml:space="preserve"><value>اختر فترة التاريخ</value></data>
+  <data name="Search" xml:space="preserve"><value>بحث</value></data>
+  <data name="PrintAll" xml:space="preserve"><value>طباعة كل النماذج PDF</value></data>
+
+  <data name="Col_Serial" xml:space="preserve"><value>م</value></data>
+  <data name="Col_ApprovalID" xml:space="preserve"><value>رقم الاعتماد</value></data>
+  <data name="Col_ClaimFormNum" xml:space="preserve"><value>رقم النموذج</value></data>
+  <data name="Col_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Col_MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="Col_Show" xml:space="preserve"><value>عرض</value></data>
+  <data name="Col_Print" xml:space="preserve"><value>طباعة</value></data>
+  <data name="Col_Delete" xml:space="preserve"><value>حذف</value></data>
+
+  <data name="ModalTitle" xml:space="preserve"><value>خدمات الفاتورة</value></data>
+  <data name="ModalClose" xml:space="preserve"><value>إغلاق</value></data>
+
+  <data name="Svc_Serial" xml:space="preserve"><value>م</value></data>
+  <data name="Svc_Name" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="Svc_Qnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Svc_Note" xml:space="preserve"><value>ملاحظة الخدمة</value></data>
+
+  <data name="Loading" xml:space="preserve"><value>جاري التحميل</value></data>
+  <data name="Warning" xml:space="preserve"><value>تحذير!</value></data>
+  <data name="Success" xml:space="preserve"><value>نجاح</value></data>
+  <data name="Error" xml:space="preserve"><value>خطأ!</value></data>
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+
+  <data name="Msg_InvalidDateRange" xml:space="preserve"><value>برجاء اختيار فترة تاريخ صحيحة مرة أخرى</value></data>
+  <data name="Msg_ConfirmPrintAll" xml:space="preserve"><value>هل أنت متأكد من طباعة كل النماذج PDF؟</value></data>
+  <data name="Msg_ConfirmPrintOne" xml:space="preserve"><value>هل أنت متأكد من طباعة نموذج المطالبة PDF؟</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>هل أنت متأكد من حذف الفاتورة؟</value></data>
+
+  <data name="Msg_DeletedOk" xml:space="preserve"><value>تم حذف الفاتورة بنجاح</value></data>
+  <data name="Msg_DeleteError" xml:space="preserve"><value>حدث خطأ في هذه المطالبة</value></data>
+  <data name="Msg_CannotDeleteSent" xml:space="preserve"><value>لا يمكن الحذف لأن المطالبة تم إرسالها إلى حسابات ميدي جولد للدفع</value></data>
+  <data name="BatchNumber" xml:space="preserve"><value>رقم الدفعة</value></data>
+  <data name="BatchDate" xml:space="preserve"><value>تاريخ الدفعة</value></data>
+</root>

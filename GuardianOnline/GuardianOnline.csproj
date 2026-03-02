@@ -225,6 +225,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClaimServices.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\DoctorClaimForm.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoctorClaimForm.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\DoctorClaimForm.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoctorClaimForm.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\InvoicesAudit.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -234,6 +244,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InvoicesAudit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MedicalHistory.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalHistory.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MedicalHistory.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MedicalHistory.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\MemberSmartCardRequests.designer.cs">
       <AutoGen>True</AutoGen>
@@ -279,6 +299,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PrintCancelApproval.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PrintCancelClaimForm.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintCancelClaimForm.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PrintCancelClaimForm.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintCancelClaimForm.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ProviderClaimFormApproved.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -823,6 +853,30 @@
     <Content Include="App_GlobalResources\ClaimServices.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ClaimServices.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PrintCancelClaimForm.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PrintCancelClaimForm.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PrintCancelClaimForm.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PrintCancelClaimForm.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MedicalHistory.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MedicalHistory.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MedicalHistory.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MedicalHistory.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\DoctorClaimForm.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DoctorClaimForm.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\DoctorClaimForm.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DoctorClaimForm.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />

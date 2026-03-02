@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>إضافة نموذج مطالبة</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>أدخل بيانات العضو، أضف الخدمات، ارفع صورة نموذج المطالبة، ثم اطلب نموذج المطالبة</value></data>
+  <data name="BackHome" xml:space="preserve"><value>رجوع للصفحة الرئيسية</value></data>
+  <data name="MedicalHistory" xml:space="preserve"><value>التاريخ الطبي</value></data>
+  <data name="Loading" xml:space="preserve"><value>جاري التحميل</value></data>
+
+  <data name="MemberCardTitle" xml:space="preserve"><value>بيانات نموذج المطالبة</value></data>
+  <data name="MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Diagnosis" xml:space="preserve"><value>التشخيص</value></data>
+  <data name="ICDNumber" xml:space="preserve"><value>كود ICD</value></data>
+
+  <data name="MemberNamePH" xml:space="preserve"><value>اكتب اسم العضو</value></data>
+  <data name="CardNumberPH" xml:space="preserve"><value>اكتب رقم الكارت</value></data>
+  <data name="DiagnosisPH" xml:space="preserve"><value>اكتب التشخيص</value></data>
+  <data name="ICDNumberPH" xml:space="preserve"><value>اكتب كود ICD</value></data>
+
+  <data name="Tbl_MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="Tbl_CustomerName" xml:space="preserve"><value>اسم العميل</value></data>
+  <data name="Tbl_CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="Tbl_ContractNumber" xml:space="preserve"><value>رقم العقد</value></data>
+  <data name="Tbl_Plan" xml:space="preserve"><value>الخطة</value></data>
+  <data name="Tbl_ActiveDate" xml:space="preserve"><value>تاريخ التفعيل</value></data>
+  <data name="Tbl_ActivityStatus" xml:space="preserve"><value>حالة العضوية</value></data>
+  <data name="Tbl_DeactiveDate" xml:space="preserve"><value>تاريخ الإيقاف</value></data>
+  <data name="Tbl_ContractStart" xml:space="preserve"><value>بداية العقد</value></data>
+  <data name="Tbl_ContractEnd" xml:space="preserve"><value>نهاية العقد</value></data>
+  <data name="Tbl_SexType" xml:space="preserve"><value>النوع</value></data>
+
+  <data name="DoctorServicesTitle" xml:space="preserve"><value>خدمات الطبيب</value></data>
+  <data name="AddNewService" xml:space="preserve"><value>إضافة خدمة جديدة</value></data>
+
+  <data name="ModalTitle" xml:space="preserve"><value>خدمات المطالبة</value></data>
+  <data name="ServiceList" xml:space="preserve"><value>قائمة الخدمات</value></data>
+  <data name="ServicePH" xml:space="preserve"><value>اكتب اسم الخدمة</value></data>
+  <data name="DrugPH" xml:space="preserve"><value>اكتب اسم الدواء/الخدمة</value></data>
+
+  <data name="Price" xml:space="preserve"><value>السعر</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>السعر المطلوب</value></data>
+  <data name="Quntity" xml:space="preserve"><value>الكمية</value></data>
+
+  <data name="Serial" xml:space="preserve"><value>م</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>سعر الخدمة</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>كمية الخدمة</value></data>
+
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="Remove" xml:space="preserve"><value>حذف</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+  <data name="NewClaimService" xml:space="preserve"><value>إضافة خدمة</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>تعديل الخدمة</value></data>
+
+  <data name="ClaimFormImage" xml:space="preserve"><value>صورة نموذج المطالبة</value></data>
+
+  <data name="InvoiceTitle" xml:space="preserve"><value>فاتورة العضو</value></data>
+  <data name="InvoiceAmt" xml:space="preserve"><value>إجمالي الفاتورة</value></data>
+  <data name="DeductPerc" xml:space="preserve"><value>نسبة التحمل</value></data>
+  <data name="MemberDeduct" xml:space="preserve"><value>تحمل العضو</value></data>
+
+  <data name="ProviderAppearance" xml:space="preserve"><value>أقسام مقدم الخدمة</value></data>
+  <data name="SelectAll" xml:space="preserve"><value>تحديد الكل</value></data>
+  <data name="Pharmacy" xml:space="preserve"><value>صيدلية</value></data>
+  <data name="Labs" xml:space="preserve"><value>تحاليل</value></data>
+  <data name="Scan" xml:space="preserve"><value>أشعة</value></data>
+  <data name="OpticalCenter" xml:space="preserve"><value>نظارات</value></data>
+  <data name="Physiotherapy" xml:space="preserve"><value>علاج طبيعي</value></data>
+
+  <data name="AddNewClaimService" xml:space="preserve"><value>إضافة خدمة مطالبة</value></data>
+  <data name="ServiceNote" xml:space="preserve"><value>ملاحظة الخدمة</value></data>
+
+  <data name="PharmacyServices" xml:space="preserve"><value>خدمات الصيدلية</value></data>
+  <data name="LabServices" xml:space="preserve"><value>خدمات المعمل</value></data>
+  <data name="ScanServices" xml:space="preserve"><value>خدمات الأشعة</value></data>
+  <data name="OpticalServices" xml:space="preserve"><value>خدمات النظارات</value></data>
+  <data name="PhysioServices" xml:space="preserve"><value>خدمات العلاج الطبيعي</value></data>
+
+  <data name="RequestClaimForm" xml:space="preserve"><value>طلب نموذج مطالبة</value></data>
+</root>

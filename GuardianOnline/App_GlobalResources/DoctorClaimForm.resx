@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>Add ClaimForm</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Enter member data, add services, upload claim form image, then request claim form</value></data>
+  <data name="BackHome" xml:space="preserve"><value>Back to Main Home</value></data>
+  <data name="MedicalHistory" xml:space="preserve"><value>Medical History</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading</value></data>
+
+  <data name="MemberCardTitle" xml:space="preserve"><value>ClaimForm Data Content</value></data>
+  <data name="MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="Diagnosis" xml:space="preserve"><value>Diagnosis</value></data>
+  <data name="ICDNumber" xml:space="preserve"><value>ICD Number</value></data>
+
+  <data name="MemberNamePH" xml:space="preserve"><value>Type member name</value></data>
+  <data name="CardNumberPH" xml:space="preserve"><value>Enter card number</value></data>
+  <data name="DiagnosisPH" xml:space="preserve"><value>Type diagnosis</value></data>
+  <data name="ICDNumberPH" xml:space="preserve"><value>Enter ICD code</value></data>
+
+  <data name="Tbl_MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="Tbl_CustomerName" xml:space="preserve"><value>Customer Name</value></data>
+  <data name="Tbl_CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="Tbl_ContractNumber" xml:space="preserve"><value>Contract Number</value></data>
+  <data name="Tbl_Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="Tbl_ActiveDate" xml:space="preserve"><value>Active Date</value></data>
+  <data name="Tbl_ActivityStatus" xml:space="preserve"><value>Activity Status</value></data>
+  <data name="Tbl_DeactiveDate" xml:space="preserve"><value>Deactive Date</value></data>
+  <data name="Tbl_ContractStart" xml:space="preserve"><value>Contract Start Date</value></data>
+  <data name="Tbl_ContractEnd" xml:space="preserve"><value>Contract End Date</value></data>
+  <data name="Tbl_SexType" xml:space="preserve"><value>Sex Type</value></data>
+
+  <data name="DoctorServicesTitle" xml:space="preserve"><value>Doctor Services</value></data>
+  <data name="AddNewService" xml:space="preserve"><value>Add New Service</value></data>
+
+  <data name="ModalTitle" xml:space="preserve"><value>Claim Services</value></data>
+  <data name="ServiceList" xml:space="preserve"><value>Service list</value></data>
+  <data name="ServicePH" xml:space="preserve"><value>Type service name</value></data>
+  <data name="DrugPH" xml:space="preserve"><value>Type drug/service name</value></data>
+
+  <data name="Price" xml:space="preserve"><value>Price</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>Requested Price</value></data>
+  <data name="Quntity" xml:space="preserve"><value>Quntity</value></data>
+
+  <data name="Serial" xml:space="preserve"><value>Serial</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>Service Price</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="NewClaimService" xml:space="preserve"><value>New Claim Service</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>Edit Claim Service</value></data>
+
+  <data name="ClaimFormImage" xml:space="preserve"><value>ClaimForm Image</value></data>
+
+  <data name="InvoiceTitle" xml:space="preserve"><value>Approval Member Invoice</value></data>
+  <data name="InvoiceAmt" xml:space="preserve"><value>Invoice Amt</value></data>
+  <data name="DeductPerc" xml:space="preserve"><value>Deductable Percentage</value></data>
+  <data name="MemberDeduct" xml:space="preserve"><value>Member Deductable</value></data>
+
+  <data name="ProviderAppearance" xml:space="preserve"><value>Provider appearance</value></data>
+  <data name="SelectAll" xml:space="preserve"><value>Select All</value></data>
+  <data name="Pharmacy" xml:space="preserve"><value>pharmacy</value></data>
+  <data name="Labs" xml:space="preserve"><value>labs</value></data>
+  <data name="Scan" xml:space="preserve"><value>scan</value></data>
+  <data name="OpticalCenter" xml:space="preserve"><value>optical center</value></data>
+  <data name="Physiotherapy" xml:space="preserve"><value>physiothrapy</value></data>
+
+  <data name="AddNewClaimService" xml:space="preserve"><value>Add New Claim Service</value></data>
+  <data name="ServiceNote" xml:space="preserve"><value>Service Note</value></data>
+
+  <data name="PharmacyServices" xml:space="preserve"><value>pharmacy Services</value></data>
+  <data name="LabServices" xml:space="preserve"><value>lab Services</value></data>
+  <data name="ScanServices" xml:space="preserve"><value>Scan Services</value></data>
+  <data name="OpticalServices" xml:space="preserve"><value>optical Services</value></data>
+  <data name="PhysioServices" xml:space="preserve"><value>physiothrapy Services</value></data>
+
+  <data name="RequestClaimForm" xml:space="preserve"><value>Request ClaimForm</value></data>
+</root>

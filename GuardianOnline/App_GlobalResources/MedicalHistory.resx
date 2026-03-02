@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>Medical History</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Medical history overview for the selected card</value></data>
+  <data name="BackHome" xml:space="preserve"><value>Back to Main Home</value></data>
+  <data name="GoMedicalServices" xml:space="preserve"><value>Go to Medical Services</value></data>
+  <data name="CardTitle" xml:space="preserve"><value>Medical History Overview</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading</value></data>
+
+  <data name="Col_ProcedureDate" xml:space="preserve"><value>Procedure Date</value></data>
+  <data name="Col_ClaimNumber" xml:space="preserve"><value>Claim Number</value></data>
+  <data name="Col_ClaimType" xml:space="preserve"><value>Claim Type</value></data>
+  <data name="Col_Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Col_ProviderName" xml:space="preserve"><value>Provider Name</value></data>
+  <data name="Col_ICDNumber" xml:space="preserve"><value>ICD Number</value></data>
+  <data name="Col_Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Col_ServiceCode" xml:space="preserve"><value>Service Code</value></data>
+  <data name="Col_ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="Col_MedicalAct" xml:space="preserve"><value>Medical Act</value></data>
+  <data name="Col_ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+</root>

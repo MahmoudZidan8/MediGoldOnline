@@ -597,6 +597,8 @@
         dtInvoices.on('draw', function () {
             exRecalcTotals();
         });
+        // ✅ Flag: يمنع التشغيل التلقائي أكثر من مرة
+        var autoSearchDone = false;
 
         $("body").off("click", "#Search").on("click", "#Search", function () {
             exShowLoading();
@@ -643,7 +645,11 @@
                 exRecalcTotals();
             });
         });
-
+        // ✅ تشغيل تلقائي مرة واحدة فقط عند فتح الصفحة
+        if (!autoSearchDone) {
+            autoSearchDone = true;
+            $("#Search").trigger("click");
+        }
         $("body").off("click", "#PrintAll").on("click", "#PrintAll", function () {
 
             Swal.fire({

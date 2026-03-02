@@ -1,14 +1,38 @@
 ﻿
 @{
     ViewBag.Title = "Doctor_ClaimForm";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    // ✅ Resource file: DoctorClaimForm.resx / DoctorClaimForm.ar.resx
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("DoctorClaimForm", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
 
-@*@Scripts.Render("~/bundles/jquery")*@
+@* ✅ لازم jQuery قبل أي plugin *@
+@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
-<input type="hidden" id="trigger" value="0" />
 
+@* ✅ Select2 + Moment *@
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+@* ✅ DataTables (مهم لأن الصفحة فيها DataTable) *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+
+@* Hidden fields (كما هي) *@
+<input type="hidden" id="trigger" value="0" />
 <input type="hidden" id="trigger1" value="0" />
 <input type="hidden" id="triggercount1" value="0" />
 
@@ -16,22 +40,283 @@
 @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
 @Html.Hidden("Get1", Url.Action("Get1", "Customer"))
 
+@* ===== original hidden fields (كما هي) ===== *@
+<input type="hidden" id="prov_cat_idd" />
+<input type="hidden" id="Provider_id" />
+<input type="hidden" id="edited_row_idDoc" />
+<input type="hidden" id="edited_row_id" />
+<input type="hidden" id="edited_row_id1" />
+<input type="hidden" id="edited_row_id2" />
+<input type="hidden" id="edited_row_id3" />
+<input type="hidden" id="edited_row_id4" />
 
-@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
+<input type="hidden" id="CustomerPremium_Amt" value="" />
+<input type="hidden" id="Customer_TotalDueAmt" value="" />
+<input type="hidden" id="AnnualCeilinggg" value="" />
+<input type="hidden" id="Member_TotalDueAmt" value="" />
+<input type="hidden" id="Ceiling_Amt" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service" value="" />
+<input type="hidden" id="Ceiling_Amt1" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service1" value="" />
+<input type="hidden" id="Ceiling_Amt2" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service2" value="" />
+<input type="hidden" id="Ceiling_Amt3" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service3" value="" />
+<input type="hidden" id="Ceiling_Amt4" value="" />
+<input type="hidden" id="Member_TotalDueAmt_Service4" value="" />
 
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
-<script src="~/Scripts/bootstrap.min.js"></script>
+<input type="hidden" id="EditDueAmt_Service" value="" />
+<input type="hidden" id="CheckCardNum" value="1" />
+<input type="hidden" id="contractNum" value="" />
+
+<input type="hidden" id="Contract_TypeID" value="" />
+<input type="hidden" id="Is_OverCeiling" value="" />
+<input type="hidden" id="Member_DeducPerc" value="" />
 
 <style>
-    /*body {
+    /* ===== Doctor ClaimForm - V2 UI (Front Only) ===== */
+
+    .dcf-page .dcf-shell {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 10px 14px 24px;
+    }
+
+    .dcf-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 8px 0 14px;
+    }
+
+    .dcf-title {
+        font-size: 22px;
+        font-weight: 900;
+        color: #0b2b40;
         margin: 0;
-        padding: 0;
-        background: #262626;
-    }*/
+    }
+
+    .dcf-sub {
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(15,23,42,.65);
+        margin-top: 4px;
+    }
+
+    .dcf-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .dcf-btn {
+        border-radius: 14px;
+        font-weight: 900;
+        padding: 10px 14px;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    /* Cards */
+    .dcf-card {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15,23,42,.06);
+        overflow: hidden;
+        margin-bottom: 12px;
+    }
+
+    .dcf-card-head {
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        background: rgba(24,169,153,.10);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .dcf-card-title {
+        font-size: 16px;
+        font-weight: 900;
+        color: #0b2b40;
+        margin: 0;
+    }
+
+    .dcf-card-body {
+        padding: 14px;
+    }
+
+    /* Section highlight colors */
+    .dcf-card--member .dcf-card-head {
+        background: rgba(13,110,253,.10);
+    }
+
+    .dcf-card--doctor .dcf-card-head {
+        background: rgba(25,135,84,.10);
+    }
+
+    .dcf-card--invoice .dcf-card-head {
+        background: rgba(255,193,7,.16);
+    }
+
+    .dcf-card--roles .dcf-card-head {
+        background: rgba(111,66,193,.10);
+    }
+
+    .dcf-card--pharmacy .dcf-card-head {
+        background: rgba(220,53,69,.10);
+    }
+
+    .dcf-card--labs .dcf-card-head {
+        background: rgba(13,202,240,.12);
+    }
+
+    .dcf-card--scan .dcf-card-head {
+        background: rgba(32,201,151,.12);
+    }
+
+    .dcf-card--optical .dcf-card-head {
+        background: rgba(253,126,20,.14);
+    }
+
+    .dcf-card--physio .dcf-card-head {
+        background: rgba(0,123,255,.10);
+    }
+
+    /* Inputs normalize (keep IDs) */
+    #Member_name, #Card_number, #Diagnosis, #ICD_Number,
+    #selectServicelist, #selectlabslist, #selectscanlist, #selectopticalcenterlist, #selectphysiothrapylist,
+    #selectServicelistDoc, #Service_Note, #Service_Note1, #Service_Note2, #Service_Note3, #Service_Note4,
+    #Claim_FormAmt, #Member_DeductablePercentage, #Member_Deductable,
+    #SystemPrice, #Requested_Price, #quntityDoc, #quntity, #quntity1, #quntity2, #quntity3, #quntity4 {
+        border-radius: 14px !important;
+        min-height: 44px !important;
+        font-size: 14px !important;
+        font-weight: 800 !important;
+    }
+
+    /* Remove huge min-width that breaks layout */
+    #Member_name, #Card_number, #Diagnosis, #ICD_Number,
+    #selectServicelist, #selectlabslist, #selectscanlist, #selectopticalcenterlist, #selectphysiothrapylist,
+    #selectServicelistDoc, #Service_Note, #Service_Note1, #Service_Note2, #Service_Note3, #Service_Note4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Table wrap */
+    .dcf-table-wrap {
+        overflow: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,.08);
+        background: #fff;
+    }
+
+        .dcf-table-wrap table {
+            min-width: 900px;
+        }
+
+    table.table789, table.table7899 {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        text-align: center;
+        margin: 0;
+    }
+
+        table.table789 th, table.table7899 th {
+            background: rgba(24,169,153,.12);
+            color: #0b2b40;
+            font-weight: 900;
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        table.table789 td, table.table7899 td {
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,.08);
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+    /* Buttons */
+    .dcf-card-body .btn, .dcf-card-body input[type="submit"], .dcf-card-body input[type="button"] {
+        border-radius: 14px !important;
+        font-weight: 900 !important;
+    }
+
+    /* Small action strip */
+    .dcf-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .dcf-strip-left {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    /* Invoice summary row */
+    .dcf-inv {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 10px;
+    }
+
+    @@media (max-width: 992px) {
+        .dcf-inv {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .dcf-scard {
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 16px;
+        box-shadow: 0 10px 26px rgba(15,23,42,.06);
+        padding: 12px 14px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .dcf-slabel {
+        font-size: 12px;
+        font-weight: 900;
+        color: rgba(15,23,42,.65);
+    }
+
+    .dcf-svalue {
+        font-size: 16px;
+        font-weight: 900;
+        color: #0b2b40;
+        direction: ltr;
+    }
+
+    /* Loading overlay */
     #backring1 {
-        background-color: darkgray;
+        background-color: rgba(0,0,0,.25);
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9998;
     }
 
     .ring1 {
@@ -41,32 +326,32 @@
         transform: translate(-50%,-50%);
         width: 150px;
         height: 150px;
-        background: transparent;
-        border: 3px solid /*#3c3c3c*/ #9ac3b8;
+        border: 3px solid #9ac3b8;
         border-radius: 50%;
         text-align: center;
         line-height: 150px;
-        font-family: sans-serif;
         font-size: 20px;
-        color: /*#928d36*/ #fff000;
-        letter-spacing: 4px;
+        letter-spacing: 2px;
+        color: #fff000;
         text-transform: uppercase;
         text-shadow: 0 0 10px #fff000;
-        box-shadow: 0 0 20px rgba(0,0,0,.5);
         background-color: #11395c;
+        box-shadow: 0 0 20px rgba(0,0,0,.35);
+        display: none;
+        z-index: 9999;
     }
 
         .ring1:before {
             content: '';
             position: absolute;
-            top: 0px;
-            left: 0px;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 3px solid transparent;
             border-top: 3px solid #fff000;
             border-right: 3px solid #fff000;
-            box-shadow: 0 0 1em white, 0 0 0 1000vw #e0dedeb5;
+            box-shadow: 0 0 1em white, 0 0 0 1000vw rgba(224,222,222,.70);
             border-radius: 50%;
             animation: animateC1 2s linear infinite;
         }
@@ -115,1384 +400,713 @@
         }
     }
 </style>
-<style>
-    thead input {
-        width: 100%;
-        color: midnightblue;
-        font-weight: bold;
-    }
 
-    tfoot tr, thead tr {
-        background: lightblue;
-    }
+<div class="dcf-page">
+    <div class="dcf-shell">
 
-    tfoot td {
-        font-weight: bold;
-    }
-
-    body.table789 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table789 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table789 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-        table.table789 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-        table.table789, table.table789 table td {
-            border: 1px solid #ccc;
-            font-size: 12pt;
-        }
-
-    body.table7899 {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table.table7899 {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table.table7899 th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            font-size: 10pt;
-        }
-
-        table.table7899 th, table.table789 td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 10pt;
-            font-weight: bold;
-        }
-
-        table.table7899, table.table7899 table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-            font-size: 10pt;
-        }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-
-    #mytable td, th {
-        border-style: hidden;
-    }
-
-    /*.fade-scale {
-        transform: scale(0);
-        opacity: 0;
-        -webkit-transition: all .25s linear;
-        -o-transition: all .25s linear;
-        transition: all .25s linear;
-    }
-
-        .fade-scale.in {
-            opacity: 1;
-            transform: scale(1);
-        }*/
-</style>
-
-<h2 style="color:teal;text-align:center">ADD ClaimForm</h2>
-
-@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
-@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
-
-<link rel="stylesheet" href="~/Content/select2.min.css">
-<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
-
-<style>
-    #Claim_FormAmt, #Member_DeductablePercentage, #Member_Deductable {
-        -webkit-box-shadow: 0;
-        max-width: 100px;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 150PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        text-align: center;
-    }
-
-    #Member_name, #Card_number, #Diagnosis, #ICD_Number {
-        -webkit-box-shadow: 0;
-        max-width: 450px;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 300PX;
-        box-shadow: 10PX;
-        border-radius: 15PX;
-        color: black;
-        font-size: 17PX;
-        padding-left: 10PX;
-    }
-
-    #selectServicelist, #selectlabslist, #selectscanlist, #selectopticalcenterlist, #selectphysiothrapylist, #selectServicelistDoc, #Service_Note, #Service_Note1, #Service_Note2, #Service_Note3, #Service_Note4 {
-        -webkit-box-shadow: 0;
-        max-width: 450px;
-        width: 100%;
-        min-height: 35PX;
-        min-width: 420PX;
-        box-shadow: 10PX;
-        /*border:0;*/
-        border-radius: 50PX;
-        /*text-align:center;*/
-        color: black;
-        font-size: 17PX;
-        padding-left: 10PX;
-    }
-
-    #Provider_Name {
-        max-width: 550px;
-    }
-
-    #imgfilelabel {
-        font-size: 18px;
-        color: #000;
-    }
-
-    #SelectProviderBranch {
-        max-width: 550px;
-    }
-
-    #Notess {
-        max-width: 550px;
-    }
-
-    #Memos {
-        max-width: 550px;
-    }
-
-    #Service_Note {
-        max-width: 550px;
-    }
-
-    #Member_name, #Approval_Date, #Notess, #Memos, #Card_number, #Date_Procedure, #Date_symptoms, #ICD_Number, #Member_name {
-        font-size: 15px;
-    }
-
-    #providerName {
-        font-size: 12px;
-    }
-</style>
-@*<input type="text" id="logininid" value="@ViewBag.Login_enter_id" hidden />
-    <input type="text" id="RecordBatch_ID" value="@ViewBag.Rec_Batch_ID" hidden />*@
-<input type="hidden" id="prov_cat_idd" />
-<input type="hidden" id="Provider_id" />
-<input type="hidden" id="edited_row_idDoc" />
-<input type="hidden" id="edited_row_id" />
-<input type="hidden" id="edited_row_id1" />
-<input type="hidden" id="edited_row_id2" />
-<input type="hidden" id="edited_row_id3" />
-<input type="hidden" id="edited_row_id4" />
-
-<input type="hidden" id="CustomerPremium_Amt" value="" />
-<input type="hidden" id="Customer_TotalDueAmt" value="" />
-<input type="hidden" id="AnnualCeilinggg" value="" />
-<input type="hidden" id="Member_TotalDueAmt" value="" />
-<input type="hidden" id="Ceiling_Amt" value="" />
-<input type="hidden" id="Member_TotalDueAmt_Service" value="" />
-<input type="hidden" id="Ceiling_Amt1" value="" />
-<input type="hidden" id="Member_TotalDueAmt_Service1" value="" />
-<input type="hidden" id="Ceiling_Amt2" value="" />
-<input type="hidden" id="Member_TotalDueAmt_Service2" value="" />
-<input type="hidden" id="Ceiling_Amt3" value="" />
-<input type="hidden" id="Member_TotalDueAmt_Service3" value="" />
-<input type="hidden" id="Ceiling_Amt4" value="" />
-<input type="hidden" id="Member_TotalDueAmt_Service4" value="" />
-
-<input type="hidden" id="EditDueAmt_Service" value="" />
-
-<input type="hidden" id="CheckCardNum" value="1" />
-<input type="hidden" id="contractNum" value="" />
-
-<input type="hidden" id="Contract_TypeID" value="" />
-<input type="hidden" id="Is_OverCeiling" value="" />
-<input type="hidden" id="Member_DeducPerc" value="" />
-
-
-
-<br />
-<p>
-    @*<a id="Utilization_member" class="btn btn-warning">
-                <span class="glyphicon glyphicon-book"></span>
-                Utilization
-            </a>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <a id="Approvals_member" class="btn btn-warning">
-                <span class="glyphicon glyphicon-book"></span>
-                Approvals
-            </a>
-
-        @if (int.Parse(Session["UserID"].ToString()) == 827)
-        {
-            <a id="Approvals_memberOnline" class="btn btn-warning">
-                <span class="glyphicon glyphicon-book"></span>
-                Approvals Online
-            </a>
-        }*@
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <a id="Medical_History" class="btn btn-warning">
-        <span class="glyphicon glyphicon-book"></span>
-        Medical History
-    </a>
-</p>
-<fieldset class="scheduler-border">
-    <legend class="scheduler-border" style="color:teal">ClaimForm Data Content</legend>
-
-    <table class="table147" cellpadding="0" cellspacing="0">
-        <tr>
-            @*<td style="width: 170px">
-                    @Html.Label("Claim Form Number")
-                </td>
-                <td style="width: 250px">
-                    @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "form_number", @Name = "form_number" } })
-                </td>*@
-
-            <td style="width: 150px;font-size:15px">
-                @Html.Label("Member Name")
-            </td>
-            <td style="width: 350px">
-                <input list="Members_List" type="text" id="Member_name" name="Member_name" size="400" class="deletable" style="max-width:400px">
-                <datalist id="Members_List"></datalist>
-            </td>
-
-            <td style="width: 150px;font-size:15px">
-                @Html.Label("Card Number")
-            </td>
-            <td style="width: 350px">
-                @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @size = 400, @id = "Card_number", @Name = "Card_number" } })
-            </td>
-
-            @*<td style="width: 150px">
-                     @Html.Label("Provider Name")
-
-                 </td>
-                <td style="width: 250px">
-                     <input type="text" id="providerName" name="providerName" @*value="@ViewBag.scn" class="form-control" readonly><br>
-                 </td>*@
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
-    </table>
-    @*<br />*@
-
-    @*<div style="font-size: 30px" id="Information">
-            <span class="label-as-badge label label-success">Contract Information</span>
-        </div>*@
-    <br />
-    <table class="table789" id="Member_Info_Table" cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Member Name</th>
-                <th>Customer Name</th>
-                <th>Card Number</th>
-                <th>Contract Number</th>
-                <th>Plan</th>
-                <th>Active Date</th>
-                <th>Activity Status</th>
-                <th>Deactive Date</th>
-                <th>Contract Start Date</th>
-                <th>Contract End Date</th>
-                @*<th>Member Birth Date</th>
-                    <th>Member Age</th>*@
-                <th>Sex Type</th>
-            </tr>
-        </thead>
-
-        <tbody></tbody>
-
-
-    </table>
-
-
-    @*<div style="font-size: 30px" id="diagnosis">
-            <span class="label-as-badge label label-success">diagnosis Information</span>
-        </div>
-        <br />*@
-    <br />
-    <table class="table369">
-
-        <tr>
-
-            <td style="width: 170px;font-size:15px">
-                @Html.Label("Diagnosis")
-            </td>
-            <td style="width: 250px;font-size:15px">
-                <input list="Diagnosis_List" type="text" id="Diagnosis" name="Diagnosis" size="400" class="deletable" style="max-width:400px">
-                <datalist id="Diagnosis_List"></datalist>
-
-                @*@Html.DropDownList("Citydropdown3", new SelectList(ViewBag.diagnosi), "----Select Diagnosis----", htmlAttributes: new { @class = "form-control", @id = "Diagnosis", @Name = "Diagnosis" })*@
-
-            </td>
-            <td style="width: 170px;font-size:15px">
-
-                @Html.Label("ICD Number")
-            </td>
-            <td style="width: 250px;font-size:15px">
-
-                @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control deletable", @size = 400, @id = "ICD_Number", @Name = "ICD_Number" } })
-
-            </td>
-
-
-        </tr>
-        <tr></tr>
-
-
-    </table>
-    <br />
-    @*<div style="text-align:center">
-            <a id="link1" class="round" href="@Url.Action("UploadMemberClaim","ClaimForm")" target="_blank">Upload New ClaimForm Image</a>
-        </div>*@
-</fieldset>
-
-<fieldset class="scheduler-border" id="Provider_services">
-    <legend class="scheduler-border" style="color:teal">Doctor Services</legend>
-    <div id="claim_services1">
-        @*<br />
-            <div class="form-group">
-                @Html.Label("ClaimForm Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "ClaimForm_NumberLabel" })
-                <div class="col-md-9">
-                    @Html.Editor("c1", new { htmlAttributes = new { @class = "form-control deletable", @id = "ClaimForm_Number", required = "required" } })
-                    @Html.ValidationMessage("c1", "", new { @class = "text-danger" })
-                </div>
+        <div class="dcf-header">
+            <div>
+                <h2 class="dcf-title">@T("Title", "Add ClaimForm")</h2>
+                <div class="dcf-sub">@T("SubTitle", "Enter member data, add services, upload claim form image, then request claim form")</div>
             </div>
-            <br />
-            <br />
-            <br />*@
-        <input type="submit" value="Add New Service" data-bs-toggle="modal" data-bs-target="#myModaldoc" id="Add_New_Claim_ServiceDoc" class="btn btn-primary btn-lg" />
-        <br />
-        <table class="table7899" id="Claim_ServicesDoc" cellpadding="0" cellspacing="0">
-            <thead style="text-align:center">
-                <tr>
-                    <th style="text-align:center">Serial</th>
-                    <th style="text-align:center">Service Name</th>
-                    <th style="text-align:center">Service Price</th>
-                    <th style="text-align:center">Service Qnt</th>
-                    <th style="text-align:center">Requested Price</th>
-                    <th style="text-align:center"></th>
-                    <th style="text-align:center"></th>
-                </tr>
-            </thead>
 
-            <tbody>
+            <div class="dcf-actions">
+                <a class="btn btn-outline-secondary dcf-btn" href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>@T("BackHome", "Back to Main Home")</span>
+                </a>
 
+                <a class="btn btn-outline-warning dcf-btn" href="javascript:void(0);" id="Medical_History">
+                    <i class="bi bi-journal-medical"></i>
+                    <span>@T("MedicalHistory", "Medical History")</span>
+                </a>
+            </div>
+        </div>
 
-                @{var claimitemselect = ViewBag.providerServices;
-                    var ii = 0; }
-                @*var counts = claimitemselect.Count; }
-                    @for (var i = 0; i < counts; i++)*@
-                @if (claimitemselect != null)
-                {
+        @* =========================
+            Member / Claim Data
+            ========================= *@
+        <div class="dcf-card dcf-card--member">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("MemberCardTitle", "ClaimForm Data Content")</div>
+            </div>
 
-                    ii = ii + 1;
+            <div class="dcf-card-body">
 
-                    <tr>
-                        <td>@ii</td>
-                        <td>@claimitemselect.GetType().GetProperty("ServiceName").GetValue(claimitemselect)</td>
-                        <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
-                        <td>1.00</td>
-                        <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
-                        <td>
-                            <input type="button" onclick="editedDoc(this)" data-bs-toggle="modal" data-bs-target="#myModaldoc" value="Edit" class="btn btn-success" />
-                        </td>
-                        <td>
-                            <input type="button" onclick="RemovedDoc(this)" value="Remove" class="btn btn-danger" />
-                        </td>
-                    </tr>
-
-
-                }
-            </tbody>
-        </table>
-
-        <br />
-        <div class="modal" id="myModaldoc">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">Claim Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                <div class="row g-3">
+                    <div class="col-12 col-lg-6">
+                        <label class="form-label fw-bold">@T("MemberName", "Member Name")</label>
+                        <input list="Members_List" type="text" id="Member_name" name="Member_name" class="form-control deletable" placeholder="@T("MemberNamePH","Type member name")">
+                        <datalist id="Members_List"></datalist>
                     </div>
-                    <div class="modal-body">
 
-                        <div id="Add_Claim_ServiceeeDoc">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
+                    <div class="col-12 col-lg-6">
+                        <label class="form-label fw-bold">@T("CardNumber", "Card Number")</label>
+                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Card_number", @Name = "Card_number", placeholder = T("CardNumberPH", "Enter card number") } })
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label class="form-label fw-bold">@T("Diagnosis", "Diagnosis")</label>
+                        <input list="Diagnosis_List" type="text" id="Diagnosis" name="Diagnosis" class="form-control deletable" placeholder="@T("DiagnosisPH","Type diagnosis")">
+                        <datalist id="Diagnosis_List"></datalist>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label class="form-label fw-bold">@T("ICDNumber", "ICD Number")</label>
+                        @Html.Editor("Citydropdown4", new { htmlAttributes = new { @class = "form-control deletable", @id = "ICD_Number", @Name = "ICD_Number", placeholder = T("ICDNumberPH", "Enter ICD code") } })
+                    </div>
+                </div>
+
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table789" id="Member_Info_Table" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Tbl_MemberName", "Member Name")</th>
+                                <th>@T("Tbl_CustomerName", "Customer Name")</th>
+                                <th>@T("Tbl_CardNumber", "Card Number")</th>
+                                <th>@T("Tbl_ContractNumber", "Contract Number")</th>
+                                <th>@T("Tbl_Plan", "Plan")</th>
+                                <th>@T("Tbl_ActiveDate", "Active Date")</th>
+                                <th>@T("Tbl_ActivityStatus", "Activity Status")</th>
+                                <th>@T("Tbl_DeactiveDate", "Deactive Date")</th>
+                                <th>@T("Tbl_ContractStart", "Contract Start Date")</th>
+                                <th>@T("Tbl_ContractEnd", "Contract End Date")</th>
+                                <th>@T("Tbl_SexType", "Sex Type")</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        @* =========================
+            Doctor Services (main)
+            ========================= *@
+        <div class="dcf-card dcf-card--doctor" id="Provider_services">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("DoctorServicesTitle", "Doctor Services")</div>
+            </div>
+
+            <div class="dcf-card-body">
+
+                <div class="dcf-strip">
+                    <div class="dcf-strip-left">
+                        <input type="submit"
+                               value="@T("AddNewService","Add New Service")"
+                               data-bs-toggle="modal"
+                               data-bs-target="#myModaldoc"
+                               id="Add_New_Claim_ServiceDoc"
+                               class="btn btn-primary btn-lg" />
+                    </div>
+                </div>
+
+                <div class="dcf-table-wrap">
+                    <table class="table7899" id="Claim_ServicesDoc" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServicePrice", "Service Price")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("RequestedPrice", "Requested Price")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var claimitemselect = ViewBag.providerServices; var ii = 0;}
+                            @if (claimitemselect != null)
+                            {
+                                ii = ii + 1;
                                 <tr>
-
-                                    <td style="width: 100px;font-size:14px">
-                                        @Html.Label("Service list")
+                                    <td>@ii</td>
+                                    <td>@claimitemselect.GetType().GetProperty("ServiceName").GetValue(claimitemselect)</td>
+                                    <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
+                                    <td>1.00</td>
+                                    <td>@claimitemselect.GetType().GetProperty("Price").GetValue(claimitemselect)</td>
+                                    <td>
+                                        <input type="button" onclick="editedDoc(this)" data-bs-toggle="modal" data-bs-target="#myModaldoc" value="@T("Edit","Edit")" class="btn btn-success" />
                                     </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdocdiv">
-                                            <input list="Service_Listdoc" type="text" id="selectServicelistDoc" size="400" name="selectServicelistDoc" class="deletable" style="max-width:400px">
-                                            <datalist id="Service_Listdoc"></datalist>
+                                    <td>
+                                        <input type="button" onclick="RemovedDoc(this)" value="@T("Remove","Remove")" class="btn btn-danger" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
+                @* Modal Doctor *@
+                <div class="modal" id="myModaldoc">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
+
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("ModalTitle", "Claim Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div id="Add_Claim_ServiceeeDoc">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <div id="selectServicelistdocdiv">
+                                                <input list="Service_Listdoc" type="text" id="selectServicelistDoc" name="selectServicelistDoc" class="form-control deletable" placeholder="@T("ServicePH","Type service name")">
+                                                <datalist id="Service_Listdoc"></datalist>
+                                            </div>
                                         </div>
 
-                                    </td>
-                                    <td style="width: 100px;font-size:14px">
-                                        @Html.Label("Price")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice", @Name = "SystemPrice",
-                                       @Value = "1.00" , @readonly = "readonly"}
-                                })
-
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td style="width: 100px;font-size:14px">
-                                        @Html.Label("Requested Price")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price", @Name = "Requested_Price",
-                                       @Value = "1.00" @*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 100px;font-size:14px">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntityDoc", @Name = "quntityDoc",
-                                       @Value = "1.00" @*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-                                </tr>
-                            </table>
-                            <br />
-                            <br />
-                            <div></div>
-                            <div></div>
-
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_ServiceDoc">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceEDoc" class="btn btn-primary btn-lg" />
-
-                            </div>
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_ServiceDoc">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceEDoc" class="btn btn-primary btn-lg" />
-
-                            </div>
-                        </div>
-                        <br />
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        @*<div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="Request Approval" id="Doctor_Add_claim" class="btn btn-primary btn-lg"  />
-
-            </div>*@
-        @*<div style="text-align:left;display:inline-block;position:relative">
-
-                <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">&laquo; Back to Main Home</a>
-            </div>
-            <div style="text-align:right;display:inline-block;padding-left:700px;position:relative">
-                <a id="link" class="round" href="@Url.Action("ProviderClaimFormApproved","ClaimForm")"> Go to ClaimForm Approved &raquo;</a>
-            </div>*@
-    </div>
-    <div class="form-group">
-        @Html.Label("ClaimForm Image", htmlAttributes: new { @class = "control-label col-md-2", @id = "imgfilelabel" })
-        <div class="col-md-10">
-            <input type="file" id="imgfile" name="imgfile" class="form-control icon-file_upload" required />
-        </div>
-    </div>
-    <br />
-    <br />
-
-</fieldset>
-
-<br />
-<fieldset class="scheduler-border" @*style="background-color:green"*@ id="Expended_Invoice">
-    <legend class="scheduler-border" style="color:teal">Approval Member Invoice</legend>
-    <br />
-
-    <label style="color:red">Invoice Amt</label>
-    <input type="text" size="20" id="Claim_FormAmt" name="Claim_FormAmt" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="color:red">Deductable Percentage</label>
-    <input type="text" size="20" id="Member_DeductablePercentage" name="Member_DeductablePercentage" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-    <label style="color:red">Member Deductable</label>
-    <input type="text" size="20" id="Member_Deductable" name="Member_Deductable" value="0" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
-
-</fieldset>
-<br />
-
-<fieldset class="scheduler-border" id="provider_role">
-    <legend class="scheduler-border" style="color:teal">Provider apperance</legend>
-    <br />
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-    </div>
-    <div class="form-check form-check-inline">
-
-        <label>Select All </label>
-        @*<input type="checkbox" id="select_all" name="select_all" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="select_all" name="select_all" /><label style="background-color:white" for="select_all" class="check-box"></label></div>
-
-    </div>
-
-    @*<br />*@
-
-
-    <div class="form-check form-check-inline">
-
-        <label style="font-size:20px">pharmacy</label>
-        @*<input type="checkbox" id="pharmacy" name="pharmacy" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="pharmacy" name="pharmacy" /><label style="background-color:white" for="pharmacy" class="check-box"></label></div>
-
-    </div>
-    <div class="form-check form-check-inline">
-
-        <label style="font-size:20px">labs</label>
-        @*<input type="checkbox" id="labs" name="labs" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="labs" name="labs" /><label style="background-color:white" for="labs" class="check-box"></label></div>
-
-    </div>
-    <div class="form-check form-check-inline">
-
-        <label style="font-size:20px">scan</label>
-        @*<input type="checkbox" id="scan" name="scan" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="scan" name="scan" /><label style="background-color:white" for="scan" class="check-box"></label></div>
-
-    </div>
-
-    <div class="form-check form-check-inline">
-
-        <label style="font-size:20px">optical center</label>
-        @*<input type="checkbox" id="opticalcenter" name="opticalcenter" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="opticalcenter" name="opticalcenter" /><label style="background-color:white" for="opticalcenter" class="check-box"></label></div>
-
-    </div>
-    <div class="form-check form-check-inline">
-
-        <label style="font-size:20px">physiothrapy</label>
-        @*<input type="checkbox" id="physiothrapy" name="physiothrapy" />*@
-        <div class="checkbox-wrapper-19"><input type="checkbox" id="physiothrapy" name="physiothrapy" /><label style="background-color:white" for="physiothrapy" class="check-box"></label></div>
-
-    </div>
-
-</fieldset>
-<br />
-<fieldset class="scheduler-border" id="pharmacy_role">
-    <legend class="scheduler-border" style="color:teal">pharmacy</legend>
-
-    <div id="claim_services1">
-
-        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal" id="Add_New_Claim_Service" class="btn btn-primary btn-lg" />
-
-        <br />
-        <br />
-        <table class="table7899" id="Claim_Services" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Qnt</th>
-                    <th>Service Note</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody></tbody>
-
-        </table>
-
-        <br />
-        <div class="modal" id="myModal">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">pharmacy Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="Add_Claim_Serviceee">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-                                <tr>
-
-                                    <td style="width: 100px;font-size:13px">
-                                        @Html.Label("Service list")
-                                    </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdiv">
-                                            <input list="drugs_List" type="text" id="selectServicelist" size="400" name="ServicelIST" class="deletable" style="max-width:400px">
-                                            <datalist id="drugs_List"></datalist>
-
-                                            @*<select data-width="100%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                    <option></option>
-
-                                                </select>*@
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label fw-bold">@T("Price", "Price")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice", @Name = "SystemPrice", @Value = "1.00", @readonly = "readonly" } })
                                         </div>
 
-                                    </td>
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label fw-bold">@T("RequestedPrice", "Requested Price")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price", @Name = "Requested_Price", @Value = "1.00" } })
+                                        </div>
 
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label fw-bold">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntityDoc", @Name = "quntityDoc", @Value = "1.00" } })
+                                        </div>
+                                    </div>
 
-                                    @*<td style="width: 100px">
-                                            @Html.Label("Service List")
-                                        </td>
-                                        <td style="width: 250px">
-                                            <select data-width="75%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                <option></option>
+                                    <div class="text-center mt-4" id="New_Claim_ServiceDoc">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceEDoc" class="btn btn-primary btn-lg" />
+                                    </div>
 
-                                            </select>
-                                        </td>*@
-
-
-                                </tr>
-                            </table>
-                            <table id="table2" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-
-                                <tr>
-
-                                    <td style="width: 100px;color:red;font-size:13px ">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity", @Name = "quntity",
-                                       @Value = "1.00"@*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 150px;color:red;font-size:13px">
-                                        @Html.Label("Service Note")
-                                    </td>
-                                    <td style="width: 400px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                       @size = 50, @id = "Service_Note", @Name = "Service_Note"@*, @readonly = "readonly"*@}
-                            })
-                                    </td>
-
-                                </tr>
-
-                            </table>
-                            <br />
-
-                            <br />
-                            <div></div>
-                            <div></div>
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE" class="btn btn-success btn-lg" />
-
+                                    <div class="text-center mt-4" id="edit_Claim_ServiceDoc">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceEDoc" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE" class="btn btn-primary btn-lg" />
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
                             </div>
-
 
                         </div>
-                        <br />
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label fw-bold" id="imgfilelabel">@T("ClaimFormImage", "ClaimForm Image")</label>
+                    <input type="file" id="imgfile" name="imgfile" class="form-control icon-file_upload" required />
+                </div>
+
+            </div>
+        </div>
+
+        @* =========================
+            Invoice Summary
+            ========================= *@
+        <div class="dcf-card dcf-card--invoice" id="Expended_Invoice">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("InvoiceTitle", "Approval Member Invoice")</div>
+            </div>
+
+            <div class="dcf-card-body">
+                <div class="dcf-inv">
+                    <div class="dcf-scard">
+                        <div>
+                            <div class="dcf-slabel">@T("InvoiceAmt", "Invoice Amt")</div>
+                            <div class="dcf-svalue">
+                                <input type="text" id="Claim_FormAmt" name="Claim_FormAmt" value="0" readonly class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dcf-scard">
+                        <div>
+                            <div class="dcf-slabel">@T("DeductPerc", "Deductable Percentage")</div>
+                            <div class="dcf-svalue">
+                                <input type="text" id="Member_DeductablePercentage" name="Member_DeductablePercentage" value="0" readonly class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dcf-scard">
+                        <div>
+                            <div class="dcf-slabel">@T("MemberDeduct", "Member Deductable")</div>
+                            <div class="dcf-svalue">
+                                <input type="text" id="Member_Deductable" name="Member_Deductable" value="0" readonly class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* =========================
+            Provider appearance (Roles)
+            ========================= *@
+        <div class="dcf-card dcf-card--roles" id="provider_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("ProviderAppearance", "Provider appearance")</div>
+            </div>
+
+            <div class="dcf-card-body">
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("SelectAll", "Select All")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="select_all" name="select_all" />
+                            <label style="background-color:white" for="select_all" class="check-box"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("Pharmacy", "pharmacy")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="pharmacy" name="pharmacy" />
+                            <label style="background-color:white" for="pharmacy" class="check-box"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("Labs", "labs")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="labs" name="labs" />
+                            <label style="background-color:white" for="labs" class="check-box"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("Scan", "scan")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="scan" name="scan" />
+                            <label style="background-color:white" for="scan" class="check-box"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("OpticalCenter", "optical center")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="opticalcenter" name="opticalcenter" />
+                            <label style="background-color:white" for="opticalcenter" class="check-box"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                        <label class="fw-bold">@T("Physiotherapy", "physiothrapy")</label>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="physiothrapy" name="physiothrapy" />
+                            <label style="background-color:white" for="physiothrapy" class="check-box"></label>
+                        </div>
                     </div>
 
                 </div>
             </div>
         </div>
-        <br />
-        @*<div></div>
-            <div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="ADD Claim" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
 
-            </div>*@
+        @* =========================
+            Pharmacy
+            ========================= *@
+        <div class="dcf-card dcf-card--pharmacy" id="pharmacy_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("Pharmacy", "pharmacy")</div>
+            </div>
 
-    </div>
-</fieldset>
-<br />
+            <div class="dcf-card-body">
+                <input type="submit" value="@T("AddNewClaimService","Add New Claim Service")" data-bs-toggle="modal" data-bs-target="#myModal" id="Add_New_Claim_Service" class="btn btn-primary btn-lg" />
 
-<fieldset class="scheduler-border" id="labs_role">
-    <legend class="scheduler-border" style="color:teal">labs</legend>
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table7899" id="Claim_Services" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("ServiceNote", "Service Note")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
 
-    <div id="claim_services2">
-        @*<div style="font-size: 30px" id="diagnosis">
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
 
-                <span class="label-as-badge label label-success">Approval Services</span>
-            </div>*@
-        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal1" id="Add_New_Claim_Service1" class="btn btn-primary btn-lg" />
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("PharmacyServices", "pharmacy Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
 
-        <br />
-        <br />
-        <table class="table7899" id="Claim_Services1" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Qnt</th>
-                    <th>Service Note</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
+                            <div class="modal-body">
+                                <div id="Add_Claim_Serviceee">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <div id="selectServicelistdiv">
+                                                <input list="drugs_List" type="text" id="selectServicelist" name="ServicelIST" class="form-control deletable" placeholder="@T("DrugPH","Type drug/service name")">
+                                                <datalist id="drugs_List"></datalist>
+                                            </div>
+                                        </div>
 
-            <tbody></tbody>
+                                        <div class="col-12 col-lg-4">
+                                            <label class="form-label fw-bold text-danger">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity", @Name = "quntity", @Value = "1.00" } })
+                                        </div>
 
-        </table>
+                                        <div class="col-12 col-lg-8">
+                                            <label class="form-label fw-bold text-danger">@T("ServiceNote", "Service Note")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Service_Note", @Name = "Service_Note" } })
+                                        </div>
+                                    </div>
 
-        <br />
-        <div class="modal" id="myModal1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
+                                    <div class="text-center mt-4" id="New_Claim_Service">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceE" class="btn btn-success btn-lg" />
+                                    </div>
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">lab Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                                    <div class="text-center mt-4" id="edit_Claim_Service">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceE" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div id="Add_Claim_Serviceee1">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-                                <tr>
+                </div>
 
-                                    <td style="width: 100px;font-size:13px">
-                                        @Html.Label("Service list")
-                                    </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdiv">
-                                            <input list="labs_List" type="text" id="selectlabslist" size="400" name="selectlabslist" class="deletable" style="max-width:400px">
+            </div>
+        </div>
+
+        @* =========================
+            Labs
+            ========================= *@
+        <div class="dcf-card dcf-card--labs" id="labs_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("Labs", "labs")</div>
+            </div>
+
+            <div class="dcf-card-body">
+                <input type="submit" value="@T("AddNewClaimService","Add New Claim Service")" data-bs-toggle="modal" data-bs-target="#myModal1" id="Add_New_Claim_Service1" class="btn btn-primary btn-lg" />
+
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table7899" id="Claim_Services1" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("ServiceNote", "Service Note")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="modal" id="myModal1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
+
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("LabServices", "lab Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div id="Add_Claim_Serviceee1">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <input list="labs_List" type="text" id="selectlabslist" name="selectlabslist" class="form-control deletable" placeholder="@T("ServicePH","Type service name")">
                                             <datalist id="labs_List"></datalist>
-
-                                            @*<select data-width="100%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                    <option></option>
-
-                                                </select>*@
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
                                         </div>
 
-                                    </td>
+                                        <div class="col-12 col-lg-4">
+                                            <label class="form-label fw-bold text-danger">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity1", @Name = "quntity1", @Value = "1.00" } })
+                                        </div>
 
+                                        <div class="col-12 col-lg-8">
+                                            <label class="form-label fw-bold text-danger">@T("ServiceNote", "Service Note")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Service_Note1", @Name = "Service_Note1" } })
+                                        </div>
+                                    </div>
 
-                                    @*<td style="width: 100px">
-                                            @Html.Label("Service List")
-                                        </td>
-                                        <td style="width: 250px">
-                                            <select data-width="75%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                <option></option>
+                                    <div class="text-center mt-4" id="New_Claim_Service1">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceE1" class="btn btn-success btn-lg" />
+                                    </div>
 
-                                            </select>
-                                        </td>*@
-
-
-                                </tr>
-                            </table>
-                            <table id="table2" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-
-                                <tr>
-
-                                    <td style="width: 100px;color:red;font-size:13px ">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity1", @Name = "quntity1",
-                                       @Value = "1.00"@*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 150px;color:red;font-size:13px">
-                                        @Html.Label("Service Note")
-                                    </td>
-                                    <td style="width: 400px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                       @size = 50, @id = "Service_Note1", @Name = "Service_Note1"@*, @readonly = "readonly"*@}
-                            })
-                                    </td>
-
-                                </tr>
-
-                            </table>
-                            <br />
-
-                            <br />
-                            <div></div>
-                            <div></div>
-                            @*<div style="font-size: 15px" id="NewService" hidden>
-                                    <input type="submit" style="text-align:left" value="Close Claim Service" id="New_Claim_Service" class="btn btn-success" />
-                                    <input type="submit" style="text-align:right" value="New Claim Service" id="New_Claim_Servicepharmacy" class="btn btn-success" />
-                                </div>*@
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service1">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE1" class="btn btn-success btn-lg" />
-
+                                    <div class="text-center mt-4" id="edit_Claim_Service1">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceE1" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service1">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE1" class="btn btn-primary btn-lg" />
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
                             </div>
 
-                            @*<div style="font-size: 15px;text-align:left" id="Close_Claim_Service">
-                                    <input type="submit" value="Close Claim Service" id="Close_Claim_ServiceE" class="btn btn-success" />
-
-                                </div>*@
                         </div>
-                        <br />
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
+
             </div>
         </div>
-        @*<br />
-            <div></div>
-            <div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="ADD Claim" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
 
-            </div>*@
+        @* =========================
+            Scan
+            ========================= *@
+        <div class="dcf-card dcf-card--scan" id="scan_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("Scan", "scan")</div>
+            </div>
 
-    </div>
-</fieldset>
-<br />
+            <div class="dcf-card-body">
+                <input type="submit" value="@T("AddNewClaimService","Add New Claim Service")" data-bs-toggle="modal" data-bs-target="#myModal3" id="Add_New_Claim_Service3" class="btn btn-primary btn-lg" />
 
-<fieldset class="scheduler-border" id="scan_role">
-    <legend class="scheduler-border" style="color:teal">scan</legend>
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table7899" id="Claim_Services3" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("ServiceNote", "Service Note")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
 
+                <div class="modal" id="myModal3">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
 
-    <div id="claim_services3">
-        @*<div style="font-size: 30px" id="diagnosis">
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("ScanServices", "Scan Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
 
-                <span class="label-as-badge label label-success">Approval Services</span>
-            </div>*@
-        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal3" id="Add_New_Claim_Service3" class="btn btn-primary btn-lg" />
-
-        <br />
-        <br />
-        <table class="table7899" id="Claim_Services3" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Qnt</th>
-                    <th>Service Note</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody></tbody>
-
-        </table>
-
-        <br />
-        <div class="modal" id="myModal3">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">Scan Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="Add_Claim_Serviceee2">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-                                <tr>
-
-
-                                    <td style="width: 100px;font-size:13px">
-                                        @Html.Label("Service list")
-                                    </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdiv">
-                                            <input list="scan_List" type="text" id="selectscanlist" size="400" name="selectscanlist" class="deletable" style="max-width:400px">
+                            <div class="modal-body">
+                                <div id="Add_Claim_Serviceee2">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <input list="scan_List" type="text" id="selectscanlist" name="selectscanlist" class="form-control deletable" placeholder="@T("ServicePH","Type service name")">
                                             <datalist id="scan_List"></datalist>
-
-                                            @*<select data-width="100%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                    <option></option>
-
-                                                </select>*@
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
                                         </div>
 
-                                    </td>
+                                        <div class="col-12 col-lg-4">
+                                            <label class="form-label fw-bold text-danger">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity2", @Name = "quntity2", @Value = "1.00" } })
+                                        </div>
 
+                                        <div class="col-12 col-lg-8">
+                                            <label class="form-label fw-bold text-danger">@T("ServiceNote", "Service Note")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Service_Note2", @Name = "Service_Note2" } })
+                                        </div>
+                                    </div>
 
-                                    @*<td style="width: 100px">
-                                            @Html.Label("Service List")
-                                        </td>
-                                        <td style="width: 250px">
-                                            <select data-width="75%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                <option></option>
+                                    <div class="text-center mt-4" id="New_Claim_Service2">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceE2" class="btn btn-success btn-lg" />
+                                    </div>
 
-                                            </select>
-                                        </td>*@
-
-
-                                </tr>
-                            </table>
-                            <table id="table2" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-
-                                <tr>
-
-                                    <td style="width: 100px;color:red;font-size:13px ">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity2", @Name = "quntity2",
-                                       @Value = "1.00"@*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 150px;color:red;font-size:13px">
-                                        @Html.Label("Service Note")
-                                    </td>
-                                    <td style="width: 400px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                       @size = 50, @id = "Service_Note2", @Name = "Service_Note2"@*, @readonly = "readonly"*@}
-                            })
-                                    </td>
-
-                                </tr>
-
-                            </table>
-                            <br />
-
-                            <br />
-                            <div></div>
-                            <div></div>
-                            @*<div style="font-size: 15px" id="NewService" hidden>
-                                    <input type="submit" style="text-align:left" value="Close Claim Service" id="New_Claim_Service" class="btn btn-success" />
-                                    <input type="submit" style="text-align:right" value="New Claim Service" id="New_Claim_Servicepharmacy" class="btn btn-success" />
-                                </div>*@
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service2">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE2" class="btn btn-success btn-lg" />
-
+                                    <div class="text-center mt-4" id="edit_Claim_Service2">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceE2" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service2">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE2" class="btn btn-primary btn-lg" />
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
                             </div>
 
-                            @*<div style="font-size: 15px;text-align:left" id="Close_Claim_Service">
-                                    <input type="submit" value="Close Claim Service" id="Close_Claim_ServiceE" class="btn btn-success" />
-
-                                </div>*@
                         </div>
-                        <br />
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
+
             </div>
         </div>
-        @*<br />
-            <div></div>
-            <div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="ADD Claim" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
 
-            </div>*@
-    </div>
-</fieldset>
-<br />
+        @* =========================
+            Optical Center
+            ========================= *@
+        <div class="dcf-card dcf-card--optical" id="opticalcenter_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("OpticalCenter", "optical center")</div>
+            </div>
 
-<fieldset class="scheduler-border" id="opticalcenter_role">
-    <legend class="scheduler-border" style="color:teal">optical center</legend>
+            <div class="dcf-card-body">
+                <input type="submit" value="@T("AddNewClaimService","Add New Claim Service")" data-bs-toggle="modal" data-bs-target="#myModal4" id="Add_New_Claim_Service4" class="btn btn-primary btn-lg" />
 
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table7899" id="Claim_Services4" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("ServiceNote", "Service Note")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
 
-    <div id="claim_services4">
-        @*<div style="font-size: 30px" id="diagnosis">
+                <div class="modal" id="myModal4">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
 
-                <span class="label-as-badge label label-success">Approval Services</span>
-            </div>*@
-        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal4" id="Add_New_Claim_Service4" class="btn btn-primary btn-lg" />
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("OpticalServices", "optical Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
 
-        <br />
-        <br />
-        <table class="table7899" id="Claim_Services4" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Qnt</th>
-                    <th>Service Note</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody></tbody>
-
-        </table>
-
-        <br />
-        <div class="modal" id="myModal4">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">optical Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="Add_Claim_Serviceee3">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-                                <tr>
-
-
-                                    <td style="width: 100px;font-size:13px">
-                                        @Html.Label("Service list")
-                                    </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdiv">
-                                            <input list="opticalcenter_List" type="text" id="selectopticalcenterlist" size="400" name="selectopticalcenterlist" class="deletable" style="max-width:400px">
+                            <div class="modal-body">
+                                <div id="Add_Claim_Serviceee3">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <input list="opticalcenter_List" type="text" id="selectopticalcenterlist" name="selectopticalcenterlist" class="form-control deletable" placeholder="@T("ServicePH","Type service name")">
                                             <datalist id="opticalcenter_List"></datalist>
-
-                                            @*<select data-width="100%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                    <option></option>
-
-                                                </select>*@
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
                                         </div>
 
-                                    </td>
+                                        <div class="col-12 col-lg-4">
+                                            <label class="form-label fw-bold text-danger">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity3", @Name = "quntity3", @Value = "1.00" } })
+                                        </div>
 
+                                        <div class="col-12 col-lg-8">
+                                            <label class="form-label fw-bold text-danger">@T("ServiceNote", "Service Note")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Service_Note3", @Name = "Service_Note3" } })
+                                        </div>
+                                    </div>
 
-                                    @*<td style="width: 100px">
-                                            @Html.Label("Service List")
-                                        </td>
-                                        <td style="width: 250px">
-                                            <select data-width="75%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                <option></option>
+                                    <div class="text-center mt-4" id="New_Claim_Service3">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceE3" class="btn btn-success btn-lg" />
+                                    </div>
 
-                                            </select>
-                                        </td>*@
-
-
-                                </tr>
-                            </table>
-                            <table id="table2" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-
-                                <tr>
-
-                                    <td style="width: 100px;color:red;font-size:13px ">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity3", @Name = "quntity3",
-                                       @Value = "1.00"@*,@Value = "1.00", @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 150px;color:red;font-size:13px">
-                                        @Html.Label("Service Note")
-                                    </td>
-                                    <td style="width: 400px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                       @size = 50, @id = "Service_Note3", @Name = "Service_Note3"@*, @readonly = "readonly"*@}
-                            })
-                                    </td>
-
-                                </tr>
-
-                            </table>
-                            <br />
-
-                            <br />
-                            <div></div>
-                            <div></div>
-                            @*<div style="font-size: 15px" id="NewService" hidden>
-                                    <input type="submit" style="text-align:left" value="Close Claim Service" id="New_Claim_Service" class="btn btn-success" />
-                                    <input type="submit" style="text-align:right" value="New Claim Service" id="New_Claim_Servicepharmacy" class="btn btn-success" />
-                                </div>*@
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service3">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE3" class="btn btn-success btn-lg" />
-
+                                    <div class="text-center mt-4" id="edit_Claim_Service3">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceE3" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service3">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE3" class="btn btn-primary btn-lg" />
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
                             </div>
 
-                            @*<div style="font-size: 15px;text-align:left" id="Close_Claim_Service">
-                                    <input type="submit" value="Close Claim Service" id="Close_Claim_ServiceE" class="btn btn-success" />
-
-                                </div>*@
                         </div>
-                        <br />
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
+
             </div>
         </div>
-        @*<br />
-            <div></div>
-            <div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="ADD Claim" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
 
-            </div>*@
-    </div>
-</fieldset>
+        @* =========================
+            Physiotherapy
+            ========================= *@
+        <div class="dcf-card dcf-card--physio" id="physiothrapy_role">
+            <div class="dcf-card-head">
+                <div class="dcf-card-title">@T("Physiotherapy", "physiothrapy")</div>
+            </div>
 
-<br />
+            <div class="dcf-card-body">
+                <input type="submit" value="@T("AddNewClaimService","Add New Claim Service")" data-bs-toggle="modal" data-bs-target="#myModal5" id="Add_New_Claim_Service5" class="btn btn-primary btn-lg" />
 
-<fieldset class="scheduler-border" id="physiothrapy_role">
-    <legend class="scheduler-border" style="color:teal">physiothrapy</legend>
+                <div class="mt-3 dcf-table-wrap">
+                    <table class="table7899" id="Claim_Services5" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@T("Serial", "Serial")</th>
+                                <th>@T("ServiceName", "Service Name")</th>
+                                <th>@T("ServiceQnt", "Service Qnt")</th>
+                                <th>@T("ServiceNote", "Service Note")</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
 
+                <div class="modal" id="myModal5">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="border-radius:18px;overflow:hidden">
 
-    <div id="claim_services5">
-        @*<div style="font-size: 30px" id="diagnosis">
+                            <div class="modal-header">
+                                <h2 class="modal-title" style="font-weight:900;color:#0b2b40">@T("PhysioServices", "physiothrapy Services")</h2>
+                                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+                            </div>
 
-                <span class="label-as-badge label label-success">Approval Services</span>
-            </div>*@
-        <input type="submit" value="Add New Claim Service" data-bs-toggle="modal" data-bs-target="#myModal5" id="Add_New_Claim_Service5" class="btn btn-primary btn-lg" />
-
-        <br />
-        <br />
-        <table class="table7899" id="Claim_Services5" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Service Name</th>
-                    <th>Service Qnt</th>
-                    <th>Service Note</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody></tbody>
-
-        </table>
-
-        <br />
-        <div class="modal" id="myModal5">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h2 class="modal-title">physiothrapy Services</h2>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="Add_Claim_Serviceee4">
-                            <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-                                <tr>
-
-
-                                    <td style="width: 100px;font-size:13px">
-                                        @Html.Label("Service list")
-                                    </td>
-                                    <td style="width: 250px">
-                                        <div id="selectServicelistdiv">
-                                            <input list="physiothrapy_List" type="text" id="selectphysiothrapylist" size="400" name="selectphysiothrapylist" class="deletable" style="max-width:400px">
+                            <div class="modal-body">
+                                <div id="Add_Claim_Serviceee4">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">@T("ServiceList", "Service list")</label>
+                                            <input list="physiothrapy_List" type="text" id="selectphysiothrapylist" name="selectphysiothrapylist" class="form-control deletable" placeholder="@T("ServicePH","Type service name")">
                                             <datalist id="physiothrapy_List"></datalist>
-
-                                            @*<select data-width="100%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                    <option></option>
-
-                                                </select>*@
-                                            @*@Html.DropDownList("Citydropdown1", new SelectList(ViewBag.provider_categor), "----Select Service Name----", htmlAttributes: new { @class = "form-control", @id = "selectServicelist", @Name = "ServicelIST" })*@
                                         </div>
 
-                                    </td>
+                                        <div class="col-12 col-lg-4">
+                                            <label class="form-label fw-bold text-danger">@T("Quntity", "Quntity")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity4", @Name = "quntity4", @Value = "1.00" } })
+                                        </div>
 
+                                        <div class="col-12 col-lg-8">
+                                            <label class="form-label fw-bold text-danger">@T("ServiceNote", "Service Note")</label>
+                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @id = "Service_Note4", @Name = "Service_Note4" } })
+                                        </div>
+                                    </div>
 
-                                    @*<td style="width: 100px">
-                                            @Html.Label("Service List")
-                                        </td>
-                                        <td style="width: 250px">
-                                            <select data-width="75%" id="selectServicelist" Name="ServicelIST" , htmlAttributes :new { class="form-control" }>
-                                                <option></option>
+                                    <div class="text-center mt-4" id="New_Claim_Service4">
+                                        <input type="submit" value="@T("NewClaimService","New Claim Service")" id="New_Claim_ServiceE4" class="btn btn-success btn-lg" />
+                                    </div>
 
-                                            </select>
-                                        </td>*@
-
-
-                                </tr>
-                            </table>
-                            <table id="table2" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
-
-                                <tr>
-
-                                    <td style="width: 100px;color:red;font-size:13px ">
-                                        @Html.Label("Quntity")
-                                    </td>
-                                    <td style="width: 150px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity4", @Name = "quntity4",
-                                       @Value = "1.00"@*, @readonly = "readonly"*@}
-                            })
-
-                                    </td>
-
-                                    <td style="width: 150px;color:red;font-size:13px">
-                                        @Html.Label("Service Note")
-                                    </td>
-                                    <td style="width: 400px">
-                                        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                       @size = 50, @id = "Service_Note4", @Name = "Service_Note4"@*, @readonly = "readonly"*@}
-                            })
-                                    </td>
-
-                                </tr>
-
-                            </table>
-                            <br />
-
-                            <br />
-                            <div></div>
-                            <div></div>
-                            @*<div style="font-size: 15px" id="NewService" hidden>
-                                    <input type="submit" style="text-align:left" value="Close Claim Service" id="New_Claim_Service" class="btn btn-success" />
-                                    <input type="submit" style="text-align:right" value="New Claim Service" id="New_Claim_Servicepharmacy" class="btn btn-success" />
-                                </div>*@
-                            <div style="font-size: 50px;text-align:center" id="New_Claim_Service4">
-                                <input type="submit" value="New Claim Service" id="New_Claim_ServiceE4" class="btn btn-success btn-lg" />
-
+                                    <div class="text-center mt-4" id="edit_Claim_Service4">
+                                        <input type="submit" value="@T("EditClaimService","Edit Claim Service")" id="edit_Claim_ServiceE4" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div style="font-size: 50px;text-align:center" id="edit_Claim_Service4">
-                                <input type="submit" value="Edit Claim Service" id="edit_Claim_ServiceE4" class="btn btn-primary btn-lg" />
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">@T("Close", "Close")</button>
                             </div>
 
-                            @*<div style="font-size: 15px;text-align:left" id="Close_Claim_Service">
-                                    <input type="submit" value="Close Claim Service" id="Close_Claim_ServiceE" class="btn btn-success" />
-
-                                </div>*@
                         </div>
-                        <br />
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
+
             </div>
         </div>
-        @*<br />
-            <div></div>
-            <div></div>
-            <div style="font-size: 15px;text-align:center" id="diagnosis">
-                <input type="submit" value="ADD Claim" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
 
-            </div>*@
+        @* =========================
+            Final submit
+            ========================= *@
+        <div class="text-center my-3" id="Doctor_Add_claimdiv">
+            <input type="submit" value="@T("RequestClaimForm","Request ClaimForm")" id="Doctor_Add_claim" class="btn btn-primary btn-lg" style="min-width:240px;height:52px" />
+        </div>
+
     </div>
-</fieldset>
-<div></div>
-<div style="font-size: 15px;text-align:center" id="Doctor_Add_claimdiv">
-    <input type="submit" value="Request ClaimForm" id="Doctor_Add_claim" class="btn btn-primary" style="width:150px;height:50px" />
-
 </div>
+
 <div id="backring1">
     <div class="ring1" id="Loadingg">
-        Loading
+        @T("Loading", "Loading")
         <spana1></spana1>
     </div>
 </div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 @if (ViewBag.providerServices != null && ViewBag.providerServices != "")
 {
     <script type="text/javascript">

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Page -->
+  <data name="Title" xml:space="preserve"><value>Claim Services</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Validate member, view claim form images, add services, and request approval</value></data>
+
+  <!-- Header buttons -->
+  <data name="BackHome" xml:space="preserve"><value>« Back to Main Home</value></data>
+  <data name="GoApproved" xml:space="preserve"><value>Go to ClaimForm Approved »</value></data>
+
+  <!-- Sections (Legends) -->
+  <data name="MemberValidation" xml:space="preserve"><value>Member Validation</value></data>
+  <data name="ClaimFormImageContent" xml:space="preserve"><value>Member ClaimForm Image Content</value></data>
+  <data name="ApprovalWaiting" xml:space="preserve"><value>Approval Services Waiting</value></data>
+  <data name="ApprovalStopped" xml:space="preserve"><value>Approval Services Stopped</value></data>
+  <data name="ApprovalDone" xml:space="preserve"><value>Approval Service Done</value></data>
+  <data name="ProviderServices" xml:space="preserve"><value>Provider Services</value></data>
+
+  <!-- Card titles -->
+  <data name="MemberValidationTitle" xml:space="preserve"><value>Validate Member Card</value></data>
+  <data name="ClaimFormsList" xml:space="preserve"><value>ClaimForms List</value></data>
+  <data name="AddServicesTitle" xml:space="preserve"><value>Add Services &amp; Diagnoses</value></data>
+
+  <!-- Inputs -->
+  <data name="CardPlaceholder" xml:space="preserve"><value>Enter Card Number</value></data>
+  <data name="ClaimFormPlaceholder" xml:space="preserve"><value>Enter ClaimForm Number</value></data>
+  <data name="DiagnosisPlaceholder" xml:space="preserve"><value>Type diagnosis</value></data>
+  <data name="ServicePlaceholder" xml:space="preserve"><value>Type service name</value></data>
+
+  <!-- Buttons -->
+  <data name="CheckValidation" xml:space="preserve"><value>Check Validation</value></data>
+  <data name="UploadNewClaimFormImage" xml:space="preserve"><value>Upload New ClaimForm Image</value></data>
+  <data name="OpenImage" xml:space="preserve"><value>Open Image</value></data>
+  <data name="CloseImage" xml:space="preserve"><value>Close Image</value></data>
+
+  <data name="AddSecondDiagnosis" xml:space="preserve"><value>Add Second Diagnosis</value></data>
+  <data name="AddThirdDiagnosis" xml:space="preserve"><value>Add Third Diagnosis</value></data>
+  <data name="DeleteSecondDiagnosis" xml:space="preserve"><value>Delete Second Diagnosis</value></data>
+  <data name="DeleteThirdDiagnosis" xml:space="preserve"><value>Delete Third Diagnosis</value></data>
+
+  <data name="AddNewService" xml:space="preserve"><value>Add New Service</value></data>
+  <data name="NewClaimService" xml:space="preserve"><value>New Claim Service</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>Edit Claim Service</value></data>
+
+  <data name="RequestApproval" xml:space="preserve"><value>Request Approval</value></data>
+
+  <!-- Common -->
+  <data name="Loading" xml:space="preserve"><value>Loading</value></data>
+  <data name="Warning" xml:space="preserve"><value>Warning !</value></data>
+  <data name="Success" xml:space="preserve"><value>Success</value></data>
+  <data name="Error" xml:space="preserve"><value>Error !</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Stopped" xml:space="preserve"><value>Stopped</value></data>
+
+  <!-- Tables: Member Info -->
+  <data name="MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="CustomerName" xml:space="preserve"><value>Customer Name</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="ContractNumber" xml:space="preserve"><value>Contract Number</value></data>
+  <data name="Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="ActiveDate" xml:space="preserve"><value>Active Date</value></data>
+  <data name="ActivityStatus" xml:space="preserve"><value>Activity Status</value></data>
+  <data name="DeactiveDate" xml:space="preserve"><value>Deactive Date</value></data>
+  <data name="BirthDate" xml:space="preserve"><value>Member Birth Date</value></data>
+  <data name="Age" xml:space="preserve"><value>Member Age</value></data>
+  <data name="SexType" xml:space="preserve"><value>Sex Type</value></data>
+
+  <!-- Tables: Common -->
+  <data name="Serial" xml:space="preserve"><value>Serial</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>ClaimForm Number</value></data>
+
+  <!-- Tables: Services -->
+  <data name="ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>Service Price</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>Requested Price</value></data>
+  <data name="RefuseNote" xml:space="preserve"><value>Refuse Note</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+
+  <!-- Image -->
+  <data name="ClickHere" xml:space="preserve"><value>Click Here</value></data>
+  <data name="ShowClaimFormImage" xml:space="preserve"><value>Show ClaimForm Image</value></data>
+  <data name="DeleteClaimFormImage" xml:space="preserve"><value>Delete ClaimForm Image</value></data>
+
+  <!-- Labels (optional) -->
+  <data name="ClaimFormNumberLabel" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="ProcedureDate" xml:space="preserve"><value>Procedure Date</value></data>
+  <data name="FirstDiagnosis" xml:space="preserve"><value>First Diagnosis</value></data>
+  <data name="SecondDiagnosis" xml:space="preserve"><value>Second Diagnosis</value></data>
+  <data name="ThirdDiagnosis" xml:space="preserve"><value>Third Diagnosis</value></data>
+  <data name="ModalTitle" xml:space="preserve"><value>Claim Services</value></data>
+
+  <!-- Messages -->
+  <data name="Msg_NotApproved" xml:space="preserve"><value>ClaimForm Number is not Approved</value></data>
+  <data name="Msg_ServiceRequired" xml:space="preserve"><value>Select Service Name is Required</value></data>
+  <data name="Msg_SelectCorrectService" xml:space="preserve"><value>Select Correct Service Name</value></data>
+  <data name="Msg_ServiceInserted" xml:space="preserve"><value>Claim Service is inserted to Services Successfully</value></data>
+  <data name="Msg_ServiceUpdated" xml:space="preserve"><value>Claim Service is updated.</value></data>
+  <data name="Msg_ServiceExists" xml:space="preserve"><value>Claim Service is Added Since while in Provider Services.</value></data>
+
+  <data name="Msg_CardNotAllowed_Suffix" xml:space="preserve"><value> is not Correct &lt;br&gt; User can not access for this Card Number &lt;br&gt; Please contact CMC</value></data>
+  <data name="Msg_CardNotCorrect_Suffix" xml:space="preserve"><value> is not Correct &lt;br&gt; Please enter Card Number again</value></data>
+
+  <data name="Q_DeleteRow" xml:space="preserve"><value>Do you want to delete:</value></data>
+  <data name="Q_DeleteClaimForm" xml:space="preserve"><value>Are you sure you want to Delete ClaimForm Number?</value></data>
+  <data name="Q_SendToCMC" xml:space="preserve"><value>You currently sent Claim Form to approve from CMC. Are you sure you want to send?</value></data>
+
+  <data name="Msg_DeleteNotAllowed1" xml:space="preserve"><value>ClaimForm Number can not be deleted because Provider made approval. If you want delete, call CMC.</value></data>
+  <data name="Msg_DeleteNotAllowed2" xml:space="preserve"><value>ClaimForm Number can not be deleted because different provider. If you want delete, call CMC.</value></data>
+  <data name="Msg_Deleted" xml:space="preserve"><value>ClaimForm Number is Deleted Successfully</value></data>
+
+  <data name="Msg_SentToCMC" xml:space="preserve"><value>Claim Form is sent to approve from CMC successfully</value></data>
+  <data name="Msg_BatchFull" xml:space="preserve"><value>Batch is Added Full Claims</value></data>
+</root>

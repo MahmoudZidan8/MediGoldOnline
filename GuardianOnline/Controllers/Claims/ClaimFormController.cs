@@ -5171,7 +5171,7 @@ select new { finalItem0.ContractNumber, item1.ContractMemberID, finalItem0.Contr
             DateTime? DeActive_Date = cont_num.DeActiveDate;
 
 
-            if (DeActive_Date < DateTime.Now && DeActive_Date?.ToShortDateString() != "01/01/0001")
+            if (DeActive_Date < DateTime.Now && DeActive_Date?.ToShortDateString() != "01/01/0001"&& DeActive_Date?.ToShortDateString() != "1/1/0001")
             {
                 insertedRecords = 1;
                 arrlis.Add(insertedRecords);
