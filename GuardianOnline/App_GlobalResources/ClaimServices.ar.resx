@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Page -->
+  <data name="Title" xml:space="preserve"><value>خدمات المطالبات</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>تحقق من العضو، اعرض صور النماذج، أضف الخدمات، ثم أرسل الطلب للاعتماد</value></data>
+
+  <!-- Header buttons -->
+  <data name="BackHome" xml:space="preserve"><value>« رجوع للصفحة الرئيسية</value></data>
+  <data name="GoApproved" xml:space="preserve"><value>الذهاب لاعتماد النماذج »</value></data>
+
+  <!-- Sections (Legends) -->
+  <data name="MemberValidation" xml:space="preserve"><value>التحقق من العضو</value></data>
+  <data name="ClaimFormImageContent" xml:space="preserve"><value>محتوى صور نموذج المطالبة</value></data>
+  <data name="ApprovalWaiting" xml:space="preserve"><value>خدمات في انتظار الاعتماد</value></data>
+  <data name="ApprovalStopped" xml:space="preserve"><value>خدمات موقوفة</value></data>
+  <data name="ApprovalDone" xml:space="preserve"><value>خدمات تم اعتمادها</value></data>
+  <data name="ProviderServices" xml:space="preserve"><value>خدمات مقدم الخدمة</value></data>
+
+  <!-- Card titles -->
+  <data name="MemberValidationTitle" xml:space="preserve"><value>التحقق من كارت العضو</value></data>
+  <data name="ClaimFormsList" xml:space="preserve"><value>قائمة النماذج</value></data>
+  <data name="AddServicesTitle" xml:space="preserve"><value>إضافة خدمات وتشخيصات</value></data>
+
+  <!-- Inputs -->
+  <data name="CardPlaceholder" xml:space="preserve"><value>اكتب رقم الكارت</value></data>
+  <data name="ClaimFormPlaceholder" xml:space="preserve"><value>اكتب رقم النموذج</value></data>
+  <data name="DiagnosisPlaceholder" xml:space="preserve"><value>اكتب التشخيص</value></data>
+  <data name="ServicePlaceholder" xml:space="preserve"><value>اكتب اسم الخدمة</value></data>
+
+  <!-- Buttons -->
+  <data name="CheckValidation" xml:space="preserve"><value>تحقق</value></data>
+  <data name="UploadNewClaimFormImage" xml:space="preserve"><value>رفع صورة جديدة للنموذج</value></data>
+  <data name="OpenImage" xml:space="preserve"><value>فتح الصورة</value></data>
+  <data name="CloseImage" xml:space="preserve"><value>إغلاق الصورة</value></data>
+
+  <data name="AddSecondDiagnosis" xml:space="preserve"><value>إضافة تشخيص ثاني</value></data>
+  <data name="AddThirdDiagnosis" xml:space="preserve"><value>إضافة تشخيص ثالث</value></data>
+  <data name="DeleteSecondDiagnosis" xml:space="preserve"><value>حذف التشخيص الثاني</value></data>
+  <data name="DeleteThirdDiagnosis" xml:space="preserve"><value>حذف التشخيص الثالث</value></data>
+
+  <data name="AddNewService" xml:space="preserve"><value>إضافة خدمة جديدة</value></data>
+  <data name="NewClaimService" xml:space="preserve"><value>إضافة الخدمة</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>تعديل الخدمة</value></data>
+
+  <data name="RequestApproval" xml:space="preserve"><value>إرسال للاعتماد</value></data>
+
+  <!-- Common -->
+  <data name="Loading" xml:space="preserve"><value>جاري التحميل</value></data>
+  <data name="Warning" xml:space="preserve"><value>تحذير!</value></data>
+  <data name="Success" xml:space="preserve"><value>نجاح</value></data>
+  <data name="Error" xml:space="preserve"><value>خطأ!</value></data>
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+  <data name="Edit" xml:space="preserve"><value>تعديل</value></data>
+  <data name="Remove" xml:space="preserve"><value>حذف</value></data>
+  <data name="Stopped" xml:space="preserve"><value>موقوف</value></data>
+
+  <!-- Tables: Member Info -->
+  <data name="MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="CustomerName" xml:space="preserve"><value>اسم العميل</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="ContractNumber" xml:space="preserve"><value>رقم العقد</value></data>
+  <data name="Plan" xml:space="preserve"><value>الخطة</value></data>
+  <data name="ActiveDate" xml:space="preserve"><value>تاريخ التفعيل</value></data>
+  <data name="ActivityStatus" xml:space="preserve"><value>حالة النشاط</value></data>
+  <data name="DeactiveDate" xml:space="preserve"><value>تاريخ الإيقاف</value></data>
+  <data name="BirthDate" xml:space="preserve"><value>تاريخ الميلاد</value></data>
+  <data name="Age" xml:space="preserve"><value>العمر</value></data>
+  <data name="SexType" xml:space="preserve"><value>النوع</value></data>
+
+  <!-- Tables: Common -->
+  <data name="Serial" xml:space="preserve"><value>م</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>رقم النموذج</value></data>
+
+  <!-- Tables: Services -->
+  <data name="ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>سعر الخدمة</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>السعر المطلوب</value></data>
+  <data name="RefuseNote" xml:space="preserve"><value>سبب الرفض</value></data>
+  <data name="Note" xml:space="preserve"><value>ملاحظة</value></data>
+
+  <!-- Image -->
+  <data name="ClickHere" xml:space="preserve"><value>اضغط هنا</value></data>
+  <data name="ShowClaimFormImage" xml:space="preserve"><value>عرض صورة النموذج</value></data>
+  <data name="DeleteClaimFormImage" xml:space="preserve"><value>حذف صورة النموذج</value></data>
+
+  <!-- Labels (optional) -->
+  <data name="ClaimFormNumberLabel" xml:space="preserve"><value>رقم النموذج</value></data>
+  <data name="ProcedureDate" xml:space="preserve"><value>تاريخ الإجراء</value></data>
+  <data name="FirstDiagnosis" xml:space="preserve"><value>التشخيص الأول</value></data>
+  <data name="SecondDiagnosis" xml:space="preserve"><value>التشخيص الثاني</value></data>
+  <data name="ThirdDiagnosis" xml:space="preserve"><value>التشخيص الثالث</value></data>
+  <data name="ModalTitle" xml:space="preserve"><value>خدمات المطالبة</value></data>
+
+  <!-- Messages -->
+  <data name="Msg_NotApproved" xml:space="preserve"><value>رقم النموذج غير معتمد</value></data>
+  <data name="Msg_ServiceRequired" xml:space="preserve"><value>اختيار اسم الخدمة مطلوب</value></data>
+  <data name="Msg_SelectCorrectService" xml:space="preserve"><value>اختر اسم خدمة صحيح</value></data>
+  <data name="Msg_ServiceInserted" xml:space="preserve"><value>تمت إضافة الخدمة بنجاح</value></data>
+  <data name="Msg_ServiceUpdated" xml:space="preserve"><value>تم تحديث الخدمة</value></data>
+  <data name="Msg_ServiceExists" xml:space="preserve"><value>الخدمة موجودة بالفعل ضمن خدمات مقدم الخدمة</value></data>
+
+  <data name="Msg_CardNotAllowed_Suffix" xml:space="preserve"><value> غير صحيح &lt;br&gt; لا يمكن للمستخدم استخدام هذا الكارت &lt;br&gt; برجاء التواصل مع CMC</value></data>
+  <data name="Msg_CardNotCorrect_Suffix" xml:space="preserve"><value> غير صحيح &lt;br&gt; برجاء إدخال رقم الكارت مرة أخرى</value></data>
+
+  <data name="Q_DeleteRow" xml:space="preserve"><value>هل تريد الحذف:</value></data>
+  <data name="Q_DeleteClaimForm" xml:space="preserve"><value>هل أنت متأكد من حذف رقم النموذج؟</value></data>
+  <data name="Q_SendToCMC" xml:space="preserve"><value>تم إرسال النموذج سابقاً للاعتماد من CMC، هل تريد الإرسال؟</value></data>
+
+  <data name="Msg_DeleteNotAllowed1" xml:space="preserve"><value>لا يمكن حذف رقم النموذج لأن مقدم الخدمة قام بالاعتماد. إذا تريد الحذف تواصل مع CMC.</value></data>
+  <data name="Msg_DeleteNotAllowed2" xml:space="preserve"><value>لا يمكن حذف رقم النموذج لأن مقدم خدمة آخر يحاول الحذف. إذا تريد الحذف تواصل مع CMC.</value></data>
+  <data name="Msg_Deleted" xml:space="preserve"><value>تم حذف رقم النموذج بنجاح</value></data>
+
+  <data name="Msg_SentToCMC" xml:space="preserve"><value>تم إرسال النموذج للاعتماد من CMC بنجاح</value></data>
+  <data name="Msg_BatchFull" xml:space="preserve"><value>تم الوصول للحد الأقصى للطلبات في الدفعة</value></data>
+</root>

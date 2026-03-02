@@ -273,7 +273,8 @@ select new { item1.CardNumber, item1.ContractMemberID }).OrderByDescending(d => 
 
                     path = "~/Images/" + Path.GetFileName(claimformnumber+imgfile.FileName);
                     imgfile.SaveAs(Server.MapPath(path));
-                    string saveDirectory = @"C:\Publish\Guardian\Images\";
+                    string saveDirectory = @"D:\Guardian Projects\Test Projects\GuardianPublish\Images\";
+                    //string saveDirectory = @"C:\Publish\Guardian\Images\";
                 //string saveDirectory = @"E:\PubishGuardianFinal\Guardian\Images\";
                
                     string secondpath = saveDirectory + Path.GetFileName(claimformnumber+imgfile.FileName);

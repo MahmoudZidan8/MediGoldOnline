@@ -712,7 +712,7 @@
                 imageUrl: "/Images/Quationimg.jpg",
                 imageWidth: 550,
                 imageHeight: 225,
-                text: "Are you Sure you want to sent Claims to Tristar Accounting ?",
+                text: "Are you Sure you want to sent Claims to Medi Gold Accounting ?",
                 showCancelButton: true,
                 confirmButtonText: "Confirm",
                 cancelButtonColor: "#700c0c"
@@ -762,7 +762,7 @@
                 var j = Claims_Services.length;
                 if (j === 0) {
                     exHideLoading();
-                    Swal.fire("Warning !", "Please Select At Least One Claim To Sent Tristar Accounting To Pay. ", "warning");
+                    Swal.fire("Warning !", "Please Select At Least One Claim To Sent Medi Gold Accounting To Pay. ", "warning");
                     return;
                 }
 
@@ -783,11 +783,11 @@
                             exHideLoading();
 
                             if (r == "0") {
-                                Swal.fire("Warning !", "Please Select At Least One Claim To Sent Tristar Accounting To Pay. ", "warning");
+                                Swal.fire("Warning !", "Please Select At Least One Claim To Sent Medi Gold Accounting To Pay. ", "warning");
                             } else if (r == "1") {
-                                Swal.fire("Error !", "Claims are Sent To Tristar Accounting To Pay from a while. ", "error");
+                                Swal.fire("Error !", "Claims are Sent To Medi Gold Accounting To Pay from a while. ", "error");
                             } else {
-                                Swal.fire("Success", "Claims are Sent To Tristar Accounting To Pay. <br> Batch Number is : " + r, "success")
+                                Swal.fire("Success", "Claims are Sent To Medi Gold Accounting To Pay. <br> Batch Number is : " + r, "success")
                                     .then(function () {
                                         window.open('@Url.Action("Provider_Expended_services", "ClaimForm")', '_self');
                                     });
@@ -803,7 +803,7 @@
                     exHideLoading();
                     Swal.fire(
                         "Error !",
-                        "Claims can not Sent To Tristar Accounting <br> After Pass 15 Days since add older Claim <br> older Claim Date : "
+                        "Claims can not Sent To Medi Gold Accounting <br> After Pass 15 Days since add older Claim <br> older Claim Date : "
                         + moment(datebefore).format('DD-MM-YYYY')
                         + " <br> You Can Sent Batch in Date : "
                         + moment(allowDate).format('DD-MM-YYYY'),

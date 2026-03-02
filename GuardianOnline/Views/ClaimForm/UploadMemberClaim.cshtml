@@ -2,249 +2,140 @@
 
 @{
     ViewBag.Title = "UploadMemberClaim";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+
+    Func<string, string, string> T = (key, fallback) =>
+    {
+        try
+        {
+            var o = HttpContext.GetGlobalResourceObject("UploadMemberClaim", key);
+            return (o == null) ? fallback : o.ToString();
+        }
+        catch { return fallback; }
+    };
 }
-
-<style>
-    /*body {
-            background-image:url('../Images/login.jpg');
-        }*/
-    /*table1 {
-        border: 1px solid black;
-    }*/
-    #ClaimForm_Number, #Card_number, #imgfile {
-        font-size: 18px;
-        color: black;
-    }
-
-    #ClaimForm_Numberlabel, #Card_numberlabel, #imgfilelabel {
-        font-size: 18px;
-        color: black;
-    }
-
-    body {
-        font-family: Arial;
-        font-size: 10pt;
-    }
-
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
-
-        table th {
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-        }
-
-        table th, table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
-
-        table, table table td {
-            border: 0px solid #ccc;
-        }
-
-    legend.scheduler-border {
-        width: inherit; /* Or auto */
-        padding: 0 10px; /* To give a bit of padding on the left and right */
-        border-bottom: none;
-    }
-
-    fieldset.scheduler-border {
-        border: 1px groove #ddd !important;
-        padding: 0 1.4em 1.4em 1.4em !important;
-        margin: 0 0 1.5em 0 !important;
-        -webkit-box-shadow: 1px 1px 1px 1px #700c0c;
-        box-shadow: 1px 1px 1px 1px #700c0c;
-    }
-
-    #pagination {
-        width: 100%;
-        text-align: center;
-    }
-
-        #pagination ul li {
-            display: inline;
-            margin-left: 10px;
-        }
-</style>
-<style>
-
-    #link {
-        text-decoration: none;
-        display: inline-block;
-        padding: 8px 16px;
-    }
-
-        #link:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .previous {
-        background-color: #f1f1f1;
-        color: black;
-    }
-
-        .previous:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-    .next {
-        background-color: #04AA6D;
-        color: white;
-    }
-
-    .round {
-        background-color: teal;
-        color: white;
-        border-radius: 50%;
-    }
-</style>
-@*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>*@
-<link rel="stylesheet" href="~/Content/select2.min.css">
-<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-<script src="~/signalr/hubs" type="text/javascript"></script>
+<script src="~/signalr/hubs"></script>
+
+<link rel="stylesheet" href="~/Content/select2.min.css">
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+
 <input type="hidden" id="trigger" value="0" />
 <input type="hidden" id="triggercount" value="0" />
-
 <input type="hidden" id="trigger1" value="0" />
 <input type="hidden" id="triggercount1" value="0" />
 
-<h2 style="color:teal;text-align:center">Member ClaimForm</h2>
 @Html.Hidden("Get", Url.Action("Get", "Customer"))
 @Html.Hidden("Getmessages", Url.Action("Getmessages", "Customer"))
 @Html.Hidden("Get1", Url.Action("Get1", "Customer"))
 
-@using (Html.BeginForm("UploadMemberClaim", "ClaimForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="ex-page">
+    <div class="pv-shell">
 
-    <div class="form-horizontal">
-        @*<h4>MemberClaimForm</h4>
-            <hr />*@
-        <fieldset class="scheduler-border">
-            <legend class="scheduler-border" style="color:teal">Member ClaimForm Content</legend>
-
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <br />
-            <br />
-            <div class="form-group">
-
-                @Html.Label("ClaimForm Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "ClaimForm_Numberlabel" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.ClaimFormNumber, new { htmlAttributes = new { @class = "form-control", @id = "ClaimForm_Number", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.ClaimFormNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <br />
-
-            <div class="form-group">
-                @Html.Label("Card Number", htmlAttributes: new { @class = "control-label col-md-3", @id = "Card_numberlabel" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control", @id = "Card_number", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <br />
-            <div class="form-group" hidden>
-                @Html.LabelFor(model => model.EntryID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EntryID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EntryID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group" hidden>
-                @Html.LabelFor(model => model.EntryDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EntryDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EntryDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group" hidden>
-                @Html.LabelFor(model => model.MemberClaimformStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.MemberClaimformStatus, new { htmlAttributes = new { @class = "form-control", @Value = 1 } })
-                    @Html.ValidationMessageFor(model => model.MemberClaimformStatus, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group" hidden>
-                @Html.LabelFor(model => model.ProviderCat, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ProviderCat, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ProviderCat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("ClaimForm Image", htmlAttributes: new { @class = "control-label col-md-3", @id = "imgfilelabel" })
-                <div class="col-md-9">
-                    <input type="file" id="imgfile" name="imgfile" class="form-control icon-file_upload" required />
-                    @*@Html.EditorFor(model => model.ClaimFormImage, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.ClaimFormImage, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <br />
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-9" style="text-align:center">
-                    <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block" @*style="width:190px"*@ />
-                </div>
-            </div>
-            <br />
-            <br />
+        <div class="pv-header">
             <div>
-                <a id="link" class="round" href="@Url.Action("DoctorHome","ClaimForm")">@*<u>*@&laquo; Back to Main List@*</u>*@</a>
-                @*@Html.ActionLink("Back to List", "Index")*@
+                <div class="pv-title">
+                    @T("PageTitle", "Member ClaimForm")
+                </div>
+                <div class="pv-sub">
+                    @T("SubTitle", "Upload member claim form image and submit to system")
+                </div>
             </div>
 
-        </fieldset>
+            <div class="pv-actions">
+                <a class="btn btn-outline-secondary pv-btn"
+                   href="@Url.Action("DoctorHome","ClaimForm")">
+                    <i class="bi bi-arrow-left"></i>
+                    @T("BackHome", "Back to Main Home")
+                </a>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("UploadMemberClaim",
+                               "ClaimForm",
+                               FormMethod.Post,
+                               new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="pv-card">
+
+                <div class="pv-card-title">
+                    @T("CardTitle", "Member ClaimForm Content")
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                <div class="row g-4">
+
+                    <div class="col-lg-6">
+                        <label class="fw-bold mb-2">
+                            @T("ClaimFormNumber", "ClaimForm Number")
+                        </label>
+                        @Html.EditorFor(m => m.ClaimFormNumber,
+                            new { htmlAttributes = new { @class = "form-control form-control-lg", required = "required" } })
+                        @Html.ValidationMessageFor(m => m.ClaimFormNumber, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label class="fw-bold mb-2">
+                            @T("CardNumber", "Card Number")
+                        </label>
+                        @Html.EditorFor(m => m.CardNumber,
+                            new { htmlAttributes = new { @class = "form-control form-control-lg", required = "required" } })
+                        @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "text-danger" })
+                    </div>
+
+                    @* Hidden fields (زي ما هم عندك بالظبط) *@
+                    @Html.HiddenFor(m => m.EntryID)
+                    @Html.HiddenFor(m => m.EntryDate)
+                    @Html.HiddenFor(m => m.MemberClaimformStatus, new { @Value = 1 })
+                    @Html.HiddenFor(m => m.ProviderCat)
+
+                    <div class="col-12">
+                        <label class="fw-bold mb-2">
+                            @T("ClaimImage", "ClaimForm Image")
+                        </label>
+                        <input type="file"
+                               name="imgfile"
+                               class="form-control form-control-lg"
+                               required />
+                        @Html.ValidationMessageFor(m => m.ClaimFormImage, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit"
+                            class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-upload"></i>
+                        @T("Create", "Create")
+                    </button>
+                </div>
+
+            </div>
+        }
 
     </div>
-}
+</div>
 
-@*eror messages*@
 @if (ViewBag.card_numberqq != null && ViewBag.card_numberqq != "")
 {
-    <script type="text/javascript">
-
-            window.onload = function () {
-                $('#Card_number').val("@ViewBag.card_numberqq");
-                //$('#Check_CardNumber').click();
-
-            };
+    <script>
+        $('#CardNumber').val("@ViewBag.card_numberqq");
     </script>
 }
 
-@*eror messages*@
 @if (ViewBag.ErorMessage != null)
 {
-    <script type="text/javascript">
-
-        window.onload = function () {
-            Swal.fire("Error !", "@ViewBag.ErorMessage", "error");
-
-                @*alert("@ViewBag.ErorMessage");*@
-            };
+    <script>
+        Swal.fire("Error !","@ViewBag.ErorMessage","error");
     </script>
 }
-
-
 
 
 <script type="text/javascript">
@@ -486,7 +377,7 @@
                                 $.connection.hub.start();
                             }, 5000); // Restart connection after 5 seconds.
                         });
-                       
+
                         $.get("/ClaimForm/DeactiveAlertSmartCard", {}, function (data2) {
 
                         //var result = confirm("You Currently Reiceve Approval From CMC \n For Card Number is : " + model.CardNumber + "\n Claim Form Is :" + model.ClaimFormNum + " \n Are you Sure you want to Go ClaimForm Approved ?");
@@ -558,48 +449,3 @@
 </script>
 
 
-
-@*<script type="text/javascript">
-        $(function () {
-
-            // Proxy created on the fly
-            var cus = $.connection.cusHub;
-
-            // Declare a function on the job hub so the server can invoke it
-            cus.client.displayCustomer = function () {
-                getData1();
-            };
-
-            // Start the connection
-            $.connection.hub.start();
-            getData1();
-        });
-
-        function getData1() {
-            //var $tbl = $('#tblInfo');
-            $.ajax({
-                url: /*"/Customer/Send_to_payy"*/ $("#Getmessages").val(),
-                type: 'GET',
-                datatype: 'json',
-                success: function (data) {
-
-                    $.get("/ClaimForm/getcountmessage", {/* Provider_id: $('#providerID').val(), Branch_id: $('#BranchID').val()*/ }, function (data) {
-                        if (data == 0) {
-                            $('#MesaageCount').removeAttr("data-count");
-
-                        }
-                        else {
-                            $('#MesaageCount').attr("data-count", data);
-                        }
-                        // console.log(data);
-                    });
-
-
-                    $.each(data.listCus, function (i, model) {
-
-                    });
-                }
-            });
-        }
-
-    </script>*@

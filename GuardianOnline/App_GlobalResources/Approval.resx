@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="PageTitle" xml:space="preserve"><value>Approval</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>Validate member card, review approvals and accept approval</value></data>
+
+  <data name="MemberValidation" xml:space="preserve"><value>Member Validation</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>Card Number</value></data>
+  <data name="CheckApproval" xml:space="preserve"><value>Check Approval</value></data>
+
+  <data name="MemberName" xml:space="preserve"><value>Member Name</value></data>
+  <data name="CustomerName" xml:space="preserve"><value>Customer Name</value></data>
+  <data name="ContractNumber" xml:space="preserve"><value>Contract Number</value></data>
+  <data name="Plan" xml:space="preserve"><value>Plan</value></data>
+  <data name="ActiveDate" xml:space="preserve"><value>Active Date</value></data>
+  <data name="ActivityStatus" xml:space="preserve"><value>Activity Status</value></data>
+  <data name="DeactiveDate" xml:space="preserve"><value>Deactive Date</value></data>
+  <data name="MemberBirthDate" xml:space="preserve"><value>Member Birth Date</value></data>
+  <data name="MemberAge" xml:space="preserve"><value>Member Age</value></data>
+  <data name="SexType" xml:space="preserve"><value>Sex Type</value></data>
+
+  <data name="ApprovalWaiting" xml:space="preserve"><value>Approval waiting</value></data>
+  <data name="ApproveService" xml:space="preserve"><value>Approve Service</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>ClaimForm Number</value></data>
+  <data name="ItemId" xml:space="preserve"><value>Item Id</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>Service Name</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>Service Price</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>Service Qnt</value></data>
+  <data name="ServiceAmt" xml:space="preserve"><value>Service Amt</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>Requested Price</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+
+  <data name="ClaimServices" xml:space="preserve"><value>Claim Services</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="Price" xml:space="preserve"><value>Price</value></data>
+  <data name="RequestedAmt" xml:space="preserve"><value>Requested Amt</value></data>
+  <data name="ServiceModification" xml:space="preserve"><value>Service Modification</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>Edit Claim Service</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+
+  <data name="Notes" xml:space="preserve"><value>Notes</value></data>
+
+  <data name="ApprovalMemberInvoice" xml:space="preserve"><value>Approval Member Invoice</value></data>
+  <data name="ApprovalAmt" xml:space="preserve"><value>Approval Amt</value></data>
+  <data name="MemberDeductablePercentage" xml:space="preserve"><value>Member Deductable Percentage</value></data>
+  <data name="MemberDeductable" xml:space="preserve"><value>Member Deductable</value></data>
+
+  <data name="AcceptApproval" xml:space="preserve"><value>Accept Approval</value></data>
+
+  <data name="NoApprovalMsg" xml:space="preserve"><value>A Member Have not Any Approval From CMC in Medi Gold , Please Contact With CMC !</value></data>
+
+  <data name="BackToMainHome" xml:space="preserve"><value>Back to Main Home</value></data>
+  <data name="GoToPrintCancel" xml:space="preserve"><value>Go to Print Cancel Approval</value></data>
+
+  <data name="Loading" xml:space="preserve"><value>Loading</value></data>
+
+  <!-- SweetAlert common -->
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Warning" xml:space="preserve"><value>Warning</value></data>
+  <data name="Success" xml:space="preserve"><value>Success</value></data>
+
+  <data name="Q_Accept" xml:space="preserve"><value>Are you Sure you want to Accept Approval ?</value></data>
+
+  <data name="Msg_SelectOne" xml:space="preserve"><value>Please Select At Least One Service To Accept Approval.</value></data>
+  <data name="Msg_AcceptedByAnother" xml:space="preserve"><value>Approval is Accepted From Another Provider &lt;br&gt; You Can not Accept This Approval &lt;br&gt; Contact With CMC Please</value></data>
+  <data name="Msg_Accepted" xml:space="preserve"><value>Approval is Accepted.</value></data>
+</root>

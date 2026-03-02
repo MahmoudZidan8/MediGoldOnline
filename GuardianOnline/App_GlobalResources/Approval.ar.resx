@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="PageTitle" xml:space="preserve"><value>الموافقات</value></data>
+  <data name="SubTitle" xml:space="preserve"><value>تحقق من الكارت، راجع الخدمات المطلوبة، ثم اعتمد الموافقة</value></data>
+
+  <data name="MemberValidation" xml:space="preserve"><value>التحقق من العضو</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="CheckApproval" xml:space="preserve"><value>بحث عن موافقة</value></data>
+
+  <data name="MemberName" xml:space="preserve"><value>اسم العضو</value></data>
+  <data name="CustomerName" xml:space="preserve"><value>اسم العميل</value></data>
+  <data name="ContractNumber" xml:space="preserve"><value>رقم التعاقد</value></data>
+  <data name="Plan" xml:space="preserve"><value>الخطة</value></data>
+  <data name="ActiveDate" xml:space="preserve"><value>تاريخ التفعيل</value></data>
+  <data name="ActivityStatus" xml:space="preserve"><value>حالة النشاط</value></data>
+  <data name="DeactiveDate" xml:space="preserve"><value>تاريخ الإيقاف</value></data>
+  <data name="MemberBirthDate" xml:space="preserve"><value>تاريخ الميلاد</value></data>
+  <data name="MemberAge" xml:space="preserve"><value>العمر</value></data>
+  <data name="SexType" xml:space="preserve"><value>النوع</value></data>
+
+  <data name="ApprovalWaiting" xml:space="preserve"><value>موافقات في الانتظار</value></data>
+  <data name="ApproveService" xml:space="preserve"><value>اعتماد الخدمة</value></data>
+  <data name="ClaimFormNumber" xml:space="preserve"><value>رقم المطالبة</value></data>
+  <data name="ItemId" xml:space="preserve"><value>رقم البند</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>اسم الخدمة</value></data>
+  <data name="ServicePrice" xml:space="preserve"><value>سعر الخدمة</value></data>
+  <data name="ServiceQnt" xml:space="preserve"><value>الكمية</value></data>
+  <data name="ServiceAmt" xml:space="preserve"><value>إجمالي الخدمة</value></data>
+  <data name="RequestedPrice" xml:space="preserve"><value>السعر المطلوب</value></data>
+  <data name="Note" xml:space="preserve"><value>ملاحظة</value></data>
+
+  <data name="ClaimServices" xml:space="preserve"><value>خدمات المطالبة</value></data>
+  <data name="Quantity" xml:space="preserve"><value>الكمية</value></data>
+  <data name="Price" xml:space="preserve"><value>السعر</value></data>
+  <data name="RequestedAmt" xml:space="preserve"><value>الإجمالي المطلوب</value></data>
+  <data name="ServiceModification" xml:space="preserve"><value>تعديل الخدمة</value></data>
+  <data name="EditClaimService" xml:space="preserve"><value>تعديل الخدمة</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+
+  <data name="Notes" xml:space="preserve"><value>ملاحظات</value></data>
+
+  <data name="ApprovalMemberInvoice" xml:space="preserve"><value>فاتورة العضو</value></data>
+  <data name="ApprovalAmt" xml:space="preserve"><value>قيمة الموافقة</value></data>
+  <data name="MemberDeductablePercentage" xml:space="preserve"><value>نسبة التحمل</value></data>
+  <data name="MemberDeductable" xml:space="preserve"><value>قيمة التحمل</value></data>
+
+  <data name="AcceptApproval" xml:space="preserve"><value>اعتماد الموافقة</value></data>
+
+  <data name="NoApprovalMsg" xml:space="preserve"><value>لا يوجد أي موافقات لهذا العضو من CMC في Medi Gold، برجاء التواصل مع CMC.</value></data>
+
+  <data name="BackToMainHome" xml:space="preserve"><value>الرجوع للصفحة الرئيسية</value></data>
+  <data name="GoToPrintCancel" xml:space="preserve"><value>الذهاب لطباعة إلغاء الموافقة</value></data>
+
+  <data name="Loading" xml:space="preserve"><value>جاري التحميل</value></data>
+
+  <!-- SweetAlert common -->
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Warning" xml:space="preserve"><value>تحذير</value></data>
+  <data name="Success" xml:space="preserve"><value>نجاح</value></data>
+
+  <data name="Q_Accept" xml:space="preserve"><value>هل أنت متأكد أنك تريد اعتماد الموافقة؟</value></data>
+
+  <data name="Msg_SelectOne" xml:space="preserve"><value>من فضلك اختر خدمة واحدة على الأقل لاعتماد الموافقة.</value></data>
+  <data name="Msg_AcceptedByAnother" xml:space="preserve"><value>تم اعتماد الموافقة بواسطة مقدم خدمة آخر&lt;br&gt;لا يمكنك اعتماد هذه الموافقة&lt;br&gt;برجاء التواصل مع CMC</value></data>
+  <data name="Msg_Accepted" xml:space="preserve"><value>تم اعتماد الموافقة بنجاح.</value></data>
+</root>

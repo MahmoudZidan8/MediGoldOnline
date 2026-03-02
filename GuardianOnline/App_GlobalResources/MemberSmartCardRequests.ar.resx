@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Title" xml:space="preserve"><value>طلبات الكارت الذكي للأعضاء</value></data>
+  <data name="LegendContent" xml:space="preserve"><value>محتوى طلبات الكارت الذكي للأعضاء</value></data>
+  <data name="MemberRequests" xml:space="preserve"><value>طلبات الأعضاء</value></data>
+  <data name="SelectMemberRequest" xml:space="preserve"><value>-- اختر طلب العضو --</value></data>
+
+  <data name="BtnShowMemberRequest" xml:space="preserve"><value>عرض طلب العضو</value></data>
+  <data name="BtnCancelMemberRequest" xml:space="preserve"><value>إلغاء طلب العضو</value></data>
+
+  <data name="ClickHere" xml:space="preserve"><value>اضغط هنا</value></data>
+  <data name="ShowMedicalServices" xml:space="preserve"><value>عرض الخدمات الطبية</value></data>
+  <data name="ShowApproval" xml:space="preserve"><value>عرض الموافقة</value></data>
+
+  <data name="Approval" xml:space="preserve"><value>الموافقة</value></data>
+  <data name="MemberValidation" xml:space="preserve"><value>بيانات العضو</value></data>
+  <data name="CardNumber" xml:space="preserve"><value>رقم الكارت</value></data>
+  <data name="CheckApproval" xml:space="preserve"><value>التحقق من الموافقة</value></data>
+
+  <data name="MsgMemberNoApproval" xml:space="preserve"><value>لا يوجد للعضو أي موافقة من CMC في Medi Gold. برجاء التواصل مع CMC.</value></data>
+
+  <data name="ApprovalWaiting" xml:space="preserve"><value>موافقات قيد الانتظار</value></data>
+  <data name="ClaimServices" xml:space="preserve"><value>خدمات المطالبة</value></data>
+
+  <data name="OpenImage" xml:space="preserve"><value>فتح الصورة</value></data>
+  <data name="CloseImage" xml:space="preserve"><value>إغلاق الصورة</value></data>
+  <data name="UploadNewClaimImage" xml:space="preserve"><value>رفع صورة جديدة لنموذج المطالبة</value></data>
+
+  <data name="BackHome" xml:space="preserve"><value>الرجوع للرئيسية</value></data>
+  <data name="GoPrintCancel" xml:space="preserve"><value>الذهاب لطباعة/إلغاء الموافقات</value></data>
+
+  <data name="Confirm" xml:space="preserve"><value>تأكيد</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="WarningTitle" xml:space="preserve"><value>تنبيه !</value></data>
+  <data name="SuccessTitle" xml:space="preserve"><value>تم بنجاح</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>خطأ !</value></data>
+
+  <data name="MsgSelectMemberReqRequired" xml:space="preserve"><value>من فضلك اختر طلب العضو (إجباري)</value></data>
+  <data name="QCancelMemberRequest" xml:space="preserve"><value>هل أنت متأكد أنك تريد إلغاء طلب العضو؟</value></data>
+  <data name="MsgClaimFormNotApproved" xml:space="preserve"><value>رقم نموذج المطالبة غير معتمد</value></data>
+</root>

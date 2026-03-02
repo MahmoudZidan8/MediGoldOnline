@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AcceptApprovalButton" xml:space="preserve">
+    <value>Accept Approval</value>
+  </data>
+  <data name="AddNewService" xml:space="preserve">
+    <value>Add New Service</value>
+  </data>
+  <data name="ApprovalHeader" xml:space="preserve">
+    <value>Approval</value>
+  </data>
+  <data name="ApprovalServiceDone" xml:space="preserve">
+    <value>Approval Service Done</value>
+  </data>
+  <data name="ApprovalServicesStopped" xml:space="preserve">
+    <value>Approval Services Stopped</value>
+  </data>
+  <data name="ApprovalServicesWaiting" xml:space="preserve">
+    <value>Approval Services Waiting</value>
+  </data>
+  <data name="BackToMainHome" xml:space="preserve">
+    <value>Back to Main Home</value>
+  </data>
+  <data name="CancelMemberRequestButton" xml:space="preserve">
+    <value>Cancel Member Request</value>
+  </data>
+  <data name="CardNumberLabel" xml:space="preserve">
+    <value>Card Number</value>
+  </data>
+  <data name="CheckApprovalButton" xml:space="preserve">
+    <value>Check Approval</value>
+  </data>
+  <data name="CheckValidationButton" xml:space="preserve">
+    <value>Check Validation</value>
+  </data>
+  <data name="ClaimFormImageLegend" xml:space="preserve">
+    <value>Member ClaimForm Image Content</value>
+  </data>
+  <data name="ClaimServicesHeader" xml:space="preserve">
+    <value>Claim Services</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Click Here</value>
+  </data>
+  <data name="ContentLegend" xml:space="preserve">
+    <value>Member Smart Card Requests Content</value>
+  </data>
+  <data name="EditClaimService" xml:space="preserve">
+    <value>Edit Claim Service</value>
+  </data>
+  <data name="GoToPrintCancelApproval" xml:space="preserve">
+    <value>Go to Print Cancel Approval</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>Member Smart Card Requests</value>
+  </data>
+  <data name="MemberNotApprovedAlert" xml:space="preserve">
+    <value>A Member has no approval from CMC in Medi Gold. Please contact CMC!</value>
+  </data>
+  <data name="MemberRequestsLabel" xml:space="preserve">
+    <value>Member Requests</value>
+  </data>
+  <data name="MemberValidationLegend" xml:space="preserve">
+    <value>Member Validation</value>
+  </data>
+  <data name="NewClaimService" xml:space="preserve">
+    <value>New Claim Service</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Member Smart Card Requests</value>
+  </data>
+  <data name="ProviderServices" xml:space="preserve">
+    <value>Provider Services</value>
+  </data>
+  <data name="RequestApproval" xml:space="preserve">
+    <value>Request Approval</value>
+  </data>
+  <data name="SelectClaimFormPlaceholder" xml:space="preserve">
+    <value>--Select ClaimForm Number--</value>
+  </data>
+  <data name="ShowApproval" xml:space="preserve">
+    <value>Show Approval</value>
+  </data>
+  <data name="ShowClaimFormImage" xml:space="preserve">
+    <value>Show ClaimForm Image</value>
+  </data>
+  <data name="ShowMedicalServices" xml:space="preserve">
+    <value>Show Medical Services</value>
+  </data>
+  <data name="ShowMemberRequestButton" xml:space="preserve">
+    <value>Show Member Request</value>
+  </data>
+  <data name="UploadNewClaimFormImage" xml:space="preserve">
+    <value>Upload New ClaimForm Image</value>
+  </data>
+</root>

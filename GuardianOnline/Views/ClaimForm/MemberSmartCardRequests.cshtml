@@ -1,21 +1,23 @@
 ﻿
 @{
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
     ViewBag.Title = "MemberSmartCardRequests";
 }
 
 
 
-@*@Scripts.Render("~/bundles/jquery")*@
+@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+
 <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 <script src="~/signalr/hubs" type="text/javascript"></script>
 
 @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">*@
-<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">
+@*<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>*@
+@*<link rel="stylesheet" href="~/Content/bootstrapbundle.min.css">*@
 
-<script src="~/Scripts/bootstrap.min.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
 
 @*<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -23,6 +25,11 @@
 <link rel="stylesheet" href="~/Content/select2.min.css">
 <script type="text/javascript" src="~/Scripts/select2.min.js"></script>
 <script type="text/javascript" src="~/Scripts/moment-with-locales.min.js"></script>
+
+
+@* DataTables (عشان الصفحة دي فيها DataTable) *@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css" />
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
 
 <input type="hidden" id="trigger" value="0" />
 <input type="hidden" id="triggercount" value="0" />
@@ -367,6 +374,7 @@
         font-size: 17PX;
         padding-left: 10PX;
     }
+
     body.table789 {
         font-family: Arial;
         font-size: 10pt;
@@ -772,37 +780,45 @@
                                             @Html.Label("Service Name")
                                         </td>
                                         <td style="width: 250px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "serv_name", @Name = "serv_name", @*,@Value = "1.00"*@/**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                /**/
-                                                                @readonly = "readonly"
-                                                            }
-                                                        })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "serv_name",
+                                                    @Name = "serv_name",@*,@Value = "1.00"*@/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+@readonly = "readonly"
+}
+})
                                         </td>
                                         <td style="width: 100px;font-size:14px">
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity", @Name = "quntity"  , @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new { @class = "form-control", @id = "quntity", @Name = "quntity", @readonly = "readonly" }
                                     })
 
                                         </td>
@@ -816,8 +832,15 @@
                                             @Html.Label("Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice", @Name = "SystemPrice",
-                                            @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "SystemPrice",
+                                                    @Name = "SystemPrice",
+                                            @readonly = "readonly"
+                                                }
                                     })
 
                                         </td>
@@ -827,8 +850,15 @@
                                             @Html.Label("Service Amt")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Service_Amt", @Name = "Service_Amt",
-                                            @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "Service_Amt",
+                                                    @Name = "Service_Amt",
+                                            @readonly = "readonly"
+                                                }
                                     })
 
                                         </td>
@@ -840,9 +870,15 @@
                                             @Html.Label("Requested Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price", @Name = "Requested_Price"
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "Requested_Price",
+                                                    @Name = "Requested_Price"
                                                     @*, @readonly = "readonly"*@}
-                                            })
+                })
 
                                         </td>
 
@@ -850,15 +886,22 @@
                                             @Html.Label("Requested Amt")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Amt", @Name = "Requested_Amt",
-                                            @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "Requested_Amt",
+                                                    @Name = "Requested_Amt",
+                                            @readonly = "readonly"
+                                                }
                                     })
 
                                         </td>
 
                                     </tr>
                                 </table>
-                                
+
                                 <table id="table1" cellpadding="10" cellspacing="10" style="border-collapse:collapse;margin-top:20px">
                                     <tr>
                                         <td style="width: 150px;font-size:14px">
@@ -901,7 +944,9 @@
 
 
         <label for="Notess">Notes : </label>
-        @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable", @size =135, @id = "Notess", @Name = "Notess", @readonly = "readonly"}
+        @Html.Editor("Citydropdown1", new
+        {
+            htmlAttributes = new { @class = "form-control deletable", @size = 135, @id = "Notess", @Name = "Notess", @readonly = "readonly" }
       })
 
     </fieldset>
@@ -925,7 +970,7 @@
 
     <div class="alert alert-danger active btn-lg" role="alert" id="memberNotApproval">
         <div style="text-align:center">
-            <a> A Member Have not Any Approval From CMC in Tristar , Please Contact With CMC !</a>
+            <a> A Member Have not Any Approval From CMC in Medi Gold , Please Contact With CMC !</a>
         </div>
     </div>
 
@@ -1205,8 +1250,16 @@
                                             @Html.Label("Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice_CS", @Name = "SystemPrice_CS",
-                                           @Value = "1.00" , @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "SystemPrice_CS",
+                                                    @Name = "SystemPrice_CS",
+                                           @Value = "1.00",
+                                                    @readonly = "readonly"
+                                                }
                                     })
 
                                         </td>
@@ -1217,9 +1270,15 @@
                                             @Html.Label("Requested Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price_CS", @Name = "Requested_Price_CS",
-                                           @Value = "1.00" @*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "Requested_Price_CS",
+                                                    @Name = "Requested_Price_CS",
+                                           @Value = "1.00"@*, @readonly = "readonly"*@}
+})
 
                                         </td>
 
@@ -1227,8 +1286,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity_CS", @Name = "quntity_CS" ,@Value = "1.00" @*, @readonly = "readonly"*@}
-                                    })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity_CS",
+                                                    @Name = "quntity_CS",
+                                                    @Value = "1.00"@*, @readonly = "readonly"*@}
+})
 
                                         </td>
                                     </tr>
@@ -1453,8 +1519,16 @@
                                             @Html.Label("Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "SystemPrice_DC", @Name = "SystemPrice_DC",
-                                           @Value = "1.00" , @readonly = "readonly"}
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "SystemPrice_DC",
+                                                    @Name = "SystemPrice_DC",
+                                           @Value = "1.00",
+                                                    @readonly = "readonly"
+                                                }
                                     })
 
                                         </td>
@@ -1465,9 +1539,15 @@
                                             @Html.Label("Requested Price")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "Requested_Price_DC", @Name = "Requested_Price_DC",
-                                           @Value = "1.00" @*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "Requested_Price_DC",
+                                                    @Name = "Requested_Price_DC",
+                                           @Value = "1.00"@*, @readonly = "readonly"*@}
+})
 
                                         </td>
 
@@ -1475,9 +1555,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntityDoc_DC", @Name = "quntityDoc_DC",
-                                           @Value = "1.00" @*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntityDoc_DC",
+                                                    @Name = "quntityDoc_DC",
+                                           @Value = "1.00"@*, @readonly = "readonly"*@}
+})
 
                                         </td>
                                     </tr>
@@ -1674,9 +1760,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity_DC", @Name = "quntity_DC",
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity_DC",
+                                                    @Name = "quntity_DC",
                                            @Value = "1.00"@*, @readonly = "readonly"*@}
-                                })
+})
 
                                         </td>
 
@@ -1684,9 +1776,15 @@
                                             @Html.Label("Service Note")
                                         </td>
                                         <td style="width: 400px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                           @size = 50, @id = "Service_Note_DC", @Name = "Service_Note_DC"@*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control deletable",
+                                           @size = 50,
+                                                    @id = "Service_Note_DC",
+                                                    @Name = "Service_Note_DC"@*, @readonly = "readonly"*@}
+})
                                         </td>
 
                                     </tr>
@@ -1797,9 +1895,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity1_DC", @Name = "quntity1_DC",
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity1_DC",
+                                                    @Name = "quntity1_DC",
                                            @Value = "1.00"@*, @readonly = "readonly"*@}
-                                })
+})
 
                                         </td>
 
@@ -1807,9 +1911,15 @@
                                             @Html.Label("Service Note")
                                         </td>
                                         <td style="width: 400px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                           @size = 50, @id = "Service_Note1_DC", @Name = "Service_Note1_DC"@*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control deletable",
+                                           @size = 50,
+                                                    @id = "Service_Note1_DC",
+                                                    @Name = "Service_Note1_DC"@*, @readonly = "readonly"*@}
+})
                                         </td>
 
                                     </tr>
@@ -1912,9 +2022,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity2_DC", @Name = "quntity2_DC",
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity2_DC",
+                                                    @Name = "quntity2_DC",
                                            @Value = "1.00"@*, @readonly = "readonly"*@}
-                                })
+})
 
                                         </td>
 
@@ -1922,9 +2038,15 @@
                                             @Html.Label("Service Note")
                                         </td>
                                         <td style="width: 400px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                           @size = 50, @id = "Service_Note2_DC", @Name = "Service_Note2_DC"@*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control deletable",
+                                           @size = 50,
+                                                    @id = "Service_Note2_DC",
+                                                    @Name = "Service_Note2_DC"@*, @readonly = "readonly"*@}
+})
                                         </td>
 
                                     </tr>
@@ -2027,9 +2149,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity3_DC", @Name = "quntity3_DC",
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity3_DC",
+                                                    @Name = "quntity3_DC",
                                            @Value = "1.00"@*,@Value = "1.00", @readonly = "readonly"*@}
-                                })
+})
 
                                         </td>
 
@@ -2037,9 +2165,15 @@
                                             @Html.Label("Service Note")
                                         </td>
                                         <td style="width: 400px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                           @size = 50, @id = "Service_Note3_DC", @Name = "Service_Note3_DC"@*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control deletable",
+                                           @size = 50,
+                                                    @id = "Service_Note3_DC",
+                                                    @Name = "Service_Note3_DC"@*, @readonly = "readonly"*@}
+})
                                         </td>
 
                                     </tr>
@@ -2143,9 +2277,15 @@
                                             @Html.Label("Quntity")
                                         </td>
                                         <td style="width: 150px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control", @id = "quntity4_DC", @Name = "quntity4_DC",
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control",
+                                                    @id = "quntity4_DC",
+                                                    @Name = "quntity4_DC",
                                            @Value = "1.00"@*, @readonly = "readonly"*@}
-                                })
+})
 
                                         </td>
 
@@ -2153,9 +2293,15 @@
                                             @Html.Label("Service Note")
                                         </td>
                                         <td style="width: 400px">
-                                            @Html.Editor("Citydropdown1", new { htmlAttributes = new { @class = "form-control deletable",
-                                           @size = 50, @id = "Service_Note4_DC", @Name = "Service_Note4_DC"@*, @readonly = "readonly"*@}
-                                })
+                                            @Html.Editor("Citydropdown1", new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "form-control deletable",
+                                           @size = 50,
+                                                    @id = "Service_Note4_DC",
+                                                    @Name = "Service_Note4_DC"@*, @readonly = "readonly"*@}
+})
                                         </td>
 
                                     </tr>
@@ -2929,7 +3075,7 @@
             t.cell(Row_id, 6).data($('#Service_Amt').val()).draw();
         }
         //t.cell(Row_id, 5).data($('#Refuse_Note').val()).draw();
-       
+
         if ($('#Requested_Amt').val() != "") {
             t.cell(Row_id, 7).data($('#Requested_Amt').val()).draw();
         }
@@ -4382,10 +4528,10 @@
 
                 $.get("/ClaimForm/delete_ClaimFormImage", { id: Claimform_number }, function (data) {
                     if (data == "falsee") {
-                        Swal.fire("error !", "ClaimForm Number Can not Deleted <br> Because Provider Make Approval For CLaimform <br> If You want Delete Claimform Call CMC In Tristar", "error");
+                        Swal.fire("error !", "ClaimForm Number Can not Deleted <br> Because Provider Make Approval For CLaimform <br> If You want Delete Claimform Call CMC In Medi Gold", "error");
                     }
                     else if (data == "falsee1") {
-                        Swal.fire("error !", "ClaimForm Number Can not Deleted <br> Because Different Provider want Delete CLaimform And Provider not upload ClaimForm <br> If You want Delete Claimform Call CMC In Tristar", "error");
+                        Swal.fire("error !", "ClaimForm Number Can not Deleted <br> Because Different Provider want Delete CLaimform And Provider not upload ClaimForm <br> If You want Delete Claimform Call CMC In Medi Gold", "error");
 
                     }
                     else {

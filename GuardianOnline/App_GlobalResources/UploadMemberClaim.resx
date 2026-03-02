@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Member ClaimForm</value>
+  </data>
+
+  <data name="SubTitle" xml:space="preserve">
+    <value>Upload member claim form image and submit to system</value>
+  </data>
+
+  <data name="BackHome" xml:space="preserve">
+    <value>Back to Main Home</value>
+  </data>
+
+  <data name="CardTitle" xml:space="preserve">
+    <value>Member ClaimForm Content</value>
+  </data>
+
+  <data name="ClaimFormNumber" xml:space="preserve">
+    <value>ClaimForm Number</value>
+  </data>
+
+  <data name="CardNumber" xml:space="preserve">
+    <value>Card Number</value>
+  </data>
+
+  <data name="ClaimImage" xml:space="preserve">
+    <value>ClaimForm Image</value>
+  </data>
+
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+
+</root>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>رفع نموذج مطالبة العضو</value>
+  </data>
+
+  <data name="SubTitle" xml:space="preserve">
+    <value>قم برفع صورة نموذج المطالبة وإرسالها للنظام</value>
+  </data>
+
+  <data name="BackHome" xml:space="preserve">
+    <value>الرجوع للصفحة الرئيسية</value>
+  </data>
+
+  <data name="CardTitle" xml:space="preserve">
+    <value>بيانات نموذج مطالبة العضو</value>
+  </data>
+
+  <data name="ClaimFormNumber" xml:space="preserve">
+    <value>رقم نموذج المطالبة</value>
+  </data>
+
+  <data name="CardNumber" xml:space="preserve">
+    <value>رقم الكارت</value>
+  </data>
+
+  <data name="ClaimImage" xml:space="preserve">
+    <value>صورة نموذج المطالبة</value>
+  </data>
+
+  <data name="Create" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+
+</root>

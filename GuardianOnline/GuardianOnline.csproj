@@ -195,6 +195,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Approval.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Approval.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Approval.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Approval.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ChronicApprovals.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChronicApprovals.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ChronicApprovals.en.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChronicApprovals.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ClaimServices.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClaimServices.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ClaimServices.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClaimServices.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\InvoicesAudit.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +234,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InvoicesAudit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MemberSmartCardRequests.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSmartCardRequests.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MemberSmartCardRequests.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSmartCardRequests.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MemberSmartCardRequests.en.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSmartCardRequests.en.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Messanger.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -274,6 +319,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ShowBatchData.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadMemberClaim.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadMemberClaim.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadMemberClaim.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadMemberClaim.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\UserDatas.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -724,6 +779,50 @@
     <Content Include="App_GlobalResources\ProviderClaimFormApproved.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ProviderClaimFormApproved.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ChronicApprovals.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ChronicApprovals.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ChronicApprovals.en.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ChronicApprovals.en.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MemberSmartCardRequests.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MemberSmartCardRequests.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MemberSmartCardRequests.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MemberSmartCardRequests.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\MemberSmartCardRequests.en.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MemberSmartCardRequests.en.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Approval.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Approval.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Approval.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Approval.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UploadMemberClaim.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadMemberClaim.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UploadMemberClaim.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadMemberClaim.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ClaimServices.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ClaimServices.ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ClaimServices.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ClaimServices.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\ClaimFormReport.rdlc" />
     <EmbeddedResource Include="Report\InvoiceReport.rdlc" />

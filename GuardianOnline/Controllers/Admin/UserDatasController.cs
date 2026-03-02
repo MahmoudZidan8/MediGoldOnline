@@ -84,7 +84,7 @@ namespace Guardian.Controllers.Admin
             }
 
             //List<string> UserType_Name = new List<string>();
-            //UserType_Name.Add("Tristar");
+            //UserType_Name.Add("Medi Gold");
             //UserType_Name.Add("Customer HR");
             //UserType_Name.Add("Insurance Company");
             //ViewBag.UserType_ID = UserType_Name;
@@ -112,10 +112,10 @@ namespace Guardian.Controllers.Admin
 
             }
 
-            if (id == "Tristar")
+            if (id == "Medi Gold")
             {
                 List<string> UserTypeCustomer_Name = new List<string>();
-                UserTypeCustomer_Name.Add("Tristar");
+                UserTypeCustomer_Name.Add("Medi Gold");
                 return Json(UserTypeCustomer_Name, JsonRequestBehavior.AllowGet);
             }
             else if (id == "Customer HR")
@@ -225,7 +225,7 @@ namespace Guardian.Controllers.Admin
                 return RedirectToAction("login", "ClaimForm");
             }
             //List<string> UserType_Name = new List<string>();
-            //UserType_Name.Add("Tristar");
+            //UserType_Name.Add("Medi Gold");
             //UserType_Name.Add("Customer HR");
             //UserType_Name.Add("Insurance Company");
             //ViewBag.UserType_ID = UserType_Name;
